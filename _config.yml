@@ -1,0 +1,10 @@
+markdown: redcarpet
+redcarpet:
+  extensions: ["superscript","no_intra_emphasis","autolink","strikethrough"]
+
+permalink: /blog/:title/
+
+source: .
+destination: ./_site
+
+blog_pagination_count: 6

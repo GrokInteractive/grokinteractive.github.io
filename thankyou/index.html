@@ -1,0 +1,32 @@
+---
+title: Thank You
+description: Thank you for contacting Grok Interactive.
+layout: default
+---
+
+{% include _about.section.html %}
+{% include _meet.section.html %}
+{% include _service.section.html %}
+{% include _work.section.html %}
+{% include _contact.section.html %}
+
+<div class='modal show fade'>
+  <div class='modal-header'>
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3>Thank you!</h3>
+  </div>
+  <div class="modal-body">
+    <p>
+      We appreciate you taking the time to contact us.  We will read your message and get back to you as soon as possible.
+    </p>
+  </div>
+  <div class="modal-footer">
+    <a href="/" class="btn">Close</a>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded",function() {
+    $('div.modal').modal();
+  })
+</script>

@@ -1,0 +1,38 @@
+---
+layout: default
+---
+  <br />
+
+  <div class="post">
+    <div class="time">
+      <strong class="month-year">{{ page.date | date: "%b" }}<br />{{ page.date | date: "%Y" }}</strong>
+      <strong class="day">{{ page.date | date: "%d" }}</strong>
+    </div>
+
+    <h4><a href="{{ page.url }}" rel="bookmark" title="Link to {{ page.title }}">{{ page.title }}</a></h4>
+    <hr />
+
+    {% if page.categories != empty %}
+    <p class="categories">
+      <i class='icon-folder-close'></i>
+      {% for cat in page.categories %}
+      <a href="/{{ cat | replace:' ','_' | remove:'/' | remove:'#' | remove:'!' | remove:'&amp;' | downcase }}/">{{ cat }}</a>{% if forloop.last %}{% else %},{% endif %}
+      {% endfor %}
+    </p>
+    {% endif %}
+
+    {% if page.tags != empty %}
+    <p class="tags">
+      <i class='icon-tags'></i>
+      {% for tag in page.tags %}
+      <a href="/tag/{{ tag | replace:' ','_' | remove:'/' | remove:'#' | remove:'!' | remove:'&amp;' | downcase }}/">{{ tag }}</a>{% if forloop.last %}{% else %},{% endif %}
+      {% endfor %}
+    </p>
+    {% endif %}
+
+    <div class='content'>
+      {{ content }}
+    </div>
+  </div>
+
+
