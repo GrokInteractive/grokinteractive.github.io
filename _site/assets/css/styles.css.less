@@ -230,7 +230,19 @@ body {
         margin-left: -35%;
         margin-bottom: 0px;
       }
-
+      div.image-stack {
+        position:relative;
+        height: 77px;
+        img {
+          position: absolute;
+          left: 50%;
+          margin-left: -38.5px;
+          top: 0;
+          &.inverted {
+            opacity: 0;
+          }
+        }
+      }
     }
 
     &.work {
@@ -289,6 +301,52 @@ body {
         margin: 20px 0;
         text-align: left;
       }
+      div.monitor {
+        position: relative;
+        height: 425px;
+        img {
+          position: absolute;
+          left: 50%;
+          margin-left: -207.5px;
+        }
+        img.work {
+          opacity: 0;
+          &.active {
+            opacity: 1;
+          }
+        }
+      }
+      div.description {
+        position: relative;
+        div.work {
+          position: absolute;
+          opacity: 0;
+          &.active {
+            opacity: 1;
+          }
+        }
+      }
+
+      div.arrows {
+        a {
+          width: 32px;
+          height: 61px;
+          display:inline-block;
+          &.directional.left {
+            background: url(/assets/img/index-arrow-left.png);
+            &:hover {
+              background: url(/assets/img/index-arrow-left-active.png);
+            }
+          }
+          &.directional.right {
+            background: url(/assets/img/index-arrow-right.png);
+            &:hover {
+              background: url(/assets/img/index-arrow-right-active.png);
+            }
+          }
+        }
+      }
+
 
     }
 
