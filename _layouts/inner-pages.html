@@ -24,32 +24,36 @@
   </head>
 
 <body {% if page.path == 'index.html' %}data-spy="scroll" data-offset="65" data-target=".navbar"{% endif %}>
-  <header>
-    <div class="navbar navbar-inverse">
-      <div class="navbar-inner">
-        <div class="container">
-          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="brand" href="/">
-            <img src="/assets/img/grok-logo.png" alt="Grok Interactive, LLC" title="Grok Interactive, LLC">
-          </a>
-          <div class="nav-collapse collapse pull-right">
-            <ul class="nav">
-              <li class='about active'><a href="#about">About</a></li>
-              <li class='service'><a href="#service">Service</a></li>
-              <li class='work'><a href="#work">Work</a></li>
-              <li class='contact'><a href="#contact">Contact</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </header>
 
-  {{ content }}
+    <div id="wrapper">
+        <header>
+            <div class="navbar navbar-inverse">
+                <div class="navbar-inner">
+                    <div class="container">
+                        <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="brand" href="/">
+                            <img src="/assets/img/grok-logo.png" alt="Grok Interactive, LLC" title="Grok Interactive, LLC">
+                        </a>
+                        <div class="nav-collapse collapse pull-right">
+                            <ul class="nav">
+                                <li class='about active'><a href="#about">About</a></li>
+                                <li class='service'><a href="#service">Service</a></li>
+                                <li class='work'><a href="#work">Work</a></li>
+                                <li class='contact'><a href="#contact">Contact</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        
+        {{ content }}
+        <div id="push"></div>
+    </div>
 
   <footer>
     <div class="container">
