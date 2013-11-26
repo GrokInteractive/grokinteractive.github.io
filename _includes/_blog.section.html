@@ -16,7 +16,7 @@
 
                 <h1>Grok Blog</h1>
                 
-                {% for post in site.posts %}
+                {% for post in paginator.posts %}
                 <a href="{{ post.url }}" class="blog-section">
                     <div class="well">
                         <p><strong>{{ post.title }}</strong></p>
@@ -24,6 +24,23 @@
                     </div>
                 </a>
                 {% endfor %}
+                
+                {% if paginator.total_pages > 1 %}
+                <div class="pagination">
+                    <ul>
+                    {% if paginator.previous_page %}
+                    <li><a href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}" class="previous">Previous</a></li>
+                    {% else %}
+                    <li><span class="previous">Previous</span></li>
+                    {% endif %}
+                    <li><span class="page_number ">Page: {{ paginator.page }} of {{ paginator.total_pages }}</span></li>
+                    {% if paginator.next_page %}
+                    <li><a href="/blog/page{{ paginator.next_page }}" class="next">Next</a></li>
+                    {% else %}
+                    <li><span class="next ">Next</span></li>
+                    {% endif %}
+                </div>
+                {% endif %}
                 
             </div>
         </div>
