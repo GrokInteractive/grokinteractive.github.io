@@ -8,3 +8,7 @@ source: .
 destination: ./_site
 
 blog_pagination_count: 6
+
+tag_page_layout: tag_page
+tag_page_dir: tag
+
