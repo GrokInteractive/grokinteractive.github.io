@@ -14,7 +14,7 @@ layout: inner-pages
     <p class="categories">
       <i class='icon-folder-close'></i>
       {% for cat in page.categories %}
-      <a href="/category/{{ cat | replace:' ','_' | remove:'/' | remove:'#' | remove:'!' | remove:'&amp;' | downcase }}/">{{ cat }}</a>{% if forloop.last %}{% else %},{% endif %}
+      <a href="/blog/category/{{ cat | replace:' ','_' | remove:'/' | remove:'#' | remove:'!' | remove:'&amp;' | downcase }}/">{{ cat }}</a>{% if forloop.last %}{% else %},{% endif %}
       {% endfor %}
     </p>
     {% endif %}
@@ -23,7 +23,7 @@ layout: inner-pages
     <p class="tags">
       <i class='icon-tags'></i>
       {% for tag in page.tags %}
-      <a href="/tag/{{ tag | replace:' ','_' | remove:'/' | remove:'#' | remove:'!' | remove:'&amp;' | downcase }}/">{{ tag }}</a>{% if forloop.last %}{% else %},{% endif %}
+      <a href="/blog/tag/{{ tag | replace:' ','_' | remove:'/' | remove:'#' | remove:'!' | remove:'&amp;' | downcase }}/">{{ tag }}</a>{% if forloop.last %}{% else %},{% endif %}
       {% endfor %}
     </p>
     {% endif %}
