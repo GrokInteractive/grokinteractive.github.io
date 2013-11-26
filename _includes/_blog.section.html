@@ -3,24 +3,27 @@
     <div class="container">
         <div class="row">
             <div class="span3">
-                <ul class="nav nav-list">
-                    <li class="nav-header">Tags</li>
-                    {% for tag in site.tags %}
-                    <li><a href="/tag/{{ tag[0] }}/">{{ tag[0] }}</a></li>
-                    {% endfor %}
-                </ul>
+                <div class="well">
+                    <ul class="nav nav-list">
+                        <li class="nav-header">Tags</li>
+                        {% for tag in site.tags %}
+                        <li><a href="/tag/{{ tag[0] }}/">{{ tag[0] }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
             </div>
             <div class="span9" role="main">
 
                 <h1>Grok Blog</h1>
-
-                <ul>
-                    {% for post in site.posts %}
-                    <li>
-                        <a href="{{ post.url }}">{{ post.title }}</a>
-                    </li>
-                    {% endfor %}
-                </ul>
+                
+                {% for post in site.posts %}
+                <a href="{{ post.url }}" class="blog-section">
+                    <div class="well">
+                        <p><strong>{{ post.title }}</strong></p>
+                        {{ post.excerpt }}
+                    </div>
+                </a>
+                {% endfor %}
                 
             </div>
         </div>

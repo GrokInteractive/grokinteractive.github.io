@@ -1,36 +1,27 @@
 ---
 layout: inner-pages
 ---
-  <div class="post" id="inner-page">
-      <h1>{{ page.title }}</h1>
-      <div class="time">
-          <strong class="month-year">{{ page.date | date: "%b" }}<br />{{ page.date | date: "%Y" }}</strong>
-          <strong class="day">{{ page.date | date: "%d" }}</strong>
-      </div>
+<div class="span12">
+    <div class="post" id="inner-page">
+        <h1>{{ page.title }}</h1>
+        <div class="time">
+            <strong class="month-year">{{ page.date | date: "%b" }}<br />{{ page.date | date: "%Y" }}</strong>
+            <strong class="day">{{ page.date | date: "%d" }}</strong>
+        </div>
 
-    <hr />
+        <hr />
 
-    {% if page.categories != empty %}
-    <p class="categories">
-      <i class='icon-folder-close'></i>
-      {% for cat in page.categories %}
-      <a href="/blog/category/{{ cat | replace:' ','_' | remove:'/' | remove:'#' | remove:'!' | remove:'&amp;' | downcase }}/">{{ cat }}</a>{% if forloop.last %}{% else %},{% endif %}
-      {% endfor %}
-    </p>
-    {% endif %}
+        {% if page.tags != empty %}
+        <ul class="tags breadcrumb">
+            <li class="active">Tags <span class="divider">:</span></li>
+            {% for tag in page.tags %}
+            <li><a href="/blog/tag/{{ tag | replace:' ','_' | remove:'/' | remove:'#' | remove:'!' | remove:'&amp;' | downcase }}/">{{ tag }}</a>{% if forloop.last %}{% else %} <span class="divider">/</span>{% endif %}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
 
-    {% if page.tags != empty %}
-    <p class="tags">
-      <i class='icon-tags'></i>
-      {% for tag in page.tags %}
-      <a href="/blog/tag/{{ tag | replace:' ','_' | remove:'/' | remove:'#' | remove:'!' | remove:'&amp;' | downcase }}/">{{ tag }}</a>{% if forloop.last %}{% else %},{% endif %}
-      {% endfor %}
-    </p>
-    {% endif %}
-
-    <div class='content'>
-      {{ content }}
+        <div class='content'>
+            {{ content }}
+        </div>
     </div>
-  </div>
-
-
+</div>
