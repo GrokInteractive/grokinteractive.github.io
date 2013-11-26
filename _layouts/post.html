@@ -15,7 +15,7 @@ layout: inner-pages
         <ul class="tags breadcrumb">
             <li class="active">Tags <span class="divider">:</span></li>
             {% for tag in page.tags %}
-            <li><a href="/blog/tag/{{ tag | replace:' ','_' | remove:'/' | remove:'#' | remove:'!' | remove:'&amp;' | downcase }}/">{{ tag }}</a>{% if forloop.last %}{% else %} <span class="divider">/</span>{% endif %}</li>
+            <li><a href="/tag/{{ tag | replace:' ','_' | remove:'/' | remove:'#' | remove:'!' | remove:'&amp;' | downcase }}/">{{ tag }}</a>{% if forloop.last %}{% else %} <span class="divider">/</span>{% endif %}</li>
             {% endfor %}
         </ul>
         {% endif %}
