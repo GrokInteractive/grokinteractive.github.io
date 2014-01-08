@@ -24,72 +24,99 @@
   </head>
 
 <body >
-  <header>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-      <div class="navbar-inner">
+
+    <div id="wrapper">
+        <header>
+            <div class="navbar navbar-inverse">
+                <div class="navbar-inner">
+                    <div class="container">
+                        <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="brand" href="/">
+                            <img src="/assets/img/grok-logo.png" alt="Grok Interactive, LLC" title="Grok Interactive, LLC">
+                        </a>
+                        <div class="nav-collapse collapse pull-right">
+                            <ul class="nav">
+                                <li class='about'><a href="/#about">About</a></li>
+                                <li class='service'><a href="/#service">Service</a></li>
+                                <li class='work'><a href="/#work">Work</a></li>
+                                <li class='contact'><a href="/#contact">Contact</a></li>
+                                <li class='blog'><a href="/blog">Blog</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        
         <div class="container">
-          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="brand" href="/">
-            <img src="/assets/img/grok-logo.png" alt="Grok Interactive, LLC" title="Grok Interactive, LLC">
-          </a>
-          <div class="nav-collapse collapse pull-right">
-            <ul class="nav">
-              <li class='about active'><a href="#about" class='slide'>About</a></li>
-              <li class='service'><a href="#service" class='slide'>Service</a></li>
-              <li class='work'><a href="#work" class='slide'>Work</a></li>
-              <li class='contact'><a href="#contact" class='slide'>Contact</a></li>
-            </ul>
-          </div>
+    <div class="row">
+        <div class="span3">
+            <div class="well">
+                <ul class="nav nav-list">
+                    <li><a href="/blog">Blog Listing</a></li>
+                    <li class="divider"></li>
+                    <li class="nav-header">Tags</li>
+                    
+                    <li><a href="/tag/Ipsum/">Ipsum</a></li>
+                    
+                    <li><a href="/tag/info/">info</a></li>
+                    
+                </ul>
+            </div>
         </div>
-      </div>
-    </div>
-  </header>
+        <div class="span7" role="main">
+            <div class="post" id="inner-page">
+                <h1>This is a test post</h1>
+                <div class="time">
+                    <strong class="month-year">Mar<br />2013</strong>
+                    <strong class="day">05</strong>
+                </div>
 
-    <br />
+                <hr />
 
-  <div class="post">
-    <div class="time">
-      <strong class="month-year">Mar<br />2013</strong>
-      <strong class="day">05</strong>
-    </div>
+                
+                <ul class="tags breadcrumb">
+                    <li class="active">Tags <span class="divider">:</span></li>
+                    
+                    <li><a href="/tag/ipsum/">Ipsum</a></li>
+                    
+                </ul>
+                
 
-    <h4><a href="/blog/test/" rel="bookmark" title="Link to This is a test post">This is a test post</a></h4>
-    <hr />
-
-    
-    <p class="categories">
-      <i class='icon-folder-close'></i>
-      
-      <a href="/tests/">tests</a>
-      
-    </p>
-    
-
-    
-    <p class="tags">
-      <i class='icon-tags'></i>
-      
-      <a href="/tag/ipsum/">Ipsum</a>
-      
-    </p>
-    
-
-    <div class='content'>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec id consequat neque. Aliquam mollis molestie velit, eget varius massa pellentesque vestibulum. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam semper molestie orci, sit amet commodo diam laoreet in. Vivamus vehicula tortor vitae lectus tristique euismod. Suspendisse convallis leo sed justo placerat dignissim. Nulla facilisi. Nullam eu mauris vitae tellus vulputate iaculis vitae et purus. Sed accumsan lacus vel nibh scelerisque consectetur in at enim.</p>
+                <div class='content'>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec id consequat neque. Aliquam mollis molestie velit, eget varius massa pellentesque vestibulum. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam semper molestie orci, sit amet commodo diam laoreet in. Vivamus vehicula tortor vitae lectus tristique euismod. Suspendisse convallis leo sed justo placerat dignissim. Nulla facilisi. Nullam eu mauris vitae tellus vulputate iaculis vitae et purus. Sed accumsan lacus vel nibh scelerisque consectetur in at enim.</p>
 
 <p>Nullam ut ipsum justo. Cras bibendum est et purus interdum placerat. Phasellus volutpat malesuada eleifend. Aenean dapibus odio ac nisi vestibulum ut vestibulum sapien scelerisque. Vestibulum in magna vitae libero sodales commodo in sed ipsum. Nunc vestibulum nunc ac ipsum euismod in venenatis velit faucibus. Nulla non leo lorem. Phasellus eu magna mauris. Duis tincidunt porttitor tempor.</p>
 
 <p>Nulla pharetra tellus non est malesuada adipiscing. Vestibulum eget dui sapien. Nulla et quam ut est cursus imperdiet. Nulla non nibh vel ante venenatis tristique. Vestibulum quis enim a metus convallis commodo. Mauris ullamcorper, purus in gravida egestas, eros tortor egestas velit, suscipit vulputate leo massa sit amet erat. Vivamus sed augue eu nisl ullamcorper pulvinar et at velit. Sed pretium metus risus, non ornare erat. Quisque fermentum, libero non lobortis euismod, leo diam tempor massa, vitae ornare velit lectus et lacus. Suspendisse ut libero libero, et mollis dolor. Integer vestibulum consectetur mauris id scelerisque. Mauris venenatis neque mi, et tempor massa. Aenean a enim sed magna vestibulum elementum id ut libero. Curabitur velit dui, ornare eget volutpat eget, viverra a urna. Pellentesque eu lectus sapien.</p>
 
+
+                    <div class="fb-comments" data-href="http://www.grok-interactive.com//blog/test/" data-numposts="5" data-colorscheme="light"></div>
+                    
+                    <hr />
+
+                    
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
+</div>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 
 
-
+        <div id="push"></div>
+    </div>
 
   <footer>
     <div class="container">
