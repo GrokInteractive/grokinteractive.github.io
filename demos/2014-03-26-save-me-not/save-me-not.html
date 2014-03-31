@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Save Me Not Demo</title>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class='container'>
+
+    <form method="POST">
+        <label for="textfield_1">Input Field 1 (Text)</label>
+        <input id="textfield_1" type="text" name="textfield_1" class="form-control">
+
+        <label for="textfield_2">Input Field 2 (Text)</label>
+        <input id="textfield_2" type="text" name="textfield_2" class="form-control" value="Default Data">
+
+        <label for="passwordfield">Input Field (Password)</label>
+        <input id="passwordfield" type="password" name="passwordfield" class="form-control" placeholder="Password">
+
+        <label for="textarea">Text Area</label>
+        <textarea id="textarea" name="textarea" class="form-control"></textarea>
+
+        <label for="select">Select Field</label>
+        <select name="select" id="select" class="form-control">
+            <option value="a">A</option>
+            <option value="b">B</option>
+            <option value="c">C</option>
+        </select>
+
+        <div class="checkbox">
+            <label for="checkbox_a">
+                <input type="checkbox" name='checkbox_a' id='checkbox_a' value='A'>A
+            </label>
+        </div>
+
+        <div class="checkbox">
+            <label for="checkbox_b">
+                <input type="checkbox" name='checkbox_b' id='checkbox_b' value='B' checked="checked">B
+            </label>
+        </div>
+
+        <div class="checkbox">
+            <label for="checkbox_c">
+                <input type="checkbox" name='checkbox_c' id='checkbox_c' value='C'>C
+            </label>
+        </div>
+
+        <button type="submit" name="submit" class="btn btn-large btn-primary" class="form-control">Button</button>
+    </form>
+
+    <script src="widget.savemenot.js"></script>
+    <script>
+    $('form').savemenot();
+    </script>
+</body>
+</html>

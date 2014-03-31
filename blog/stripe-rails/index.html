@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Grok Interactive, LLC | Stripe in Rails</title>
+    <meta name="description" content="">
+    <meta name="author" content="Grok Interactive, LLC">
+
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <meta http-equiv="Content-Language" content="en" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="MS.LOCALE" content="EN-US" />
+    <meta name="robots" content="index,follow" />
+    <meta name="URL" content="http://www.grok-interactive.com" />
+    <meta name="revisit-after" content="10 days" />
+
+    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800,300|Open+Sans+Condensed:300' type='text/css' />
+
+    <link rel='stylesheet' href='/assets/css/bootstrap.min.css' type='text/css' media='all' />
+    <link rel='stylesheet' href='/assets/css/bootstrap-responsive.min.css' type='text/css' media='all' />
+    <link rel='stylesheet' href='/assets/css/font-awesome.css' type='text/css' media='all' />
+
+    <link rel='stylesheet/less' href='/assets/css/styles.css.less' type='text/css' media='all' />
+
+  </head>
+
+<body>
+
+  <div id="wrap">
+    <div id="main">
+      <header>
+        <div class="navbar navbar-inverse navbar-static-top">
+          <div class="navbar-inner">
+            <div class="container">
+              <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="brand" href="/">
+                <img src="/assets/img/grok-logo.png" alt="Grok Interactive, LLC" title="Grok Interactive, LLC">
+              </a>
+              <div class="nav-collapse collapse pull-right">
+                <ul class="nav">
+                  <li class='blog active'><a href="/blog/">Blog</a></li>
+                  <li class='about'><a href="/#about" class='slide'>About</a></li>
+                  <li class='service'><a href="/#service" class='slide'>Service</a></li>
+                  <li class='work'><a href="/#work" class='slide'>Work</a></li>
+                  <li class='contact'><a href="/#contact" class='slide'>Contact</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div class="content">
+  <div class="container">
+    <div class="columns">
+      <div class="col c70">
+
+        
+        
+
+        <div class="canvas">
+
+          <div class="post">
+
+            <div class="date pull-right">
+              <strong class="month">Mar</strong>
+              <strong class="year">2014</strong>
+              <strong class="day">31</strong>
+            </div>
+
+            
+            <img class="gravatar" src="http://www.gravatar.com/avatar/b75678dcec58b321562516130a2c0076?s=60"></img>
+            
+
+            <h1><a href="/blog/stripe-rails/" rel="bookmark" title="Link to Stripe in Rails">Stripe in Rails</a></h1>
+            <h5>by Chris Hardee on Mar 31, 2014
+              
+              <i class="icon fa fa-folder" title="Categories"></i>
+              
+              <a href="/blog/category/development/">Development</a>
+              
+              
+
+              
+              <i class="icon fa fa-tags" title="Tags"></i>
+              
+              <a href="/blog/tag/ruby_on_rails/">Ruby on rails</a>,
+              
+              <a href="/blog/tag/stripe/">Stripe</a>
+              
+              
+
+              
+            </h5>
+
+            <div class=''>
+
+              
+              <img src="/images/2014/03/stripeonrails.jpg" width="150" height="150" class="pull-right" />
+              
+
+              <p>If you have not watched it yet, you will want to go through the Railscast on setting up Stripe payments: <a href="http://railscasts.com/episodes/288-billing-with-stripe">here</a>. This article expands upon that and will be referencing it. This won&#39;t be about llama kisses though, thankfully.</p>
+
+<p>One of our first internal projects here at Grok is <a href="http://www.elformo.com/">Elformo</a>, which allows for a free or subscription-based form submission solution for static or eblast type sites. For the subscription model, we decided to go with Stripe since it provides a very developer-friendly API and is generally easy to understand and work with. It seems so many payment gateways spent ages support monolithic aging technologies required by many institutions, it comes as a certain fresh breath of air to see such a simple system.</p>
+
+<p>I am going to be focusing on changes we made for our purposes instead of retreading the entire Railscast.</p>
+
+<p>So to begin with, if you have not already followed with the Railscast guide on it, you will want to add the Stripe gem:</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">gem &#39;stripe&#39;
+</code></pre></div>
+<p>Add your Stripe API and public key to your initializer stripe.rb file:</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">Stripe.api_key = &quot;&lt;api_key&gt;&quot;
+STRIPE_PUBLIC_KEY = &quot;&lt;pub_key&gt;&quot;
+</code></pre></div>
+<p>Of course, making sure not to publish these publicly. Getting to our view we are going to go from HAML to plan &#39;ol erb format. I am going to gloss over the free plan, since we are talking about Stripe, but I have a check at the beginning to see if you&#39;re on a free plan and if so just register the user without any calls to Stripe. We&#39;ll have all the standard CC fields, along with our hidden field for the Stripe card token:</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">&lt;%= form_for subscription do |f| %&gt;
+&lt;div&gt;
+    &lt;% if subscription.errors.any? %&gt;
+        &lt;div class=&quot;error_messages&quot;&gt;
+          &lt;h2&gt;&lt;%= pluralize(subscription.errors.count, &quot;error&quot;) %&gt; prohibited this subscription from being saved:&lt;/h2&gt;
+          &lt;ul&gt;
+            &lt;% subscription.errors.full_messages.each do |msg| %&gt;
+              &lt;li&gt;&lt;%= msg %&gt;&lt;/li&gt;
+            &lt;% end %&gt;
+          &lt;/ul&gt;
+        &lt;/div&gt;
+      &lt;% end %&gt;
+</code></pre></div>
+<p>This is where we start our form and check for error messages if any.</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">      &lt;%= f.hidden_field :stripe_card_token %&gt;
+</code></pre></div>
+<p>This is our stripe card token, that gets generated based on their credit card being processed, from our subscription.js file.</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">      &lt;h2&gt;Address&lt;/h2&gt;
+      &lt;div class=&quot;form-group&quot;&gt;
+        &lt;%= label_tag :card_address, &quot;Address&quot; %&gt;
+        &lt;%= text_field_tag :card_address, nil, name: nil %&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;form-group&quot;&gt;
+        &lt;div class=&quot;multi&quot;&gt;
+          &lt;%= label_tag :card_city, &quot;City&quot; %&gt;
+          &lt;%= text_field_tag :card_city, nil, name: nil %&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;multi&quot;&gt;
+          &lt;%= label_tag :card_state, &quot;State&quot; %&gt;
+          &lt;%= text_field_tag :card_state, nil, name: nil %&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;multi&quot;&gt;
+          &lt;%= label_tag :card_zip, &quot;Zip&quot; %&gt;
+          &lt;%= text_field_tag :card_zip, nil, name: nil %&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+</code></pre></div>
+<p>Here we grab the subscribers address, this is actually optional for Stripe purposes but useful for our purposes in regards to record-keeping.</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">      &lt;h2&gt;Your payment Information&lt;/h2&gt;
+      &lt;div class=&quot;form-group&quot;&gt;
+        &lt;div class=&quot;double&quot;&gt;
+          &lt;%= label_tag :card_name, &quot;Full Name on Card&quot; %&gt;
+          &lt;%= text_field_tag :card_name, nil, name: nil %&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;double&quot;&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;div class=&quot;form-group&quot;&gt;
+        &lt;div class=&quot;double&quot;&gt;
+          &lt;%= label_tag :card_number, &quot;Credit Card Number&quot; %&gt;
+          &lt;%= text_field_tag :card_number, nil, name: nil %&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;double&quot;&gt;
+          &lt;img alt=&quot;&quot; title=&quot;&quot; src=&quot;http://www.credit-card-logos.com/images/multiple_credit-card-logos-2/credit_card_logos_31.gif&quot; /&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;form-group&quot;&gt;
+        &lt;div class=&quot;double&quot;&gt;
+          &lt;%= label_tag :card_code, &quot;Security Code on Card (CVV)&quot; %&gt;
+          &lt;%= text_field_tag :card_code, nil, name: nil %&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;double&quot;&gt;
+          &lt;%= label_tag :card_month, &quot;Card Expiration&quot; %&gt;
+          &lt;%= select_month nil, {add_month_numbers: true}, {name: nil, id: &quot;card_month&quot;} %&gt;
+          &lt;%= select_year nil, {start_year: Date.today.year, end_year: Date.today.year+15}, {name: nil, id: &quot;card_year&quot;} %&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+</code></pre></div>
+<p>All our credit card fields, it is important to note that we are not actually going to be capturing these fields. We do not want to do that, all we want is to send them on to Stripe which will handle all the billing.</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">  &lt;div id=&quot;stripe_error&quot;&gt;
+      &lt;noscript&gt;JavaScript is not enabled and is required for this form. First enable it in your web browser settings.&lt;/noscript&gt;
+  &lt;/div&gt;
+      &lt;div&gt;&lt;%= f.submit &quot;Subscribe&quot;, class: &#39;glossy-small-button&#39; %&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;% end %&gt;
+</code></pre></div>
+<p>I removed some references to having a plan_id being stored. It depends on what sort of setup you have. In addition to doing away with HAML, let&#39;s also do away with coffee script. We need to have a way to ajax call Stripe to generate a credit card subscription token. The hidden token gets generated from our subscription.js file here:</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">$( document ).on(&#39;page:load&#39;, function() {
+Stripe.setPublishableKey($(&#39;meta[name=&quot;stripe-key&quot;]&#39;).attr(&#39;content&#39;));
+    subscription.setupForm();
+});
+
+var subscription = {
+    setupForm : function() {
+
+        $(&quot;form[id*=&#39;subscription&#39;]&quot;).submit(function() {
+            $(&#39;input[type=submit]&#39;).attr(&#39;disabled&#39;, true);
+                if ($(&#39;#card_number&#39;).length) {
+                    subscription.processCard();
+                    return false;
+                } else {
+                    return true;
+                }
+            });
+        },
+
+    processCard : function() {
+        var card = {
+            name: $(&#39;#card_name&#39;).val(),
+            address_line1: $(&#39;#card_address&#39;).val(),
+            address_city: $(&#39;#card_city&#39;).val(),
+            address_state: $(&#39;#card_state&#39;).val(),
+            address_zip: $(&#39;#card_zip&#39;).val(),
+            number: $(&#39;#card_number&#39;).val(),
+            cvc: $(&#39;#card_code&#39;).val(),
+            expMonth: $(&#39;#card_month&#39;).val(),
+            expYear: $(&#39;#card_year&#39;).val()
+        };
+        Stripe.createToken(card, subscription.handleStripeResponse);
+        },
+
+    handleStripeResponse : function( status, response ) {
+        if ( status == 200 ) {
+            $(&#39;#subscription_stripe_card_token&#39;).val(response.id);
+            $(&quot;form[id*=&#39;subscription&#39;]&quot;)[0].submit();
+        } else {
+            $(&#39;#stripe_error&#39;).text(response.error.message);
+            $(&#39;input[type=submit]&#39;).attr(&#39;disabled&#39;, false);
+        }
+    }
+}
+</code></pre></div>
+<p>There we go! This will be called and set the hidden token when we are ready for the subscription to be sent. A few optional fields we provide here like the address/city/state/zip for the subscription and I set it up so it&#39;ll be set on a new_ or update_ subscription form.</p>
+
+<p>In our subscription model we want to have methods that call the Stripe API depending on whether the user is starting a new subscription from scratch or if they&#39;re changing their subscription. We also have logic that will check to see if they&#39;re going from a paid plan, to a non-paid (free) plan. In which case we&#39;ll want to stop the subscription.</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text"># Let&#39;s create a new customer and pass in the card token and their plan
+def save_with_payment
+    if valid?
+        customer = Stripe::Customer.create(description: user_id, plan: plan_id, card: stripe_card_token)
+        self.stripe_customer_token = customer.id
+        save!
+    end
+# exceptions raised if there is a card error or invalid request
+rescue Stripe::InvalidRequestError =&gt; e
+    logger.error &quot;Stripe error while creating customer: #{e.message}&quot;
+    errors.add :base, &quot;There was an invalid request.&quot;
+    false
+rescue Stripe::CardError =&gt; e
+    logger.error &quot;Stripe error while creating customer: #{e.message}&quot;
+    errors.add :base, &quot;There was a problem with your credit card.&quot;
+    false
+end
+</code></pre></div>
+<p>Since we are calling valid? initially, we do not want to validate again, so we are calling save! and catching any exceptions that might be called.</p>
+
+<p>If we are just updating their plan, we want to call the Stripe calls to simple change their plan:</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text"># This updates their card along with changing their plan
+def update_with_payment
+    if valid?
+    customer = Stripe::Customer.retrieve(stripe_customer_token)
+    customer.cards.create(card: stripe_card_token)
+    customer.update_subscription(plan: plan_id)
+    save!
+end
+# exceptions raised if there is a card error or invalid request
+rescue Stripe::InvalidRequestError =&gt; e
+    logger.error &quot;Stripe error while updating customer: #{e.message}&quot;
+    errors.add :base, &quot;There was an invalid request.&quot;
+    false
+rescue Stripe::CardError =&gt; e
+    logger.error &quot;Stripe error while creating customer: #{e.message}&quot;
+    errors.add :base, &quot;There was a problem with your credit card.&quot;
+    false
+end
+</code></pre></div>
+<p>Finally, we want to cancel their payment if, for example, they&#39;re going to the free plan.</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text"># Cancels a user&#39;s current subscription, likely by going to the free plan
+def cancel_payment
+    if valid?
+        customer = Stripe::Customer.retrieve(stripe_customer_token)
+        customer.cancel_subscription
+        save!
+    end
+rescue Stripe::InvalidRequestError =&gt; e
+    logger.error &quot;Stripe error while canceling payment for customer: #{e.message}&quot;
+    errors.add :base, &quot;Could not cancel payment.&quot;
+    false
+end
+</code></pre></div>
+<p>That is pretty much it! The controller is pretty straight forward in calling the appropriate methods depending on the user&#39;s status. We want to thank Ryan Bates again, for the excellent tutorial on getting Stripe subscriptions working.</p>
+
+<p>Do you have a project that needs subscriptions or reoccuring payments? Let us know!</p>
+
+<h2>Links</h2>
+
+<ul>
+<li><a href="http://railscasts.com/episodes/288-billing-with-stripe">Bill with Stripe Railscast</a></li>
+<li><a href="https://stripe.com/docs/checkout/guides/rails">Stripe Rails documentation</a></li>
+<li><a href="https://stripe.com/docs/api">Full Stripe API library</a></li>
+</ul>
+
+
+            </div>
+
+            
+
+            
+<h3>Comments</h3>
+<hr />
+<!-- https://developers.facebook.com/docs/reference/plugins/comments/ -->
+<div class='comments'>
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
+  <div class='fb-comments' data-href='http://www.grok-interactive.com/blog/stripe-rails/' data-colorscheme='' data-width='500'></div>
+</div>
+
+
+
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col c30">
+
+        <div class="well">
+  <h4>Categories</h4>
+  <ul class="nav nav-list">
+    
+    <li><a href="/blog/category/general/">General</a></li>
+    
+    <li><a href="/blog/category/software_development/">Software development</a></li>
+    
+    <li><a href="/blog/category/training/">Training</a></li>
+    
+    <li><a href="/blog/category/testing/">Testing</a></li>
+    
+    <li><a href="/blog/category/environments/">Environments</a></li>
+    
+    <li><a href="/blog/category/development/">Development</a></li>
+    
+  </ul>
+</div>
+
+
+        <div class="well">
+  <h4>Tags</h4>
+
+  <ul class="nav nav-list">
+    
+    <li><a href="/blog/tag/grok">Grok</a></li>
+    
+    <li><a href="/blog/tag/industry">Industry</a></li>
+    
+    <li><a href="/blog/tag/codeup">Codeup</a></li>
+    
+    <li><a href="/blog/tag/security">Security</a></li>
+    
+    <li><a href="/blog/tag/php">Php</a></li>
+    
+    <li><a href="/blog/tag/phpunit">Phpunit</a></li>
+    
+    <li><a href="/blog/tag/emacs">Emacs</a></li>
+    
+    <li><a href="/blog/tag/expression_engine">Expression engine</a></li>
+    
+    <li><a href="/blog/tag/javascript">Javascript</a></li>
+    
+    <li><a href="/blog/tag/dom">Dom</a></li>
+    
+    <li><a href="/blog/tag/jquery">Jquery</a></li>
+    
+    <li><a href="/blog/tag/ruby_on_rails">Ruby on rails</a></li>
+    
+    <li><a href="/blog/tag/stripe">Stripe</a></li>
+    
+  </ul>
+</div>
+
+
+        
+        
+          <div class="well">
+  <h4>Author Profile</h4>
+
+  <strong>Chris Hardee</strong>
+  <p>Developer at Grok-Interactive and first full-time employee. Develops in Rails & PHP, along with projects for/involving Expression Engine, Responsive Web Design, and Mobile Applications.</p>
+  <p>When he is not developing he helps run the San Antonio hackerspace <a href="http://www.10bitworks.com/" target="_blank">10BitWorks.com</a></p>
+
+</div>
+
+        
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <div class="pull-left">
+        <p>&copy; 2013 Grok Interactive, LLC
+      </div>
+    </div>
+  </footer>
+
+  <script type='text/javascript' src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script type='text/javascript' src='/assets/js/jquery.easing.1.3.js'></script>
+  <script type='text/javascript' src='/assets/js/less-1.3.3.min.js'></script>
+  <script type='text/javascript' src="/assets/js/bootstrap.min.js"></script>
+  <script type='text/javascript' src="/assets/js/default.js"></script>
+  <script src="//static.getclicky.com/js" type="text/javascript"></script>
+  <script type="text/javascript">try{ clicky.init(100585693); }catch(e){}</script>
+  <noscript><p><img alt="Clicky" width="1" height="1" src="//in.getclicky.com/100585693ns.gif" /></p></noscript>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-43998305-2', 'grok-interactive.com');
+    ga('send', 'pageview');
+  </script>
+</body>
+</html>

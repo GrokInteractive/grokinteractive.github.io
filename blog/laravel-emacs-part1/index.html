@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Grok Interactive, LLC | Laravel & Emacs - Part 1</title>
+    <meta name="description" content="">
+    <meta name="author" content="Grok Interactive, LLC">
+
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <meta http-equiv="Content-Language" content="en" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="MS.LOCALE" content="EN-US" />
+    <meta name="robots" content="index,follow" />
+    <meta name="URL" content="http://www.grok-interactive.com" />
+    <meta name="revisit-after" content="10 days" />
+
+    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800,300|Open+Sans+Condensed:300' type='text/css' />
+
+    <link rel='stylesheet' href='/assets/css/bootstrap.min.css' type='text/css' media='all' />
+    <link rel='stylesheet' href='/assets/css/bootstrap-responsive.min.css' type='text/css' media='all' />
+    <link rel='stylesheet' href='/assets/css/font-awesome.css' type='text/css' media='all' />
+
+    <link rel='stylesheet/less' href='/assets/css/styles.css.less' type='text/css' media='all' />
+
+  </head>
+
+<body>
+
+  <div id="wrap">
+    <div id="main">
+      <header>
+        <div class="navbar navbar-inverse navbar-static-top">
+          <div class="navbar-inner">
+            <div class="container">
+              <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="brand" href="/">
+                <img src="/assets/img/grok-logo.png" alt="Grok Interactive, LLC" title="Grok Interactive, LLC">
+              </a>
+              <div class="nav-collapse collapse pull-right">
+                <ul class="nav">
+                  <li class='blog active'><a href="/blog/">Blog</a></li>
+                  <li class='about'><a href="/#about" class='slide'>About</a></li>
+                  <li class='service'><a href="/#service" class='slide'>Service</a></li>
+                  <li class='work'><a href="/#work" class='slide'>Work</a></li>
+                  <li class='contact'><a href="/#contact" class='slide'>Contact</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div class="content">
+  <div class="container">
+    <div class="columns">
+      <div class="col c70">
+
+        
+        
+
+        <div class="canvas">
+
+          <div class="post">
+
+            <div class="date pull-right">
+              <strong class="month">Mar</strong>
+              <strong class="year">2014</strong>
+              <strong class="day">23</strong>
+            </div>
+
+            
+            <img class="gravatar" src="http://www.gravatar.com/avatar/b75678dcec58b321562516130a2c0076?s=60"></img>
+            
+
+            <h1><a href="/blog/laravel-emacs-part1/" rel="bookmark" title="Link to Laravel & Emacs - Part 1">Laravel & Emacs - Part 1</a></h1>
+            <h5>by Chris Hardee on Mar 23, 2014
+              
+              <i class="icon fa fa-folder" title="Categories"></i>
+              
+              <a href="/blog/category/environments/">Environments</a>
+              
+              
+
+              
+              <i class="icon fa fa-tags" title="Tags"></i>
+              
+              <a href="/blog/tag/emacs/">Emacs</a>
+              
+              
+
+              
+            </h5>
+
+            <div class=''>
+
+              
+              <img src="/images/2014/03/emacs.jpg" width="150" height="150" class="pull-right" />
+              
+
+              <p>I have been using Emacs for development for four years now, it initially started when I started learning Linux sysadmin work and working from a terminal. I quickly got frustrated with the limitations, and embarrassed from on-lookers, when I would load up Nano for text editing. I got comfortable enough with <code>vi</code> to do some simple things and started learning regular expressions. The time soon came to learn something I can start calling my own that could handle much more than what <code>vi</code> was initially setup for.</p>
+
+<p>Googling for something akin to &quot;What editor should I learn after vi?&quot; and you will run amuck with suggestions for using Vim. But instead of that you should learn Emacs. Really now, you should learn Vim and just <em>Deal With It</em>. Then there is a picture of Richard M. Stallman in a christlike outfit, devoted to The Church of Emacs.</p>
+
+<p>Those of you, in the gentle comfort of Sublime or Textmate might mercifully be spared the long-running editor wars waged between Emacs and Vim. They more or less boil down to different philosophies on what constitutes an editor, and that is all that really needs to be said on that subject.</p>
+
+<p>I played around with both for a few days and went with Emacs.</p>
+
+<h2>Discovering web-mode</h2>
+
+<p>At <a href="http://www.grok-interactive.com/">Grok Interactive</a> we have been doing a lot of Laravel work, mostly custom applications for very specific needs. Working in Emacs the first thing that hit me was how little the default <code>php-mode</code> fitted my needs when it came to working in php files in general, but especially <code>.blade.</code> templates.</p>
+
+<p>After some research I came across <a href="http://web-mode.org">web-mode</a>, and it suited my purposes neatly and I now use it for several templating engines (including Rails <code>.erb</code> files).</p>
+
+<p>I hope to document my usage of hacking laravel in Emacs in several parts. I use standard Emacs command conventions in this, please refer to basic Emacs documentation if you&#39;re confused.</p>
+
+<h2>Part 1 - Configuring Emacs to use web-mode for laravel</h2>
+
+<p>If you are using Emacs 24 or later you can grab it off the melpa repository. To enable this or any other of the various excellent unofficial <em>elisp</em> repositories you simple need to add this to your configuration:</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">(setq package-archives &#39;((&quot;gnu&quot; . &quot;http://elpa.gnu.org/packages/&quot;)
+                       (&quot;melpa&quot; . &quot;http://melpa.milkbox.net/packages/&quot;)))
+</code></pre></div>
+<p>Adding this to your configuration will slow things down a bit when you got to list available packages:</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">M-x package-list-packages
+</code></pre></div>
+<p>You&#39;ll be rewarded though with tons of available packages, search for web-mode:</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">C-s web-mode
+</code></pre></div>
+<p>With your cursor on it, hit <code>i</code> to mark it for installation then <code>x</code> to execute the actions (you can browse around for other kewl packages too and mark them for installation, hit <code>x</code> when you&#39;re done). Emacs will ask you if you want to install these packages, type yes and hit enter. It&#39;ll download and compile the elisp. Ok you&#39;ve got web-mode!</p>
+
+<p>Let&#39;s set it up, open up your config file or switch to the buffer if you already have it open. First we need to load web-mode:</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">(require &#39;web-mode)
+</code></pre></div>
+<p>Then we set it to switch to web-mode whenever we open up a .php (.phtml) file or a .blade file:</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">(add-to-list &#39;auto-mode-alist &#39;(&quot;\\.php\\&#39;&quot; . web-mode))
+(setq web-mode-engines-alist
+  &#39;((&quot;php&quot;    . &quot;\\.phtml\\&#39;&quot;)
+    (&quot;blade&quot;  . &quot;\\.blade\\.&quot;))
+)
+</code></pre></div>
+<p>This is also a good place to set any indentation levels or tabs-to-spaces settings:</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">(setq-default indent-tabs-mode nil)
+(setq web-mode-code-indent-offset 4)
+(setq web-mode-indent-style 4)
+</code></pre></div>
+<p>Reload your buffer if needed <code>M-x eval-buffer</code> then you&#39;re good to go.</p>
+
+<p>That is it for part one, you should be ready to tackle any <code>.blade</code> or <code>.php</code> files. Next time we&#39;ll go over efficiently coding and formatting in web-mode.</p>
+
+<h2>Links:</h2>
+
+<ul>
+<li><a href="https://www.gnu.org/software/emacs/">GNU Emacs</a></li>
+<li><a href="http://web-mode.org">web-mode</a></li>
+<li><a href="https://stallman.org/saintignucius.jpg">Saint IGNUcius</a></li>
+</ul>
+
+
+            </div>
+
+            
+
+            
+<h3>Comments</h3>
+<hr />
+<!-- https://developers.facebook.com/docs/reference/plugins/comments/ -->
+<div class='comments'>
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
+  <div class='fb-comments' data-href='http://www.grok-interactive.com/blog/laravel-emacs-part1/' data-colorscheme='' data-width='500'></div>
+</div>
+
+
+
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col c30">
+
+        <div class="well">
+  <h4>Categories</h4>
+  <ul class="nav nav-list">
+    
+    <li><a href="/blog/category/general/">General</a></li>
+    
+    <li><a href="/blog/category/software_development/">Software development</a></li>
+    
+    <li><a href="/blog/category/training/">Training</a></li>
+    
+    <li><a href="/blog/category/testing/">Testing</a></li>
+    
+    <li><a href="/blog/category/environments/">Environments</a></li>
+    
+    <li><a href="/blog/category/development/">Development</a></li>
+    
+  </ul>
+</div>
+
+
+        <div class="well">
+  <h4>Tags</h4>
+
+  <ul class="nav nav-list">
+    
+    <li><a href="/blog/tag/grok">Grok</a></li>
+    
+    <li><a href="/blog/tag/industry">Industry</a></li>
+    
+    <li><a href="/blog/tag/codeup">Codeup</a></li>
+    
+    <li><a href="/blog/tag/security">Security</a></li>
+    
+    <li><a href="/blog/tag/php">Php</a></li>
+    
+    <li><a href="/blog/tag/phpunit">Phpunit</a></li>
+    
+    <li><a href="/blog/tag/emacs">Emacs</a></li>
+    
+    <li><a href="/blog/tag/expression_engine">Expression engine</a></li>
+    
+    <li><a href="/blog/tag/javascript">Javascript</a></li>
+    
+    <li><a href="/blog/tag/dom">Dom</a></li>
+    
+    <li><a href="/blog/tag/jquery">Jquery</a></li>
+    
+    <li><a href="/blog/tag/ruby_on_rails">Ruby on rails</a></li>
+    
+    <li><a href="/blog/tag/stripe">Stripe</a></li>
+    
+  </ul>
+</div>
+
+
+        
+        
+          <div class="well">
+  <h4>Author Profile</h4>
+
+  <strong>Chris Hardee</strong>
+  <p>Developer at Grok-Interactive and first full-time employee. Develops in Rails & PHP, along with projects for/involving Expression Engine, Responsive Web Design, and Mobile Applications.</p>
+  <p>When he is not developing he helps run the San Antonio hackerspace <a href="http://www.10bitworks.com/" target="_blank">10BitWorks.com</a></p>
+
+</div>
+
+        
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <div class="pull-left">
+        <p>&copy; 2013 Grok Interactive, LLC
+      </div>
+    </div>
+  </footer>
+
+  <script type='text/javascript' src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script type='text/javascript' src='/assets/js/jquery.easing.1.3.js'></script>
+  <script type='text/javascript' src='/assets/js/less-1.3.3.min.js'></script>
+  <script type='text/javascript' src="/assets/js/bootstrap.min.js"></script>
+  <script type='text/javascript' src="/assets/js/default.js"></script>
+  <script src="//static.getclicky.com/js" type="text/javascript"></script>
+  <script type="text/javascript">try{ clicky.init(100585693); }catch(e){}</script>
+  <noscript><p><img alt="Clicky" width="1" height="1" src="//in.getclicky.com/100585693ns.gif" /></p></noscript>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-43998305-2', 'grok-interactive.com');
+    ga('send', 'pageview');
+  </script>
+</body>
+</html>

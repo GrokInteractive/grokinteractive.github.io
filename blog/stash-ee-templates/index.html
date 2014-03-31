@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Grok Interactive, LLC | Clean Templates with Stash</title>
+    <meta name="description" content="">
+    <meta name="author" content="Grok Interactive, LLC">
+
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <meta http-equiv="Content-Language" content="en" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="MS.LOCALE" content="EN-US" />
+    <meta name="robots" content="index,follow" />
+    <meta name="URL" content="http://www.grok-interactive.com" />
+    <meta name="revisit-after" content="10 days" />
+
+    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800,300|Open+Sans+Condensed:300' type='text/css' />
+
+    <link rel='stylesheet' href='/assets/css/bootstrap.min.css' type='text/css' media='all' />
+    <link rel='stylesheet' href='/assets/css/bootstrap-responsive.min.css' type='text/css' media='all' />
+    <link rel='stylesheet' href='/assets/css/font-awesome.css' type='text/css' media='all' />
+
+    <link rel='stylesheet/less' href='/assets/css/styles.css.less' type='text/css' media='all' />
+
+  </head>
+
+<body>
+
+  <div id="wrap">
+    <div id="main">
+      <header>
+        <div class="navbar navbar-inverse navbar-static-top">
+          <div class="navbar-inner">
+            <div class="container">
+              <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="brand" href="/">
+                <img src="/assets/img/grok-logo.png" alt="Grok Interactive, LLC" title="Grok Interactive, LLC">
+              </a>
+              <div class="nav-collapse collapse pull-right">
+                <ul class="nav">
+                  <li class='blog active'><a href="/blog/">Blog</a></li>
+                  <li class='about'><a href="/#about" class='slide'>About</a></li>
+                  <li class='service'><a href="/#service" class='slide'>Service</a></li>
+                  <li class='work'><a href="/#work" class='slide'>Work</a></li>
+                  <li class='contact'><a href="/#contact" class='slide'>Contact</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div class="content">
+  <div class="container">
+    <div class="columns">
+      <div class="col c70">
+
+        
+        
+
+        <div class="canvas">
+
+          <div class="post">
+
+            <div class="date pull-right">
+              <strong class="month">Mar</strong>
+              <strong class="year">2014</strong>
+              <strong class="day">24</strong>
+            </div>
+
+            
+            <img class="gravatar" src="http://www.gravatar.com/avatar/b75678dcec58b321562516130a2c0076?s=60"></img>
+            
+
+            <h1><a href="/blog/stash-ee-templates/" rel="bookmark" title="Link to Clean Templates with Stash">Clean Templates with Stash</a></h1>
+            <h5>by Chris Hardee on Mar 24, 2014
+              
+              <i class="icon fa fa-folder" title="Categories"></i>
+              
+              <a href="/blog/category/software_development/">Software development</a>
+              
+              
+
+              
+              <i class="icon fa fa-tags" title="Tags"></i>
+              
+              <a href="/blog/tag/expression_engine/">Expression engine</a>
+              
+              
+
+              
+            </h5>
+
+            <div class=''>
+
+              
+              <img src="/images/2014/03/expressionengine.jpg" width="150" height="150" class="pull-right" />
+              
+
+              <p>I am not sure if it is still hip and trendy within the ExpressionEngine (EE) community to use Stash. There was so much buzz about it when people started using it and talking about it, and we have received a few EE projects utilizing it.</p>
+
+<p>I like it, it has its quirks but I think it not only helps improve rendering but also cleans up your template code considerably. Traditionally at my old studio, and I want to note there are several ways to do this, we would typically have a section, say About, with a landing page that listed all the entries for that section and a detail page that had the actually content for the entry. To set this up you would create your section group:</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">/about.group
+</code></pre></div>
+<p>Within there, you would create the index page along with the <code>.landing</code> and <code>.detail</code> page. So now your structure looks like this:</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">/about.group
+    index.html
+    .landing.html
+    .detail.html
+</code></pre></div>
+<p>These would then be embedded within the index page depending on a segment conditional. If <code>segment_2</code> is empty, we embed the landing page, else we show the detail page and let EE figure out the entry.</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">{if segment_2 == &#39;&#39;}
+    {embed=&quot;about/.landing&quot;}
+{if:else}
+    {embed=&quot;about/.detail&quot;}
+{/if}
+</code></pre></div>
+<p>Ok, a little clunky, we now have three files to keep track of whenever we have changes to this section. What if the clients wants to change the container for the content, ie. the index page? We&#39;ll need to go through each index page of each section to change it. Say the client wants the title to be in gold for just the About section? Would you then go into the <code>.detail</code> page and add a class for the <code>h1</code>? Now you will have to be careful that no one comes along and copies over what is usually boilerplate code for the detail section.</p>
+
+<p>Issues like these start adding up: driving up maintenance time and turnaround for client requests. What if instead we have one, well documented, file per section, one container, and a simple tag we can utilize for any custom styling? Not only will this clean things up considerably, but can make edits much more manageable.</p>
+
+<h2>Setting up clean templates</h2>
+
+<p>I will not go over Stash basics, there are <a href="http://www.jamessmith.co.uk/articles/expressionengine-stash-tutorials">some tutorials available</a> on the general structure of using Stash partials. If you do not already have it created, you will want to create a section for all your wrappers. I usually call this <code>/_layouts.group</code>, in here you will want to add your wrapper for all your pages. I want to note that you can create as many wrappers as you&#39;d like, but for this article I am trying to keep the amount of trackable files down. Having one layout for the homepage and one for the inner pages is pretty common.</p>
+
+<p>Within here, I want to set up the container for all your page content so we will be getting all the stash variables we are going to set, starting with the <code>&lt;head&gt;</code>. Now, I am a big fan of SEO lite, so we will put a block in the head to grab a section title:</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">&lt;!DOCTYPE HTML&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        {if segment_2 == &#39;&#39;}
+        {exp:stash:get name=&quot;seo-title&quot;}
+        {if:elseif segment_2 == &#39;category&#39;}
+        {exp:seo_lite category_url_title=&quot;{segment_3}&quot;}
+        {if:else}
+        {exp:seo_lite url_title=&quot;{segment_2}&quot;}
+        {/if}
+</code></pre></div>
+<p>This sets it up so if we are on the landing page we will grab a title variable off our page, otherwise we will check to see if we are using category headings (assuming we are using <code>/category/</code> as the segment name). I paste this block within all wrapper regardless of using categories, if we do we will not have to go back through any code. If nothing matches, let&#39;s grab the url_title off the last segment.</p>
+
+<p>After that we will include meta tags, links to stylesheets and web-fonts, and scripts we will be using on all pages. I include a <code>{exp:stash:get name=&quot;head&quot;}</code> for any additional scripts or anything else needed. Remember that calling a get on something that isn&#39;t set is fine, it doesn&#39;t add much overhead and let&#39;s you set up defined blocks within your template to stash.</p>
+
+<p>Down to the <code>&lt;body&gt;</code> tag, I like to add in a section identifier that I can later use as a &#39;hook&#39; for any custom css or script:</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">&lt;body id=&quot;{exp:stash:get name=&#39;id&#39;}&quot;&gt;
+</code></pre></div>
+<p>Going down to where you will have your content, you will probably have something like <code>&lt;div id=&quot;main&quot;&gt;</code> or <code>&lt;article&gt;</code> tag, let&#39;s grab our stashed content:</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">&lt;div id=&quot;main&quot;&gt;
+    {exp:stash:get name=&quot;content&quot;}
+&lt;/div&gt;
+</code></pre></div>
+<p>I also want to grab the secondary content, such as section menu along with any callouts:</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">&lt;div id=&quot;secondary&quot;&gt;
+    {exp:stash:get name=&quot;secondary&quot;}
+&lt;/div&gt;
+</code></pre></div>
+<p>Now, let&#39;s get to the actually template. First we can devote the first lines to some general comments, Copyright/TOS, documentation, etc. I like have a boiler plate section that lists the developer who last edited it too.</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">{!--
+Page: AwesomeSite.com
+Section: About
+Last Edited By: Chris Hardee (chris.hardee@grok-interactive.com)
+Last Edited On: 03/24/2014 14:10
+Notes: &lt; page notes &gt;
+--}
+</code></pre></div>
+<p>I also like to prepend a title before each stash block, along with any notes if needed.</p>
+
+<p>Now let&#39;s add our one and only embed:</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">{!-- Layout --}
+{embed=&quot;_layouts/page&quot;}
+</code></pre></div>
+<p>Stash users know you can put the embed anywhere you like, I like to put it front and center.</p>
+
+<p>Next, and I will talk about this in the next section, I like to assign an ID variable that we can use for any css or script for that specific section:</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">{!-- ID --}
+{exp:stash:set name=&quot;id&quot;}about{/exp:stash:set}
+</code></pre></div>
+<p>Our SEO Title we are grabbing from earlier:</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">{!-- SEO Title --}
+{exp:stash:set name=&quot;seo-title&quot; parse=&quot;inward&quot;}
+{exp:seo_lite default_title=&quot;About Us&quot;}
+{/exp:stash:set}
+</code></pre></div>
+<p>Now let&#39;s start on the content, we will want to first check to see if we are on a landing page or a detail page.</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">{!-- Content --}
+{exp:stash:set name=&quot;content&quot;}
+    {if segment_2 == &#39;&#39;}
+    {if:else}
+    {/if}
+{/exp:stash:set}
+</code></pre></div>
+<p>Looping through our entries depending on whether we are on a landing page or entry page.</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">{!-- Content --}
+{exp:stash:set name=&quot;content&quot;}
+    {if segment_2 == &#39;&#39;}
+        &lt;h1&gt;About Us&lt;/h1&gt;
+        {exp:channel:entries channel=&quot;about&quot; disable=&quot;member_data|categories&quot; limit=&quot;5&quot; paginate=&quot;bottom&quot;}
+            &lt;a href=&quot;{url_title_path=&#39;about/index&#39;}&quot;&gt;
+                &lt;h2&gt;{title}&lt;/h2&gt;
+                {summary}
+            &lt;/a&gt;
+        {/exp:channel:entries}
+    {if:else}
+        {exp:channel:entries channel=&quot;about&quot; disable=&quot;member_data|pagination|categories&quot;}
+            &lt;h1&gt;{title}&lt;/h1&gt;
+            {content}
+        {/exp:channel:entries}
+    {/if}
+{/exp:stash:set}
+</code></pre></div>
+<p>There we go! We now have our detail and landing sections all within one template, with only one embed.</p>
+
+<h2>ID Hooks</h2>
+
+<p>Remember when we set that section ID up? Well let&#39;s say if a client asks us to make all the titles for the event section to be in Comic-Sans. Normally you&#39;d have to set up a class, call it about-font, and add it to all the titles or add it to the main section and let all child title appear in this new font.</p>
+
+<p>Instead what I do is use that ID in a special section or separate file for any changes. In our <code>custom.css</code> file:</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">/* Section Styles */
+
+body#about h1 {
+    font-family: Comic Sans, Comic Sans MS, cursive;
+}
+</code></pre></div>
+<p>Now we have some clear designation on which sections have differing styles, which is especially helpful when all the inner sections share the same wrapper.</p>
+
+<p>That is it for this blog post, let me know if you have any comments for suggestions on ExpressionEngine or Stash usage. Also let us know if you have an Expression Engine work that needs to be done!</p>
+
+<h2>Links</h2>
+
+<ul>
+<li><a href="http://expressionengine.stackexchange.com/questions/1675/stash-embeds-trying-to-be-dry">Good EE Stack Exchange answer on using template partials with Stash</a></li>
+<li><a href="https://github.com/croxton/Stash">Stash Github page, includes links to documentation</a></li>
+</ul>
+
+
+            </div>
+
+            
+
+            
+<h3>Comments</h3>
+<hr />
+<!-- https://developers.facebook.com/docs/reference/plugins/comments/ -->
+<div class='comments'>
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
+  <div class='fb-comments' data-href='http://www.grok-interactive.com/blog/stash-ee-templates/' data-colorscheme='' data-width='500'></div>
+</div>
+
+
+
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col c30">
+
+        <div class="well">
+  <h4>Categories</h4>
+  <ul class="nav nav-list">
+    
+    <li><a href="/blog/category/general/">General</a></li>
+    
+    <li><a href="/blog/category/software_development/">Software development</a></li>
+    
+    <li><a href="/blog/category/training/">Training</a></li>
+    
+    <li><a href="/blog/category/testing/">Testing</a></li>
+    
+    <li><a href="/blog/category/environments/">Environments</a></li>
+    
+    <li><a href="/blog/category/development/">Development</a></li>
+    
+  </ul>
+</div>
+
+
+        <div class="well">
+  <h4>Tags</h4>
+
+  <ul class="nav nav-list">
+    
+    <li><a href="/blog/tag/grok">Grok</a></li>
+    
+    <li><a href="/blog/tag/industry">Industry</a></li>
+    
+    <li><a href="/blog/tag/codeup">Codeup</a></li>
+    
+    <li><a href="/blog/tag/security">Security</a></li>
+    
+    <li><a href="/blog/tag/php">Php</a></li>
+    
+    <li><a href="/blog/tag/phpunit">Phpunit</a></li>
+    
+    <li><a href="/blog/tag/emacs">Emacs</a></li>
+    
+    <li><a href="/blog/tag/expression_engine">Expression engine</a></li>
+    
+    <li><a href="/blog/tag/javascript">Javascript</a></li>
+    
+    <li><a href="/blog/tag/dom">Dom</a></li>
+    
+    <li><a href="/blog/tag/jquery">Jquery</a></li>
+    
+    <li><a href="/blog/tag/ruby_on_rails">Ruby on rails</a></li>
+    
+    <li><a href="/blog/tag/stripe">Stripe</a></li>
+    
+  </ul>
+</div>
+
+
+        
+        
+          <div class="well">
+  <h4>Author Profile</h4>
+
+  <strong>Chris Hardee</strong>
+  <p>Developer at Grok-Interactive and first full-time employee. Develops in Rails & PHP, along with projects for/involving Expression Engine, Responsive Web Design, and Mobile Applications.</p>
+  <p>When he is not developing he helps run the San Antonio hackerspace <a href="http://www.10bitworks.com/" target="_blank">10BitWorks.com</a></p>
+
+</div>
+
+        
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <div class="pull-left">
+        <p>&copy; 2013 Grok Interactive, LLC
+      </div>
+    </div>
+  </footer>
+
+  <script type='text/javascript' src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script type='text/javascript' src='/assets/js/jquery.easing.1.3.js'></script>
+  <script type='text/javascript' src='/assets/js/less-1.3.3.min.js'></script>
+  <script type='text/javascript' src="/assets/js/bootstrap.min.js"></script>
+  <script type='text/javascript' src="/assets/js/default.js"></script>
+  <script src="//static.getclicky.com/js" type="text/javascript"></script>
+  <script type="text/javascript">try{ clicky.init(100585693); }catch(e){}</script>
+  <noscript><p><img alt="Clicky" width="1" height="1" src="//in.getclicky.com/100585693ns.gif" /></p></noscript>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-43998305-2', 'grok-interactive.com');
+    ga('send', 'pageview');
+  </script>
+</body>
+</html>

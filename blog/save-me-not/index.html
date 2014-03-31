@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Grok Interactive, LLC | Save Me Not</title>
+    <meta name="description" content="">
+    <meta name="author" content="Grok Interactive, LLC">
+
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <meta http-equiv="Content-Language" content="en" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="MS.LOCALE" content="EN-US" />
+    <meta name="robots" content="index,follow" />
+    <meta name="URL" content="http://www.grok-interactive.com" />
+    <meta name="revisit-after" content="10 days" />
+
+    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800,300|Open+Sans+Condensed:300' type='text/css' />
+
+    <link rel='stylesheet' href='/assets/css/bootstrap.min.css' type='text/css' media='all' />
+    <link rel='stylesheet' href='/assets/css/bootstrap-responsive.min.css' type='text/css' media='all' />
+    <link rel='stylesheet' href='/assets/css/font-awesome.css' type='text/css' media='all' />
+
+    <link rel='stylesheet/less' href='/assets/css/styles.css.less' type='text/css' media='all' />
+
+  </head>
+
+<body>
+
+  <div id="wrap">
+    <div id="main">
+      <header>
+        <div class="navbar navbar-inverse navbar-static-top">
+          <div class="navbar-inner">
+            <div class="container">
+              <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="brand" href="/">
+                <img src="/assets/img/grok-logo.png" alt="Grok Interactive, LLC" title="Grok Interactive, LLC">
+              </a>
+              <div class="nav-collapse collapse pull-right">
+                <ul class="nav">
+                  <li class='blog active'><a href="/blog/">Blog</a></li>
+                  <li class='about'><a href="/#about" class='slide'>About</a></li>
+                  <li class='service'><a href="/#service" class='slide'>Service</a></li>
+                  <li class='work'><a href="/#work" class='slide'>Work</a></li>
+                  <li class='contact'><a href="/#contact" class='slide'>Contact</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div class="content">
+  <div class="container">
+    <div class="columns">
+      <div class="col c70">
+
+        
+        
+
+        <div class="canvas">
+
+          <div class="post">
+
+            <div class="date pull-right">
+              <strong class="month">Mar</strong>
+              <strong class="year">2014</strong>
+              <strong class="day">30</strong>
+            </div>
+
+            
+            <img class="gravatar" src="http://www.gravatar.com/avatar/a5e7d050656b7d7353c5d7daa70a8681?s=60"></img>
+            
+
+            <h1><a href="/blog/save-me-not/" rel="bookmark" title="Link to Save Me Not">Save Me Not</a></h1>
+            <h5>by Josh Freeman on Mar 30, 2014
+              
+              <i class="icon fa fa-folder" title="Categories"></i>
+              
+              <a href="/blog/category/software_development/">Software development</a>
+              
+              
+
+              
+              <i class="icon fa fa-tags" title="Tags"></i>
+              
+              <a href="/blog/tag/dom/">Dom</a>,
+              
+              <a href="/blog/tag/javascript/">Javascript</a>,
+              
+              <a href="/blog/tag/jquery/">Jquery</a>
+              
+              
+
+              
+            </h5>
+
+            <div class=''>
+
+              
+              <img src="/images/2014/03/javascript.jpg" width="150" height="150" class="pull-right" />
+              
+
+              <p>Buttons just begged to be pushed. We design them that way. But what if they do not need to be pushed? A while back I hit a project requirement that a form for user data could not be submitted back to the server unless there had been a change. I will not get into too many particulars, but I did <em>way</em> more work (and made the browser do way more work) than necessary. Lot&#39;s of DOM manipulation and value hashing. Let us fix that.</p>
+
+<p>Before we begin, let us look at a demo of what we are trying to accomplish. Notice the submit button at the bottom: it is disabled and you are unable to submit the form. Make any change to the form, and the submit button is no longer disabled. If you change the form <em>back</em> to it is default state from the server, the submit button is disabled again. Awesome.</p>
+
+<iframe src="/demos/2014-03-26-save-me-not/save-me-not.html" width="100%" height="100%" name="save-me-not-demo" id="save-me-not-demo" marginheight="0" frameborder="0" onLoad="autoResize('save-me-not-demo');"></iframe>
+
+<script language="JavaScript">
+// http://scottdizzle.com/viewtopic.php?f=11&t=846#p978
+function autoResize(id){
+    var newheight;
+    var newwidth;
+
+    if(document.getElementById){
+        newheight=document.getElementById(id).contentWindow.document .body.scrollHeight;
+        newwidth=document.getElementById(id).contentWindow.document .body.scrollWidth;
+    }
+
+    document.getElementById(id).height= (newheight) + "px";
+    document.getElementById(id).width= (newwidth) + "px";
+}
+</script>
+
+<h2>The Code</h2>
+
+<p>Because we are working directly with HTML form elements, jQuery is particularly useful for abstracting DOM work. Additionally, we will create a jQuery UI Widget to encapsulate this functionality and apply it easily.</p>
+
+<p>The first thing we will do is create our widget shell with the constructor method &#39;_create&#39;:</p>
+<div class="highlight"><pre><code class="javascript language-javascript" data-lang="javascript"><span class="nx">$</span><span class="p">.</span><span class="nx">widget</span><span class="p">(</span><span class="s2">&quot;grok.savemenot&quot;</span><span class="p">,</span> <span class="p">{</span>
+
+    <span class="nx">_create</span><span class="o">:</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+
+    <span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div>
+<p>The create method will server as the master method to intialize everything we need. First we will collect all the form elements that store information to be sent to the server. We&#39;ll cache these elements to avoid repeated DOM searches. We&#39;ll also collect the submit button separately.</p>
+<div class="highlight"><pre><code class="javascript language-javascript" data-lang="javascript"><span class="nx">_create</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+
+    <span class="k">this</span><span class="p">.</span><span class="nx">inputs</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">element</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s1">&#39;input, textarea, select, button&#39;</span><span class="p">);</span>
+
+    <span class="k">this</span><span class="p">.</span><span class="nx">submit</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;[type=&quot;submit&quot;]&#39;</span><span class="p">);</span>
+
+<span class="p">}</span>
+</code></pre></div>
+<p>Now, we will collect the current values for all the form elements and return the value. When we instantiate the widget, we need to know the beginning state of the form, so we will store those values in the <code>initialFormState</code> property.</p>
+
+<p>We have to treat checkboxes a little differently than other elements. Most form elements will send their name and value (even if empty) to the server upon submission. Checkboxes do not work this way; instead, their name and value is only sent to the server if checked. The value is really inconsequential to a checkbox&mdash;only it is checked attribute matters to us.</p>
+<div class="highlight"><pre><code class="javascript language-javascript" data-lang="javascript"><span class="nx">_create</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+
+    <span class="p">...</span>
+
+    <span class="k">this</span><span class="p">.</span><span class="nx">initialFormState</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">_getInputValues</span><span class="p">();</span>
+
+<span class="p">},</span>
+
+<span class="nx">_getInputValues</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+
+    <span class="kd">var</span> <span class="nx">formValues</span> <span class="o">=</span> <span class="p">{};</span>
+
+    <span class="k">this</span><span class="p">.</span><span class="nx">inputs</span><span class="p">.</span><span class="nx">not</span><span class="p">(</span><span class="s2">&quot;[type=&#39;checkbox&#39;]&quot;</span><span class="p">).</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">index</span><span class="p">,</span> <span class="nx">element</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">$element</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">element</span><span class="p">);</span>
+        <span class="nx">formValues</span><span class="p">[</span><span class="nx">$element</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)]</span> <span class="o">=</span> <span class="nx">$element</span><span class="p">.</span><span class="nx">val</span><span class="p">();</span>
+    <span class="p">});</span>
+
+    <span class="k">this</span><span class="p">.</span><span class="nx">inputs</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="s1">&#39;[type=&quot;checkbox&quot;]&#39;</span><span class="p">).</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">index</span><span class="p">,</span> <span class="nx">element</span><span class="p">)</span> <span class="p">{</span>
+
+        <span class="kd">var</span> <span class="nx">$element</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">element</span><span class="p">);</span>
+        <span class="kd">var</span> <span class="nx">checked</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="nx">$element</span><span class="p">.</span><span class="nx">prop</span><span class="p">(</span><span class="s1">&#39;checked&#39;</span><span class="p">))</span> <span class="p">{</span>
+            <span class="nx">checked</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+        <span class="p">};</span>
+
+        <span class="nx">formValues</span><span class="p">[</span><span class="nx">$element</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)]</span> <span class="o">=</span> <span class="nx">checked</span><span class="p">;</span>
+
+    <span class="p">});</span>
+
+    <span class="k">return</span> <span class="nx">formValues</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>It is time to check the current state of the form to its beginning state. We will create a <code>_formChanged</code> method that will return a simple boolean if the form is different now from when it was instantiated.</p>
+<div class="highlight"><pre><code class="javascript language-javascript" data-lang="javascript"><span class="nx">_formChanged</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+
+    <span class="kd">var</span> <span class="nx">object1</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">initialFormState</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">object2</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">_getInputValues</span><span class="p">();</span>
+
+    <span class="kd">var</span> <span class="nx">isEqual</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+
+    <span class="nx">$</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">object2</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">object1</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span> <span class="o">!==</span> <span class="nx">object2</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span> <span class="p">)</span> <span class="p">{</span>
+            <span class="nx">isEqual</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+            <span class="k">return</span> <span class="nx">isEqual</span><span class="p">;</span>
+        <span class="p">};</span>
+    <span class="p">});</span>
+
+    <span class="k">return</span> <span class="o">!</span><span class="nx">isEqual</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>The whole point of this widget is to update the submit button&#39;s disabled attribute on a form change. So now we listen to form changes. We listen for two kinds of events: <strong>change</strong> and <strong>keyup</strong>. The <strong>change</strong> event fires when the element&#39;s value changes, but only after it looses focus (tab away, click away, etc). The <strong>keyup</strong> event will unsurprising fire when you release a key from your keyboard, but it is blind to mouse events or programattic events. Unfortunately, these events may call the _formChanged method multiple times per change, but we are stuck with this for UX&#39;s sake.</p>
+
+<p>The call is simple. In effect, if the user changes the form, it compares the new state to the original state. If they&#39;re different, the submitting element is enabled; if it is not, it is disabled. Easy peasy.</p>
+<div class="highlight"><pre><code class="javascript language-javascript" data-lang="javascript"><span class="nx">_inputsOn</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+
+    <span class="kd">var</span> <span class="nx">that</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+
+    <span class="k">this</span><span class="p">.</span><span class="nx">inputs</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;change keyup&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="nx">that</span><span class="p">.</span><span class="nx">_formChanged</span><span class="p">())</span> <span class="p">{</span>
+            <span class="nx">that</span><span class="p">.</span><span class="nx">submit</span><span class="p">.</span><span class="nx">removeAttr</span><span class="p">(</span><span class="s1">&#39;disabled&#39;</span><span class="p">,</span> <span class="s1">&#39;disabled&#39;</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="nx">that</span><span class="p">.</span><span class="nx">submit</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;disabled&#39;</span><span class="p">,</span> <span class="s1">&#39;disabled&#39;</span><span class="p">);</span>
+        <span class="p">}</span>
+
+    <span class="p">});</span>
+<span class="p">},</span>
+</code></pre></div>
+<p>Now we set all this up when the widget is instantiated. For clarity, all the method calls to setup the inputs are grouped into an _inputSetup method. It is optional, but helped me keep it all straight.</p>
+
+<p>First, we disable the submitting element. We could technically disable the element from the HTML, but this would violate progressive enhancement principles and be a really bad idea. If the user has javascript turned off or an error occurs that prevents the widget from working correctly, the form is unsubmittable from the user.</p>
+
+<p>Now we have to handle a special case with the select element. When a browser loads the form, the option within a select element is automatically chosen. If it is a new form, and the user wants to only submit that element with the first option selected, they are out of luck. In this case, unless the HTML requires that a particular option be selected initially (such as when updating data), we will deselect all options by default.</p>
+<div class="highlight"><pre><code class="javascript language-javascript" data-lang="javascript">    <span class="nx">_create</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+
+        <span class="p">...</span>
+
+        <span class="k">this</span><span class="p">.</span><span class="nx">_inputSetup</span><span class="p">();</span>
+
+        <span class="c1">// Because of the select issue, data collection MUST come after setup</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">initialFormState</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">_getInputValues</span><span class="p">();</span>
+
+    <span class="p">},</span>
+
+    <span class="nx">_inputSetup</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+
+        <span class="k">this</span><span class="p">.</span><span class="nx">submit</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;disabled&#39;</span><span class="p">,</span> <span class="s1">&#39;disabled&#39;</span><span class="p">);</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">_selectSetup</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">inputs</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="s1">&#39;select&#39;</span><span class="p">));</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">_inputsOn</span><span class="p">();</span>
+
+    <span class="p">},</span>
+
+    <span class="nx">_selectSetup</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">$selects</span><span class="p">)</span> <span class="p">{</span>
+
+        <span class="nx">$selects</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">index</span><span class="p">,</span> <span class="nx">element</span><span class="p">)</span> <span class="p">{</span>
+
+            <span class="kd">var</span> <span class="nx">$element</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">element</span><span class="p">);</span>
+            <span class="kd">var</span> <span class="nx">value</span> <span class="o">=</span> <span class="nx">$element</span><span class="p">.</span><span class="nx">val</span><span class="p">();</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">value</span> <span class="o">||</span> <span class="sr">/^\s*$/</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="nx">value</span><span class="p">))</span> <span class="k">return</span><span class="p">;</span>
+
+            <span class="nx">$element</span><span class="p">.</span><span class="nx">prop</span><span class="p">(</span><span class="s1">&#39;selectedIndex&#39;</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+        <span class="p">});</span>
+    <span class="p">}</span>
+</code></pre></div>
+<h2>The Result</h2>
+
+<p>Your final widget should look similar to below:</p>
+<div class="highlight"><pre><code class="javascript language-javascript" data-lang="javascript"><span class="nx">$</span><span class="p">.</span><span class="nx">widget</span><span class="p">(</span><span class="s2">&quot;grok.savemenot&quot;</span><span class="p">,</span> <span class="p">{</span>
+
+    <span class="nx">_create</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+
+        <span class="k">this</span><span class="p">.</span><span class="nx">inputs</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">element</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s1">&#39;input, textarea, select, button&#39;</span><span class="p">);</span>
+
+        <span class="k">this</span><span class="p">.</span><span class="nx">submit</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;[type=&quot;submit&quot;]&#39;</span><span class="p">);</span>
+
+        <span class="k">this</span><span class="p">.</span><span class="nx">_inputSetup</span><span class="p">();</span>
+
+        <span class="k">this</span><span class="p">.</span><span class="nx">initialFormState</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">_getInputValues</span><span class="p">();</span>
+    <span class="p">},</span>
+
+    <span class="nx">_getInputValues</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+
+        <span class="kd">var</span> <span class="nx">formValues</span> <span class="o">=</span> <span class="p">{};</span>
+
+        <span class="k">this</span><span class="p">.</span><span class="nx">inputs</span><span class="p">.</span><span class="nx">not</span><span class="p">(</span><span class="s2">&quot;[type=&#39;checkbox&#39;]&quot;</span><span class="p">).</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">index</span><span class="p">,</span> <span class="nx">element</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">$element</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">element</span><span class="p">);</span>
+            <span class="nx">formValues</span><span class="p">[</span><span class="nx">$element</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)]</span> <span class="o">=</span> <span class="nx">$element</span><span class="p">.</span><span class="nx">val</span><span class="p">();</span>
+        <span class="p">});</span>
+
+        <span class="k">this</span><span class="p">.</span><span class="nx">inputs</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="s1">&#39;[type=&quot;checkbox&quot;]&#39;</span><span class="p">).</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">index</span><span class="p">,</span> <span class="nx">element</span><span class="p">)</span> <span class="p">{</span>
+
+            <span class="kd">var</span> <span class="nx">$element</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">element</span><span class="p">);</span>
+            <span class="kd">var</span> <span class="nx">checked</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="nx">$element</span><span class="p">.</span><span class="nx">prop</span><span class="p">(</span><span class="s1">&#39;checked&#39;</span><span class="p">))</span> <span class="p">{</span>
+                <span class="nx">checked</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+            <span class="p">};</span>
+
+            <span class="nx">formValues</span><span class="p">[</span><span class="nx">$element</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)]</span> <span class="o">=</span> <span class="nx">checked</span><span class="p">;</span>
+
+        <span class="p">});</span>
+
+        <span class="k">return</span> <span class="nx">formValues</span><span class="p">;</span>
+    <span class="p">},</span>
+
+    <span class="nx">_formChanged</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+
+        <span class="kd">var</span> <span class="nx">object1</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">initialFormState</span><span class="p">;</span>
+        <span class="kd">var</span> <span class="nx">object2</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">_getInputValues</span><span class="p">();</span>
+
+        <span class="kd">var</span> <span class="nx">isEqual</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+
+        <span class="nx">$</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">object2</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">object1</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span> <span class="o">!==</span> <span class="nx">object2</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span> <span class="p">)</span> <span class="p">{</span>
+                <span class="nx">isEqual</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+                <span class="k">return</span> <span class="nx">isEqual</span><span class="p">;</span>
+            <span class="p">};</span>
+        <span class="p">});</span>
+
+        <span class="k">return</span> <span class="o">!</span><span class="nx">isEqual</span><span class="p">;</span>
+    <span class="p">},</span>
+
+    <span class="nx">_inputSetup</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+
+        <span class="k">this</span><span class="p">.</span><span class="nx">submit</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;disabled&#39;</span><span class="p">,</span> <span class="s1">&#39;disabled&#39;</span><span class="p">);</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">_selectSetup</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">inputs</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="s1">&#39;select&#39;</span><span class="p">));</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">_inputsOn</span><span class="p">();</span>
+
+    <span class="p">},</span>
+
+    <span class="nx">_inputsOn</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+
+        <span class="kd">var</span> <span class="nx">that</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+
+        <span class="k">this</span><span class="p">.</span><span class="nx">inputs</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;change keyup&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="nx">that</span><span class="p">.</span><span class="nx">_formChanged</span><span class="p">())</span> <span class="p">{</span>
+                <span class="nx">that</span><span class="p">.</span><span class="nx">submit</span><span class="p">.</span><span class="nx">removeAttr</span><span class="p">(</span><span class="s1">&#39;disabled&#39;</span><span class="p">,</span> <span class="s1">&#39;disabled&#39;</span><span class="p">);</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="nx">that</span><span class="p">.</span><span class="nx">submit</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;disabled&#39;</span><span class="p">,</span> <span class="s1">&#39;disabled&#39;</span><span class="p">);</span>
+            <span class="p">}</span>
+
+        <span class="p">});</span>
+    <span class="p">},</span>
+
+    <span class="nx">_selectSetup</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">$selects</span><span class="p">)</span> <span class="p">{</span>
+
+        <span class="nx">$selects</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">index</span><span class="p">,</span> <span class="nx">element</span><span class="p">)</span> <span class="p">{</span>
+
+            <span class="kd">var</span> <span class="nx">$element</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">element</span><span class="p">);</span>
+            <span class="kd">var</span> <span class="nx">value</span> <span class="o">=</span> <span class="nx">$element</span><span class="p">.</span><span class="nx">val</span><span class="p">();</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">value</span> <span class="o">||</span> <span class="sr">/^\s*$/</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="nx">value</span><span class="p">))</span> <span class="k">return</span><span class="p">;</span>
+
+            <span class="nx">$element</span><span class="p">.</span><span class="nx">prop</span><span class="p">(</span><span class="s1">&#39;selectedIndex&#39;</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+        <span class="p">});</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div>
+<p>So how do we turn it on?</p>
+<div class="highlight"><pre><code class="html language-html" data-lang="html"><span class="nt">&lt;script&gt;</span>
+    <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;form&#39;</span><span class="p">).</span><span class="nx">savemenot</span><span class="p">();</span>
+<span class="nt">&lt;/script&gt;</span>
+</code></pre></div>
+<p>Really? Yes, really. That is it. Do not forget to require jQuery and jQueryUI in your head, however. Check out the HTML used for the demo. I have omitted the html required by bootstrap for clarity.</p>
+<div class="highlight"><pre><code class="html language-html" data-lang="html"><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;title&gt;</span>Save Me Not Demo<span class="nt">&lt;/title&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">&quot;#&quot;</span> <span class="na">method=</span><span class="s">&quot;POST&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">&quot;textfield_1&quot;</span><span class="nt">&gt;</span>Input Field 1 (Text)<span class="nt">&lt;/label&gt;</span>
+        <span class="nt">&lt;input</span> <span class="na">id=</span><span class="s">&quot;textfield_1&quot;</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">name=</span><span class="s">&quot;textfield_1&quot;</span><span class="nt">&gt;</span>
+
+        <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">&quot;textfield_2&quot;</span><span class="nt">&gt;</span>Input Field 2 (Text)<span class="nt">&lt;/label&gt;</span>
+        <span class="nt">&lt;input</span> <span class="na">id=</span><span class="s">&quot;textfield_2&quot;</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">name=</span><span class="s">&quot;textfield_2&quot;</span> <span class="na">value=</span><span class="s">&quot;Default Data&quot;</span><span class="nt">&gt;</span>
+
+        <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">&quot;passwordfield&quot;</span><span class="nt">&gt;</span>Input Field (Password)<span class="nt">&lt;/label&gt;</span>
+        <span class="nt">&lt;input</span> <span class="na">id=</span><span class="s">&quot;passwordfield&quot;</span> <span class="na">type=</span><span class="s">&quot;password&quot;</span> <span class="na">name=</span><span class="s">&quot;passwordfield&quot;</span> <span class="na">placeholder=</span><span class="s">&quot;Password&quot;</span><span class="nt">&gt;</span>
+
+        <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">&quot;textarea&quot;</span><span class="nt">&gt;</span>Text Area<span class="nt">&lt;/label&gt;</span>
+        <span class="nt">&lt;textarea</span> <span class="na">id=</span><span class="s">&quot;textarea&quot;</span> <span class="na">name=</span><span class="s">&quot;textarea&quot;</span><span class="nt">&gt;&lt;/textarea&gt;</span>
+
+        <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">&quot;select&quot;</span><span class="nt">&gt;</span>Select Field<span class="nt">&lt;/label&gt;</span>
+        <span class="nt">&lt;select</span> <span class="na">name=</span><span class="s">&quot;select&quot;</span> <span class="na">id=</span><span class="s">&quot;select&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">&quot;a&quot;</span><span class="nt">&gt;</span>A<span class="nt">&lt;/option&gt;</span>
+            <span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">&quot;b&quot;</span><span class="nt">&gt;</span>B<span class="nt">&lt;/option&gt;</span>
+            <span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">&quot;c&quot;</span><span class="nt">&gt;</span>C<span class="nt">&lt;/option&gt;</span>
+        <span class="nt">&lt;/select&gt;</span>
+
+        <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">&quot;checkbox_a&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;checkbox&quot;</span> <span class="na">name=</span><span class="s">&#39;checkbox_a&#39;</span> <span class="na">id=</span><span class="s">&#39;checkbox_a&#39;</span> <span class="na">value=</span><span class="s">&#39;A&#39;</span><span class="nt">&gt;</span>A
+        <span class="nt">&lt;/label&gt;</span>
+
+        <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">&quot;checkbox_b&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;checkbox&quot;</span> <span class="na">name=</span><span class="s">&#39;checkbox_b&#39;</span> <span class="na">id=</span><span class="s">&#39;checkbox_b&#39;</span> <span class="na">value=</span><span class="s">&#39;B&#39;</span> <span class="na">checked=</span><span class="s">&quot;checked&quot;</span><span class="nt">&gt;</span>B
+        <span class="nt">&lt;/label&gt;</span>
+
+        <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">&quot;checkbox_c&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;checkbox&quot;</span> <span class="na">name=</span><span class="s">&#39;checkbox_c&#39;</span> <span class="na">id=</span><span class="s">&#39;checkbox_c&#39;</span> <span class="na">value=</span><span class="s">&#39;C&#39;</span><span class="nt">&gt;</span>C
+        <span class="nt">&lt;/label&gt;</span>
+
+        <span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">&quot;submit&quot;</span> <span class="na">name=</span><span class="s">&quot;submit&quot;</span><span class="nt">&gt;</span>Button<span class="nt">&lt;/button&gt;</span>
+    <span class="nt">&lt;/form&gt;</span>
+
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;widget.savemenot.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class="nt">&lt;script&gt;</span>
+    <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;form&#39;</span><span class="p">).</span><span class="nx">savemenot</span><span class="p">();</span>
+    <span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div>
+<p>So there you have it. A widget you can use AND a tutorial on creating widgets. If you want to check out the source, check out my gist over on <a href="https://gist.github.com/jdfreeman/9843445">Github</a>.</p>
+
+
+            </div>
+
+            
+
+            
+<h3>Comments</h3>
+<hr />
+<!-- https://developers.facebook.com/docs/reference/plugins/comments/ -->
+<div class='comments'>
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
+  <div class='fb-comments' data-href='http://www.grok-interactive.com/blog/save-me-not/' data-colorscheme='' data-width='500'></div>
+</div>
+
+
+
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col c30">
+
+        <div class="well">
+  <h4>Categories</h4>
+  <ul class="nav nav-list">
+    
+    <li><a href="/blog/category/general/">General</a></li>
+    
+    <li><a href="/blog/category/software_development/">Software development</a></li>
+    
+    <li><a href="/blog/category/training/">Training</a></li>
+    
+    <li><a href="/blog/category/testing/">Testing</a></li>
+    
+    <li><a href="/blog/category/environments/">Environments</a></li>
+    
+    <li><a href="/blog/category/development/">Development</a></li>
+    
+  </ul>
+</div>
+
+
+        <div class="well">
+  <h4>Tags</h4>
+
+  <ul class="nav nav-list">
+    
+    <li><a href="/blog/tag/grok">Grok</a></li>
+    
+    <li><a href="/blog/tag/industry">Industry</a></li>
+    
+    <li><a href="/blog/tag/codeup">Codeup</a></li>
+    
+    <li><a href="/blog/tag/security">Security</a></li>
+    
+    <li><a href="/blog/tag/php">Php</a></li>
+    
+    <li><a href="/blog/tag/phpunit">Phpunit</a></li>
+    
+    <li><a href="/blog/tag/emacs">Emacs</a></li>
+    
+    <li><a href="/blog/tag/expression_engine">Expression engine</a></li>
+    
+    <li><a href="/blog/tag/javascript">Javascript</a></li>
+    
+    <li><a href="/blog/tag/dom">Dom</a></li>
+    
+    <li><a href="/blog/tag/jquery">Jquery</a></li>
+    
+    <li><a href="/blog/tag/ruby_on_rails">Ruby on rails</a></li>
+    
+    <li><a href="/blog/tag/stripe">Stripe</a></li>
+    
+  </ul>
+</div>
+
+
+        
+        
+          <div class="well">
+  <h4>Author Profile</h4>
+
+  <strong>Josh Freeman</strong>
+  <p></p>
+
+</div>
+
+        
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <div class="pull-left">
+        <p>&copy; 2013 Grok Interactive, LLC
+      </div>
+    </div>
+  </footer>
+
+  <script type='text/javascript' src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script type='text/javascript' src='/assets/js/jquery.easing.1.3.js'></script>
+  <script type='text/javascript' src='/assets/js/less-1.3.3.min.js'></script>
+  <script type='text/javascript' src="/assets/js/bootstrap.min.js"></script>
+  <script type='text/javascript' src="/assets/js/default.js"></script>
+  <script src="//static.getclicky.com/js" type="text/javascript"></script>
+  <script type="text/javascript">try{ clicky.init(100585693); }catch(e){}</script>
+  <noscript><p><img alt="Clicky" width="1" height="1" src="//in.getclicky.com/100585693ns.gif" /></p></noscript>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-43998305-2', 'grok-interactive.com');
+    ga('send', 'pageview');
+  </script>
+</body>
+</html>
