@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Grok Interactive, LLC | Your Presence Is Required</title>
+    <meta name="description" content="">
+    <meta name="author" content="Grok Interactive, LLC">
+
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <meta http-equiv="Content-Language" content="en" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="MS.LOCALE" content="EN-US" />
+    <meta name="robots" content="index,follow" />
+    <meta name="URL" content="http://www.grok-interactive.com" />
+    <meta name="revisit-after" content="10 days" />
+
+    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800,300|Open+Sans+Condensed:300' type='text/css' />
+
+    <link rel='stylesheet' href='/assets/css/bootstrap.min.css' type='text/css' media='all' />
+    <link rel='stylesheet' href='/assets/css/bootstrap-responsive.min.css' type='text/css' media='all' />
+    <link rel='stylesheet' href='/assets/css/font-awesome.css' type='text/css' media='all' />
+
+    <link rel='stylesheet/less' href='/assets/css/styles.css.less' type='text/css' media='all' />
+
+  </head>
+
+<body>
+
+  <div id="wrap">
+    <div id="main">
+      <header>
+        <div class="navbar navbar-inverse navbar-static-top">
+          <div class="navbar-inner">
+            <div class="container">
+              <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="brand" href="/">
+                <img src="/assets/img/grok-logo.png" alt="Grok Interactive, LLC" title="Grok Interactive, LLC">
+              </a>
+              <div class="nav-collapse collapse pull-right">
+                <ul class="nav">
+                  <li class='blog active'><a href="/blog/">Blog</a></li>
+                  <li class='about'><a href="/#about" class='slide'>About</a></li>
+                  <li class='service'><a href="/#service" class='slide'>Service</a></li>
+                  <li class='work'><a href="/#work" class='slide'>Work</a></li>
+                  <li class='contact'><a href="/#contact" class='slide'>Contact</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div class="content">
+  <div class="container">
+    <div class="columns">
+      <div class="col c70">
+
+        
+        
+
+        <div class="canvas">
+
+          <div class="post">
+
+            <div class="date pull-right">
+              <strong class="month">Apr</strong>
+              <strong class="year">2014</strong>
+              <strong class="day">11</strong>
+            </div>
+
+            
+            <a href="/blog/josh-freeman"><img class="gravatar" src="http://www.gravatar.com/avatar/a5e7d050656b7d7353c5d7daa70a8681?s=60"></img></a>
+            
+
+            <h1><a href="/blog/object-inheritance/" rel="bookmark" title="Link to Your Presence Is Required">Your Presence Is Required</a></h1>
+            <h5>by <a href="/blog/josh-freeman">Josh Freeman</a>
+               on Apr 11, 2014
+              
+              <i class="icon fa fa-folder" title="Categories"></i>
+              
+              <a href="/blog/category/training/">Training</a>
+              
+              
+
+              
+              <i class="icon fa fa-tags" title="Tags"></i>
+              
+              <a href="/blog/tag/php/">Php</a>
+              
+              
+
+              
+            </h5>
+
+            <div class=''>
+
+              
+              <img src="/images/2014/05/php.svg" width="150" height="150" class="pull-right" />
+              
+
+              <p>Earlier this week, I ran into an into a self-induced problem.  I was attempting to populate a database with lots of random, but grammatically correct data. In Laravel&#39;s parlance, I was <em>seeding</em> the database.  The problem was that I could seed my database by running individual seeders, but if I ran them all at once, I had lots of missing data.</p>
+
+<p>My attempt was simple: store lists of words by type (nouns, adjectives, first names, etc.) in their own files as an array and return that array when included. I created a base class that on construction requires a list once and sets it to a static property that is accessible from any child classes.</p>
+<div class="highlight"><pre><code class="php language-php" data-lang="php"><span class="cp">&lt;?php</span>
+
+<span class="sd">/**</span>
+<span class="sd"> * nouns-list.php</span>
+<span class="sd"> */</span>
+<span class="k">return</span> <span class="p">[</span>
+    <span class="s1">&#39;apple&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;car&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;dog&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;house&#39;</span>
+<span class="p">];</span>
+</code></pre></div><div class="highlight"><pre><code class="php language-php" data-lang="php"><span class="x">class BaseSeeder</span>
+<span class="x">{</span>
+<span class="x">    public static $nouns;</span>
+
+<span class="x">    public function __construct()</span>
+<span class="x">    {</span>
+<span class="x">        self::$nouns = require_once &quot;nouns-list.php&quot;;</span>
+<span class="x">    }</span>
+
+<span class="x">    /**</span>
+<span class="x">     * Gets a random value from a dictionary list</span>
+<span class="x">     *</span>
+<span class="x">     * @return string</span>
+<span class="x">     */</span>
+<span class="x">    public function getRandomFrom($list_name)</span>
+<span class="x">    {</span>
+<span class="x">        $array = self::${$list_name};</span>
+
+<span class="x">        $max_key = count($array) - 1;</span>
+
+<span class="x">        $random_key = self::getRandomInteger($max_key);</span>
+
+<span class="x">        return $array[$random_key];</span>
+<span class="x">    }</span>
+
+<span class="x">    /**</span>
+<span class="x">     * Get a random integer bound within an array&#39;s key space</span>
+<span class="x">     *</span>
+<span class="x">     * @var    integer $count the result of ```count($array) -1```</span>
+<span class="x">     * @return integer</span>
+<span class="x">     */</span>
+<span class="x">    public function getRandomArrayKey($count)</span>
+<span class="x">    {</span>
+<span class="x">    ...</span>
+<span class="x">    }</span>
+<span class="x">}</span>
+
+<span class="x">class FooSeeder extends BaseSeeder</span>
+<span class="x">{</span>
+<span class="x">}</span>
+
+<span class="x">class BarSeeder extends BaseSeeder</span>
+<span class="x">{</span>
+<span class="x">}</span>
+
+<span class="x">$foo = new FooSeeder;</span>
+<span class="x">$bar = new BarSeeder;</span>
+
+<span class="x">$foo-&gt;getRandomFrom(&#39;nouns&#39;);</span>
+<span class="x">$bar-&gt;getRandomFrom(&#39;nouns&#39;); // Doesn&#39;t work</span>
+</code></pre></div>
+<p>The first piece in this puzzle is to understand file includes and the different ways to include a file. There are four ways to include a file: <strong>include</strong>, <strong>include_once</strong>, <strong>require</strong>, and <strong>require_once</strong>. The function names are pretty self-explanitory, but a brief explanation follows.</p>
+<div class="highlight"><pre><code class="php language-php" data-lang="php"><span class="cp">&lt;?php</span>
+
+<span class="sd">/**</span>
+<span class="sd"> * Open a file and process its contents</span>
+<span class="sd"> */</span>
+<span class="k">include</span> <span class="s2">&quot;somefile.php&quot;</span><span class="p">;</span>
+
+<span class="sd">/**</span>
+<span class="sd"> * Include the file only if the file has not been included previously</span>
+<span class="sd"> */</span>
+<span class="k">include_once</span> <span class="s2">&quot;somefile.php&quot;</span><span class="p">;</span>
+
+<span class="sd">/**</span>
+<span class="sd"> * Include the file. Halt the script if the include fails</span>
+<span class="sd"> *</span>
+<span class="sd"> * This usually occurs if the path to the file is incorrect</span>
+<span class="sd"> * or your php process does not have sufficient privileges to</span>
+<span class="sd"> * read the file.</span>
+<span class="sd"> */</span>
+<span class="k">require</span> <span class="s2">&quot;somefile.php&quot;</span><span class="p">;</span>
+
+<span class="sd">/**</span>
+<span class="sd"> * Require only if the file has not been included previously</span>
+<span class="sd"> */</span>
+<span class="k">require_once</span> <span class="s2">&quot;somefile.php&quot;</span><span class="p">;</span>
+</code></pre></div>
+<p>Typically, when we want to include a file, it is because we need it for the rest of the script to function. Since it is required for the script to work, we naturally rely upon the <em>require</em> family of file includes. If we include a file containing class or function definitions, PHP fails if we attempt to define a class or function with the same name twice, <em>even if it is the same classes from the same file</em>. This leads us to using <code>require_once</code> in most cases.</p>
+
+<p>Since we&#39;re defining our BaseSeeder&#39; static properties with arrays from an external file, <code>require_once</code> seemed like a reasonable choice&mdash;afterall, the word lists are only required by our <code>BaseSeeder</code> and all other classes extend from that one single class.</p>
+
+<p>No problem right? <strong><em>WRONG</em></strong>.</p>
+
+<p>This leads us to the second piece to the puzzle.</p>
+
+<p>When learning object-oreinted principles in PHP, it&#39;s sufficient in most cases to treat multiple child classes that extend a common parent class as coming from the same object during instatiation (that is, when the class becomes and object (<code>$foo = new FooSeeder</code>), in reality, that is not what is happening at all. While we use the words &#39;parent&#39;, &#39;child&#39;, and &#39;inheritance&#39; to help clarify our understanding of how objects can relate to one another, it would be more appropriate to treat classes as object blueprints that are used to build an object on instantiation. If we keep the concept of blueprinting in mind when you hear a words like &#39;parent&#39; or &#39;inherit&#39;, then you will have a better understanding of what is actually happening when that class becomes an object.</p>
+
+<p>Let&#39;s take our previous example and look at the final result when classes <code>FooSeeder</code> and <code>BarSeeder</code> extends <code>BaseSeeder</code>.</p>
+<div class="highlight"><pre><code class="php language-php" data-lang="php"><span class="cp">&lt;?php</span>
+
+<span class="sd">/**</span>
+<span class="sd"> * Pretend that this class is actually defined as `class FooSeeder extends BaseSeeder`,</span>
+<span class="sd"> * and this is the result of extending the BaseSeeder</span>
+<span class="sd"> */</span>
+<span class="k">class</span> <span class="nc">FooSeeder</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="nv">$nouns</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">__construct</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nx">self</span><span class="o">::</span><span class="nv">$nouns</span> <span class="o">=</span> <span class="k">require_once</span> <span class="s2">&quot;nouns-list.php&quot;</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">getRandomFrom</span><span class="p">(</span><span class="nv">$list_name</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$array</span> <span class="o">=</span> <span class="nx">self</span><span class="o">::</span><span class="nv">${$list_name}</span><span class="p">;</span>
+
+        <span class="nv">$max_key</span> <span class="o">=</span> <span class="nb">count</span><span class="p">(</span><span class="nv">$array</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+
+        <span class="nv">$random_key</span> <span class="o">=</span> <span class="nx">self</span><span class="o">::</span><span class="na">getRandomInteger</span><span class="p">(</span><span class="nv">$max_key</span><span class="p">);</span>
+
+        <span class="k">return</span> <span class="nv">$array</span><span class="p">[</span><span class="nv">$random_key</span><span class="p">];</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">getRandomArrayKey</span><span class="p">(</span><span class="nv">$count</span><span class="p">)</span>
+    <span class="p">{</span>
+    <span class="o">...</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="sd">/**</span>
+<span class="sd"> * Pretend that this class is actually defined as `class BarSeeder extends BaseSeeder`,</span>
+<span class="sd"> * and this is the result of extending the BaseSeeder</span>
+<span class="sd"> */</span>
+<span class="k">class</span> <span class="nc">BarSeeder</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="nv">$nouns</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">__construct</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nx">self</span><span class="o">::</span><span class="nv">$nouns</span> <span class="o">=</span> <span class="k">require_once</span> <span class="s2">&quot;nouns-list.php&quot;</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">getRandomFrom</span><span class="p">(</span><span class="nv">$list_name</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$array</span> <span class="o">=</span> <span class="nx">self</span><span class="o">::</span><span class="nv">${$list_name}</span><span class="p">;</span>
+
+        <span class="nv">$max_key</span> <span class="o">=</span> <span class="nb">count</span><span class="p">(</span><span class="nv">$array</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+
+        <span class="nv">$random_key</span> <span class="o">=</span> <span class="nx">self</span><span class="o">::</span><span class="na">getRandomInteger</span><span class="p">(</span><span class="nv">$max_key</span><span class="p">);</span>
+
+        <span class="k">return</span> <span class="nv">$array</span><span class="p">[</span><span class="nv">$random_key</span><span class="p">];</span>
+    <span class="p">}</span>
+
+   <span class="k">public</span> <span class="k">function</span> <span class="nf">getRandomArrayKey</span><span class="p">(</span><span class="nv">$count</span><span class="p">)</span>
+    <span class="p">{</span>
+    <span class="o">...</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Do you see the problem now? On object instantiation, the <code>__construct</code> method is called and <code>nouns-list.php</code> is required once by the script. This is fine if we only instantiate
+either object once. If we instantiate either object again, the <code>__construct</code> method is called <strong>again</strong>! We already required <code>nouns-list.php</code>, and because we&#39;re including the list through <code>require_once</code>, we cannot include the file again. The script will not fail, but neither will the file be included on subsequent instantiations.</p>
+
+<p>The solution to this problem is deceptively simple, while the root cause is conceptually complex; so what is the solution? Change the way we include our file from <code>require_once</code> to <code>require</code>. Each time the object is instantiated, the <code>$nouns</code> property will now be loaded with the file&#39;s contents. Let the seeding begin...again!</p>
+
+
+            </div>
+
+            
+
+            
+<h3>Comments</h3>
+<hr />
+<!-- https://developers.facebook.com/docs/reference/plugins/comments/ -->
+<div class='comments'>
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
+  <div class='fb-comments' data-href='http://www.grok-interactive.com/blog/object-inheritance/' data-colorscheme='' data-width='500'></div>
+</div>
+
+
+
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col c30">
+
+        
+        
+        <div class="well">
+  <h4>Author Profile</h4>
+
+  <strong>Josh Freeman</strong>
+  <p></p>
+
+</div>
+
+        
+
+        <div class="well">
+  <h4>Categories</h4>
+  <ul class="nav nav-list">
+    
+    <li><a href="/blog/category/general/">General</a></li>
+    
+    <li><a href="/blog/category/software_development/">Software development</a></li>
+    
+    <li><a href="/blog/category/training/">Training</a></li>
+    
+    <li><a href="/blog/category/testing/">Testing</a></li>
+    
+    <li><a href="/blog/category/environments/">Environments</a></li>
+    
+    <li><a href="/blog/category/business_development/">Business development</a></li>
+    
+  </ul>
+</div>
+
+
+        
+<div class="well">
+    <h4>Authors</h4>
+    <ul class="nav nav-list">
+        
+        <li><a href="/blog/jason-straughan">Jason Straughan</a></li>
+        
+        <li><a href="/blog/jason-ellis">Jason Ellis</a></li>
+        
+        <li><a href="/blog/josh-freeman">Josh Freeman</a></li>
+        
+        <li><a href="/blog/chris-hardee">Chris Hardee</a></li>
+        
+  </ul>
+</div>
+
+
+
+        <div class="well">
+  <h4>Tags</h4>
+
+  <ul class="nav nav-list">
+    
+    <li><a href="/blog/tag/grok">Grok</a></li>
+    
+    <li><a href="/blog/tag/industry">Industry</a></li>
+    
+    <li><a href="/blog/tag/codeup">Codeup</a></li>
+    
+    <li><a href="/blog/tag/security">Security</a></li>
+    
+    <li><a href="/blog/tag/php">Php</a></li>
+    
+    <li><a href="/blog/tag/phpunit">Phpunit</a></li>
+    
+    <li><a href="/blog/tag/emacs">Emacs</a></li>
+    
+    <li><a href="/blog/tag/expression_engine">Expression engine</a></li>
+    
+    <li><a href="/blog/tag/javascript">Javascript</a></li>
+    
+    <li><a href="/blog/tag/dom">Dom</a></li>
+    
+    <li><a href="/blog/tag/jquery">Jquery</a></li>
+    
+    <li><a href="/blog/tag/git">Git</a></li>
+    
+    <li><a href="/blog/tag/githooks">Githooks</a></li>
+    
+    <li><a href="/blog/tag/source_control">Source control</a></li>
+    
+    <li><a href="/blog/tag/css">Css</a></li>
+    
+    <li><a href="/blog/tag/rails">Rails</a></li>
+    
+    <li><a href="/blog/tag/ubuntu">Ubuntu</a></li>
+    
+    <li><a href="/blog/tag/linux">Linux</a></li>
+    
+    <li><a href="/blog/tag/developers">Developers</a></li>
+    
+  </ul>
+</div>
+
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <div class="pull-left">
+        <p>&copy; 2013 Grok Interactive, LLC
+      </div>
+    </div>
+  </footer>
+
+  <script type='text/javascript' src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script type='text/javascript' src='/assets/js/jquery.easing.1.3.js'></script>
+  <script type='text/javascript' src='/assets/js/less-1.3.3.min.js'></script>
+  <script type='text/javascript' src="/assets/js/bootstrap.min.js"></script>
+  <script type='text/javascript' src="/assets/js/default.js"></script>
+  <script src="//static.getclicky.com/js" type="text/javascript"></script>
+  <script type="text/javascript">try{ clicky.init(100585693); }catch(e){}</script>
+  <noscript><p><img alt="Clicky" width="1" height="1" src="//in.getclicky.com/100585693ns.gif" /></p></noscript>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-43998305-2', 'grok-interactive.com');
+    ga('send', 'pageview');
+  </script>
+</body>
+</html>

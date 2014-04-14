@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Grok Interactive, LLC | Git Hooks for Checking Tabs vs Spaces</title>
+    <meta name="description" content="">
+    <meta name="author" content="Grok Interactive, LLC">
+
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <meta http-equiv="Content-Language" content="en" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="MS.LOCALE" content="EN-US" />
+    <meta name="robots" content="index,follow" />
+    <meta name="URL" content="http://www.grok-interactive.com" />
+    <meta name="revisit-after" content="10 days" />
+
+    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800,300|Open+Sans+Condensed:300' type='text/css' />
+
+    <link rel='stylesheet' href='/assets/css/bootstrap.min.css' type='text/css' media='all' />
+    <link rel='stylesheet' href='/assets/css/bootstrap-responsive.min.css' type='text/css' media='all' />
+    <link rel='stylesheet' href='/assets/css/font-awesome.css' type='text/css' media='all' />
+
+    <link rel='stylesheet/less' href='/assets/css/styles.css.less' type='text/css' media='all' />
+
+  </head>
+
+<body>
+
+  <div id="wrap">
+    <div id="main">
+      <header>
+        <div class="navbar navbar-inverse navbar-static-top">
+          <div class="navbar-inner">
+            <div class="container">
+              <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="brand" href="/">
+                <img src="/assets/img/grok-logo.png" alt="Grok Interactive, LLC" title="Grok Interactive, LLC">
+              </a>
+              <div class="nav-collapse collapse pull-right">
+                <ul class="nav">
+                  <li class='blog active'><a href="/blog/">Blog</a></li>
+                  <li class='about'><a href="/#about" class='slide'>About</a></li>
+                  <li class='service'><a href="/#service" class='slide'>Service</a></li>
+                  <li class='work'><a href="/#work" class='slide'>Work</a></li>
+                  <li class='contact'><a href="/#contact" class='slide'>Contact</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div class="content">
+  <div class="container">
+    <div class="columns">
+      <div class="col c70">
+
+        
+        
+
+        <div class="canvas">
+
+          <div class="post">
+
+            <div class="date pull-right">
+              <strong class="month">Apr</strong>
+              <strong class="year">2014</strong>
+              <strong class="day">02</strong>
+            </div>
+
+            
+            <a href="/blog/josh-freeman"><img class="gravatar" src="http://www.gravatar.com/avatar/a5e7d050656b7d7353c5d7daa70a8681?s=60"></img></a>
+            
+
+            <h1><a href="/blog/githooks/" rel="bookmark" title="Link to Git Hooks for Checking Tabs vs Spaces">Git Hooks for Checking Tabs vs Spaces</a></h1>
+            <h5>by <a href="/blog/josh-freeman">Josh Freeman</a>
+               on Apr 02, 2014
+              
+              <i class="icon fa fa-folder" title="Categories"></i>
+              
+              <a href="/blog/category/software_development/">Software development</a>
+              
+              
+
+              
+              <i class="icon fa fa-tags" title="Tags"></i>
+              
+              <a href="/blog/tag/git/">Git</a>,
+              
+              <a href="/blog/tag/githooks/">Githooks</a>,
+              
+              <a href="/blog/tag/source_control/">Source control</a>
+              
+              
+
+              
+            </h5>
+
+            <div class=''>
+
+              
+              <img src="/images/2014/04/git-logo.jpg" width="150" height="150" class="pull-right" />
+              
+
+              <h2>The Problem: Tabs in Source Control</h2>
+
+<p>Here&#39;s a recent conversation I had:</p>
+
+<ul>
+<li><strong>Me</strong>: PSR Standards...blah, blah, blah...no tabs...blah, blah, blah...indent 4 spaces for PHP!</li>
+<li><strong>Boss</strong>: OK, that&#39;s what we&#39;ll do</li>
+</ul>
+
+<p><em>A few days later</em></p>
+
+<ul>
+<li><strong>Me</strong>: Sent a pull request</li>
+<li><strong>Boss</strong>: Okay great! Please replace all tabs with spaces. We agreed to use 4 spaces for indention, not tabs.</li>
+</ul>
+
+<p>It&#39;s time to figure out what&#39;s going on.</p>
+<div class="highlight"><pre><code class="bash language-bash" data-lang="bash">~/path/to/project<span class="nv">$ </span>grep -r -P <span class="s1">&#39;\t&#39;</span> .
+</code></pre></div>
+<p>Uh, oh...</p>
+
+<p><img src="/images/2014/04/tabs-tabs-everywhere.jpg" alt="Woody and Buzz Meme. Top-text: &quot;TABS&quot;. Bottom-text: &quot;TABS EVERYWHERE&quot;." title="My project runneth over with tabs"></p>
+
+<h2>The Answer: Git Hooks</h2>
+
+<p>While wars rage on about why to use spaces or tabs over the other, we are not here to talk about why we do not use tabs in a project. No, no, we are here to talk about <em>git hooks</em>.</p>
+
+<p>In the lifecycle of a project controlled through Git, there are actions a user takes to manage their code, mostly adding, committing, and pushing to another repository. Git Hooks are a kind of event listener for these actions. Each hook is an executable script that fires off before, during, or after certain git events. For pre-action hooks, if the script exits with a non-zero status&mdash;Unix-speak for the script failed&mdash;the action is halted and will not continue. This is what we are going to rely upon.</p>
+
+<p>Inside a Git respository, you&#39;ll find the hooks directory:</p>
+<div class="highlight"><pre><code class="bash language-bash" data-lang="bash">~/path/to/project/<span class="nv">$ </span><span class="nb">cd</span> .git/hooks
+</code></pre></div>
+<p>Inside this directory, git provides several sample hooks to demonstrate their naming convention and functionality.  To make any sample hook work, all you need to do is rename it and ensure it is executable (if it is not already):</p>
+<div class="highlight"><pre><code class="bash language-bash" data-lang="bash">~/path/to/project/.git/hooks<span class="nv">$ </span>mv pre-commit.sample pre-commit
+~/path/to/project/.git/hooks<span class="nv">$ </span>chmod +x pre-commit
+</code></pre></div>
+<p>Now, the example files are written using bash, but you can use any language so long as you have an interpreter installed and can execute it. In my case, we&#39;ll be using Ruby.</p>
+
+<p>I want my pre-commit hook to do three things: check the files I am about to commit for tab characters, list the locations of the tab characters, and stop the commit from happening so I can fix the problem.</p>
+
+<h2>I Have Pre-Committment Issues</h2>
+
+<p>Let&#39;s build our git hook, piece by piece. First, we need to declare that we are using Ruby to execute this file. All work is done in <code>.git/hooks/pre-commit</code></p>
+<div class="highlight"><pre><code class="bash language-bash" data-lang="bash"><span class="c">#!/usr/bin/ruby</span>
+...
+</code></pre></div>
+<p>Now, it&#39;s time to get the list of files we are about to commit. Git has a handy command for just this purpose. <code>git diff --cached --name-only</code>. We&#39;ll git this list and map it to an array. We&#39;ll also initialize our <code>offending_lines</code> hash.</p>
+<div class="highlight"><pre><code class="ruby language-ruby" data-lang="ruby"><span class="o">.</span><span class="n">.</span><span class="o">.</span>
+<span class="n">git_files</span> <span class="o">=</span> <span class="sb">`git diff --cached --name-only`</span><span class="o">.</span><span class="n">lines</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:chomp</span><span class="p">)</span>
+
+<span class="n">offending_lines</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</code></pre></div>
+<p>With the list of files in hand, we will check each file, line-by-line, for the tab character. Two quick gotchas: we need to ensure that the files we are checking are actually files and text-based (not images, archives, etc.). Without including a library, we can check like this:</p>
+<div class="highlight"><pre><code class="ruby language-ruby" data-lang="ruby"><span class="o">.</span><span class="n">.</span><span class="o">.</span>
+<span class="c1"># https://www.ruby-forum.com/topic/122170#544763</span>
+
+<span class="k">def</span> <span class="nc">File</span><span class="o">.</span><span class="nf">binary?</span> <span class="nb">name</span>
+  <span class="nb">open</span> <span class="nb">name</span> <span class="k">do</span> <span class="o">|</span><span class="n">f</span><span class="o">|</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">b</span><span class="o">=</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">256</span><span class="p">))</span> <span class="k">do</span>
+      <span class="k">return</span> <span class="kp">true</span> <span class="k">if</span> <span class="n">b</span><span class="o">[</span> <span class="s2">&quot;</span><span class="se">\0</span><span class="s2">&quot;</span><span class="o">]</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+  <span class="kp">false</span>
+<span class="k">end</span>
+
+<span class="n">git_files</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">file</span><span class="o">|</span>
+
+  <span class="k">next</span> <span class="k">unless</span> <span class="no">File</span><span class="o">.</span><span class="n">file?</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+  <span class="k">next</span> <span class="k">if</span> <span class="no">File</span><span class="o">.</span><span class="n">binary?</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+
+  <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+
+<span class="k">end</span>
+<span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</code></pre></div>
+<p>Let&#39;s find those elusive tabs. We just iterate through each line of each staged file, check for a tab character, and add it to the <code>offending_lines</code> hash if found.</p>
+<div class="highlight"><pre><code class="ruby language-ruby" data-lang="ruby"><span class="o">.</span><span class="n">.</span><span class="o">.</span>
+<span class="n">git_files</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">file</span><span class="o">|</span>
+
+  <span class="k">next</span> <span class="k">unless</span> <span class="no">File</span><span class="o">.</span><span class="n">file?</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+  <span class="k">next</span> <span class="k">if</span> <span class="no">File</span><span class="o">.</span><span class="n">binary?</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+
+  <span class="no">File</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">file</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">f</span><span class="o">|</span>
+    <span class="n">ln</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">lna</span> <span class="o">=</span> <span class="nb">Array</span><span class="o">.</span><span class="n">new</span>
+
+    <span class="n">f</span><span class="o">.</span><span class="n">each_line</span> <span class="k">do</span> <span class="o">|</span><span class="n">line</span><span class="o">|</span>
+
+      <span class="n">lna</span><span class="o">.</span><span class="n">push</span> <span class="n">ln</span>  <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">match</span> <span class="sr">/\t/</span>
+
+      <span class="n">offending_lines</span><span class="o">[</span><span class="n">file</span><span class="o">]</span> <span class="o">=</span> <span class="n">lna</span> <span class="k">unless</span> <span class="n">lna</span><span class="o">.</span><span class="n">empty?</span>
+
+      <span class="n">ln</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">end</span>
+  <span class="n">f</span><span class="o">.</span><span class="n">close</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+<span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</code></pre></div>
+<p>If we found any tabs, we need to output the results and exit with a non-zero status.</p>
+<div class="highlight"><pre><code class="ruby language-ruby" data-lang="ruby"><span class="o">.</span><span class="n">.</span><span class="o">.</span>
+<span class="k">unless</span> <span class="n">offending_lines</span><span class="o">.</span><span class="n">empty?</span>
+
+  <span class="nb">puts</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+  <span class="nb">puts</span> <span class="s2">&quot;Pre-Commit Hook Failure (.git/hooks/pre-commit)&quot;</span>
+  <span class="nb">puts</span> <span class="s2">&quot;Tab characters are illegal in source control and Tabs were found in the following files&quot;</span>
+  <span class="nb">puts</span> <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&quot;</span>
+
+  <span class="n">offending_lines</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">file</span><span class="p">,</span> <span class="n">line_numbers</span><span class="o">|</span>
+    <span class="nb">puts</span> <span class="n">file</span>
+    <span class="n">line_numbers</span><span class="o">.</span><span class="n">each_slice</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span><span class="o">.</span><span class="n">to_a</span><span class="o">.</span><span class="n">each</span> <span class="p">{</span> <span class="o">|</span><span class="n">sub_array</span><span class="o">|</span> <span class="nb">puts</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">sub_array</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;, &#39;</span><span class="p">)</span> <span class="p">}</span>
+    <span class="nb">puts</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+  <span class="k">end</span>
+
+<span class="nb">exit</span> <span class="mi">1</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>Let us put it all together:</p>
+
+<blockquote>
+<p>.git/hooks/pre-commit</p>
+</blockquote>
+<div class="highlight"><pre><code class="ruby language-ruby" data-lang="ruby"><span class="c1">#!/usr/bin/ruby</span>
+
+<span class="c1"># https://www.ruby-forum.com/topic/122170#544763</span>
+
+<span class="n">git_files</span> <span class="o">=</span> <span class="sb">`git diff --cached --name-only`</span><span class="o">.</span><span class="n">lines</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:chomp</span><span class="p">)</span>
+
+<span class="n">offending_lines</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="k">def</span> <span class="nc">File</span><span class="o">.</span><span class="nf">binary?</span> <span class="nb">name</span>
+  <span class="nb">open</span> <span class="nb">name</span> <span class="k">do</span> <span class="o">|</span><span class="n">f</span><span class="o">|</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">b</span><span class="o">=</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">256</span><span class="p">))</span> <span class="k">do</span>
+      <span class="k">return</span> <span class="kp">true</span> <span class="k">if</span> <span class="n">b</span><span class="o">[</span> <span class="s2">&quot;</span><span class="se">\0</span><span class="s2">&quot;</span><span class="o">]</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+  <span class="kp">false</span>
+<span class="k">end</span>
+
+<span class="n">git_files</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">file</span><span class="o">|</span>
+
+  <span class="k">next</span> <span class="k">unless</span> <span class="no">File</span><span class="o">.</span><span class="n">file?</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+  <span class="k">next</span> <span class="k">if</span> <span class="no">File</span><span class="o">.</span><span class="n">binary?</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+
+  <span class="no">File</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">file</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">f</span><span class="o">|</span>
+    <span class="n">ln</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">lna</span> <span class="o">=</span> <span class="nb">Array</span><span class="o">.</span><span class="n">new</span>
+
+    <span class="n">f</span><span class="o">.</span><span class="n">each_line</span> <span class="k">do</span> <span class="o">|</span><span class="n">line</span><span class="o">|</span>
+
+      <span class="n">lna</span><span class="o">.</span><span class="n">push</span> <span class="n">ln</span>  <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">match</span> <span class="sr">/\t/</span>
+
+      <span class="n">offending_lines</span><span class="o">[</span><span class="n">file</span><span class="o">]</span> <span class="o">=</span> <span class="n">lna</span> <span class="k">unless</span> <span class="n">lna</span><span class="o">.</span><span class="n">empty?</span>
+
+      <span class="n">ln</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">end</span>
+  <span class="n">f</span><span class="o">.</span><span class="n">close</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="k">unless</span> <span class="n">offending_lines</span><span class="o">.</span><span class="n">empty?</span>
+
+  <span class="nb">puts</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+  <span class="nb">puts</span> <span class="s2">&quot;Pre-Commit Hook Failure (.git/hooks/pre-commit)&quot;</span>
+  <span class="nb">puts</span> <span class="s2">&quot;Tab characters are illegal in source control and Tabs were found in the following files&quot;</span>
+  <span class="nb">puts</span> <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&quot;</span>
+
+  <span class="n">offending_lines</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">file</span><span class="p">,</span> <span class="n">line_numbers</span><span class="o">|</span>
+    <span class="nb">puts</span> <span class="n">file</span>
+    <span class="n">line_numbers</span><span class="o">.</span><span class="n">each_slice</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span><span class="o">.</span><span class="n">to_a</span><span class="o">.</span><span class="n">each</span> <span class="p">{</span> <span class="o">|</span><span class="n">sub_array</span><span class="o">|</span> <span class="nb">puts</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">sub_array</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;, &#39;</span><span class="p">)</span> <span class="p">}</span>
+    <span class="nb">puts</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+  <span class="k">end</span>
+<span class="nb">exit</span> <span class="mi">1</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>Now, throw some tab characters into you&#39;re project (a test branch, please). And try to commit the changes.</p>
+<div class="highlight"><pre><code class="bash language-bash" data-lang="bash">~/path/to/project<span class="nv">$ </span>git add posts/githooks.md
+~/path/to/project<span class="nv">$ </span>git commit -m <span class="s1">&#39;Attempted commit with tab characters&#39;</span>
+
+Tab characters are illegal in <span class="nb">source </span>control and Tabs were found in the following files
+
+
+posts/githooks.md
+    50, 51, 55
+</code></pre></div>
+<h2>Conclusion</h2>
+
+<p>Git Hooks are awesome. While this post uses them to prevent tabs sneaking into source control, you can use them to do just about anything. If you&#39;d like to check out this particular hook, check out my gist over on <a href="https://gist.github.com/jdfreeman/9795256">Github</a>.</p>
+
+<p>P.S. By the way, I forgot to fix my editor back to spaces before I committed. It really does work.</p>
+<div class="highlight"><pre><code class="bash language-bash" data-lang="bash"><span class="nv">$ </span>gitcommit <span class="s2">&quot;Tutorial complete, requires proofreading&quot;</span>
+
+Pre-Commit Hook Failure <span class="o">(</span>.git/hooks/pre-commit<span class="o">)</span>
+Tab characters are illegal in <span class="nb">source </span>control and Tabs were found in the following files
+
+
+_posts/2014-03-26-githooks.md
+    95, 96, 97, 125, 126, 128, 130, 132, 134, 135, 156, 157, 158, 180, 181
+    182, 193, 194, 196, 198, 200, 202, 203, 216, 217, 218, 235
+</code></pre></div>
+
+            </div>
+
+            
+
+            
+<h3>Comments</h3>
+<hr />
+<!-- https://developers.facebook.com/docs/reference/plugins/comments/ -->
+<div class='comments'>
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
+  <div class='fb-comments' data-href='http://www.grok-interactive.com/blog/githooks/' data-colorscheme='' data-width='500'></div>
+</div>
+
+
+
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col c30">
+
+        
+        
+        <div class="well">
+  <h4>Author Profile</h4>
+
+  <strong>Josh Freeman</strong>
+  <p></p>
+
+</div>
+
+        
+
+        <div class="well">
+  <h4>Categories</h4>
+  <ul class="nav nav-list">
+    
+    <li><a href="/blog/category/general/">General</a></li>
+    
+    <li><a href="/blog/category/software_development/">Software development</a></li>
+    
+    <li><a href="/blog/category/training/">Training</a></li>
+    
+    <li><a href="/blog/category/testing/">Testing</a></li>
+    
+    <li><a href="/blog/category/environments/">Environments</a></li>
+    
+    <li><a href="/blog/category/business_development/">Business development</a></li>
+    
+  </ul>
+</div>
+
+
+        
+<div class="well">
+    <h4>Authors</h4>
+    <ul class="nav nav-list">
+        
+        <li><a href="/blog/jason-straughan">Jason Straughan</a></li>
+        
+        <li><a href="/blog/jason-ellis">Jason Ellis</a></li>
+        
+        <li><a href="/blog/josh-freeman">Josh Freeman</a></li>
+        
+        <li><a href="/blog/chris-hardee">Chris Hardee</a></li>
+        
+  </ul>
+</div>
+
+
+
+        <div class="well">
+  <h4>Tags</h4>
+
+  <ul class="nav nav-list">
+    
+    <li><a href="/blog/tag/grok">Grok</a></li>
+    
+    <li><a href="/blog/tag/industry">Industry</a></li>
+    
+    <li><a href="/blog/tag/codeup">Codeup</a></li>
+    
+    <li><a href="/blog/tag/security">Security</a></li>
+    
+    <li><a href="/blog/tag/php">Php</a></li>
+    
+    <li><a href="/blog/tag/phpunit">Phpunit</a></li>
+    
+    <li><a href="/blog/tag/emacs">Emacs</a></li>
+    
+    <li><a href="/blog/tag/expression_engine">Expression engine</a></li>
+    
+    <li><a href="/blog/tag/javascript">Javascript</a></li>
+    
+    <li><a href="/blog/tag/dom">Dom</a></li>
+    
+    <li><a href="/blog/tag/jquery">Jquery</a></li>
+    
+    <li><a href="/blog/tag/git">Git</a></li>
+    
+    <li><a href="/blog/tag/githooks">Githooks</a></li>
+    
+    <li><a href="/blog/tag/source_control">Source control</a></li>
+    
+    <li><a href="/blog/tag/css">Css</a></li>
+    
+    <li><a href="/blog/tag/rails">Rails</a></li>
+    
+    <li><a href="/blog/tag/ubuntu">Ubuntu</a></li>
+    
+    <li><a href="/blog/tag/linux">Linux</a></li>
+    
+    <li><a href="/blog/tag/developers">Developers</a></li>
+    
+  </ul>
+</div>
+
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <div class="pull-left">
+        <p>&copy; 2013 Grok Interactive, LLC
+      </div>
+    </div>
+  </footer>
+
+  <script type='text/javascript' src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script type='text/javascript' src='/assets/js/jquery.easing.1.3.js'></script>
+  <script type='text/javascript' src='/assets/js/less-1.3.3.min.js'></script>
+  <script type='text/javascript' src="/assets/js/bootstrap.min.js"></script>
+  <script type='text/javascript' src="/assets/js/default.js"></script>
+  <script src="//static.getclicky.com/js" type="text/javascript"></script>
+  <script type="text/javascript">try{ clicky.init(100585693); }catch(e){}</script>
+  <noscript><p><img alt="Clicky" width="1" height="1" src="//in.getclicky.com/100585693ns.gif" /></p></noscript>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-43998305-2', 'grok-interactive.com');
+    ga('send', 'pageview');
+  </script>
+</body>
+</html>
