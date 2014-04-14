@@ -528,6 +528,7 @@ body {
               right: 65px;
               bottom: 54px;
               overflow: hidden;
+              border: 1px solid #e4e4e3;
               img {
                 position: absolute;
                 margin-top: -50%;
@@ -602,7 +603,7 @@ body {
         margin-bottom: 20px;
       }
       div.highlight {
-        margin: 10px 20px 10px 20px;
+        margin: 10px 20px;
         pre {
           white-space: pre-wrap;
         }
@@ -610,10 +611,14 @@ body {
       div.thumb {
         float: left;
         margin-right: 10px;
-        img {
+        height: 60px;
+        width: 60px;
+        & > img {
           padding: 1px;
           margin: 1px 0 0 3px;
           border: 1px solid #e4e4e3;
+          width: 60px;
+          height: 60px;
         }
       }
       div.date {
