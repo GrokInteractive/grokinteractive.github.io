@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"
+  xmlns:content="http://purl.org/rss/1.0/modules/content/"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd"
+  xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
+  <channel>
+    <title>Grok Interactive</title>
+    <link>http://www.grok-interactive.com</link>
+    <description>Grok Interactive's web developers create outstanding applications</description>
+    <pubDate>Thu, 01 May 2014 00:00:00 -0400</pubDate>
+    <item>
+      <title>Happy Developers are Good Developers</title>
+      <link>http://www.grok-interactive.com/blog/happy-developers-are-good-developers/</link>
+      <description>Any developer can relate to writing depressing code. Our industry is known for long hours and the resulting burnout that follows. Corporate America is full of managers that like to see code written, without caring if the code will ever launch. This grinds on the inner-nerd of every developer and they suffer.</description>
+      <pubDate>Thu, 01 May 2014 00:00:00 -0400</pubDate>
+      <guid>http://www.grok-interactive.com/blog/happy-developers-are-good-developers/</guid>
+      <dc:date>2014-05-01T00:00:00-04:00</dc:date>
+    </item>
+    <item>
+      <title>Your Presence Is Required</title>
+      <link>http://www.grok-interactive.com/blog/object-inheritance/</link>
+      <description>It's time to start thinking about how classes and objects actually relate to each other.</description>
+      <pubDate>Fri, 11 Apr 2014 00:00:00 -0400</pubDate>
+      <guid>http://www.grok-interactive.com/blog/object-inheritance/</guid>
+      <dc:date>2014-04-11T00:00:00-04:00</dc:date>
+    </item>
+    <item>
+      <title>Setting up Rails in Ubuntu</title>
+      <link>http://www.grok-interactive.com/blog/setting-up-rails-in-ubuntu/</link>
+      <description>How to get a good Rails environment going in the world's most popular free and open source desktop</description>
+      <pubDate>Tue, 08 Apr 2014 00:00:00 -0400</pubDate>
+      <guid>http://www.grok-interactive.com/blog/setting-up-rails-in-ubuntu/</guid>
+      <dc:date>2014-04-08T00:00:00-04:00</dc:date>
+    </item>
+    <item>
+      <title>CSS Specificity</title>
+      <link>http://www.grok-interactive.com/blog/css-specificity/</link>
+      <description>Style sheets, style tags, inline styles; if you could override a style and make it important, rest assured, it was.</description>
+      <pubDate>Sat, 05 Apr 2014 00:00:00 -0400</pubDate>
+      <guid>http://www.grok-interactive.com/blog/css-specificity/</guid>
+      <dc:date>2014-04-05T00:00:00-04:00</dc:date>
+    </item>
+    <item>
+      <title>Git Hooks for Checking Tabs vs Spaces</title>
+      <link>http://www.grok-interactive.com/blog/githooks/</link>
+      <description>While wars rage on about why to use spaces or tabs over the other, we are not here to talk about why we do not use tabs in a project. No, no, we are here to talk about *git hooks*.</description>
+      <pubDate>Wed, 02 Apr 2014 00:00:00 -0400</pubDate>
+      <guid>http://www.grok-interactive.com/blog/githooks/</guid>
+      <dc:date>2014-04-02T00:00:00-04:00</dc:date>
+    </item>
+    <item>
+      <title>Save Me Not</title>
+      <link>http://www.grok-interactive.com/blog/save-me-not/</link>
+      <description>Buttons just begged to be pushed. We design them that way. But what if they do not need to be pushed? A while back I hit a project requirement that a form for user data could not be submitted back to the server unless there had been a change. I did *way* more work (and made the browser do way more work) than necessary.</description>
+      <pubDate>Sun, 30 Mar 2014 00:00:00 -0400</pubDate>
+      <guid>http://www.grok-interactive.com/blog/save-me-not/</guid>
+      <dc:date>2014-03-30T00:00:00-04:00</dc:date>
+    </item>
+    <item>
+      <title>&quot;In Javascript everything is an object!&quot; Mmm, Wrong.</title>
+      <link>http://www.grok-interactive.com/blog/javascript-everything-is-an-object-wrong/</link>
+      <description>Most people will tell you that in javascript, everything is an object. That is not actually true, through the magic of auto-boxing javascript fools you into thinking it is an object. Quite a few of the things you use every day in javascript are actually primitives, not objects.</description>
+      <pubDate>Thu, 27 Mar 2014 00:00:00 -0400</pubDate>
+      <guid>http://www.grok-interactive.com/blog/javascript-everything-is-an-object-wrong/</guid>
+      <dc:date>2014-03-27T00:00:00-04:00</dc:date>
+    </item>
+    <item>
+      <title>Javascript dot notation versus bracket notation</title>
+      <link>http://www.grok-interactive.com/blog/javascript-dot-notation-vs-bracket-notation/</link>
+      <description>Javascript is one of those fun and unique languages that let you do things differently, just because. An example of this is the javascript object model. An object in javascript is simply a hashmap of key-value pairs where the key is always a string and the value can be anything.</description>
+      <pubDate>Tue, 25 Mar 2014 00:00:00 -0400</pubDate>
+      <guid>http://www.grok-interactive.com/blog/javascript-dot-notation-vs-bracket-notation/</guid>
+      <dc:date>2014-03-25T00:00:00-04:00</dc:date>
+    </item>
+    <item>
+      <title>Clean Templates with Stash</title>
+      <link>http://www.grok-interactive.com/blog/stash-ee-templates/</link>
+      <description>Using Stash in Expression Engine to create clean, readable templates</description>
+      <pubDate>Mon, 24 Mar 2014 00:00:00 -0400</pubDate>
+      <guid>http://www.grok-interactive.com/blog/stash-ee-templates/</guid>
+      <dc:date>2014-03-24T00:00:00-04:00</dc:date>
+    </item>
+    <item>
+      <title>Laravel &amp; Emacs - Part 1</title>
+      <link>http://www.grok-interactive.com/blog/laravel-emacs-part1/</link>
+      <description>Part 1 - Setting up The One True Editor to tackle Laravel development</description>
+      <pubDate>Sun, 23 Mar 2014 00:00:00 -0400</pubDate>
+      <guid>http://www.grok-interactive.com/blog/laravel-emacs-part1/</guid>
+      <dc:date>2014-03-23T00:00:00-04:00</dc:date>
+    </item>
+    <item>
+      <title>Setting Up a PHPUnit Testing Environment</title>
+      <link>http://www.grok-interactive.com/blog/setting-up-a-phpunit-testing-environment/</link>
+      <description>You should be testing. You know you should be testing. But you are not testing. Time to fix that.</description>
+      <pubDate>Fri, 21 Mar 2014 00:00:00 -0400</pubDate>
+      <guid>http://www.grok-interactive.com/blog/setting-up-a-phpunit-testing-environment/</guid>
+      <dc:date>2014-03-21T00:00:00-04:00</dc:date>
+    </item>
+    <item>
+      <title>Avoid obvious avenues of attack</title>
+      <link>http://www.grok-interactive.com/blog/avoid-avenues-of-attack/</link>
+      <description>This may seem like a no-brainer but when creating a new web application you should be conscious of and avoid obvious avenues of attack... I said it was a no-brainer.</description>
+      <pubDate>Wed, 05 Mar 2014 00:00:00 -0500</pubDate>
+      <guid>http://www.grok-interactive.com/blog/avoid-avenues-of-attack/</guid>
+      <dc:date>2014-03-05T00:00:00-05:00</dc:date>
+    </item>
+    <item>
+      <title>Grok Welcomes Joshua Freeman to the Team</title>
+      <link>http://www.grok-interactive.com/blog/introducing-josh-freeman/</link>
+      <description>We are growing the team again. This time, we are welcoming our newest Groker, Joshua Freeman, as a software engineer. He will be joining our team as a PHP and Ruby on Rails developer.</description>
+      <pubDate>Sat, 01 Mar 2014 00:00:00 -0500</pubDate>
+      <guid>http://www.grok-interactive.com/blog/introducing-josh-freeman/</guid>
+      <dc:date>2014-03-01T00:00:00-05:00</dc:date>
+    </item>
+    <item>
+      <title>Codeup for a Brighter Future</title>
+      <link>http://www.grok-interactive.com/blog/codeup-for-a-brighter-future/</link>
+      <description>Last fall Grok Interactive was needing to hire a developer and expand the team. We had read hundreds of resumes, most with little to no practical programming experience.  We quickly learned that many people wanted to be developers, but there were none to be found. The market was worse than we had realized.</description>
+      <pubDate>Tue, 04 Feb 2014 00:00:00 -0500</pubDate>
+      <guid>http://www.grok-interactive.com/blog/codeup-for-a-brighter-future/</guid>
+      <dc:date>2014-02-04T00:00:00-05:00</dc:date>
+    </item>
+    <item>
+      <title>State of the Industry Concerns</title>
+      <link>http://www.grok-interactive.com/blog/state-of-the-industry/</link>
+      <description>When your software goes from 'magic' to just another tool in your toolbox that you fully understand, then you can call yourself an expert. Until then, you have some learning to do.</description>
+      <pubDate>Wed, 15 Jan 2014 00:00:00 -0500</pubDate>
+      <guid>http://www.grok-interactive.com/blog/state-of-the-industry/</guid>
+      <dc:date>2014-01-15T00:00:00-05:00</dc:date>
+    </item>
+    <item>
+      <title>Grok Welcomes Chris Hardee to the Team</title>
+      <link>http://www.grok-interactive.com/blog/introducting-chris-hardee/</link>
+      <description>Chris is a cofounder and CEO of 10BitWorks.com, also known as the San Antonio Hackerspace. Helping grow the tech and hacker communities in San Antonio is an important mission, and we are very excited to have Chris on our team.</description>
+      <pubDate>Mon, 11 Nov 2013 00:00:00 -0500</pubDate>
+      <guid>http://www.grok-interactive.com/blog/introducting-chris-hardee/</guid>
+      <dc:date>2013-11-11T00:00:00-05:00</dc:date>
+    </item>
+    <item>
+      <title>Groking the Web</title>
+      <link>http://www.grok-interactive.com/blog/groking-the-web/</link>
+      <description>Today Grok Interactive, LLC officially opens our doors. For months we have been laying the foundation; creating the LLC, lawyers writing contracts, designers making logos, blogs being built. Today. Today it all goes live.</description>
+      <pubDate>Mon, 01 Apr 2013 00:00:00 -0400</pubDate>
+      <guid>http://www.grok-interactive.com/blog/groking-the-web/</guid>
+      <dc:date>2013-04-01T00:00:00-04:00</dc:date>
+    </item>
+    <dc:date>2014-05-01T00:00:00-04:00</dc:date>
+  </channel>
+</rss>

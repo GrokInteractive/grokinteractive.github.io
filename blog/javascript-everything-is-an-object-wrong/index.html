@@ -113,20 +113,25 @@
 <p>Each time you attempt to use a primitive, javascript silently creates a wrapper object of that type when code attempts to access or use any property of that primitive. The terminology for this is called &quot;auto-boxing&quot; or just &quot;boxing&quot;.</p>
 
 <p>So for example if I create a variable and assign it a string value, the type of that variable is &quot;string&quot;, not &quot;object&quot;;</p>
+
 <div class="highlight"><pre><code class="text language-text" data-lang="text">// Create a primitive variable with &quot;foobar&quot; as the value.
 var foo = &quot;foobar&quot;;
 
 console.log(typeof foo);
 &gt; &quot;string&quot;
 </code></pre></div>
+
 <p>If we then perform method calls on that &quot;string&quot; primitive, it will first convert the variable into an auto-boxed string wrapper object and call the requested method. The temporary object is only available to that property access and does not replace primitive. As such, once the method has return it&#39;s results it will dispose of the String wrapper object entirely and return the primitive that was generated.</p>
+
 <div class="highlight"><pre><code class="text language-text" data-lang="text">// Create a primitive variable with &quot;bar&quot; as the value, from the foo primitive.
 var bar = foo.substring(3,6);
 
 console.log(typeof bar);
 &gt; &quot;string&quot;
 </code></pre></div>
+
 <p>Why is this important?  A primary consequence of this is that it looks like you can assign properties to a primitive like you can an object or function, and in fact it will allow you to do it but it does not actually do anything and you can never retrieve those properties.</p>
+
 <div class="highlight"><pre><code class="text language-text" data-lang="text">// Create a primitive variable with &quot;foo&quot; as the value.
 var foo = &quot;foo&quot;;
 // Now assign a property of foo with the value &quot;bar&quot; -- Note it allows it.
@@ -135,9 +140,11 @@ foo.bar = &quot;bar&quot;;
 console.log(foo.bar);
 &gt; undefined
 </code></pre></div>
+
 <p>This happens because when you call a method on the foo primitive, it is first converted into a String object wrapper which allows you to assign properties - thus the lack of errors. The return results of setting <code>foo.bar</code> is returned immediately as &quot;bar&quot; for use by the assignment operator and then the String object wrapper is destroyed which destroys the <code>.bar</code> property since the <code>typeof</code> foo is back to being a primitive. Strings, Numbers and Booleans all behave this way.</p>
 
 <p>Functions on the other hand don&#39;t behave this way because they inherit from <code>Object.prototype</code> which makes them first order Objects as far as javascript is concerned. This means that functions can do anything an object can do, to include having randomly assigned properties;</p>
+
 <div class="highlight"><pre><code class="text language-text" data-lang="text">// Create a function
 var foo = function() {};
 foo.bar = &quot;bar&quot;;
@@ -145,6 +152,7 @@ foo.bar = &quot;bar&quot;;
 console.log(foo.bar);
 &gt; &quot;bar&quot;
 </code></pre></div>
+
 <p>This simple fact is the basis of all of javascript&#39;s power and how most people use it and abuse it without even knowing whats going on behind the scenes. Personally I believe things like this is what makes javascript an extremely misunderstood and powerful language.</p>
 
 
@@ -215,13 +223,13 @@ console.log(foo.bar);
     <h4>Authors</h4>
     <ul class="nav nav-list">
         
-        <li><a href="/blog/jason-straughan">Jason Straughan</a></li>
+        <li><a href="/blog//jason-straughan">Jason Straughan</a></li>
         
-        <li><a href="/blog/jason-ellis">Jason Ellis</a></li>
+        <li><a href="/blog//jason-ellis">Jason Ellis</a></li>
         
-        <li><a href="/blog/josh-freeman">Josh Freeman</a></li>
+        <li><a href="/blog//josh-freeman">Josh Freeman</a></li>
         
-        <li><a href="/blog/chris-hardee">Chris Hardee</a></li>
+        <li><a href="/blog//chris-hardee">Chris Hardee</a></li>
         
   </ul>
 </div>

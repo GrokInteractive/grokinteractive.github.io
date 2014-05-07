@@ -115,20 +115,26 @@
 <p>Because you are talking about a key-value pair hashmap, you can reference those values a number of different ways.</p>
 
 <p>Firstly, lets create our object. There are two primary ways to create an object in javascript and there is technically no difference in that they do exactly the same thing so it is easiest to just think of <code>{}</code> as a shortcut for <code>new Object()</code>.</p>
+
 <div class="highlight"><pre><code class="text language-text" data-lang="text">var obj = {};
 var obj = new Object();
 </code></pre></div>
+
 <p>The primary difference between those two is that the literal notation <code>{}</code> takes less space, is more recognizable as to what is happening, cannot be overridden by other code, and more importantly, allows you to assign values to keys at time of object initialization. Example; here we have an initialized object with two properties <code>foo</code> and <code>baz</code> already set.</p>
+
 <div class="highlight"><pre><code class="text language-text" data-lang="text">var obj = { &#39;foo&#39; : &#39;bar&#39;, &#39;baz&#39; : false }
 </code></pre></div>
+
 <p>But how do we access the methods and properties of an object correctly?</p>
 
 <p>There are two ways of accessing object members, &quot;dot notation&quot; and &quot;bracket notation&quot;.</p>
+
 <div class="highlight"><pre><code class="text language-text" data-lang="text">// Dot notation
 obj.foo
 // Bracket notation
 obj[&#39;foo&#39;]
 </code></pre></div>
+
 <p>There are key differences between the two methods, and right times to use both.</p>
 
 <h2>Dot Notation</h2>
@@ -136,6 +142,7 @@ obj[&#39;foo&#39;]
 <p>Dot notation only works with property names which are valid identifier names. An identifier must start with $, _, or any character in the Unicode categories &quot;Uppercase letter (Lu)&quot;, &quot;Lowercase letter (Ll)&quot;, &quot;Titlecase letter (Lt)&quot;, &quot;Modifier letter (Lm)&quot;, &quot;Other letter (Lo)&quot;, or &quot;Letter number (Nl)&quot;. (The rest of the string can contain the same characters, plus any U+200C zero width non-joiner characters, U+200D zero width joiner characters, and characters in the Unicode categories &quot;Non-spacing mark (Mn)&quot;, &quot;Spacing combining mark (Mc)&quot;, &quot;Decimal digit number (Nd)&quot;, or &quot;Connector punctuation (Pc)&quot;.)</p>
 
 <p>That means you have a lot of options for valid key names, but also a lot that are not valid. You have a pretty high potential for breakage if you are new to the language and are unfamiliar with what is allowed and not allowed in identifiers.</p>
+
 <div class="highlight"><pre><code class="text language-text" data-lang="text">obj.foo;      // valid
 obj.for;      // valid even though for is a reserved word ***
 obj.4;        // invalid - identifiers cannot start with numbers
@@ -144,9 +151,11 @@ obj.foo-bar;  // invalid - &#39;-&#39; is not a valid character for identifiers
 
 *** Older versions of IE will error even though its legal
 </code></pre></div>
+
 <h2>Bracket Notation</h2>
 
 <p>Bracket notation expects an expression which evaluates to a string (or can be coerced into a string), so you can use <em>any character sequence as a property name</em>.</p>
+
 <div class="highlight"><pre><code class="text language-text" data-lang="text">obj[&#39;foo&#39;];       // valid
 obj[&#39;for&#39;];       // valid - reserved words, are just words.
 obj[4];           // valid - only a number, not an issue!
@@ -154,6 +163,7 @@ obj[&#39;4foo&#39;];      // valid - starting with a number, no problem
 obj[&#39;foo-bar&#39;];   // valid - &#39;-&#39; is no longer an issue
 obj[foo];         // valid - will evaluate out foo and use it is value as the property name - cannot do this with dotnotation at all.
 </code></pre></div>
+
 <p>Note; this is also why you must use bracket notation to access array elements;  Identifiers cannot start with (or consist only of) numbers.</p>
 
 <h4>Which is better and why?</h4>
@@ -161,10 +171,12 @@ obj[foo];         // valid - will evaluate out foo and use it is value as the pr
 <p>That really depends on personal preference and coding styles. Most people use dot notation exclusively because it is much easier to read and avoid any of the potential issues with identifier names simply because they know the rules.</p>
 
 <p>For reading and writing code, Dot Notation is clearly faster and easier. But when it comes to code execution, Bracket notation is the faster performer. And double quotes are faster than single;</p>
+
 <div class="highlight"><pre><code class="text language-text" data-lang="text">var obj.foo == 1;     // fast - about 2% slower than bracket notation
 var obj[&#39;foo&#39;] == 1;  // faster - slightly slower than double quotes
 var obj[&quot;foo&quot;] == 1;  // fastest - speed!
 </code></pre></div>
+
 <p>The speed differences are minor at best but it is something to take into consideration if you need to eek out every possible bit of speed.</p>
 
 <p>In the end I think the right way to go is to always use dot notation where possible, simply because it makes the code easier to read and maintain, and use bracket notation where you have to break the dot notation rules.</p>
@@ -243,13 +255,13 @@ var obj[&quot;foo&quot;] == 1;  // fastest - speed!
     <h4>Authors</h4>
     <ul class="nav nav-list">
         
-        <li><a href="/blog/jason-straughan">Jason Straughan</a></li>
+        <li><a href="/blog//jason-straughan">Jason Straughan</a></li>
         
-        <li><a href="/blog/jason-ellis">Jason Ellis</a></li>
+        <li><a href="/blog//jason-ellis">Jason Ellis</a></li>
         
-        <li><a href="/blog/josh-freeman">Josh Freeman</a></li>
+        <li><a href="/blog//josh-freeman">Josh Freeman</a></li>
         
-        <li><a href="/blog/chris-hardee">Chris Hardee</a></li>
+        <li><a href="/blog//chris-hardee">Chris Hardee</a></li>
         
   </ul>
 </div>

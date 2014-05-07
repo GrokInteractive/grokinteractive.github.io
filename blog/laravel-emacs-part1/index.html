@@ -123,32 +123,44 @@
 <h2>Part 1 - Configuring Emacs to use web-mode for laravel</h2>
 
 <p>If you are using Emacs 24 or later you can grab it off the melpa repository. To enable this or any other of the various excellent unofficial <em>elisp</em> repositories you simple need to add this to your configuration:</p>
+
 <div class="highlight"><pre><code class="text language-text" data-lang="text">(setq package-archives &#39;((&quot;gnu&quot; . &quot;http://elpa.gnu.org/packages/&quot;)
                        (&quot;melpa&quot; . &quot;http://melpa.milkbox.net/packages/&quot;)))
 </code></pre></div>
+
 <p>Adding this to your configuration will slow things down a bit when you got to list available packages:</p>
+
 <div class="highlight"><pre><code class="text language-text" data-lang="text">M-x package-list-packages
 </code></pre></div>
+
 <p>You&#39;ll be rewarded though with tons of available packages, search for web-mode:</p>
+
 <div class="highlight"><pre><code class="text language-text" data-lang="text">C-s web-mode
 </code></pre></div>
+
 <p>With your cursor on it, hit <code>i</code> to mark it for installation then <code>x</code> to execute the actions (you can browse around for other kewl packages too and mark them for installation, hit <code>x</code> when you&#39;re done). Emacs will ask you if you want to install these packages, type yes and hit enter. It&#39;ll download and compile the elisp. Ok you&#39;ve got web-mode!</p>
 
 <p>Let&#39;s set it up, open up your config file or switch to the buffer if you already have it open. First we need to load web-mode:</p>
+
 <div class="highlight"><pre><code class="text language-text" data-lang="text">(require &#39;web-mode)
 </code></pre></div>
+
 <p>Then we set it to switch to web-mode whenever we open up a .php (.phtml) file or a .blade file:</p>
+
 <div class="highlight"><pre><code class="text language-text" data-lang="text">(add-to-list &#39;auto-mode-alist &#39;(&quot;\\.php\\&#39;&quot; . web-mode))
 (setq web-mode-engines-alist
   &#39;((&quot;php&quot;    . &quot;\\.phtml\\&#39;&quot;)
     (&quot;blade&quot;  . &quot;\\.blade\\.&quot;))
 )
 </code></pre></div>
+
 <p>This is also a good place to set any indentation levels or tabs-to-spaces settings:</p>
+
 <div class="highlight"><pre><code class="text language-text" data-lang="text">(setq-default indent-tabs-mode nil)
 (setq web-mode-code-indent-offset 4)
 (setq web-mode-indent-style 4)
 </code></pre></div>
+
 <p>Reload your buffer if needed <code>M-x eval-buffer</code> then you&#39;re good to go.</p>
 
 <p>That is it for part one, you should be ready to tackle any <code>.blade</code> or <code>.php</code> files. Next time we&#39;ll go over efficiently coding and formatting in web-mode.</p>
@@ -229,13 +241,13 @@
     <h4>Authors</h4>
     <ul class="nav nav-list">
         
-        <li><a href="/blog/jason-straughan">Jason Straughan</a></li>
+        <li><a href="/blog//jason-straughan">Jason Straughan</a></li>
         
-        <li><a href="/blog/jason-ellis">Jason Ellis</a></li>
+        <li><a href="/blog//jason-ellis">Jason Ellis</a></li>
         
-        <li><a href="/blog/josh-freeman">Josh Freeman</a></li>
+        <li><a href="/blog//josh-freeman">Josh Freeman</a></li>
         
-        <li><a href="/blog/chris-hardee">Chris Hardee</a></li>
+        <li><a href="/blog//chris-hardee">Chris Hardee</a></li>
         
   </ul>
 </div>

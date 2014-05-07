@@ -117,6 +117,7 @@
 <h2>Installing Composer</h2>
 
 <p>To get started, we are going to create a project and treat PHPUnit as a project dependency. I have found that the easiest way to manage your project dependencies is through <a href="https://getcomposer.org/" title="Dependency Manager for PHP">Composer</a>. You can install this one of two ways, globally on your system, or locally within your project. Since we&#39;re new and just want to play with composer, we will opt for the local method. At the very least, you will need PHP 5.3.2 or above to use composer.</p>
+
 <div class="highlight"><pre><code class="bash language-bash" data-lang="bash"><span class="c"># Create your phpunit-example</span>
 ~<span class="nv">$ </span>mkdir -p phpunit-example/src/PHPUnitExample
 ~<span class="nv">$ </span><span class="nb">cd </span>phpunit-example
@@ -127,11 +128,13 @@
 <span class="c"># Now we initialize this project as a composer project, this will create your composer.json</span>
 ~/phpunit-example<span class="nv">$ </span>php composer.phar init
 </code></pre></div>
+
 <h2>Installing PHPUnit</h2>
 
 <p>Now that we have the project initially setup, we are going to create our <code>composer.json</code>. This file is the manifest for your project, describing itself and the dependencies it requires. Running <code>php composer.phar init</code> will start an interactive shell to generate our composer.json.</p>
 
 <p>The Package name is broken into two parts, the vendor and the project name. Use your name or your organization name as the vendor. Here, I will be using my GitHub name.</p>
+
 <div class="highlight"><pre><code class="bash language-bash" data-lang="bash">~/phpunit-example<span class="nv">$ </span>php composer.phar init
 This <span class="nb">command </span>will guide you through creating your composer.json config.
 
@@ -150,7 +153,9 @@ Would you like to define your dev dependencies <span class="o">(</span>require-d
 
 Do you confirm generation <span class="o">[</span>yes<span class="o">]</span>?
 </code></pre></div>
+
 <p>We are not done yet, instead of auto-generating the dependencies, let us learn how to manually add dependencies. Open your <code>composer.json</code> and you should see something similar to below:</p>
+
 <div class="highlight"><pre><code class="json language-json" data-lang="json"><span class="p">{</span>
     <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;jdfreeman/phpunit-example&quot;</span><span class="p">,</span>
     <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;This project demonstrates how to quickly setup phpunit&quot;</span><span class="p">,</span>
@@ -167,7 +172,9 @@ Do you confirm generation <span class="o">[</span>yes<span class="o">]</span>?
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
+
 <p>Within your require block, we&#39;re going to ensure you have a sufficiently up-to-date version of PHP.</p>
+
 <div class="highlight"><pre><code class="json language-json" data-lang="json"><span class="p">{</span>
     <span class="err">...</span>
     <span class="nt">&quot;require&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -176,7 +183,9 @@ Do you confirm generation <span class="o">[</span>yes<span class="o">]</span>?
     <span class="err">...</span>
 <span class="p">}</span>
 </code></pre></div>
+
 <p>Now, we are going to add PHPUnit to the list of dependencies. Under the <code>require</code> block, append the following:</p>
+
 <div class="highlight"><pre><code class="json language-json" data-lang="json"><span class="p">{</span>
     <span class="err">...</span>
     <span class="nt">&quot;require-dev&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -184,6 +193,7 @@ Do you confirm generation <span class="o">[</span>yes<span class="o">]</span>?
     <span class="p">},</span>
 <span class="p">}</span>
 </code></pre></div>
+
 <p>Finally, we are going to permit the autoloading of assets through namespacing.
 <code>
 {
@@ -200,6 +210,7 @@ Save your <code>composer.json</code> and ensure it validates through <code>php c
 <blockquote>
 <p>composer.json</p>
 </blockquote>
+
 <div class="highlight"><pre><code class="json language-json" data-lang="json"><span class="p">{</span>
     <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;jdfreeman/phpunit-example&quot;</span><span class="p">,</span>
     <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;This project demonstrates how to quickly setup phpunit&quot;</span><span class="p">,</span>
@@ -224,6 +235,7 @@ Save your <code>composer.json</code> and ensure it validates through <code>php c
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
+
 <p>Now it&#39;s time to install PHPUnit. Since it&#39;s already defined in our composer.json, we simple need to run <code>php composer.phar install</code></p>
 
 <p>At this point, a new directory <strong>vendor/</strong> should have been created and all the packages required to run PHPUnit should have been installed. There should also be a <code>composer.lock</code> file which describes the current state of all your dependencies.</p>
@@ -231,14 +243,17 @@ Save your <code>composer.json</code> and ensure it validates through <code>php c
 <h2>Configuring PHPUnit</h2>
 
 <p>Now that we have PHPUnit installed locally, we will create the test directory and configuration file PHPUnit uses to run the tests.</p>
+
 <div class="highlight"><pre><code class="bash language-bash" data-lang="bash">~/phpunit-example<span class="nv">$ </span>mkdir tests
 ~/phpunit-example<span class="nv">$ </span>touch phpunit.xml
 </code></pre></div>
+
 <p>Open your <strong>phpunit.xml</strong> and write the following:</p>
 
 <blockquote>
 <p>phpunit.xml</p>
 </blockquote>
+
 <div class="highlight"><pre><code class="xml language-xml" data-lang="xml"><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
 <span class="nt">&lt;phpunit</span> <span class="na">backupGlobals=</span><span class="s">&quot;false&quot;</span>
          <span class="na">backupStaticAttributes=</span><span class="s">&quot;false&quot;</span>
@@ -258,6 +273,7 @@ Save your <code>composer.json</code> and ensure it validates through <code>php c
     <span class="nt">&lt;/testsuites&gt;</span>
 <span class="nt">&lt;/phpunit&gt;</span>
 </code></pre></div>
+
 <p>With our <strong>phpunit.xml</strong> file updated, we are ready to start writing tests!</p>
 
 <h2>Testing Time</h2>
@@ -265,14 +281,17 @@ Save your <code>composer.json</code> and ensure it validates through <code>php c
 <p>Now that we can write tests, we are going to build a simple calculator through TDD (Test-Driven Development). Using the TDD paradigm, we will write our test first, ensure it fails, then write the necessary code to make it pass, and then refactor as needed.</p>
 
 <p>We will begin by creating two files: the class to be tested and the class holding the tests.</p>
+
 <div class="highlight"><pre><code class="bash language-bash" data-lang="bash">~/phpunit-example<span class="nv">$ </span>touch src/PHPUnitExample/Calculator.php
 ~/phpunit-example<span class="nv">$ </span>touch tests/PHPUnitExample/CalculatorTest.php
 </code></pre></div>
+
 <p>In your <strong>tests/PHPUnitExample/CalculatorTest.php</strong>, write the following:</p>
 
 <blockquote>
 <p>tests/PHPUnitExample/CalculatorTest.php</p>
 </blockquote>
+
 <div class="highlight"><pre><code class="php language-php" data-lang="php"><span class="cp">&lt;?php</span>
 
 <span class="k">class</span> <span class="nc">CalculatorTest</span> <span class="k">extends</span> <span class="nx">PHPUnit_Framework_TestCase</span>
@@ -287,11 +306,13 @@ Save your <code>composer.json</code> and ensure it validates through <code>php c
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
+
 <p>In your <code>src/PHPUnitExample/Calculator.php</code>, write the following:</p>
 
 <blockquote>
 <p>src/PHPUnitExample/Calculator.php</p>
 </blockquote>
+
 <div class="highlight"><pre><code class="php language-php" data-lang="php"><span class="cp">&lt;?php</span>
 
 <span class="k">namespace</span> <span class="nx">PHPUnitExample</span><span class="p">;</span>
@@ -303,11 +324,15 @@ Save your <code>composer.json</code> and ensure it validates through <code>php c
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
+
 <p>Now that you have the minimum files needed to run test, we need to update the autoloader that will allow PHPUnit to require the needed files automatically.</p>
+
 <div class="highlight"><pre><code class="bash language-bash" data-lang="bash"><span class="c"># updates the vendor/autoload.php, which is required in the phpunit.xml</span>
 ~/phpunit-example<span class="nv">$ </span>php composer.phar dumpautoload
 </code></pre></div>
+
 <p>It is time to actually run our first test! This test should fail, since we have defined the method, but not built any functionality.</p>
+
 <div class="highlight"><pre><code class="bash language-bash" data-lang="bash">~/phpunit-example<span class="nv">$ </span>php vendor/bin/phpunit
 PHPUnit 4.0.12 by Sebastian Bergmann.
 
@@ -327,13 +352,17 @@ Failed asserting that null matches expected 7.
 FAILURES!
 Tests: 1, Assertions: 1, Failures: 1.
 </code></pre></div>
+
 <p>As expected, our test failed; now it is time to actually make this test pass. Return to your Calculator class and write the following:</p>
+
 <div class="highlight"><pre><code class="php language-php" data-lang="php"><span class="x">public function add($a, $b)</span>
 <span class="x">{</span>
 <span class="x">    return $a + $b;</span>
 <span class="x">}</span>
 </code></pre></div>
+
 <p>Return to your terminal and run the tests again.</p>
+
 <div class="highlight"><pre><code class="text language-text" data-lang="text">~/phpunit-example$ php vendor/bin/phpunit
 PHPUnit 4.0.12 by Sebastian Bergmann.
 
@@ -345,6 +374,7 @@ Time: 579 ms, Memory: 3.25Mb
 
 OK (1 test, 1 assertion)
 </code></pre></div>
+
 <p>Voila! Now we have our testing environment set up and our first passing test! Now it is time for you start reading <a href="http://phpunit.de">PHPUnit Documentation</a> and learn all that PHPUnit can bring to the table.</p>
 
 <p>If you would like to peruse source files I used to create this tutorial, check out my <a href="https://github.com/jdfreeman/phpunit-example" title="jdfreeman/phpunit-example">repository</a> on Github.</p>
@@ -416,13 +446,13 @@ OK (1 test, 1 assertion)
     <h4>Authors</h4>
     <ul class="nav nav-list">
         
-        <li><a href="/blog/jason-straughan">Jason Straughan</a></li>
+        <li><a href="/blog//jason-straughan">Jason Straughan</a></li>
         
-        <li><a href="/blog/jason-ellis">Jason Ellis</a></li>
+        <li><a href="/blog//jason-ellis">Jason Ellis</a></li>
         
-        <li><a href="/blog/josh-freeman">Josh Freeman</a></li>
+        <li><a href="/blog//josh-freeman">Josh Freeman</a></li>
         
-        <li><a href="/blog/chris-hardee">Chris Hardee</a></li>
+        <li><a href="/blog//chris-hardee">Chris Hardee</a></li>
         
   </ul>
 </div>

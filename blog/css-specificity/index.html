@@ -107,17 +107,20 @@
               <p>About a year ago, I had a front-end project that was a mess, particularly the CSS. Selectors were often 6 or more selectors long and had <strong>!important</strong> appended to properties over the code base&mdash;style sheets, style tags, inline styles; if you could override a style and make it important, rest assured, it was.</p>
 
 <p>It was pretty clear that the previous developer either did not understand CSS very well or could not care less (probably a little of both).</p>
+
 <div class="highlight"><pre><code class="css language-css" data-lang="css"><span class="o">//</span> <span class="nt">Do</span> <span class="nt">not</span> <span class="nt">do</span> <span class="nt">this</span><span class="o">.</span> <span class="nt">Do</span> <span class="nt">not</span> <span class="nt">ever</span> <span class="nt">do</span> <span class="nt">this</span><span class="o">.</span> <span class="o">(</span><span class="nt">Unless</span> <span class="nt">you</span> <span class="nt">have</span> <span class="nt">to</span> <span class="nt">do</span> <span class="nt">this</span><span class="o">.)</span>
 
 <span class="nt">body</span><span class="nc">.ie</span>  <span class="nf">#mainheader</span> <span class="nt">nav</span> <span class="nt">ul</span><span class="nc">.nav</span> <span class="nt">li</span><span class="nc">.nav-link.active</span> <span class="nt">a</span> <span class="o">*</span> <span class="p">{</span>
     <span class="k">color</span><span class="o">:</span> <span class="nb">black</span> <span class="cp">!important</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
+
 <p>I had another challenge: I could only change the style sheets; I was prohibitied from touching the markup or the JavaScript that gave elements styling directly. This presented a huge problem, especially for the important inline styles and it all boiled down to CSS specificity as both the problem and solution.</p>
 
 <h2>What is Specificity?</h2>
 
 <p>Say we have a style sheet defines a style for an element, a style tag that has a conflicting property value for the same element, and an inline style that also has a conflicting property value for the same element.</p>
+
 <div class="highlight"><pre><code class="css language-css" data-lang="css"><span class="o">&lt;!</span><span class="nt">--</span> <span class="nt">styles</span><span class="nc">.css</span> <span class="nt">--</span><span class="o">&gt;</span>
 <span class="nt">p</span> <span class="p">{</span>
     <span class="k">color</span><span class="o">:</span> <span class="nb">black</span><span class="p">;</span>
@@ -131,6 +134,7 @@
 
 <span class="nt">&lt;p</span> <span class="na">style=</span><span class="s">&quot;color:red;&quot;</span><span class="nt">&gt;</span>Header<span class="nt">&lt;/p&gt;</span>
 </code></pre></div>
+
 <p>We&#39;re telling the browser three different things, so which one wins? The one with the highest <em>specificity</em>. Specificity is applied at the property level, so if multiple style sheets all declare styles for different properties on the same element, all the property declarations will be applied.</p>
 
 <h2>How to Calculate Specificity</h2>
@@ -296,6 +300,7 @@
 <h2>A Quick Word on !important</h2>
 
 <p>Now is a good time to discuss what is really <strong>!important</strong>. Declaring a property <strong>!important</strong> is an quick and easy way to override a selector you cannot modify. Be careful with this approach, however; once you decalare a selector&#39;s property as <strong>!important</strong>, the only way to then override it is to again declare that property as <strong>!important</strong> with a selector that has higher specificity.</p>
+
 <div class="highlight"><pre><code class="css language-css" data-lang="css"><span class="nt">p</span> <span class="p">{</span>
     <span class="k">color</span><span class="o">:</span> <span class="nb">black</span><span class="p">;</span>
 <span class="p">}</span>
@@ -312,6 +317,7 @@
     <span class="k">color</span><span class="o">:</span> <span class="nb">green</span> <span class="cp">!important</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
+
 <p>Try to avoid getting into the selector rat race in this way. It hurts your browser&#39;s performance in several ways and becomes much more difficult to maintain.</p>
 
 <p>This brings me to a very important point regarding CSS:</p>
@@ -393,13 +399,13 @@
     <h4>Authors</h4>
     <ul class="nav nav-list">
         
-        <li><a href="/blog/jason-straughan">Jason Straughan</a></li>
+        <li><a href="/blog//jason-straughan">Jason Straughan</a></li>
         
-        <li><a href="/blog/jason-ellis">Jason Ellis</a></li>
+        <li><a href="/blog//jason-ellis">Jason Ellis</a></li>
         
-        <li><a href="/blog/josh-freeman">Josh Freeman</a></li>
+        <li><a href="/blog//josh-freeman">Josh Freeman</a></li>
         
-        <li><a href="/blog/chris-hardee">Chris Hardee</a></li>
+        <li><a href="/blog//chris-hardee">Chris Hardee</a></li>
         
   </ul>
 </div>

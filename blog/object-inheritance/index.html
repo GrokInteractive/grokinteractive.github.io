@@ -107,6 +107,7 @@
               <p>Earlier this week, I ran into an into a self-induced problem.  I was attempting to populate a database with lots of random, but grammatically correct data. In Laravel&#39;s parlance, I was <em>seeding</em> the database.  The problem was that I could seed my database by running individual seeders, but if I ran them all at once, I had lots of missing data.</p>
 
 <p>My attempt was simple: store lists of words by type (nouns, adjectives, first names, etc.) in their own files as an array and return that array when included. I created a base class that on construction requires a list once and sets it to a static property that is accessible from any child classes.</p>
+
 <div class="highlight"><pre><code class="php language-php" data-lang="php"><span class="cp">&lt;?php</span>
 
 <span class="sd">/**</span>
@@ -169,7 +170,9 @@
 <span class="x">$foo-&gt;getRandomFrom(&#39;nouns&#39;);</span>
 <span class="x">$bar-&gt;getRandomFrom(&#39;nouns&#39;); // Doesn&#39;t work</span>
 </code></pre></div>
+
 <p>The first piece in this puzzle is to understand file includes and the different ways to include a file. There are four ways to include a file: <strong>include</strong>, <strong>include_once</strong>, <strong>require</strong>, and <strong>require_once</strong>. The function names are pretty self-explanitory, but a brief explanation follows.</p>
+
 <div class="highlight"><pre><code class="php language-php" data-lang="php"><span class="cp">&lt;?php</span>
 
 <span class="sd">/**</span>
@@ -196,6 +199,7 @@
 <span class="sd"> */</span>
 <span class="k">require_once</span> <span class="s2">&quot;somefile.php&quot;</span><span class="p">;</span>
 </code></pre></div>
+
 <p>Typically, when we want to include a file, it is because we need it for the rest of the script to function. Since it is required for the script to work, we naturally rely upon the <em>require</em> family of file includes. If we include a file containing class or function definitions, PHP fails if we attempt to define a class or function with the same name twice, <em>even if it is the same classes from the same file</em>. This leads us to using <code>require_once</code> in most cases.</p>
 
 <p>Since we&#39;re defining our BaseSeeder&#39; static properties with arrays from an external file, <code>require_once</code> seemed like a reasonable choice&mdash;afterall, the word lists are only required by our <code>BaseSeeder</code> and all other classes extend from that one single class.</p>
@@ -207,6 +211,7 @@
 <p>When learning object-oreinted principles in PHP, it&#39;s sufficient in most cases to treat multiple child classes that extend a common parent class as coming from the same object during instatiation (that is, when the class becomes and object (<code>$foo = new FooSeeder</code>), in reality, that is not what is happening at all. While we use the words &#39;parent&#39;, &#39;child&#39;, and &#39;inheritance&#39; to help clarify our understanding of how objects can relate to one another, it would be more appropriate to treat classes as object blueprints that are used to build an object on instantiation. If we keep the concept of blueprinting in mind when you hear a words like &#39;parent&#39; or &#39;inherit&#39;, then you will have a better understanding of what is actually happening when that class becomes an object.</p>
 
 <p>Let&#39;s take our previous example and look at the final result when classes <code>FooSeeder</code> and <code>BarSeeder</code> extends <code>BaseSeeder</code>.</p>
+
 <div class="highlight"><pre><code class="php language-php" data-lang="php"><span class="cp">&lt;?php</span>
 
 <span class="sd">/**</span>
@@ -269,6 +274,7 @@
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
+
 <p>Do you see the problem now? On object instantiation, the <code>__construct</code> method is called and <code>nouns-list.php</code> is required once by the script. This is fine if we only instantiate
 either object once. If we instantiate either object again, the <code>__construct</code> method is called <strong>again</strong>! We already required <code>nouns-list.php</code>, and because we&#39;re including the list through <code>require_once</code>, we cannot include the file again. The script will not fail, but neither will the file be included on subsequent instantiations.</p>
 
@@ -341,13 +347,13 @@ either object once. If we instantiate either object again, the <code>__construct
     <h4>Authors</h4>
     <ul class="nav nav-list">
         
-        <li><a href="/blog/jason-straughan">Jason Straughan</a></li>
+        <li><a href="/blog//jason-straughan">Jason Straughan</a></li>
         
-        <li><a href="/blog/jason-ellis">Jason Ellis</a></li>
+        <li><a href="/blog//jason-ellis">Jason Ellis</a></li>
         
-        <li><a href="/blog/josh-freeman">Josh Freeman</a></li>
+        <li><a href="/blog//josh-freeman">Josh Freeman</a></li>
         
-        <li><a href="/blog/chris-hardee">Chris Hardee</a></li>
+        <li><a href="/blog//chris-hardee">Chris Hardee</a></li>
         
   </ul>
 </div>

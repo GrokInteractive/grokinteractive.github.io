@@ -125,8 +125,10 @@
 </ul>
 
 <p>It&#39;s time to figure out what&#39;s going on.</p>
+
 <div class="highlight"><pre><code class="bash language-bash" data-lang="bash">~/path/to/project<span class="nv">$ </span>grep -r -P <span class="s1">&#39;\t&#39;</span> .
 </code></pre></div>
+
 <p>Uh, oh...</p>
 
 <p><img src="/images/2014/04/tabs-tabs-everywhere.jpg" alt="Woody and Buzz Meme. Top-text: &quot;TABS&quot;. Bottom-text: &quot;TABS EVERYWHERE&quot;." title="My project runneth over with tabs"></p>
@@ -138,12 +140,16 @@
 <p>In the lifecycle of a project controlled through Git, there are actions a user takes to manage their code, mostly adding, committing, and pushing to another repository. Git Hooks are a kind of event listener for these actions. Each hook is an executable script that fires off before, during, or after certain git events. For pre-action hooks, if the script exits with a non-zero status&mdash;Unix-speak for the script failed&mdash;the action is halted and will not continue. This is what we are going to rely upon.</p>
 
 <p>Inside a Git respository, you&#39;ll find the hooks directory:</p>
+
 <div class="highlight"><pre><code class="bash language-bash" data-lang="bash">~/path/to/project/<span class="nv">$ </span><span class="nb">cd</span> .git/hooks
 </code></pre></div>
+
 <p>Inside this directory, git provides several sample hooks to demonstrate their naming convention and functionality.  To make any sample hook work, all you need to do is rename it and ensure it is executable (if it is not already):</p>
+
 <div class="highlight"><pre><code class="bash language-bash" data-lang="bash">~/path/to/project/.git/hooks<span class="nv">$ </span>mv pre-commit.sample pre-commit
 ~/path/to/project/.git/hooks<span class="nv">$ </span>chmod +x pre-commit
 </code></pre></div>
+
 <p>Now, the example files are written using bash, but you can use any language so long as you have an interpreter installed and can execute it. In my case, we&#39;ll be using Ruby.</p>
 
 <p>I want my pre-commit hook to do three things: check the files I am about to commit for tab characters, list the locations of the tab characters, and stop the commit from happening so I can fix the problem.</p>
@@ -151,17 +157,22 @@
 <h2>I Have Pre-Committment Issues</h2>
 
 <p>Let&#39;s build our git hook, piece by piece. First, we need to declare that we are using Ruby to execute this file. All work is done in <code>.git/hooks/pre-commit</code></p>
+
 <div class="highlight"><pre><code class="bash language-bash" data-lang="bash"><span class="c">#!/usr/bin/ruby</span>
 ...
 </code></pre></div>
+
 <p>Now, it&#39;s time to get the list of files we are about to commit. Git has a handy command for just this purpose. <code>git diff --cached --name-only</code>. We&#39;ll git this list and map it to an array. We&#39;ll also initialize our <code>offending_lines</code> hash.</p>
+
 <div class="highlight"><pre><code class="ruby language-ruby" data-lang="ruby"><span class="o">.</span><span class="n">.</span><span class="o">.</span>
 <span class="n">git_files</span> <span class="o">=</span> <span class="sb">`git diff --cached --name-only`</span><span class="o">.</span><span class="n">lines</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:chomp</span><span class="p">)</span>
 
 <span class="n">offending_lines</span> <span class="o">=</span> <span class="p">{}</span>
 <span class="o">.</span><span class="n">.</span><span class="o">.</span>
 </code></pre></div>
+
 <p>With the list of files in hand, we will check each file, line-by-line, for the tab character. Two quick gotchas: we need to ensure that the files we are checking are actually files and text-based (not images, archives, etc.). Without including a library, we can check like this:</p>
+
 <div class="highlight"><pre><code class="ruby language-ruby" data-lang="ruby"><span class="o">.</span><span class="n">.</span><span class="o">.</span>
 <span class="c1"># https://www.ruby-forum.com/topic/122170#544763</span>
 
@@ -184,7 +195,9 @@
 <span class="k">end</span>
 <span class="o">.</span><span class="n">.</span><span class="o">.</span>
 </code></pre></div>
+
 <p>Let&#39;s find those elusive tabs. We just iterate through each line of each staged file, check for a tab character, and add it to the <code>offending_lines</code> hash if found.</p>
+
 <div class="highlight"><pre><code class="ruby language-ruby" data-lang="ruby"><span class="o">.</span><span class="n">.</span><span class="o">.</span>
 <span class="n">git_files</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">file</span><span class="o">|</span>
 
@@ -208,7 +221,9 @@
 <span class="k">end</span>
 <span class="o">.</span><span class="n">.</span><span class="o">.</span>
 </code></pre></div>
+
 <p>If we found any tabs, we need to output the results and exit with a non-zero status.</p>
+
 <div class="highlight"><pre><code class="ruby language-ruby" data-lang="ruby"><span class="o">.</span><span class="n">.</span><span class="o">.</span>
 <span class="k">unless</span> <span class="n">offending_lines</span><span class="o">.</span><span class="n">empty?</span>
 
@@ -226,11 +241,13 @@
 <span class="nb">exit</span> <span class="mi">1</span>
 <span class="k">end</span>
 </code></pre></div>
+
 <p>Let us put it all together:</p>
 
 <blockquote>
 <p>.git/hooks/pre-commit</p>
 </blockquote>
+
 <div class="highlight"><pre><code class="ruby language-ruby" data-lang="ruby"><span class="c1">#!/usr/bin/ruby</span>
 
 <span class="c1"># https://www.ruby-forum.com/topic/122170#544763</span>
@@ -284,7 +301,9 @@
 <span class="nb">exit</span> <span class="mi">1</span>
 <span class="k">end</span>
 </code></pre></div>
+
 <p>Now, throw some tab characters into you&#39;re project (a test branch, please). And try to commit the changes.</p>
+
 <div class="highlight"><pre><code class="bash language-bash" data-lang="bash">~/path/to/project<span class="nv">$ </span>git add posts/githooks.md
 ~/path/to/project<span class="nv">$ </span>git commit -m <span class="s1">&#39;Attempted commit with tab characters&#39;</span>
 
@@ -294,11 +313,13 @@ Tab characters are illegal in <span class="nb">source </span>control and Tabs we
 posts/githooks.md
     50, 51, 55
 </code></pre></div>
+
 <h2>Conclusion</h2>
 
 <p>Git Hooks are awesome. While this post uses them to prevent tabs sneaking into source control, you can use them to do just about anything. If you&#39;d like to check out this particular hook, check out my gist over on <a href="https://gist.github.com/jdfreeman/9795256">Github</a>.</p>
 
 <p>P.S. By the way, I forgot to fix my editor back to spaces before I committed. It really does work.</p>
+
 <div class="highlight"><pre><code class="bash language-bash" data-lang="bash"><span class="nv">$ </span>gitcommit <span class="s2">&quot;Tutorial complete, requires proofreading&quot;</span>
 
 Pre-Commit Hook Failure <span class="o">(</span>.git/hooks/pre-commit<span class="o">)</span>
@@ -309,6 +330,7 @@ _posts/2014-03-26-githooks.md
     95, 96, 97, 125, 126, 128, 130, 132, 134, 135, 156, 157, 158, 180, 181
     182, 193, 194, 196, 198, 200, 202, 203, 216, 217, 218, 235
 </code></pre></div>
+
 
             </div>
 
@@ -376,13 +398,13 @@ _posts/2014-03-26-githooks.md
     <h4>Authors</h4>
     <ul class="nav nav-list">
         
-        <li><a href="/blog/jason-straughan">Jason Straughan</a></li>
+        <li><a href="/blog//jason-straughan">Jason Straughan</a></li>
         
-        <li><a href="/blog/jason-ellis">Jason Ellis</a></li>
+        <li><a href="/blog//jason-ellis">Jason Ellis</a></li>
         
-        <li><a href="/blog/josh-freeman">Josh Freeman</a></li>
+        <li><a href="/blog//josh-freeman">Josh Freeman</a></li>
         
-        <li><a href="/blog/chris-hardee">Chris Hardee</a></li>
+        <li><a href="/blog//chris-hardee">Chris Hardee</a></li>
         
   </ul>
 </div>
