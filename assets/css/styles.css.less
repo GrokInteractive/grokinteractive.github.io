@@ -752,6 +752,14 @@ body {
 }
 @media (min-width: 980px) and (max-width: 1199px) {
   body {
+    div > div.hero div.container div.post {
+      p {
+        margin-bottom: 0;
+      }
+      div.text {
+        width: 600px;
+      }
+    }
     section {
       &.about {
         height: 485px;
@@ -773,6 +781,17 @@ body {
 }
 @media (min-width: 768px) and (max-width:979px) {
   body {
+    div > div.hero div.container div.post {
+      p {
+        margin-bottom: 0;
+      }
+      div.text {
+        width: 98%;
+      }
+      div.thumb {
+        display: none;
+      }
+    }
     div.navbar-fixed-top {
       margin-bottom: 0;
     }
@@ -805,8 +824,23 @@ body {
 @media (max-width: 767px) {
   body {
     padding: 0;
+    div > div.hero div.container div.post {
+      p {
+        margin-bottom: 0;
+      }
+      div.text {
+        width: 98%;
+      }
+      div.thumb {
+        display: none;
+      }
+    }
     div.navbar-fixed-top {
       margin: 0;
+    }
+    div.inner div.canvas div.columns div.col {
+      width: 100%;
+      clear: left;
     }
     section {
       &.about {
