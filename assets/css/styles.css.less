@@ -680,7 +680,7 @@ body {
 
     &.well {
       .rounded(8px);
-      margin: 10px;
+      margin: 20px 10px;
       background: #f9f9f9;
       border: 1px solid #d9d9d9;
       h4 {
@@ -715,7 +715,35 @@ body {
         }
       }
     }
+  }
 
+  div.author-profile {
+    margin: 20px 0px;
+    img {
+      width: 20%;
+      .rounded(150px);
+      float: left;
+    }
+    div.about {
+      font-size: 16px;
+      line-height: 22px;
+      padding-left: 20px;
+      width: 75%;
+      display: inline-block;
+      em {
+        font-size: 14px;
+        text-transform: uppercase;
+        color: #d9d9d9;
+        font-style: normal;
+        font-weight: 800;
+      }
+      strong {
+        font-size: 20px;
+        line-height: 45px;
+        .orange;
+      }
+
+    }
   }
 
   .pagination {
