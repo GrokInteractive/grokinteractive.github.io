@@ -68,30 +68,24 @@
 
           <div class="post">
 
-            <div class="date pull-right">
-              <strong class="month">Apr</strong>
-              <strong class="year">2014</strong>
-              <strong class="day">05</strong>
-            </div>
-
             
             <a href="/blog/josh-freeman"><img class="gravatar" src="http://www.gravatar.com/avatar/a5e7d050656b7d7353c5d7daa70a8681?s=60"></img></a>
             
 
             <h1><a href="/blog/css-specificity/" rel="bookmark" title="Link to CSS Specificity">CSS Specificity</a></h1>
-            <h5>by <a href="/blog/josh-freeman">Josh Freeman</a>
-               on Apr 05, 2014
+            <h5>by <a href="/blog/josh-freeman" class="author">Josh Freeman</a>
+              &nbsp;&nbsp;&nbsp;<strong>Apr 05, 2014</strong>&nbsp;&nbsp;&nbsp;
               
               <i class="icon fa fa-folder" title="Categories"></i>
               
-              <a href="/blog/category/training/">Training</a>
+              <a href="/blog/category/training/" class="category">Training</a>
               
               
 
               
               <i class="icon fa fa-tags" title="Tags"></i>
               
-              <a href="/blog/tag/css/">Css</a>
+              <a href="/blog/tag/css/" class="tag">Css</a>
               
               
 
@@ -108,7 +102,7 @@
 
 <p>It was pretty clear that the previous developer either did not understand CSS very well or could not care less (probably a little of both).</p>
 
-<div class="highlight"><pre><code class="css language-css" data-lang="css"><span class="o">//</span> <span class="nt">Do</span> <span class="nt">not</span> <span class="nt">do</span> <span class="nt">this</span><span class="o">.</span> <span class="nt">Do</span> <span class="nt">not</span> <span class="nt">ever</span> <span class="nt">do</span> <span class="nt">this</span><span class="o">.</span> <span class="o">(</span><span class="nt">Unless</span> <span class="nt">you</span> <span class="nt">have</span> <span class="nt">to</span> <span class="nt">do</span> <span class="nt">this</span><span class="o">.)</span>
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="o">//</span> <span class="nt">Do</span> <span class="nt">not</span> <span class="nt">do</span> <span class="nt">this</span><span class="o">.</span> <span class="nt">Do</span> <span class="nt">not</span> <span class="nt">ever</span> <span class="nt">do</span> <span class="nt">this</span><span class="o">.</span> <span class="o">(</span><span class="nt">Unless</span> <span class="nt">you</span> <span class="nt">have</span> <span class="nt">to</span> <span class="nt">do</span> <span class="nt">this</span><span class="o">.)</span>
 
 <span class="nt">body</span><span class="nc">.ie</span>  <span class="nf">#mainheader</span> <span class="nt">nav</span> <span class="nt">ul</span><span class="nc">.nav</span> <span class="nt">li</span><span class="nc">.nav-link.active</span> <span class="nt">a</span> <span class="o">*</span> <span class="p">{</span>
     <span class="k">color</span><span class="o">:</span> <span class="nb">black</span> <span class="cp">!important</span><span class="p">;</span>
@@ -121,11 +115,11 @@
 
 <p>Say we have a style sheet defines a style for an element, a style tag that has a conflicting property value for the same element, and an inline style that also has a conflicting property value for the same element.</p>
 
-<div class="highlight"><pre><code class="css language-css" data-lang="css"><span class="o">&lt;!</span><span class="nt">--</span> <span class="nt">styles</span><span class="nc">.css</span> <span class="nt">--</span><span class="o">&gt;</span>
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="o">&lt;!</span><span class="nt">--</span> <span class="nt">styles</span><span class="nc">.css</span> <span class="nt">--</span><span class="o">&gt;</span>
 <span class="nt">p</span> <span class="p">{</span>
     <span class="k">color</span><span class="o">:</span> <span class="nb">black</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div><div class="highlight"><pre><code class="html language-html" data-lang="html"><span class="c">&lt;!-- index.html --&gt;</span>
+</code></pre></div><div class="highlight"><pre><code class="language-html" data-lang="html"><span class="c">&lt;!-- index.html --&gt;</span>
 <span class="nt">&lt;style&gt;</span>
 <span class="nt">p</span> <span class="p">{</span>
     <span class="k">color</span><span class="o">:</span> <span class="nb">green</span><span class="p">;</span>
@@ -301,7 +295,7 @@
 
 <p>Now is a good time to discuss what is really <strong>!important</strong>. Declaring a property <strong>!important</strong> is an quick and easy way to override a selector you cannot modify. Be careful with this approach, however; once you decalare a selector&#39;s property as <strong>!important</strong>, the only way to then override it is to again declare that property as <strong>!important</strong> with a selector that has higher specificity.</p>
 
-<div class="highlight"><pre><code class="css language-css" data-lang="css"><span class="nt">p</span> <span class="p">{</span>
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">p</span> <span class="p">{</span>
     <span class="k">color</span><span class="o">:</span> <span class="nb">black</span><span class="p">;</span>
 <span class="p">}</span>
 
@@ -365,7 +359,7 @@
         
         
         <div class="well">
-  <h4>Author Profile</h4>
+  <h4><i class="icon fa fa-user" title="Author"></i> Author Profile</h4>
 
   <strong>Josh Freeman</strong>
   <p></p>
@@ -375,20 +369,38 @@
         
 
         <div class="well">
-  <h4>Categories</h4>
+  <h4><i class="icon fa fa-folder" title="Categories"></i> Categories</h4>
   <ul class="nav nav-list">
     
-    <li><a href="/blog/category/general/">General</a></li>
+
+    <li><a href="/blog/category/general/">
+      General
+    </a></li>
     
-    <li><a href="/blog/category/software_development/">Software development</a></li>
+
+    <li><a href="/blog/category/software_development/">
+      Software development
+    </a></li>
     
-    <li><a href="/blog/category/training/">Training</a></li>
+
+    <li><a href="/blog/category/training/">
+      Training
+    </a></li>
     
-    <li><a href="/blog/category/testing/">Testing</a></li>
+
+    <li><a href="/blog/category/testing/">
+      Testing
+    </a></li>
     
-    <li><a href="/blog/category/environments/">Environments</a></li>
+
+    <li><a href="/blog/category/environments/">
+      Environments
+    </a></li>
     
-    <li><a href="/blog/category/business_development/">Business development</a></li>
+
+    <li><a href="/blog/category/business_development/">
+      Business development
+    </a></li>
     
   </ul>
 </div>
@@ -396,24 +408,24 @@
 
         
 <div class="well">
-    <h4>Authors</h4>
-    <ul class="nav nav-list">
-        
-        <li><a href="/blog//jason-straughan">Jason Straughan</a></li>
-        
-        <li><a href="/blog//jason-ellis">Jason Ellis</a></li>
-        
-        <li><a href="/blog//josh-freeman">Josh Freeman</a></li>
-        
-        <li><a href="/blog//chris-hardee">Chris Hardee</a></li>
-        
+  <h4><i class="icon fa fa-users" title="Authors"></i> Authors</h4>
+  <ul class="nav nav-list">
+    
+    <li><a href="/blog/author/jason-straughan">Jason Straughan</a></li>
+    
+    <li><a href="/blog/author/jason-ellis">Jason Ellis</a></li>
+    
+    <li><a href="/blog/author/josh-freeman">Josh Freeman</a></li>
+    
+    <li><a href="/blog/author/chris-hardee">Chris Hardee</a></li>
+    
   </ul>
 </div>
 
 
 
         <div class="well">
-  <h4>Tags</h4>
+  <h4><i class="icon fa fa-tags" title="Categories"></i> Tags</h4>
 
   <ul class="nav nav-list">
     

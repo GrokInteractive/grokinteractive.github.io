@@ -68,34 +68,28 @@
 
           <div class="post">
 
-            <div class="date pull-right">
-              <strong class="month">Mar</strong>
-              <strong class="year">2014</strong>
-              <strong class="day">21</strong>
-            </div>
-
             
             <a href="/blog/josh-freeman"><img class="gravatar" src="http://www.gravatar.com/avatar/a5e7d050656b7d7353c5d7daa70a8681?s=60"></img></a>
             
 
             <h1><a href="/blog/setting-up-a-phpunit-testing-environment/" rel="bookmark" title="Link to Setting Up a PHPUnit Testing Environment">Setting Up a PHPUnit Testing Environment</a></h1>
-            <h5>by <a href="/blog/josh-freeman">Josh Freeman</a>
-               on Mar 21, 2014
+            <h5>by <a href="/blog/josh-freeman" class="author">Josh Freeman</a>
+              &nbsp;&nbsp;&nbsp;<strong>Mar 21, 2014</strong>&nbsp;&nbsp;&nbsp;
               
               <i class="icon fa fa-folder" title="Categories"></i>
               
-              <a href="/blog/category/software_development/">Software development</a>,
+              <a href="/blog/category/software_development/" class="category">Software development</a>,
               
-              <a href="/blog/category/testing/">Testing</a>
+              <a href="/blog/category/testing/" class="category">Testing</a>
               
               
 
               
               <i class="icon fa fa-tags" title="Tags"></i>
               
-              <a href="/blog/tag/php/">Php</a>,
+              <a href="/blog/tag/php/" class="tag">Php</a>,
               
-              <a href="/blog/tag/phpunit/">Phpunit</a>
+              <a href="/blog/tag/phpunit/" class="tag">Phpunit</a>
               
               
 
@@ -118,7 +112,7 @@
 
 <p>To get started, we are going to create a project and treat PHPUnit as a project dependency. I have found that the easiest way to manage your project dependencies is through <a href="https://getcomposer.org/" title="Dependency Manager for PHP">Composer</a>. You can install this one of two ways, globally on your system, or locally within your project. Since we&#39;re new and just want to play with composer, we will opt for the local method. At the very least, you will need PHP 5.3.2 or above to use composer.</p>
 
-<div class="highlight"><pre><code class="bash language-bash" data-lang="bash"><span class="c"># Create your phpunit-example</span>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c"># Create your phpunit-example</span>
 ~<span class="nv">$ </span>mkdir -p phpunit-example/src/PHPUnitExample
 ~<span class="nv">$ </span><span class="nb">cd </span>phpunit-example
 
@@ -135,7 +129,7 @@
 
 <p>The Package name is broken into two parts, the vendor and the project name. Use your name or your organization name as the vendor. Here, I will be using my GitHub name.</p>
 
-<div class="highlight"><pre><code class="bash language-bash" data-lang="bash">~/phpunit-example<span class="nv">$ </span>php composer.phar init
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">~/phpunit-example<span class="nv">$ </span>php composer.phar init
 This <span class="nb">command </span>will guide you through creating your composer.json config.
 
 Package name <span class="o">(</span>&lt;vendor&gt;/&lt;name&gt;<span class="o">)</span> <span class="o">[</span>hostname/phpunit-example<span class="o">]</span>: jdfreeman/phpunit-example
@@ -156,7 +150,7 @@ Do you confirm generation <span class="o">[</span>yes<span class="o">]</span>?
 
 <p>We are not done yet, instead of auto-generating the dependencies, let us learn how to manually add dependencies. Open your <code>composer.json</code> and you should see something similar to below:</p>
 
-<div class="highlight"><pre><code class="json language-json" data-lang="json"><span class="p">{</span>
+<div class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span>
     <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;jdfreeman/phpunit-example&quot;</span><span class="p">,</span>
     <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;This project demonstrates how to quickly setup phpunit&quot;</span><span class="p">,</span>
     <span class="nt">&quot;license&quot;</span><span class="p">:</span> <span class="s2">&quot;MIT&quot;</span><span class="p">,</span>
@@ -175,7 +169,7 @@ Do you confirm generation <span class="o">[</span>yes<span class="o">]</span>?
 
 <p>Within your require block, we&#39;re going to ensure you have a sufficiently up-to-date version of PHP.</p>
 
-<div class="highlight"><pre><code class="json language-json" data-lang="json"><span class="p">{</span>
+<div class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span>
     <span class="err">...</span>
     <span class="nt">&quot;require&quot;</span><span class="p">:</span> <span class="p">{</span>
         <span class="nt">&quot;php&quot;</span><span class="p">:</span> <span class="s2">&quot;&gt;=5.4.0&quot;</span>
@@ -186,7 +180,7 @@ Do you confirm generation <span class="o">[</span>yes<span class="o">]</span>?
 
 <p>Now, we are going to add PHPUnit to the list of dependencies. Under the <code>require</code> block, append the following:</p>
 
-<div class="highlight"><pre><code class="json language-json" data-lang="json"><span class="p">{</span>
+<div class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span>
     <span class="err">...</span>
     <span class="nt">&quot;require-dev&quot;</span><span class="p">:</span> <span class="p">{</span>
         <span class="nt">&quot;phpunit/phpunit&quot;</span><span class="p">:</span><span class="s2">&quot;4.0.*&quot;</span>
@@ -211,7 +205,7 @@ Save your <code>composer.json</code> and ensure it validates through <code>php c
 <p>composer.json</p>
 </blockquote>
 
-<div class="highlight"><pre><code class="json language-json" data-lang="json"><span class="p">{</span>
+<div class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span>
     <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;jdfreeman/phpunit-example&quot;</span><span class="p">,</span>
     <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;This project demonstrates how to quickly setup phpunit&quot;</span><span class="p">,</span>
     <span class="nt">&quot;license&quot;</span><span class="p">:</span> <span class="s2">&quot;MIT&quot;</span><span class="p">,</span>
@@ -244,7 +238,7 @@ Save your <code>composer.json</code> and ensure it validates through <code>php c
 
 <p>Now that we have PHPUnit installed locally, we will create the test directory and configuration file PHPUnit uses to run the tests.</p>
 
-<div class="highlight"><pre><code class="bash language-bash" data-lang="bash">~/phpunit-example<span class="nv">$ </span>mkdir tests
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">~/phpunit-example<span class="nv">$ </span>mkdir tests
 ~/phpunit-example<span class="nv">$ </span>touch phpunit.xml
 </code></pre></div>
 
@@ -254,7 +248,7 @@ Save your <code>composer.json</code> and ensure it validates through <code>php c
 <p>phpunit.xml</p>
 </blockquote>
 
-<div class="highlight"><pre><code class="xml language-xml" data-lang="xml"><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
 <span class="nt">&lt;phpunit</span> <span class="na">backupGlobals=</span><span class="s">&quot;false&quot;</span>
          <span class="na">backupStaticAttributes=</span><span class="s">&quot;false&quot;</span>
          <span class="na">bootstrap=</span><span class="s">&quot;./vendor/autoload.php&quot;</span>
@@ -282,7 +276,7 @@ Save your <code>composer.json</code> and ensure it validates through <code>php c
 
 <p>We will begin by creating two files: the class to be tested and the class holding the tests.</p>
 
-<div class="highlight"><pre><code class="bash language-bash" data-lang="bash">~/phpunit-example<span class="nv">$ </span>touch src/PHPUnitExample/Calculator.php
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">~/phpunit-example<span class="nv">$ </span>touch src/PHPUnitExample/Calculator.php
 ~/phpunit-example<span class="nv">$ </span>touch tests/PHPUnitExample/CalculatorTest.php
 </code></pre></div>
 
@@ -292,7 +286,7 @@ Save your <code>composer.json</code> and ensure it validates through <code>php c
 <p>tests/PHPUnitExample/CalculatorTest.php</p>
 </blockquote>
 
-<div class="highlight"><pre><code class="php language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<div class="highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
 
 <span class="k">class</span> <span class="nc">CalculatorTest</span> <span class="k">extends</span> <span class="nx">PHPUnit_Framework_TestCase</span>
 <span class="p">{</span>
@@ -313,7 +307,7 @@ Save your <code>composer.json</code> and ensure it validates through <code>php c
 <p>src/PHPUnitExample/Calculator.php</p>
 </blockquote>
 
-<div class="highlight"><pre><code class="php language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<div class="highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
 
 <span class="k">namespace</span> <span class="nx">PHPUnitExample</span><span class="p">;</span>
 
@@ -327,22 +321,22 @@ Save your <code>composer.json</code> and ensure it validates through <code>php c
 
 <p>Now that you have the minimum files needed to run test, we need to update the autoloader that will allow PHPUnit to require the needed files automatically.</p>
 
-<div class="highlight"><pre><code class="bash language-bash" data-lang="bash"><span class="c"># updates the vendor/autoload.php, which is required in the phpunit.xml</span>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c"># updates the vendor/autoload.php, which is required in the phpunit.xml</span>
 ~/phpunit-example<span class="nv">$ </span>php composer.phar dumpautoload
 </code></pre></div>
 
 <p>It is time to actually run our first test! This test should fail, since we have defined the method, but not built any functionality.</p>
 
-<div class="highlight"><pre><code class="bash language-bash" data-lang="bash">~/phpunit-example<span class="nv">$ </span>php vendor/bin/phpunit
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">~/phpunit-example<span class="nv">$ </span>php vendor/bin/phpunit
 PHPUnit 4.0.12 by Sebastian Bergmann.
 
 Configuration <span class="nb">read </span>from /vagrant/sites/phpunit-example/phpunit.xml
 
 F
 
-Time: 575 ms, Memory: 3.50Mb
+Time: <span class="m">575</span> ms, Memory: 3.50Mb
 
-There was 1 failure:
+There was <span class="m">1</span> failure:
 
 1<span class="o">)</span> CalculatorTest::testAdd
 Failed asserting that null matches expected 7.
@@ -355,7 +349,7 @@ Tests: 1, Assertions: 1, Failures: 1.
 
 <p>As expected, our test failed; now it is time to actually make this test pass. Return to your Calculator class and write the following:</p>
 
-<div class="highlight"><pre><code class="php language-php" data-lang="php"><span class="x">public function add($a, $b)</span>
+<div class="highlight"><pre><code class="language-php" data-lang="php"><span class="x">public function add($a, $b)</span>
 <span class="x">{</span>
 <span class="x">    return $a + $b;</span>
 <span class="x">}</span>
@@ -363,7 +357,7 @@ Tests: 1, Assertions: 1, Failures: 1.
 
 <p>Return to your terminal and run the tests again.</p>
 
-<div class="highlight"><pre><code class="text language-text" data-lang="text">~/phpunit-example$ php vendor/bin/phpunit
+<div class="highlight"><pre><code class="language-text" data-lang="text">~/phpunit-example$ php vendor/bin/phpunit
 PHPUnit 4.0.12 by Sebastian Bergmann.
 
 Configuration read from /vagrant/sites/phpunit-example/phpunit.xml
@@ -412,7 +406,7 @@ OK (1 test, 1 assertion)
         
         
         <div class="well">
-  <h4>Author Profile</h4>
+  <h4><i class="icon fa fa-user" title="Author"></i> Author Profile</h4>
 
   <strong>Josh Freeman</strong>
   <p></p>
@@ -422,20 +416,38 @@ OK (1 test, 1 assertion)
         
 
         <div class="well">
-  <h4>Categories</h4>
+  <h4><i class="icon fa fa-folder" title="Categories"></i> Categories</h4>
   <ul class="nav nav-list">
     
-    <li><a href="/blog/category/general/">General</a></li>
+
+    <li><a href="/blog/category/general/">
+      General
+    </a></li>
     
-    <li><a href="/blog/category/software_development/">Software development</a></li>
+
+    <li><a href="/blog/category/software_development/">
+      Software development
+    </a></li>
     
-    <li><a href="/blog/category/training/">Training</a></li>
+
+    <li><a href="/blog/category/training/">
+      Training
+    </a></li>
     
-    <li><a href="/blog/category/testing/">Testing</a></li>
+
+    <li><a href="/blog/category/testing/">
+      Testing
+    </a></li>
     
-    <li><a href="/blog/category/environments/">Environments</a></li>
+
+    <li><a href="/blog/category/environments/">
+      Environments
+    </a></li>
     
-    <li><a href="/blog/category/business_development/">Business development</a></li>
+
+    <li><a href="/blog/category/business_development/">
+      Business development
+    </a></li>
     
   </ul>
 </div>
@@ -443,24 +455,24 @@ OK (1 test, 1 assertion)
 
         
 <div class="well">
-    <h4>Authors</h4>
-    <ul class="nav nav-list">
-        
-        <li><a href="/blog//jason-straughan">Jason Straughan</a></li>
-        
-        <li><a href="/blog//jason-ellis">Jason Ellis</a></li>
-        
-        <li><a href="/blog//josh-freeman">Josh Freeman</a></li>
-        
-        <li><a href="/blog//chris-hardee">Chris Hardee</a></li>
-        
+  <h4><i class="icon fa fa-users" title="Authors"></i> Authors</h4>
+  <ul class="nav nav-list">
+    
+    <li><a href="/blog/author/jason-straughan">Jason Straughan</a></li>
+    
+    <li><a href="/blog/author/jason-ellis">Jason Ellis</a></li>
+    
+    <li><a href="/blog/author/josh-freeman">Josh Freeman</a></li>
+    
+    <li><a href="/blog/author/chris-hardee">Chris Hardee</a></li>
+    
   </ul>
 </div>
 
 
 
         <div class="well">
-  <h4>Tags</h4>
+  <h4><i class="icon fa fa-tags" title="Categories"></i> Tags</h4>
 
   <ul class="nav nav-list">
     

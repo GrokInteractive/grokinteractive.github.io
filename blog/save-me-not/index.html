@@ -68,34 +68,28 @@
 
           <div class="post">
 
-            <div class="date pull-right">
-              <strong class="month">Mar</strong>
-              <strong class="year">2014</strong>
-              <strong class="day">30</strong>
-            </div>
-
             
             <a href="/blog/josh-freeman"><img class="gravatar" src="http://www.gravatar.com/avatar/a5e7d050656b7d7353c5d7daa70a8681?s=60"></img></a>
             
 
             <h1><a href="/blog/save-me-not/" rel="bookmark" title="Link to Save Me Not">Save Me Not</a></h1>
-            <h5>by <a href="/blog/josh-freeman">Josh Freeman</a>
-               on Mar 30, 2014
+            <h5>by <a href="/blog/josh-freeman" class="author">Josh Freeman</a>
+              &nbsp;&nbsp;&nbsp;<strong>Mar 30, 2014</strong>&nbsp;&nbsp;&nbsp;
               
               <i class="icon fa fa-folder" title="Categories"></i>
               
-              <a href="/blog/category/software_development/">Software development</a>
+              <a href="/blog/category/software_development/" class="category">Software development</a>
               
               
 
               
               <i class="icon fa fa-tags" title="Tags"></i>
               
-              <a href="/blog/tag/dom/">Dom</a>,
+              <a href="/blog/tag/dom/" class="tag">Dom</a>,
               
-              <a href="/blog/tag/javascript/">Javascript</a>,
+              <a href="/blog/tag/javascript/" class="tag">Javascript</a>,
               
-              <a href="/blog/tag/jquery/">Jquery</a>
+              <a href="/blog/tag/jquery/" class="tag">Jquery</a>
               
               
 
@@ -136,7 +130,7 @@ function autoResize(id){
 
 <p>The first thing we will do is create our widget shell with the constructor method &#39;_create&#39;:</p>
 
-<div class="highlight"><pre><code class="javascript language-javascript" data-lang="javascript"><span class="nx">$</span><span class="p">.</span><span class="nx">widget</span><span class="p">(</span><span class="s2">&quot;grok.savemenot&quot;</span><span class="p">,</span> <span class="p">{</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">$</span><span class="p">.</span><span class="nx">widget</span><span class="p">(</span><span class="s2">&quot;grok.savemenot&quot;</span><span class="p">,</span> <span class="p">{</span>
 
     <span class="nx">_create</span><span class="o">:</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
 
@@ -146,7 +140,7 @@ function autoResize(id){
 
 <p>The create method will server as the master method to intialize everything we need. First we will collect all the form elements that store information to be sent to the server. We&#39;ll cache these elements to avoid repeated DOM searches. We&#39;ll also collect the submit button separately.</p>
 
-<div class="highlight"><pre><code class="javascript language-javascript" data-lang="javascript"><span class="nx">_create</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">_create</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
 
     <span class="k">this</span><span class="p">.</span><span class="nx">inputs</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">element</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s1">&#39;input, textarea, select, button&#39;</span><span class="p">);</span>
 
@@ -159,7 +153,7 @@ function autoResize(id){
 
 <p>We have to treat checkboxes a little differently than other elements. Most form elements will send their name and value (even if empty) to the server upon submission. Checkboxes do not work this way; instead, their name and value is only sent to the server if checked. The value is really inconsequential to a checkbox&mdash;only it is checked attribute matters to us.</p>
 
-<div class="highlight"><pre><code class="javascript language-javascript" data-lang="javascript"><span class="nx">_create</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">_create</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
 
     <span class="p">...</span>
 
@@ -195,7 +189,7 @@ function autoResize(id){
 
 <p>It is time to check the current state of the form to its beginning state. We will create a <code>_formChanged</code> method that will return a simple boolean if the form is different now from when it was instantiated.</p>
 
-<div class="highlight"><pre><code class="javascript language-javascript" data-lang="javascript"><span class="nx">_formChanged</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">_formChanged</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
 
     <span class="kd">var</span> <span class="nx">object1</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">initialFormState</span><span class="p">;</span>
     <span class="kd">var</span> <span class="nx">object2</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">_getInputValues</span><span class="p">();</span>
@@ -217,7 +211,7 @@ function autoResize(id){
 
 <p>The call is simple. In effect, if the user changes the form, it compares the new state to the original state. If they&#39;re different, the submitting element is enabled; if it is not, it is disabled. Easy peasy.</p>
 
-<div class="highlight"><pre><code class="javascript language-javascript" data-lang="javascript"><span class="nx">_inputsOn</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">_inputsOn</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
 
     <span class="kd">var</span> <span class="nx">that</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
 
@@ -239,7 +233,7 @@ function autoResize(id){
 
 <p>Now we have to handle a special case with the select element. When a browser loads the form, the option within a select element is automatically chosen. If it is a new form, and the user wants to only submit that element with the first option selected, they are out of luck. In this case, unless the HTML requires that a particular option be selected initially (such as when updating data), we will deselect all options by default.</p>
 
-<div class="highlight"><pre><code class="javascript language-javascript" data-lang="javascript">    <span class="nx">_create</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript">    <span class="nx">_create</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
 
         <span class="p">...</span>
 
@@ -276,7 +270,7 @@ function autoResize(id){
 
 <p>Your final widget should look similar to below:</p>
 
-<div class="highlight"><pre><code class="javascript language-javascript" data-lang="javascript"><span class="nx">$</span><span class="p">.</span><span class="nx">widget</span><span class="p">(</span><span class="s2">&quot;grok.savemenot&quot;</span><span class="p">,</span> <span class="p">{</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">$</span><span class="p">.</span><span class="nx">widget</span><span class="p">(</span><span class="s2">&quot;grok.savemenot&quot;</span><span class="p">,</span> <span class="p">{</span>
 
     <span class="nx">_create</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
 
@@ -371,14 +365,14 @@ function autoResize(id){
 
 <p>So how do we turn it on?</p>
 
-<div class="highlight"><pre><code class="html language-html" data-lang="html"><span class="nt">&lt;script&gt;</span>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;script&gt;</span>
     <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;form&#39;</span><span class="p">).</span><span class="nx">savemenot</span><span class="p">();</span>
 <span class="nt">&lt;/script&gt;</span>
 </code></pre></div>
 
 <p>Really? Yes, really. That is it. Do not forget to require jQuery and jQueryUI in your head, however. Check out the HTML used for the demo. I have omitted the html required by bootstrap for clarity.</p>
 
-<div class="highlight"><pre><code class="html language-html" data-lang="html"><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="cp">&lt;!DOCTYPE html&gt;</span>
 <span class="nt">&lt;html&gt;</span>
 <span class="nt">&lt;head&gt;</span>
     <span class="nt">&lt;title&gt;</span>Save Me Not Demo<span class="nt">&lt;/title&gt;</span>
@@ -464,7 +458,7 @@ function autoResize(id){
         
         
         <div class="well">
-  <h4>Author Profile</h4>
+  <h4><i class="icon fa fa-user" title="Author"></i> Author Profile</h4>
 
   <strong>Josh Freeman</strong>
   <p></p>
@@ -474,20 +468,38 @@ function autoResize(id){
         
 
         <div class="well">
-  <h4>Categories</h4>
+  <h4><i class="icon fa fa-folder" title="Categories"></i> Categories</h4>
   <ul class="nav nav-list">
     
-    <li><a href="/blog/category/general/">General</a></li>
+
+    <li><a href="/blog/category/general/">
+      General
+    </a></li>
     
-    <li><a href="/blog/category/software_development/">Software development</a></li>
+
+    <li><a href="/blog/category/software_development/">
+      Software development
+    </a></li>
     
-    <li><a href="/blog/category/training/">Training</a></li>
+
+    <li><a href="/blog/category/training/">
+      Training
+    </a></li>
     
-    <li><a href="/blog/category/testing/">Testing</a></li>
+
+    <li><a href="/blog/category/testing/">
+      Testing
+    </a></li>
     
-    <li><a href="/blog/category/environments/">Environments</a></li>
+
+    <li><a href="/blog/category/environments/">
+      Environments
+    </a></li>
     
-    <li><a href="/blog/category/business_development/">Business development</a></li>
+
+    <li><a href="/blog/category/business_development/">
+      Business development
+    </a></li>
     
   </ul>
 </div>
@@ -495,24 +507,24 @@ function autoResize(id){
 
         
 <div class="well">
-    <h4>Authors</h4>
-    <ul class="nav nav-list">
-        
-        <li><a href="/blog//jason-straughan">Jason Straughan</a></li>
-        
-        <li><a href="/blog//jason-ellis">Jason Ellis</a></li>
-        
-        <li><a href="/blog//josh-freeman">Josh Freeman</a></li>
-        
-        <li><a href="/blog//chris-hardee">Chris Hardee</a></li>
-        
+  <h4><i class="icon fa fa-users" title="Authors"></i> Authors</h4>
+  <ul class="nav nav-list">
+    
+    <li><a href="/blog/author/jason-straughan">Jason Straughan</a></li>
+    
+    <li><a href="/blog/author/jason-ellis">Jason Ellis</a></li>
+    
+    <li><a href="/blog/author/josh-freeman">Josh Freeman</a></li>
+    
+    <li><a href="/blog/author/chris-hardee">Chris Hardee</a></li>
+    
   </ul>
 </div>
 
 
 
         <div class="well">
-  <h4>Tags</h4>
+  <h4><i class="icon fa fa-tags" title="Categories"></i> Tags</h4>
 
   <ul class="nav nav-list">
     

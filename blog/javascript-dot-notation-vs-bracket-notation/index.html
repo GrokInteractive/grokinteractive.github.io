@@ -68,30 +68,24 @@
 
           <div class="post">
 
-            <div class="date pull-right">
-              <strong class="month">Mar</strong>
-              <strong class="year">2014</strong>
-              <strong class="day">25</strong>
-            </div>
-
             
             <a href="/blog/jason-ellis"><img class="gravatar" src="http://www.gravatar.com/avatar/86e6a10c32d24185216f45810a9729c8?s=60"></img></a>
             
 
             <h1><a href="/blog/javascript-dot-notation-vs-bracket-notation/" rel="bookmark" title="Link to Javascript dot notation versus bracket notation">Javascript dot notation versus bracket notation</a></h1>
-            <h5>by <a href="/blog/jason-ellis">Jason Ellis</a>
-               on Mar 25, 2014
+            <h5>by <a href="/blog/jason-ellis" class="author">Jason Ellis</a>
+              &nbsp;&nbsp;&nbsp;<strong>Mar 25, 2014</strong>&nbsp;&nbsp;&nbsp;
               
               <i class="icon fa fa-folder" title="Categories"></i>
               
-              <a href="/blog/category/software_development/">Software development</a>
+              <a href="/blog/category/software_development/" class="category">Software development</a>
               
               
 
               
               <i class="icon fa fa-tags" title="Tags"></i>
               
-              <a href="/blog/tag/javascript/">Javascript</a>
+              <a href="/blog/tag/javascript/" class="tag">Javascript</a>
               
               
 
@@ -116,20 +110,20 @@
 
 <p>Firstly, lets create our object. There are two primary ways to create an object in javascript and there is technically no difference in that they do exactly the same thing so it is easiest to just think of <code>{}</code> as a shortcut for <code>new Object()</code>.</p>
 
-<div class="highlight"><pre><code class="text language-text" data-lang="text">var obj = {};
+<div class="highlight"><pre><code class="language-text" data-lang="text">var obj = {};
 var obj = new Object();
 </code></pre></div>
 
 <p>The primary difference between those two is that the literal notation <code>{}</code> takes less space, is more recognizable as to what is happening, cannot be overridden by other code, and more importantly, allows you to assign values to keys at time of object initialization. Example; here we have an initialized object with two properties <code>foo</code> and <code>baz</code> already set.</p>
 
-<div class="highlight"><pre><code class="text language-text" data-lang="text">var obj = { &#39;foo&#39; : &#39;bar&#39;, &#39;baz&#39; : false }
+<div class="highlight"><pre><code class="language-text" data-lang="text">var obj = { &#39;foo&#39; : &#39;bar&#39;, &#39;baz&#39; : false }
 </code></pre></div>
 
 <p>But how do we access the methods and properties of an object correctly?</p>
 
 <p>There are two ways of accessing object members, &quot;dot notation&quot; and &quot;bracket notation&quot;.</p>
 
-<div class="highlight"><pre><code class="text language-text" data-lang="text">// Dot notation
+<div class="highlight"><pre><code class="language-text" data-lang="text">// Dot notation
 obj.foo
 // Bracket notation
 obj[&#39;foo&#39;]
@@ -143,7 +137,7 @@ obj[&#39;foo&#39;]
 
 <p>That means you have a lot of options for valid key names, but also a lot that are not valid. You have a pretty high potential for breakage if you are new to the language and are unfamiliar with what is allowed and not allowed in identifiers.</p>
 
-<div class="highlight"><pre><code class="text language-text" data-lang="text">obj.foo;      // valid
+<div class="highlight"><pre><code class="language-text" data-lang="text">obj.foo;      // valid
 obj.for;      // valid even though for is a reserved word ***
 obj.4;        // invalid - identifiers cannot start with numbers
 obj.4foo;     // invalid - identifiers cannot start with numbers
@@ -156,7 +150,7 @@ obj.foo-bar;  // invalid - &#39;-&#39; is not a valid character for identifiers
 
 <p>Bracket notation expects an expression which evaluates to a string (or can be coerced into a string), so you can use <em>any character sequence as a property name</em>.</p>
 
-<div class="highlight"><pre><code class="text language-text" data-lang="text">obj[&#39;foo&#39;];       // valid
+<div class="highlight"><pre><code class="language-text" data-lang="text">obj[&#39;foo&#39;];       // valid
 obj[&#39;for&#39;];       // valid - reserved words, are just words.
 obj[4];           // valid - only a number, not an issue!
 obj[&#39;4foo&#39;];      // valid - starting with a number, no problem
@@ -172,7 +166,7 @@ obj[foo];         // valid - will evaluate out foo and use it is value as the pr
 
 <p>For reading and writing code, Dot Notation is clearly faster and easier. But when it comes to code execution, Bracket notation is the faster performer. And double quotes are faster than single;</p>
 
-<div class="highlight"><pre><code class="text language-text" data-lang="text">var obj.foo == 1;     // fast - about 2% slower than bracket notation
+<div class="highlight"><pre><code class="language-text" data-lang="text">var obj.foo == 1;     // fast - about 2% slower than bracket notation
 var obj[&#39;foo&#39;] == 1;  // faster - slightly slower than double quotes
 var obj[&quot;foo&quot;] == 1;  // fastest - speed!
 </code></pre></div>
@@ -220,7 +214,7 @@ var obj[&quot;foo&quot;] == 1;  // fastest - speed!
         
         
         <div class="well">
-  <h4>Author Profile</h4>
+  <h4><i class="icon fa fa-user" title="Author"></i> Author Profile</h4>
 
   <strong>Jason Ellis</strong>
   <p>The CTO of Grok Interactive and is a calm, considerate problem solver that has been working as a software engineer in the industry for over 15 years.</p>
@@ -231,20 +225,38 @@ var obj[&quot;foo&quot;] == 1;  // fastest - speed!
         
 
         <div class="well">
-  <h4>Categories</h4>
+  <h4><i class="icon fa fa-folder" title="Categories"></i> Categories</h4>
   <ul class="nav nav-list">
     
-    <li><a href="/blog/category/general/">General</a></li>
+
+    <li><a href="/blog/category/general/">
+      General
+    </a></li>
     
-    <li><a href="/blog/category/software_development/">Software development</a></li>
+
+    <li><a href="/blog/category/software_development/">
+      Software development
+    </a></li>
     
-    <li><a href="/blog/category/training/">Training</a></li>
+
+    <li><a href="/blog/category/training/">
+      Training
+    </a></li>
     
-    <li><a href="/blog/category/testing/">Testing</a></li>
+
+    <li><a href="/blog/category/testing/">
+      Testing
+    </a></li>
     
-    <li><a href="/blog/category/environments/">Environments</a></li>
+
+    <li><a href="/blog/category/environments/">
+      Environments
+    </a></li>
     
-    <li><a href="/blog/category/business_development/">Business development</a></li>
+
+    <li><a href="/blog/category/business_development/">
+      Business development
+    </a></li>
     
   </ul>
 </div>
@@ -252,24 +264,24 @@ var obj[&quot;foo&quot;] == 1;  // fastest - speed!
 
         
 <div class="well">
-    <h4>Authors</h4>
-    <ul class="nav nav-list">
-        
-        <li><a href="/blog//jason-straughan">Jason Straughan</a></li>
-        
-        <li><a href="/blog//jason-ellis">Jason Ellis</a></li>
-        
-        <li><a href="/blog//josh-freeman">Josh Freeman</a></li>
-        
-        <li><a href="/blog//chris-hardee">Chris Hardee</a></li>
-        
+  <h4><i class="icon fa fa-users" title="Authors"></i> Authors</h4>
+  <ul class="nav nav-list">
+    
+    <li><a href="/blog/author/jason-straughan">Jason Straughan</a></li>
+    
+    <li><a href="/blog/author/jason-ellis">Jason Ellis</a></li>
+    
+    <li><a href="/blog/author/josh-freeman">Josh Freeman</a></li>
+    
+    <li><a href="/blog/author/chris-hardee">Chris Hardee</a></li>
+    
   </ul>
 </div>
 
 
 
         <div class="well">
-  <h4>Tags</h4>
+  <h4><i class="icon fa fa-tags" title="Categories"></i> Tags</h4>
 
   <ul class="nav nav-list">
     

@@ -68,30 +68,24 @@
 
           <div class="post">
 
-            <div class="date pull-right">
-              <strong class="month">Mar</strong>
-              <strong class="year">2014</strong>
-              <strong class="day">24</strong>
-            </div>
-
             
             <a href="/blog/chris-hardee"><img class="gravatar" src="http://www.gravatar.com/avatar/b75678dcec58b321562516130a2c0076?s=60"></img></a>
             
 
             <h1><a href="/blog/stash-ee-templates/" rel="bookmark" title="Link to Clean Templates with Stash">Clean Templates with Stash</a></h1>
-            <h5>by <a href="/blog/chris-hardee">Chris Hardee</a>
-               on Mar 24, 2014
+            <h5>by <a href="/blog/chris-hardee" class="author">Chris Hardee</a>
+              &nbsp;&nbsp;&nbsp;<strong>Mar 24, 2014</strong>&nbsp;&nbsp;&nbsp;
               
               <i class="icon fa fa-folder" title="Categories"></i>
               
-              <a href="/blog/category/software_development/">Software development</a>
+              <a href="/blog/category/software_development/" class="category">Software development</a>
               
               
 
               
               <i class="icon fa fa-tags" title="Tags"></i>
               
-              <a href="/blog/tag/expression_engine/">Expression engine</a>
+              <a href="/blog/tag/expression_engine/" class="tag">Expression engine</a>
               
               
 
@@ -108,12 +102,12 @@
 
 <p>I like it, it has its quirks but I think it not only helps improve rendering but also cleans up your template code considerably. Traditionally at my old studio, and I want to note there are several ways to do this, we would typically have a section, say About, with a landing page that listed all the entries for that section and a detail page that had the actually content for the entry. To set this up you would create your section group:</p>
 
-<div class="highlight"><pre><code class="text language-text" data-lang="text">/about.group
+<div class="highlight"><pre><code class="language-text" data-lang="text">/about.group
 </code></pre></div>
 
 <p>Within there, you would create the index page along with the <code>.landing</code> and <code>.detail</code> page. So now your structure looks like this:</p>
 
-<div class="highlight"><pre><code class="text language-text" data-lang="text">/about.group
+<div class="highlight"><pre><code class="language-text" data-lang="text">/about.group
     index.html
     .landing.html
     .detail.html
@@ -121,7 +115,7 @@
 
 <p>These would then be embedded within the index page depending on a segment conditional. If <code>segment_2</code> is empty, we embed the landing page, else we show the detail page and let EE figure out the entry.</p>
 
-<div class="highlight"><pre><code class="text language-text" data-lang="text">{if segment_2 == &#39;&#39;}
+<div class="highlight"><pre><code class="language-text" data-lang="text">{if segment_2 == &#39;&#39;}
     {embed=&quot;about/.landing&quot;}
 {if:else}
     {embed=&quot;about/.detail&quot;}
@@ -138,7 +132,7 @@
 
 <p>Within here, I want to set up the container for all your page content so we will be getting all the stash variables we are going to set, starting with the <code>&lt;head&gt;</code>. Now, I am a big fan of SEO lite, so we will put a block in the head to grab a section title:</p>
 
-<div class="highlight"><pre><code class="text language-text" data-lang="text">&lt;!DOCTYPE HTML&gt;
+<div class="highlight"><pre><code class="language-text" data-lang="text">&lt;!DOCTYPE HTML&gt;
 &lt;html&gt;
     &lt;head&gt;
         {if segment_2 == &#39;&#39;}
@@ -156,26 +150,26 @@
 
 <p>Down to the <code>&lt;body&gt;</code> tag, I like to add in a section identifier that I can later use as a &#39;hook&#39; for any custom css or script:</p>
 
-<div class="highlight"><pre><code class="text language-text" data-lang="text">&lt;body id=&quot;{exp:stash:get name=&#39;id&#39;}&quot;&gt;
+<div class="highlight"><pre><code class="language-text" data-lang="text">&lt;body id=&quot;{exp:stash:get name=&#39;id&#39;}&quot;&gt;
 </code></pre></div>
 
 <p>Going down to where you will have your content, you will probably have something like <code>&lt;div id=&quot;main&quot;&gt;</code> or <code>&lt;article&gt;</code> tag, let&#39;s grab our stashed content:</p>
 
-<div class="highlight"><pre><code class="text language-text" data-lang="text">&lt;div id=&quot;main&quot;&gt;
+<div class="highlight"><pre><code class="language-text" data-lang="text">&lt;div id=&quot;main&quot;&gt;
     {exp:stash:get name=&quot;content&quot;}
 &lt;/div&gt;
 </code></pre></div>
 
 <p>I also want to grab the secondary content, such as section menu along with any callouts:</p>
 
-<div class="highlight"><pre><code class="text language-text" data-lang="text">&lt;div id=&quot;secondary&quot;&gt;
+<div class="highlight"><pre><code class="language-text" data-lang="text">&lt;div id=&quot;secondary&quot;&gt;
     {exp:stash:get name=&quot;secondary&quot;}
 &lt;/div&gt;
 </code></pre></div>
 
 <p>Now, let&#39;s get to the actually template. First we can devote the first lines to some general comments, Copyright/TOS, documentation, etc. I like have a boiler plate section that lists the developer who last edited it too.</p>
 
-<div class="highlight"><pre><code class="text language-text" data-lang="text">{!--
+<div class="highlight"><pre><code class="language-text" data-lang="text">{!--
 Page: AwesomeSite.com
 Section: About
 Last Edited By: Chris Hardee (chris.hardee@grok-interactive.com)
@@ -188,7 +182,7 @@ Notes: &lt; page notes &gt;
 
 <p>Now let&#39;s add our one and only embed:</p>
 
-<div class="highlight"><pre><code class="text language-text" data-lang="text">{!-- Layout --}
+<div class="highlight"><pre><code class="language-text" data-lang="text">{!-- Layout --}
 {embed=&quot;_layouts/page&quot;}
 </code></pre></div>
 
@@ -196,13 +190,13 @@ Notes: &lt; page notes &gt;
 
 <p>Next, and I will talk about this in the next section, I like to assign an ID variable that we can use for any css or script for that specific section:</p>
 
-<div class="highlight"><pre><code class="text language-text" data-lang="text">{!-- ID --}
+<div class="highlight"><pre><code class="language-text" data-lang="text">{!-- ID --}
 {exp:stash:set name=&quot;id&quot;}about{/exp:stash:set}
 </code></pre></div>
 
 <p>Our SEO Title we are grabbing from earlier:</p>
 
-<div class="highlight"><pre><code class="text language-text" data-lang="text">{!-- SEO Title --}
+<div class="highlight"><pre><code class="language-text" data-lang="text">{!-- SEO Title --}
 {exp:stash:set name=&quot;seo-title&quot; parse=&quot;inward&quot;}
 {exp:seo_lite default_title=&quot;About Us&quot;}
 {/exp:stash:set}
@@ -210,7 +204,7 @@ Notes: &lt; page notes &gt;
 
 <p>Now let&#39;s start on the content, we will want to first check to see if we are on a landing page or a detail page.</p>
 
-<div class="highlight"><pre><code class="text language-text" data-lang="text">{!-- Content --}
+<div class="highlight"><pre><code class="language-text" data-lang="text">{!-- Content --}
 {exp:stash:set name=&quot;content&quot;}
     {if segment_2 == &#39;&#39;}
     {if:else}
@@ -220,7 +214,7 @@ Notes: &lt; page notes &gt;
 
 <p>Looping through our entries depending on whether we are on a landing page or entry page.</p>
 
-<div class="highlight"><pre><code class="text language-text" data-lang="text">{!-- Content --}
+<div class="highlight"><pre><code class="language-text" data-lang="text">{!-- Content --}
 {exp:stash:set name=&quot;content&quot;}
     {if segment_2 == &#39;&#39;}
         &lt;h1&gt;About Us&lt;/h1&gt;
@@ -247,7 +241,7 @@ Notes: &lt; page notes &gt;
 
 <p>Instead what I do is use that ID in a special section or separate file for any changes. In our <code>custom.css</code> file:</p>
 
-<div class="highlight"><pre><code class="text language-text" data-lang="text">/* Section Styles */
+<div class="highlight"><pre><code class="language-text" data-lang="text">/* Section Styles */
 
 body#about h1 {
     font-family: Comic Sans, Comic Sans MS, cursive;
@@ -298,7 +292,7 @@ body#about h1 {
         
         
         <div class="well">
-  <h4>Author Profile</h4>
+  <h4><i class="icon fa fa-user" title="Author"></i> Author Profile</h4>
 
   <strong>Chris Hardee</strong>
   <p>Developer at Grok-Interactive and first full-time employee. Develops in Rails & PHP, along with projects for/involving Expression Engine, Responsive Web Design, and Mobile Applications.</p>
@@ -309,20 +303,38 @@ body#about h1 {
         
 
         <div class="well">
-  <h4>Categories</h4>
+  <h4><i class="icon fa fa-folder" title="Categories"></i> Categories</h4>
   <ul class="nav nav-list">
     
-    <li><a href="/blog/category/general/">General</a></li>
+
+    <li><a href="/blog/category/general/">
+      General
+    </a></li>
     
-    <li><a href="/blog/category/software_development/">Software development</a></li>
+
+    <li><a href="/blog/category/software_development/">
+      Software development
+    </a></li>
     
-    <li><a href="/blog/category/training/">Training</a></li>
+
+    <li><a href="/blog/category/training/">
+      Training
+    </a></li>
     
-    <li><a href="/blog/category/testing/">Testing</a></li>
+
+    <li><a href="/blog/category/testing/">
+      Testing
+    </a></li>
     
-    <li><a href="/blog/category/environments/">Environments</a></li>
+
+    <li><a href="/blog/category/environments/">
+      Environments
+    </a></li>
     
-    <li><a href="/blog/category/business_development/">Business development</a></li>
+
+    <li><a href="/blog/category/business_development/">
+      Business development
+    </a></li>
     
   </ul>
 </div>
@@ -330,24 +342,24 @@ body#about h1 {
 
         
 <div class="well">
-    <h4>Authors</h4>
-    <ul class="nav nav-list">
-        
-        <li><a href="/blog//jason-straughan">Jason Straughan</a></li>
-        
-        <li><a href="/blog//jason-ellis">Jason Ellis</a></li>
-        
-        <li><a href="/blog//josh-freeman">Josh Freeman</a></li>
-        
-        <li><a href="/blog//chris-hardee">Chris Hardee</a></li>
-        
+  <h4><i class="icon fa fa-users" title="Authors"></i> Authors</h4>
+  <ul class="nav nav-list">
+    
+    <li><a href="/blog/author/jason-straughan">Jason Straughan</a></li>
+    
+    <li><a href="/blog/author/jason-ellis">Jason Ellis</a></li>
+    
+    <li><a href="/blog/author/josh-freeman">Josh Freeman</a></li>
+    
+    <li><a href="/blog/author/chris-hardee">Chris Hardee</a></li>
+    
   </ul>
 </div>
 
 
 
         <div class="well">
-  <h4>Tags</h4>
+  <h4><i class="icon fa fa-tags" title="Categories"></i> Tags</h4>
 
   <ul class="nav nav-list">
     

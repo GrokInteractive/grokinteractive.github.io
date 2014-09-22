@@ -68,30 +68,24 @@
 
           <div class="post">
 
-            <div class="date pull-right">
-              <strong class="month">Apr</strong>
-              <strong class="year">2014</strong>
-              <strong class="day">11</strong>
-            </div>
-
             
             <a href="/blog/josh-freeman"><img class="gravatar" src="http://www.gravatar.com/avatar/a5e7d050656b7d7353c5d7daa70a8681?s=60"></img></a>
             
 
             <h1><a href="/blog/object-inheritance/" rel="bookmark" title="Link to Your Presence Is Required">Your Presence Is Required</a></h1>
-            <h5>by <a href="/blog/josh-freeman">Josh Freeman</a>
-               on Apr 11, 2014
+            <h5>by <a href="/blog/josh-freeman" class="author">Josh Freeman</a>
+              &nbsp;&nbsp;&nbsp;<strong>Apr 11, 2014</strong>&nbsp;&nbsp;&nbsp;
               
               <i class="icon fa fa-folder" title="Categories"></i>
               
-              <a href="/blog/category/training/">Training</a>
+              <a href="/blog/category/training/" class="category">Training</a>
               
               
 
               
               <i class="icon fa fa-tags" title="Tags"></i>
               
-              <a href="/blog/tag/php/">Php</a>
+              <a href="/blog/tag/php/" class="tag">Php</a>
               
               
 
@@ -108,7 +102,7 @@
 
 <p>My attempt was simple: store lists of words by type (nouns, adjectives, first names, etc.) in their own files as an array and return that array when included. I created a base class that on construction requires a list once and sets it to a static property that is accessible from any child classes.</p>
 
-<div class="highlight"><pre><code class="php language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<div class="highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
 
 <span class="sd">/**</span>
 <span class="sd"> * nouns-list.php</span>
@@ -119,7 +113,7 @@
     <span class="s1">&#39;dog&#39;</span><span class="p">,</span>
     <span class="s1">&#39;house&#39;</span>
 <span class="p">];</span>
-</code></pre></div><div class="highlight"><pre><code class="php language-php" data-lang="php"><span class="x">class BaseSeeder</span>
+</code></pre></div><div class="highlight"><pre><code class="language-php" data-lang="php"><span class="x">class BaseSeeder</span>
 <span class="x">{</span>
 <span class="x">    public static $nouns;</span>
 
@@ -173,7 +167,7 @@
 
 <p>The first piece in this puzzle is to understand file includes and the different ways to include a file. There are four ways to include a file: <strong>include</strong>, <strong>include_once</strong>, <strong>require</strong>, and <strong>require_once</strong>. The function names are pretty self-explanitory, but a brief explanation follows.</p>
 
-<div class="highlight"><pre><code class="php language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<div class="highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
 
 <span class="sd">/**</span>
 <span class="sd"> * Open a file and process its contents</span>
@@ -212,7 +206,7 @@
 
 <p>Let&#39;s take our previous example and look at the final result when classes <code>FooSeeder</code> and <code>BarSeeder</code> extends <code>BaseSeeder</code>.</p>
 
-<div class="highlight"><pre><code class="php language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<div class="highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
 
 <span class="sd">/**</span>
 <span class="sd"> * Pretend that this class is actually defined as `class FooSeeder extends BaseSeeder`,</span>
@@ -313,7 +307,7 @@ either object once. If we instantiate either object again, the <code>__construct
         
         
         <div class="well">
-  <h4>Author Profile</h4>
+  <h4><i class="icon fa fa-user" title="Author"></i> Author Profile</h4>
 
   <strong>Josh Freeman</strong>
   <p></p>
@@ -323,20 +317,38 @@ either object once. If we instantiate either object again, the <code>__construct
         
 
         <div class="well">
-  <h4>Categories</h4>
+  <h4><i class="icon fa fa-folder" title="Categories"></i> Categories</h4>
   <ul class="nav nav-list">
     
-    <li><a href="/blog/category/general/">General</a></li>
+
+    <li><a href="/blog/category/general/">
+      General
+    </a></li>
     
-    <li><a href="/blog/category/software_development/">Software development</a></li>
+
+    <li><a href="/blog/category/software_development/">
+      Software development
+    </a></li>
     
-    <li><a href="/blog/category/training/">Training</a></li>
+
+    <li><a href="/blog/category/training/">
+      Training
+    </a></li>
     
-    <li><a href="/blog/category/testing/">Testing</a></li>
+
+    <li><a href="/blog/category/testing/">
+      Testing
+    </a></li>
     
-    <li><a href="/blog/category/environments/">Environments</a></li>
+
+    <li><a href="/blog/category/environments/">
+      Environments
+    </a></li>
     
-    <li><a href="/blog/category/business_development/">Business development</a></li>
+
+    <li><a href="/blog/category/business_development/">
+      Business development
+    </a></li>
     
   </ul>
 </div>
@@ -344,24 +356,24 @@ either object once. If we instantiate either object again, the <code>__construct
 
         
 <div class="well">
-    <h4>Authors</h4>
-    <ul class="nav nav-list">
-        
-        <li><a href="/blog//jason-straughan">Jason Straughan</a></li>
-        
-        <li><a href="/blog//jason-ellis">Jason Ellis</a></li>
-        
-        <li><a href="/blog//josh-freeman">Josh Freeman</a></li>
-        
-        <li><a href="/blog//chris-hardee">Chris Hardee</a></li>
-        
+  <h4><i class="icon fa fa-users" title="Authors"></i> Authors</h4>
+  <ul class="nav nav-list">
+    
+    <li><a href="/blog/author/jason-straughan">Jason Straughan</a></li>
+    
+    <li><a href="/blog/author/jason-ellis">Jason Ellis</a></li>
+    
+    <li><a href="/blog/author/josh-freeman">Josh Freeman</a></li>
+    
+    <li><a href="/blog/author/chris-hardee">Chris Hardee</a></li>
+    
   </ul>
 </div>
 
 
 
         <div class="well">
-  <h4>Tags</h4>
+  <h4><i class="icon fa fa-tags" title="Categories"></i> Tags</h4>
 
   <ul class="nav nav-list">
     

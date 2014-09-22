@@ -68,30 +68,24 @@
 
           <div class="post">
 
-            <div class="date pull-right">
-              <strong class="month">Mar</strong>
-              <strong class="year">2014</strong>
-              <strong class="day">27</strong>
-            </div>
-
             
             <a href="/blog/jason-ellis"><img class="gravatar" src="http://www.gravatar.com/avatar/86e6a10c32d24185216f45810a9729c8?s=60"></img></a>
             
 
             <h1><a href="/blog/javascript-everything-is-an-object-wrong/" rel="bookmark" title="Link to "In Javascript everything is an object!" Mmm, Wrong.">"In Javascript everything is an object!" Mmm, Wrong.</a></h1>
-            <h5>by <a href="/blog/jason-ellis">Jason Ellis</a>
-               on Mar 27, 2014
+            <h5>by <a href="/blog/jason-ellis" class="author">Jason Ellis</a>
+              &nbsp;&nbsp;&nbsp;<strong>Mar 27, 2014</strong>&nbsp;&nbsp;&nbsp;
               
               <i class="icon fa fa-folder" title="Categories"></i>
               
-              <a href="/blog/category/software_development/">Software development</a>
+              <a href="/blog/category/software_development/" class="category">Software development</a>
               
               
 
               
               <i class="icon fa fa-tags" title="Tags"></i>
               
-              <a href="/blog/tag/javascript/">Javascript</a>
+              <a href="/blog/tag/javascript/" class="tag">Javascript</a>
               
               
 
@@ -114,7 +108,7 @@
 
 <p>So for example if I create a variable and assign it a string value, the type of that variable is &quot;string&quot;, not &quot;object&quot;;</p>
 
-<div class="highlight"><pre><code class="text language-text" data-lang="text">// Create a primitive variable with &quot;foobar&quot; as the value.
+<div class="highlight"><pre><code class="language-text" data-lang="text">// Create a primitive variable with &quot;foobar&quot; as the value.
 var foo = &quot;foobar&quot;;
 
 console.log(typeof foo);
@@ -123,7 +117,7 @@ console.log(typeof foo);
 
 <p>If we then perform method calls on that &quot;string&quot; primitive, it will first convert the variable into an auto-boxed string wrapper object and call the requested method. The temporary object is only available to that property access and does not replace primitive. As such, once the method has return it&#39;s results it will dispose of the String wrapper object entirely and return the primitive that was generated.</p>
 
-<div class="highlight"><pre><code class="text language-text" data-lang="text">// Create a primitive variable with &quot;bar&quot; as the value, from the foo primitive.
+<div class="highlight"><pre><code class="language-text" data-lang="text">// Create a primitive variable with &quot;bar&quot; as the value, from the foo primitive.
 var bar = foo.substring(3,6);
 
 console.log(typeof bar);
@@ -132,7 +126,7 @@ console.log(typeof bar);
 
 <p>Why is this important?  A primary consequence of this is that it looks like you can assign properties to a primitive like you can an object or function, and in fact it will allow you to do it but it does not actually do anything and you can never retrieve those properties.</p>
 
-<div class="highlight"><pre><code class="text language-text" data-lang="text">// Create a primitive variable with &quot;foo&quot; as the value.
+<div class="highlight"><pre><code class="language-text" data-lang="text">// Create a primitive variable with &quot;foo&quot; as the value.
 var foo = &quot;foo&quot;;
 // Now assign a property of foo with the value &quot;bar&quot; -- Note it allows it.
 foo.bar = &quot;bar&quot;;
@@ -145,7 +139,7 @@ console.log(foo.bar);
 
 <p>Functions on the other hand don&#39;t behave this way because they inherit from <code>Object.prototype</code> which makes them first order Objects as far as javascript is concerned. This means that functions can do anything an object can do, to include having randomly assigned properties;</p>
 
-<div class="highlight"><pre><code class="text language-text" data-lang="text">// Create a function
+<div class="highlight"><pre><code class="language-text" data-lang="text">// Create a function
 var foo = function() {};
 foo.bar = &quot;bar&quot;;
 
@@ -188,7 +182,7 @@ console.log(foo.bar);
         
         
         <div class="well">
-  <h4>Author Profile</h4>
+  <h4><i class="icon fa fa-user" title="Author"></i> Author Profile</h4>
 
   <strong>Jason Ellis</strong>
   <p>The CTO of Grok Interactive and is a calm, considerate problem solver that has been working as a software engineer in the industry for over 15 years.</p>
@@ -199,20 +193,38 @@ console.log(foo.bar);
         
 
         <div class="well">
-  <h4>Categories</h4>
+  <h4><i class="icon fa fa-folder" title="Categories"></i> Categories</h4>
   <ul class="nav nav-list">
     
-    <li><a href="/blog/category/general/">General</a></li>
+
+    <li><a href="/blog/category/general/">
+      General
+    </a></li>
     
-    <li><a href="/blog/category/software_development/">Software development</a></li>
+
+    <li><a href="/blog/category/software_development/">
+      Software development
+    </a></li>
     
-    <li><a href="/blog/category/training/">Training</a></li>
+
+    <li><a href="/blog/category/training/">
+      Training
+    </a></li>
     
-    <li><a href="/blog/category/testing/">Testing</a></li>
+
+    <li><a href="/blog/category/testing/">
+      Testing
+    </a></li>
     
-    <li><a href="/blog/category/environments/">Environments</a></li>
+
+    <li><a href="/blog/category/environments/">
+      Environments
+    </a></li>
     
-    <li><a href="/blog/category/business_development/">Business development</a></li>
+
+    <li><a href="/blog/category/business_development/">
+      Business development
+    </a></li>
     
   </ul>
 </div>
@@ -220,24 +232,24 @@ console.log(foo.bar);
 
         
 <div class="well">
-    <h4>Authors</h4>
-    <ul class="nav nav-list">
-        
-        <li><a href="/blog//jason-straughan">Jason Straughan</a></li>
-        
-        <li><a href="/blog//jason-ellis">Jason Ellis</a></li>
-        
-        <li><a href="/blog//josh-freeman">Josh Freeman</a></li>
-        
-        <li><a href="/blog//chris-hardee">Chris Hardee</a></li>
-        
+  <h4><i class="icon fa fa-users" title="Authors"></i> Authors</h4>
+  <ul class="nav nav-list">
+    
+    <li><a href="/blog/author/jason-straughan">Jason Straughan</a></li>
+    
+    <li><a href="/blog/author/jason-ellis">Jason Ellis</a></li>
+    
+    <li><a href="/blog/author/josh-freeman">Josh Freeman</a></li>
+    
+    <li><a href="/blog/author/chris-hardee">Chris Hardee</a></li>
+    
   </ul>
 </div>
 
 
 
         <div class="well">
-  <h4>Tags</h4>
+  <h4><i class="icon fa fa-tags" title="Categories"></i> Tags</h4>
 
   <ul class="nav nav-list">
     

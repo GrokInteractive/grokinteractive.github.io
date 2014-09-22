@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Grok Interactive</title>
-        <description>Grok Interactive's web developers create outstanding applications</description>      
+        <description>Grok Interactive&#39;s web developers create outstanding applications</description>      
         <link>http://www.grok-interactive.com</link>
         <atom:link href="http://www.grok-interactive.com/feed.xml" rel="self" type="application/rss+xml" />
         
@@ -42,7 +42,7 @@
 
 &lt;p&gt;My attempt was simple: store lists of words by type (nouns, adjectives, first names, etc.) in their own files as an array and return that array when included. I created a base class that on construction requires a list once and sets it to a static property that is accessible from any child classes.&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;php language-php&quot; data-lang=&quot;php&quot;&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
 
 &lt;span class=&quot;sd&quot;&gt;/**&lt;/span&gt;
 &lt;span class=&quot;sd&quot;&gt; * nouns-list.php&lt;/span&gt;
@@ -53,7 +53,7 @@
     &lt;span class=&quot;s1&quot;&gt;&amp;#39;dog&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
     &lt;span class=&quot;s1&quot;&gt;&amp;#39;house&amp;#39;&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;php language-php&quot; data-lang=&quot;php&quot;&gt;&lt;span class=&quot;x&quot;&gt;class BaseSeeder&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;span class=&quot;x&quot;&gt;class BaseSeeder&lt;/span&gt;
 &lt;span class=&quot;x&quot;&gt;{&lt;/span&gt;
 &lt;span class=&quot;x&quot;&gt;    public static $nouns;&lt;/span&gt;
 
@@ -107,7 +107,7 @@
 
 &lt;p&gt;The first piece in this puzzle is to understand file includes and the different ways to include a file. There are four ways to include a file: &lt;strong&gt;include&lt;/strong&gt;, &lt;strong&gt;include_once&lt;/strong&gt;, &lt;strong&gt;require&lt;/strong&gt;, and &lt;strong&gt;require_once&lt;/strong&gt;. The function names are pretty self-explanitory, but a brief explanation follows.&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;php language-php&quot; data-lang=&quot;php&quot;&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
 
 &lt;span class=&quot;sd&quot;&gt;/**&lt;/span&gt;
 &lt;span class=&quot;sd&quot;&gt; * Open a file and process its contents&lt;/span&gt;
@@ -146,7 +146,7 @@
 
 &lt;p&gt;Let&amp;#39;s take our previous example and look at the final result when classes &lt;code&gt;FooSeeder&lt;/code&gt; and &lt;code&gt;BarSeeder&lt;/code&gt; extends &lt;code&gt;BaseSeeder&lt;/code&gt;.&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;php language-php&quot; data-lang=&quot;php&quot;&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
 
 &lt;span class=&quot;sd&quot;&gt;/**&lt;/span&gt;
 &lt;span class=&quot;sd&quot;&gt; * Pretend that this class is actually defined as `class FooSeeder extends BaseSeeder`,&lt;/span&gt;
@@ -233,47 +233,47 @@ either object once. If we instantiate either object again, the &lt;code&gt;__con
 
 &lt;p&gt;I use RVM in OSX, as it allows you to deal with multiple versions of Ruby per project. If you open up your trusty command line (this can be done through Ubuntu&amp;#39;s Software Center, but it is much more cumbersome), and first make sure your repo list is up to date:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;sudo apt-get update
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo apt-get update
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;You should have curl installed by default if not run &lt;code&gt;sudo apt-get install curl&lt;/code&gt;, then we want to grab RVM along with Rails so run this command:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;\curl -sSL https://get.rvm.io | bash -s stable --rails
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;\curl -sSL https://get.rvm.io | bash -s stable --rails
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;It will run through, download, and install RVM along with Rails. It might ask you a few questions on your personal setup. After that is done, you want to make sure your shell is connected to RVM&amp;#39;s scripts:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;source ~/.rvm/scripts/rvm
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;source ~/.rvm/scripts/rvm
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Let us also add this to our shell config:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;echo &amp;quot;source ~/.rvm/scripts/rvm&amp;quot; &amp;gt;&amp;gt; ~/.bashrc
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;echo &amp;quot;source ~/.rvm/scripts/rvm&amp;quot; &amp;gt;&amp;gt; ~/.bashrc
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Lastly, see if there are any additional requirements:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;rvm requirements
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;rvm requirements
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;If that gives you weird errors, you can try to run everything through the apt-get way:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;sudo apt-get install git-core curl zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libgdbm-dev libncurses5-dev automake libtool bison libffi-dev
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo apt-get install git-core curl zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libgdbm-dev libncurses5-dev automake libtool bison libffi-dev
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Grab Ruby:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;rvm install ruby
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;rvm install ruby
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Then RubyGems:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;rvm rubygems current
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;rvm rubygems current
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;If you skipped out on installing Rails or had an error, run:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;gem install rails
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;gem install rails
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;That should be it!&lt;/p&gt;
@@ -282,14 +282,14 @@ either object once. If we instantiate either object again, the &lt;code&gt;__con
 
 &lt;p&gt;Ok, everything should be ready to go to create a Rails app. Run:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;rails new blog
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;rails new blog
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Did everything work ok? If not, you might want to go back and make sure Rails is installed, RVM is not acting up again, or you are in fact mistaken and are attempting these commands in Windows ME.&lt;/p&gt;
 
 &lt;p&gt;Go to your new app:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;cd blog
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;cd blog
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Now let us push this baby to Github.&lt;/p&gt;
@@ -298,30 +298,30 @@ either object once. If we instantiate either object again, the &lt;code&gt;__con
 
 &lt;p&gt;We all use Git, though I remember when Ubuntu required Bzr for everything in Launchpad. In addition to Git, the hosted Git service Github is also widely used including myself. Let us set it up:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;sudo apt-get install git
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo apt-get install git
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;I am assuming you have created an account on Github already, if not do so, then create a test repo. I like to have a personal repo to host my emacs config. After you have created an account, you will want to set your name and email:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;git config --global user.name &amp;quot;Chris Hardee&amp;quot;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;git config --global user.name &amp;quot;Chris Hardee&amp;quot;
 git config --global user.email &amp;quot;chris.hardee@grok-interactive.com&amp;quot;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Now let us create this repo, add everything to it, then commit it all:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;git init
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;git init
 git add *
 git commit -a -m &amp;quot;Initial Commit&amp;quot;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Now we want to add the url origin that Github provided:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;git remote add origin https://github.com/&amp;lt;username&amp;gt;/&amp;lt;repoName&amp;gt;.git
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;git remote add origin https://github.com/&amp;lt;username&amp;gt;/&amp;lt;repoName&amp;gt;.git
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Last we push:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;git push -u origin master
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;git push -u origin master
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Everything work ok? If not you might want to make sure you are authenticated on Github.&lt;/p&gt;
@@ -369,7 +369,7 @@ git commit -a -m &amp;quot;Initial Commit&amp;quot;
 
 &lt;p&gt;It was pretty clear that the previous developer either did not understand CSS very well or could not care less (probably a little of both).&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;css language-css&quot; data-lang=&quot;css&quot;&gt;&lt;span class=&quot;o&quot;&gt;//&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;Do&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;Do&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;ever&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;Unless&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;you&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;have&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;to&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.)&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-css&quot; data-lang=&quot;css&quot;&gt;&lt;span class=&quot;o&quot;&gt;//&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;Do&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;Do&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;ever&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;Unless&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;you&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;have&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;to&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.)&lt;/span&gt;
 
 &lt;span class=&quot;nt&quot;&gt;body&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;.ie&lt;/span&gt;  &lt;span class=&quot;nf&quot;&gt;#mainheader&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;nav&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;ul&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;.nav&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;li&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;.nav-link.active&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;black&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;!important&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
@@ -382,11 +382,11 @@ git commit -a -m &amp;quot;Initial Commit&amp;quot;
 
 &lt;p&gt;Say we have a style sheet defines a style for an element, a style tag that has a conflicting property value for the same element, and an inline style that also has a conflicting property value for the same element.&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;css language-css&quot; data-lang=&quot;css&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;!&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;--&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;styles&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;.css&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-css&quot; data-lang=&quot;css&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;!&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;--&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;styles&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;.css&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
 &lt;span class=&quot;nt&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;black&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;html language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;c&quot;&gt;&amp;lt;!-- index.html --&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;c&quot;&gt;&amp;lt;!-- index.html --&amp;gt;&lt;/span&gt;
 &lt;span class=&quot;nt&quot;&gt;&amp;lt;style&amp;gt;&lt;/span&gt;
 &lt;span class=&quot;nt&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;green&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
@@ -562,7 +562,7 @@ git commit -a -m &amp;quot;Initial Commit&amp;quot;
 
 &lt;p&gt;Now is a good time to discuss what is really &lt;strong&gt;!important&lt;/strong&gt;. Declaring a property &lt;strong&gt;!important&lt;/strong&gt; is an quick and easy way to override a selector you cannot modify. Be careful with this approach, however; once you decalare a selector&amp;#39;s property as &lt;strong&gt;!important&lt;/strong&gt;, the only way to then override it is to again declare that property as &lt;strong&gt;!important&lt;/strong&gt; with a selector that has higher specificity.&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;css language-css&quot; data-lang=&quot;css&quot;&gt;&lt;span class=&quot;nt&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-css&quot; data-lang=&quot;css&quot;&gt;&lt;span class=&quot;nt&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;black&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
@@ -618,7 +618,7 @@ git commit -a -m &amp;quot;Initial Commit&amp;quot;
 
 &lt;p&gt;It&amp;#39;s time to figure out what&amp;#39;s going on.&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;~/path/to/project&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;grep -r -P &lt;span class=&quot;s1&quot;&gt;&amp;#39;\t&amp;#39;&lt;/span&gt; .
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;~/path/to/project&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;grep -r -P &lt;span class=&quot;s1&quot;&gt;&amp;#39;\t&amp;#39;&lt;/span&gt; .
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Uh, oh...&lt;/p&gt;
@@ -633,12 +633,12 @@ git commit -a -m &amp;quot;Initial Commit&amp;quot;
 
 &lt;p&gt;Inside a Git respository, you&amp;#39;ll find the hooks directory:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;~/path/to/project/&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; .git/hooks
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;~/path/to/project/&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; .git/hooks
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Inside this directory, git provides several sample hooks to demonstrate their naming convention and functionality.  To make any sample hook work, all you need to do is rename it and ensure it is executable (if it is not already):&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;~/path/to/project/.git/hooks&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;mv pre-commit.sample pre-commit
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;~/path/to/project/.git/hooks&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;mv pre-commit.sample pre-commit
 ~/path/to/project/.git/hooks&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;chmod +x pre-commit
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
@@ -650,13 +650,13 @@ git commit -a -m &amp;quot;Initial Commit&amp;quot;
 
 &lt;p&gt;Let&amp;#39;s build our git hook, piece by piece. First, we need to declare that we are using Ruby to execute this file. All work is done in &lt;code&gt;.git/hooks/pre-commit&lt;/code&gt;&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;c&quot;&gt;#!/usr/bin/ruby&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;c&quot;&gt;#!/usr/bin/ruby&lt;/span&gt;
 ...
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Now, it&amp;#39;s time to get the list of files we are about to commit. Git has a handy command for just this purpose. &lt;code&gt;git diff --cached --name-only&lt;/code&gt;. We&amp;#39;ll git this list and map it to an array. We&amp;#39;ll also initialize our &lt;code&gt;offending_lines&lt;/code&gt; hash.&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;ruby language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;git_files&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;sb&quot;&gt;`git diff --cached --name-only`&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lines&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:chomp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 
 &lt;span class=&quot;n&quot;&gt;offending_lines&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{}&lt;/span&gt;
@@ -665,7 +665,7 @@ git commit -a -m &amp;quot;Initial Commit&amp;quot;
 
 &lt;p&gt;With the list of files in hand, we will check each file, line-by-line, for the tab character. Two quick gotchas: we need to ensure that the files we are checking are actually files and text-based (not images, archives, etc.). Without including a library, we can check like this:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;ruby language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;
 &lt;span class=&quot;c1&quot;&gt;# https://www.ruby-forum.com/topic/122170#544763&lt;/span&gt;
 
 &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;File&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;binary?&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;
@@ -690,7 +690,7 @@ git commit -a -m &amp;quot;Initial Commit&amp;quot;
 
 &lt;p&gt;Let&amp;#39;s find those elusive tabs. We just iterate through each line of each staged file, check for a tab character, and add it to the &lt;code&gt;offending_lines&lt;/code&gt; hash if found.&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;ruby language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;git_files&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;each&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
 
   &lt;span class=&quot;k&quot;&gt;next&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;unless&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;File&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;file?&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
@@ -716,7 +716,7 @@ git commit -a -m &amp;quot;Initial Commit&amp;quot;
 
 &lt;p&gt;If we found any tabs, we need to output the results and exit with a non-zero status.&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;ruby language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;unless&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;offending_lines&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;empty?&lt;/span&gt;
 
   &lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;
@@ -740,7 +740,7 @@ git commit -a -m &amp;quot;Initial Commit&amp;quot;
 &lt;p&gt;.git/hooks/pre-commit&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;ruby language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;c1&quot;&gt;#!/usr/bin/ruby&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;c1&quot;&gt;#!/usr/bin/ruby&lt;/span&gt;
 
 &lt;span class=&quot;c1&quot;&gt;# https://www.ruby-forum.com/topic/122170#544763&lt;/span&gt;
 
@@ -796,7 +796,7 @@ git commit -a -m &amp;quot;Initial Commit&amp;quot;
 
 &lt;p&gt;Now, throw some tab characters into you&amp;#39;re project (a test branch, please). And try to commit the changes.&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;~/path/to/project&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git add posts/githooks.md
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;~/path/to/project&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git add posts/githooks.md
 ~/path/to/project&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git commit -m &lt;span class=&quot;s1&quot;&gt;&amp;#39;Attempted commit with tab characters&amp;#39;&lt;/span&gt;
 
 Tab characters are illegal in &lt;span class=&quot;nb&quot;&gt;source &lt;/span&gt;control and Tabs were found in the following files
@@ -812,7 +812,7 @@ posts/githooks.md
 
 &lt;p&gt;P.S. By the way, I forgot to fix my editor back to spaces before I committed. It really does work.&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;gitcommit &lt;span class=&quot;s2&quot;&gt;&amp;quot;Tutorial complete, requires proofreading&amp;quot;&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;gitcommit &lt;span class=&quot;s2&quot;&gt;&amp;quot;Tutorial complete, requires proofreading&amp;quot;&lt;/span&gt;
 
 Pre-Commit Hook Failure &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;.git/hooks/pre-commit&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
 Tab characters are illegal in &lt;span class=&quot;nb&quot;&gt;source &lt;/span&gt;control and Tabs were found in the following files
@@ -834,7 +834,7 @@ _posts/2014-03-26-githooks.md
 
 &lt;p&gt;Before we begin, let us look at a demo of what we are trying to accomplish. Notice the submit button at the bottom: it is disabled and you are unable to submit the form. Make any change to the form, and the submit button is no longer disabled. If you change the form &lt;em&gt;back&lt;/em&gt; to it is default state from the server, the submit button is disabled again. Awesome.&lt;/p&gt;
 
-&lt;iframe src=&quot;/demos/2014-03-26-save-me-not/save-me-not.html&quot; width=&quot;100%&quot; height=&quot;100%&quot; name=&quot;save-me-not-demo&quot; id=&quot;save-me-not-demo&quot; marginheight=&quot;0&quot; frameborder=&quot;0&quot; onLoad=&quot;autoResize('save-me-not-demo');&quot;&gt;&lt;/iframe&gt;
+&lt;iframe src=&quot;/demos/2014-03-26-save-me-not/save-me-not.html&quot; width=&quot;100%&quot; height=&quot;100%&quot; name=&quot;save-me-not-demo&quot; id=&quot;save-me-not-demo&quot; marginheight=&quot;0&quot; frameborder=&quot;0&quot; onLoad=&quot;autoResize(&#39;save-me-not-demo&#39;);&quot;&gt;&lt;/iframe&gt;
 
 &lt;script language=&quot;JavaScript&quot;&gt;
 // http://scottdizzle.com/viewtopic.php?f=11&amp;t=846#p978
@@ -858,7 +858,7 @@ function autoResize(id){
 
 &lt;p&gt;The first thing we will do is create our widget shell with the constructor method &amp;#39;_create&amp;#39;:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;javascript language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;widget&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;grok.savemenot&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;widget&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;grok.savemenot&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
 
     &lt;span class=&quot;nx&quot;&gt;_create&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
 
@@ -868,7 +868,7 @@ function autoResize(id){
 
 &lt;p&gt;The create method will server as the master method to intialize everything we need. First we will collect all the form elements that store information to be sent to the server. We&amp;#39;ll cache these elements to avoid repeated DOM searches. We&amp;#39;ll also collect the submit button separately.&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;javascript language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;_create&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;_create&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
 
     &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;inputs&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;element&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;find&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;input, textarea, select, button&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
 
@@ -881,7 +881,7 @@ function autoResize(id){
 
 &lt;p&gt;We have to treat checkboxes a little differently than other elements. Most form elements will send their name and value (even if empty) to the server upon submission. Checkboxes do not work this way; instead, their name and value is only sent to the server if checked. The value is really inconsequential to a checkbox&amp;mdash;only it is checked attribute matters to us.&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;javascript language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;_create&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;_create&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
 
     &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
 
@@ -917,7 +917,7 @@ function autoResize(id){
 
 &lt;p&gt;It is time to check the current state of the form to its beginning state. We will create a &lt;code&gt;_formChanged&lt;/code&gt; method that will return a simple boolean if the form is different now from when it was instantiated.&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;javascript language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;_formChanged&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;_formChanged&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
 
     &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;object1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;initialFormState&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
     &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;object2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;_getInputValues&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
@@ -939,7 +939,7 @@ function autoResize(id){
 
 &lt;p&gt;The call is simple. In effect, if the user changes the form, it compares the new state to the original state. If they&amp;#39;re different, the submitting element is enabled; if it is not, it is disabled. Easy peasy.&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;javascript language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;_inputsOn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;_inputsOn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
 
     &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;that&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 
@@ -961,7 +961,7 @@ function autoResize(id){
 
 &lt;p&gt;Now we have to handle a special case with the select element. When a browser loads the form, the option within a select element is automatically chosen. If it is a new form, and the user wants to only submit that element with the first option selected, they are out of luck. In this case, unless the HTML requires that a particular option be selected initially (such as when updating data), we will deselect all options by default.&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;javascript language-javascript&quot; data-lang=&quot;javascript&quot;&gt;    &lt;span class=&quot;nx&quot;&gt;_create&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;    &lt;span class=&quot;nx&quot;&gt;_create&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
 
         &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
 
@@ -998,7 +998,7 @@ function autoResize(id){
 
 &lt;p&gt;Your final widget should look similar to below:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;javascript language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;widget&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;grok.savemenot&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;widget&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;grok.savemenot&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
 
     &lt;span class=&quot;nx&quot;&gt;_create&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
 
@@ -1093,14 +1093,14 @@ function autoResize(id){
 
 &lt;p&gt;So how do we turn it on?&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;html language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;script&amp;gt;&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;script&amp;gt;&lt;/span&gt;
     &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;form&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;savemenot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
 &lt;span class=&quot;nt&quot;&gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Really? Yes, really. That is it. Do not forget to require jQuery and jQueryUI in your head, however. Check out the HTML used for the demo. I have omitted the html required by bootstrap for clarity.&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;html language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;!DOCTYPE html&amp;gt;&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;!DOCTYPE html&amp;gt;&lt;/span&gt;
 &lt;span class=&quot;nt&quot;&gt;&amp;lt;html&amp;gt;&lt;/span&gt;
 &lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
     &lt;span class=&quot;nt&quot;&gt;&amp;lt;title&amp;gt;&lt;/span&gt;Save Me Not Demo&lt;span class=&quot;nt&quot;&gt;&amp;lt;/title&amp;gt;&lt;/span&gt;
@@ -1170,7 +1170,7 @@ function autoResize(id){
 
 &lt;p&gt;So for example if I create a variable and assign it a string value, the type of that variable is &amp;quot;string&amp;quot;, not &amp;quot;object&amp;quot;;&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;// Create a primitive variable with &amp;quot;foobar&amp;quot; as the value.
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;// Create a primitive variable with &amp;quot;foobar&amp;quot; as the value.
 var foo = &amp;quot;foobar&amp;quot;;
 
 console.log(typeof foo);
@@ -1179,7 +1179,7 @@ console.log(typeof foo);
 
 &lt;p&gt;If we then perform method calls on that &amp;quot;string&amp;quot; primitive, it will first convert the variable into an auto-boxed string wrapper object and call the requested method. The temporary object is only available to that property access and does not replace primitive. As such, once the method has return it&amp;#39;s results it will dispose of the String wrapper object entirely and return the primitive that was generated.&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;// Create a primitive variable with &amp;quot;bar&amp;quot; as the value, from the foo primitive.
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;// Create a primitive variable with &amp;quot;bar&amp;quot; as the value, from the foo primitive.
 var bar = foo.substring(3,6);
 
 console.log(typeof bar);
@@ -1188,7 +1188,7 @@ console.log(typeof bar);
 
 &lt;p&gt;Why is this important?  A primary consequence of this is that it looks like you can assign properties to a primitive like you can an object or function, and in fact it will allow you to do it but it does not actually do anything and you can never retrieve those properties.&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;// Create a primitive variable with &amp;quot;foo&amp;quot; as the value.
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;// Create a primitive variable with &amp;quot;foo&amp;quot; as the value.
 var foo = &amp;quot;foo&amp;quot;;
 // Now assign a property of foo with the value &amp;quot;bar&amp;quot; -- Note it allows it.
 foo.bar = &amp;quot;bar&amp;quot;;
@@ -1201,7 +1201,7 @@ console.log(foo.bar);
 
 &lt;p&gt;Functions on the other hand don&amp;#39;t behave this way because they inherit from &lt;code&gt;Object.prototype&lt;/code&gt; which makes them first order Objects as far as javascript is concerned. This means that functions can do anything an object can do, to include having randomly assigned properties;&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;// Create a function
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;// Create a function
 var foo = function() {};
 foo.bar = &amp;quot;bar&amp;quot;;
 
@@ -1230,20 +1230,20 @@ console.log(foo.bar);
 
 &lt;p&gt;Firstly, lets create our object. There are two primary ways to create an object in javascript and there is technically no difference in that they do exactly the same thing so it is easiest to just think of &lt;code&gt;{}&lt;/code&gt; as a shortcut for &lt;code&gt;new Object()&lt;/code&gt;.&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;var obj = {};
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;var obj = {};
 var obj = new Object();
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;The primary difference between those two is that the literal notation &lt;code&gt;{}&lt;/code&gt; takes less space, is more recognizable as to what is happening, cannot be overridden by other code, and more importantly, allows you to assign values to keys at time of object initialization. Example; here we have an initialized object with two properties &lt;code&gt;foo&lt;/code&gt; and &lt;code&gt;baz&lt;/code&gt; already set.&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;var obj = { &amp;#39;foo&amp;#39; : &amp;#39;bar&amp;#39;, &amp;#39;baz&amp;#39; : false }
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;var obj = { &amp;#39;foo&amp;#39; : &amp;#39;bar&amp;#39;, &amp;#39;baz&amp;#39; : false }
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;But how do we access the methods and properties of an object correctly?&lt;/p&gt;
 
 &lt;p&gt;There are two ways of accessing object members, &amp;quot;dot notation&amp;quot; and &amp;quot;bracket notation&amp;quot;.&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;// Dot notation
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;// Dot notation
 obj.foo
 // Bracket notation
 obj[&amp;#39;foo&amp;#39;]
@@ -1257,7 +1257,7 @@ obj[&amp;#39;foo&amp;#39;]
 
 &lt;p&gt;That means you have a lot of options for valid key names, but also a lot that are not valid. You have a pretty high potential for breakage if you are new to the language and are unfamiliar with what is allowed and not allowed in identifiers.&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;obj.foo;      // valid
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;obj.foo;      // valid
 obj.for;      // valid even though for is a reserved word ***
 obj.4;        // invalid - identifiers cannot start with numbers
 obj.4foo;     // invalid - identifiers cannot start with numbers
@@ -1270,7 +1270,7 @@ obj.foo-bar;  // invalid - &amp;#39;-&amp;#39; is not a valid character for iden
 
 &lt;p&gt;Bracket notation expects an expression which evaluates to a string (or can be coerced into a string), so you can use &lt;em&gt;any character sequence as a property name&lt;/em&gt;.&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;obj[&amp;#39;foo&amp;#39;];       // valid
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;obj[&amp;#39;foo&amp;#39;];       // valid
 obj[&amp;#39;for&amp;#39;];       // valid - reserved words, are just words.
 obj[4];           // valid - only a number, not an issue!
 obj[&amp;#39;4foo&amp;#39;];      // valid - starting with a number, no problem
@@ -1286,7 +1286,7 @@ obj[foo];         // valid - will evaluate out foo and use it is value as the pr
 
 &lt;p&gt;For reading and writing code, Dot Notation is clearly faster and easier. But when it comes to code execution, Bracket notation is the faster performer. And double quotes are faster than single;&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;var obj.foo == 1;     // fast - about 2% slower than bracket notation
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;var obj.foo == 1;     // fast - about 2% slower than bracket notation
 var obj[&amp;#39;foo&amp;#39;] == 1;  // faster - slightly slower than double quotes
 var obj[&amp;quot;foo&amp;quot;] == 1;  // fastest - speed!
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
@@ -1312,12 +1312,12 @@ var obj[&amp;quot;foo&amp;quot;] == 1;  // fastest - speed!
 
 &lt;p&gt;I like it, it has its quirks but I think it not only helps improve rendering but also cleans up your template code considerably. Traditionally at my old studio, and I want to note there are several ways to do this, we would typically have a section, say About, with a landing page that listed all the entries for that section and a detail page that had the actually content for the entry. To set this up you would create your section group:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;/about.group
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;/about.group
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Within there, you would create the index page along with the &lt;code&gt;.landing&lt;/code&gt; and &lt;code&gt;.detail&lt;/code&gt; page. So now your structure looks like this:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;/about.group
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;/about.group
     index.html
     .landing.html
     .detail.html
@@ -1325,7 +1325,7 @@ var obj[&amp;quot;foo&amp;quot;] == 1;  // fastest - speed!
 
 &lt;p&gt;These would then be embedded within the index page depending on a segment conditional. If &lt;code&gt;segment_2&lt;/code&gt; is empty, we embed the landing page, else we show the detail page and let EE figure out the entry.&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;{if segment_2 == &amp;#39;&amp;#39;}
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;{if segment_2 == &amp;#39;&amp;#39;}
     {embed=&amp;quot;about/.landing&amp;quot;}
 {if:else}
     {embed=&amp;quot;about/.detail&amp;quot;}
@@ -1342,7 +1342,7 @@ var obj[&amp;quot;foo&amp;quot;] == 1;  // fastest - speed!
 
 &lt;p&gt;Within here, I want to set up the container for all your page content so we will be getting all the stash variables we are going to set, starting with the &lt;code&gt;&amp;lt;head&amp;gt;&lt;/code&gt;. Now, I am a big fan of SEO lite, so we will put a block in the head to grab a section title:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;&amp;lt;!DOCTYPE HTML&amp;gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&amp;lt;!DOCTYPE HTML&amp;gt;
 &amp;lt;html&amp;gt;
     &amp;lt;head&amp;gt;
         {if segment_2 == &amp;#39;&amp;#39;}
@@ -1360,26 +1360,26 @@ var obj[&amp;quot;foo&amp;quot;] == 1;  // fastest - speed!
 
 &lt;p&gt;Down to the &lt;code&gt;&amp;lt;body&amp;gt;&lt;/code&gt; tag, I like to add in a section identifier that I can later use as a &amp;#39;hook&amp;#39; for any custom css or script:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;&amp;lt;body id=&amp;quot;{exp:stash:get name=&amp;#39;id&amp;#39;}&amp;quot;&amp;gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&amp;lt;body id=&amp;quot;{exp:stash:get name=&amp;#39;id&amp;#39;}&amp;quot;&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Going down to where you will have your content, you will probably have something like &lt;code&gt;&amp;lt;div id=&amp;quot;main&amp;quot;&amp;gt;&lt;/code&gt; or &lt;code&gt;&amp;lt;article&amp;gt;&lt;/code&gt; tag, let&amp;#39;s grab our stashed content:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;&amp;lt;div id=&amp;quot;main&amp;quot;&amp;gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&amp;lt;div id=&amp;quot;main&amp;quot;&amp;gt;
     {exp:stash:get name=&amp;quot;content&amp;quot;}
 &amp;lt;/div&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;I also want to grab the secondary content, such as section menu along with any callouts:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;&amp;lt;div id=&amp;quot;secondary&amp;quot;&amp;gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&amp;lt;div id=&amp;quot;secondary&amp;quot;&amp;gt;
     {exp:stash:get name=&amp;quot;secondary&amp;quot;}
 &amp;lt;/div&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Now, let&amp;#39;s get to the actually template. First we can devote the first lines to some general comments, Copyright/TOS, documentation, etc. I like have a boiler plate section that lists the developer who last edited it too.&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;{!--
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;{!--
 Page: AwesomeSite.com
 Section: About
 Last Edited By: Chris Hardee (chris.hardee@grok-interactive.com)
@@ -1392,7 +1392,7 @@ Notes: &amp;lt; page notes &amp;gt;
 
 &lt;p&gt;Now let&amp;#39;s add our one and only embed:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;{!-- Layout --}
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;{!-- Layout --}
 {embed=&amp;quot;_layouts/page&amp;quot;}
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
@@ -1400,13 +1400,13 @@ Notes: &amp;lt; page notes &amp;gt;
 
 &lt;p&gt;Next, and I will talk about this in the next section, I like to assign an ID variable that we can use for any css or script for that specific section:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;{!-- ID --}
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;{!-- ID --}
 {exp:stash:set name=&amp;quot;id&amp;quot;}about{/exp:stash:set}
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Our SEO Title we are grabbing from earlier:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;{!-- SEO Title --}
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;{!-- SEO Title --}
 {exp:stash:set name=&amp;quot;seo-title&amp;quot; parse=&amp;quot;inward&amp;quot;}
 {exp:seo_lite default_title=&amp;quot;About Us&amp;quot;}
 {/exp:stash:set}
@@ -1414,7 +1414,7 @@ Notes: &amp;lt; page notes &amp;gt;
 
 &lt;p&gt;Now let&amp;#39;s start on the content, we will want to first check to see if we are on a landing page or a detail page.&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;{!-- Content --}
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;{!-- Content --}
 {exp:stash:set name=&amp;quot;content&amp;quot;}
     {if segment_2 == &amp;#39;&amp;#39;}
     {if:else}
@@ -1424,7 +1424,7 @@ Notes: &amp;lt; page notes &amp;gt;
 
 &lt;p&gt;Looping through our entries depending on whether we are on a landing page or entry page.&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;{!-- Content --}
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;{!-- Content --}
 {exp:stash:set name=&amp;quot;content&amp;quot;}
     {if segment_2 == &amp;#39;&amp;#39;}
         &amp;lt;h1&amp;gt;About Us&amp;lt;/h1&amp;gt;
@@ -1451,7 +1451,7 @@ Notes: &amp;lt; page notes &amp;gt;
 
 &lt;p&gt;Instead what I do is use that ID in a special section or separate file for any changes. In our &lt;code&gt;custom.css&lt;/code&gt; file:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;/* Section Styles */
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;/* Section Styles */
 
 body#about h1 {
     font-family: Comic Sans, Comic Sans MS, cursive;
@@ -1496,30 +1496,30 @@ body#about h1 {
 
 &lt;p&gt;If you are using Emacs 24 or later you can grab it off the melpa repository. To enable this or any other of the various excellent unofficial &lt;em&gt;elisp&lt;/em&gt; repositories you simple need to add this to your configuration:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;(setq package-archives &amp;#39;((&amp;quot;gnu&amp;quot; . &amp;quot;http://elpa.gnu.org/packages/&amp;quot;)
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;(setq package-archives &amp;#39;((&amp;quot;gnu&amp;quot; . &amp;quot;http://elpa.gnu.org/packages/&amp;quot;)
                        (&amp;quot;melpa&amp;quot; . &amp;quot;http://melpa.milkbox.net/packages/&amp;quot;)))
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Adding this to your configuration will slow things down a bit when you got to list available packages:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;M-x package-list-packages
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;M-x package-list-packages
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;You&amp;#39;ll be rewarded though with tons of available packages, search for web-mode:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;C-s web-mode
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;C-s web-mode
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;With your cursor on it, hit &lt;code&gt;i&lt;/code&gt; to mark it for installation then &lt;code&gt;x&lt;/code&gt; to execute the actions (you can browse around for other kewl packages too and mark them for installation, hit &lt;code&gt;x&lt;/code&gt; when you&amp;#39;re done). Emacs will ask you if you want to install these packages, type yes and hit enter. It&amp;#39;ll download and compile the elisp. Ok you&amp;#39;ve got web-mode!&lt;/p&gt;
 
 &lt;p&gt;Let&amp;#39;s set it up, open up your config file or switch to the buffer if you already have it open. First we need to load web-mode:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;(require &amp;#39;web-mode)
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;(require &amp;#39;web-mode)
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Then we set it to switch to web-mode whenever we open up a .php (.phtml) file or a .blade file:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;(add-to-list &amp;#39;auto-mode-alist &amp;#39;(&amp;quot;\\.php\\&amp;#39;&amp;quot; . web-mode))
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;(add-to-list &amp;#39;auto-mode-alist &amp;#39;(&amp;quot;\\.php\\&amp;#39;&amp;quot; . web-mode))
 (setq web-mode-engines-alist
   &amp;#39;((&amp;quot;php&amp;quot;    . &amp;quot;\\.phtml\\&amp;#39;&amp;quot;)
     (&amp;quot;blade&amp;quot;  . &amp;quot;\\.blade\\.&amp;quot;))
@@ -1528,7 +1528,7 @@ body#about h1 {
 
 &lt;p&gt;This is also a good place to set any indentation levels or tabs-to-spaces settings:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;(setq-default indent-tabs-mode nil)
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;(setq-default indent-tabs-mode nil)
 (setq web-mode-code-indent-offset 4)
 (setq web-mode-indent-style 4)
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
