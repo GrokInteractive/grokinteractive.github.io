@@ -197,7 +197,7 @@ body {
           .opensans();
           font-size: 18px;
           font-weight: 500px;
-          line-height: 20px;
+          line-height: 25px;
           color: #414141;
           margin: 0;
         }
@@ -209,18 +209,22 @@ body {
           color: #818181;
           margin: 0;
         }
-        svg {
-          image {
-            .transition-event(all 0.8s ease-in-out);
-            &.mask {
-              .opacity(0);
-            }
+        a {
+          position: relative;
+        }
+        img {
+          width: 200px;
+          border-radius: 20px;
+          border: 1px solid #AAA;
+          .transition-event(all 0.8s ease-in-out);
+          &.mask {
+            position: absolute;
+            left: 0;
+            .opacity(0);
           }
-          &:hover {
-            image {
-              &.mask {
-                .opacity(1);
-              }
+          &:hover{
+            &.mask {
+              .opacity(1);
             }
           }
         }
@@ -720,8 +724,8 @@ body {
   div.author-profile {
     margin: 20px 0px;
     img {
-      width: 20%;
-      .rounded(150px);
+      width: 15%;
+      .rounded(20px);
       float: left;
     }
     div.about {
@@ -742,7 +746,6 @@ body {
         line-height: 45px;
         .orange;
       }
-
     }
   }
 
