@@ -111,98 +111,66 @@
 <h2>RVM</h2>
 
 <p>I use RVM in OSX, as it allows you to deal with multiple versions of Ruby per project. If you open up your trusty command line (this can be done through Ubuntu&#39;s Software Center, but it is much more cumbersome), and first make sure your repo list is up to date:</p>
-
 <div class="highlight"><pre><code class="language-text" data-lang="text">sudo apt-get update
 </code></pre></div>
-
 <p>You should have curl installed by default if not run <code>sudo apt-get install curl</code>, then we want to grab RVM along with Rails so run this command:</p>
-
 <div class="highlight"><pre><code class="language-text" data-lang="text">\curl -sSL https://get.rvm.io | bash -s stable --rails
 </code></pre></div>
-
 <p>It will run through, download, and install RVM along with Rails. It might ask you a few questions on your personal setup. After that is done, you want to make sure your shell is connected to RVM&#39;s scripts:</p>
-
 <div class="highlight"><pre><code class="language-text" data-lang="text">source ~/.rvm/scripts/rvm
 </code></pre></div>
-
 <p>Let us also add this to our shell config:</p>
-
 <div class="highlight"><pre><code class="language-text" data-lang="text">echo &quot;source ~/.rvm/scripts/rvm&quot; &gt;&gt; ~/.bashrc
 </code></pre></div>
-
 <p>Lastly, see if there are any additional requirements:</p>
-
 <div class="highlight"><pre><code class="language-text" data-lang="text">rvm requirements
 </code></pre></div>
-
 <p>If that gives you weird errors, you can try to run everything through the apt-get way:</p>
-
 <div class="highlight"><pre><code class="language-text" data-lang="text">sudo apt-get install git-core curl zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libgdbm-dev libncurses5-dev automake libtool bison libffi-dev
 </code></pre></div>
-
 <p>Grab Ruby:</p>
-
 <div class="highlight"><pre><code class="language-text" data-lang="text">rvm install ruby
 </code></pre></div>
-
 <p>Then RubyGems:</p>
-
 <div class="highlight"><pre><code class="language-text" data-lang="text">rvm rubygems current
 </code></pre></div>
-
 <p>If you skipped out on installing Rails or had an error, run:</p>
-
 <div class="highlight"><pre><code class="language-text" data-lang="text">gem install rails
 </code></pre></div>
-
 <p>That should be it!</p>
 
 <h2>Let&#39;s try it</h2>
 
 <p>Ok, everything should be ready to go to create a Rails app. Run:</p>
-
 <div class="highlight"><pre><code class="language-text" data-lang="text">rails new blog
 </code></pre></div>
-
 <p>Did everything work ok? If not, you might want to go back and make sure Rails is installed, RVM is not acting up again, or you are in fact mistaken and are attempting these commands in Windows ME.</p>
 
 <p>Go to your new app:</p>
-
 <div class="highlight"><pre><code class="language-text" data-lang="text">cd blog
 </code></pre></div>
-
 <p>Now let us push this baby to Github.</p>
 
 <h2>Git</h2>
 
 <p>We all use Git, though I remember when Ubuntu required Bzr for everything in Launchpad. In addition to Git, the hosted Git service Github is also widely used including myself. Let us set it up:</p>
-
 <div class="highlight"><pre><code class="language-text" data-lang="text">sudo apt-get install git
 </code></pre></div>
-
 <p>I am assuming you have created an account on Github already, if not do so, then create a test repo. I like to have a personal repo to host my emacs config. After you have created an account, you will want to set your name and email:</p>
-
 <div class="highlight"><pre><code class="language-text" data-lang="text">git config --global user.name &quot;Chris Hardee&quot;
 git config --global user.email &quot;chris.hardee@grok-interactive.com&quot;
 </code></pre></div>
-
 <p>Now let us create this repo, add everything to it, then commit it all:</p>
-
 <div class="highlight"><pre><code class="language-text" data-lang="text">git init
 git add *
 git commit -a -m &quot;Initial Commit&quot;
 </code></pre></div>
-
 <p>Now we want to add the url origin that Github provided:</p>
-
 <div class="highlight"><pre><code class="language-text" data-lang="text">git remote add origin https://github.com/&lt;username&gt;/&lt;repoName&gt;.git
 </code></pre></div>
-
 <p>Last we push:</p>
-
 <div class="highlight"><pre><code class="language-text" data-lang="text">git push -u origin master
 </code></pre></div>
-
 <p>Everything work ok? If not you might want to make sure you are authenticated on Github.</p>
 
 <h2>Summary</h2>
@@ -335,6 +303,8 @@ git commit -a -m &quot;Initial Commit&quot;
     
     <li><a href="/blog/author/chris-hardee">Chris Hardee</a></li>
     
+    <li><a href="/blog/author/john-guest">John Guest</a></li>
+    
   </ul>
 </div>
 
@@ -382,6 +352,16 @@ git commit -a -m &quot;Initial Commit&quot;
     <li><a href="/blog/tag/linux">Linux</a></li>
     
     <li><a href="/blog/tag/developers">Developers</a></li>
+    
+    <li><a href="/blog/tag/node.js">Node.js</a></li>
+    
+    <li><a href="/blog/tag/mongodb">Mongodb</a></li>
+    
+    <li><a href="/blog/tag/javascript">Javascript</a></li>
+    
+    <li><a href="/blog/tag/socket.io">Socket.io</a></li>
+    
+    <li><a href="/blog/tag/express.js">Express.js</a></li>
     
   </ul>
 </div>

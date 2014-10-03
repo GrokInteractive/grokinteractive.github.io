@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Grok Interactive, LLC | A not so small introduction to 3 parts of the MEAN stack</title>
+    <meta name="description" content="">
+    <meta name="author" content="Grok Interactive, LLC">
+
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <meta http-equiv="Content-Language" content="en" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="MS.LOCALE" content="EN-US" />
+    <meta name="robots" content="index,follow" />
+    <meta name="URL" content="http://www.grok-interactive.com" />
+    <meta name="revisit-after" content="10 days" />
+    <meta property="fb:admins" content="621293620"/>
+    <meta property="fb:admins" content="710704899"/>
+    <meta property="fb:admins" content="440639386014676"/>
+    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800,300|Open+Sans+Condensed:300' type='text/css' />
+
+    <link rel='stylesheet' href='/assets/css/bootstrap.min.css' type='text/css' media='all' />
+    <link rel='stylesheet' href='/assets/css/bootstrap-responsive.min.css' type='text/css' media='all' />
+    <link rel='stylesheet' href='/assets/css/font-awesome.css' type='text/css' media='all' />
+
+    <link rel='stylesheet/less' href='/assets/css/styles.css.less' type='text/css' media='all' />
+
+  </head>
+
+<body>
+
+  <div id="wrap">
+    <div id="main">
+      <header>
+        <div class="navbar navbar-inverse navbar-static-top">
+          <div class="navbar-inner">
+            <div class="container">
+              <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="brand" href="/">
+                <img src="/assets/img/grok-logo.png" alt="Grok Interactive, LLC" title="Grok Interactive, LLC">
+              </a>
+              <div class="nav-collapse collapse pull-right">
+                <ul class="nav">
+                  <li class='blog active'><a href="/blog/">Blog</a></li>
+                  <li class='about'><a href="/#about" class='slide'>About</a></li>
+                  <li class='service'><a href="/#service" class='slide'>Service</a></li>
+                  <li class='work'><a href="/#work" class='slide'>Work</a></li>
+                  <li class='contact'><a href="/#contact" class='slide'>Contact</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div class="content">
+  <div class="container">
+    <div class="columns">
+      <div class="col c70">
+
+        
+        
+
+        <div class="canvas">
+
+          <div class="post">
+
+            <h1><a href="/blog/node-express-mongo-socketio-introduction/" rel="bookmark" title="Link to A not so small introduction to 3 parts of the MEAN stack">A not so small introduction to 3 parts of the MEAN stack</a></h1>
+            <h5>by <a href="/blog/john-guest" class="author">John Guest</a>
+              &nbsp;&nbsp;&nbsp;<strong>Oct 02, 2014</strong>&nbsp;&nbsp;&nbsp;
+              
+              <i class="icon fa fa-folder" title="Categories"></i>
+              
+              <a href="/blog/category/training/" class="category">Training</a>
+              
+              
+
+              
+              <i class="icon fa fa-tags" title="Tags"></i>
+              
+              <a href="/blog/tag/node.js/" class="tag">Node.js</a>,
+              
+              <a href="/blog/tag/mongodb/" class="tag">Mongodb</a>,
+              
+              <a href="/blog/tag/javascript/" class="tag">Javascript</a>,
+              
+              <a href="/blog/tag/socket.io/" class="tag">Socket.io</a>,
+              
+              <a href="/blog/tag/express.js/" class="tag">Express.js</a>
+              
+              
+
+              
+            </h5>
+
+            <div class=''>
+
+              
+              <img src="/images/2014/10/node-comment-feature.png" width="150" height="150" class="pull-right" />
+              
+
+              <p><strong>Node.js</strong> and <strong>MongoDB</strong> go well together, like lamb and tunafish. This post aims to provide a newcomer with enough knowledge to build out small pieces of common web app functionality. We&#39;ll start with some boilerplate code, setting up Express.js and an http server, then move on to a building a tiny feature with the help of some popular Node.js libraries. If you&#39;re more of a hands on kind of guy or simply want to follow along with some code in front of you, you can find this project on <a href="https://github.com/jguest/node-mongo-tutorial/">github</a>. That said, I highly suggest reading this guide and coding from scratch. </p>
+
+<h2>install all the things</h2>
+
+<p>First things first, you&#39;ll need to install node, npm, and mongo. The fastest way to get node and npm is by visiting the <a href="http://nodejs.org/download/">node.js download page</a> and grabbing the installer for your system. As for mongo, you homebrew mac users can get it with a simple <code>brew update &amp;&amp; brew install mongodb</code>. Linux users, checkout <a href="http://docs.mongodb.org/manual/tutorial/install-mongodb-on-ubuntu/">this guide</a> (that&#39;s for Ubuntu but the guide has most major distos listed on the left under <em>installation</em>) and Windows guys, <a href="http://docs.mongodb.org/manual/tutorial/install-mongodb-on-windows/">the mongo website provides a guide for you too</a>.</p>
+
+<p>Open up a terminal and run <code>node -v</code> to make sure your node install went ok; I might do <code>npm -v</code> and <code>mongo --version</code> to make sure that&#39;s all gravy too. Awesome, so you&#39;re good to go.</p>
+
+<h2>the basics</h2>
+
+<p>While you&#39;re there on the command line, go ahead and make a new directory somewhere where you want this tutorial app to live; I&#39;ve called mine &#39;node-mongo-tutorial&#39;. Go ahead and run <code>touch app.js &amp;&amp; touch package.json &amp;&amp; touch index.html</code> then open up the directory in your favorite text editor. <code>app.js</code> will be the core of your node/express application, responsible for routing rules (think <a href="http://www.sinatrarb.com/">Sinatra</a>), configuration, and server connections. <code>package.json</code> is where we&#39;ll specify node libraries that our app will use (like express and mongoose), and <code>index.html</code> is our one static html file where we&#39;ll later be putting some handlebars templates. (Note: the blogger does not subscribe to any one frontend framework and will avoid that by simply not using one). Onwards.</p>
+
+<p>Here is some boilerplate code for the three files that you just created.</p>
+
+<p><strong>app.js</strong></p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript">  <span class="kd">var</span> <span class="nx">express</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">)</span>
+    <span class="p">,</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">express</span><span class="p">();</span>
+
+  <span class="c1">// serve static assets</span>
+  <span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">express</span><span class="p">.</span><span class="kr">static</span><span class="p">(</span><span class="nx">__dirname</span> <span class="o">+</span> <span class="s1">&#39;/public&#39;</span><span class="p">));</span>
+
+  <span class="c1">// simple sinatra-like syntax</span>
+  <span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">request</span><span class="p">,</span> <span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">response</span><span class="p">.</span><span class="nx">sendFile</span><span class="p">(</span><span class="s1">&#39;index.html&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">root</span><span class="o">:</span> <span class="nx">__dirname</span> <span class="p">})</span>
+  <span class="p">});</span>
+
+  <span class="c1">// listen for connections</span>
+  <span class="kd">var</span> <span class="nx">server</span> <span class="o">=</span> <span class="nx">app</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="mi">3000</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;listening on %d&#39;</span><span class="p">,</span> <span class="nx">server</span><span class="p">.</span><span class="nx">address</span><span class="p">().</span><span class="nx">port</span><span class="p">);</span>
+  <span class="p">});</span>
+</code></pre></div>
+<p><strong>package.json</strong></p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript">  <span class="p">{</span>
+    <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;node-mongo-tutorial&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dependencies&quot;</span><span class="o">:</span> <span class="p">{</span>
+      <span class="s2">&quot;express&quot;</span><span class="o">:</span> <span class="s2">&quot;4.x&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;mongoose&quot;</span><span class="o">:</span> <span class="s2">&quot;3.8.x&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;socket.io&quot;</span><span class="o">:</span> <span class="s2">&quot;1.0.x&quot;</span><span class="p">,</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+</code></pre></div>
+<p><strong>index.html</strong></p>
+<div class="highlight"><pre><code class="language-html" data-lang="html">  <span class="nt">&lt;html&gt;</span>
+    <span class="nt">&lt;head&gt;</span>
+      <span class="nt">&lt;title&gt;</span>hello world<span class="nt">&lt;/title&gt;</span>
+      <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">href=</span><span class="s">&quot;https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;/head&gt;</span>
+    <span class="nt">&lt;body&gt;</span>
+      <span class="nt">&lt;h1&gt;</span>GOODBYE CRUEL WORLD<span class="nt">&lt;/h1&gt;</span>
+    <span class="nt">&lt;/body&gt;</span>
+  <span class="nt">&lt;/html&gt;</span>
+</code></pre></div>
+<p>If any of that js looks weird, it&#39;s actually really not doing anything you haven&#39;t done before in another web app framework. We require express and create an application by calling express as a function (lines 1-2). We can configure our <code>app</code> variable as well as give it routes using http verbs (line 8). The last bit of code in <code>app.js</code> is creating a server on port 3000. Let&#39;s run it. </p>
+
+<p>Go back to your terminal and run <code>npm install</code> to fetch our specified npm packages and <code>node app.js</code> to start the server. You&#39;ll see some console output and as long as it doesn&#39;t crash on you with some unhelpful error, go to <a href="http://localhost:3000">localhost:3000</a> in your browser. And there ya go, hello world. </p>
+
+<p>If you&#39;re still here, the setup (for the most part) is done and it&#39;s time to get down to business. </p>
+
+<h2>feature introduction</h2>
+
+<p>Let&#39;s set up a frontend with some handlebars templates, just enough to see what we&#39;ll be building out. If you&#39;re not familiar with handlebars.js, checkout <a href="http://handlebarsjs.com/">their docs</a> for more information. Change your <code>index.html</code> to look like this:</p>
+
+<p><strong>index.html</strong></p>
+<div class="highlight"><pre><code class="language-html" data-lang="html">  <span class="nt">&lt;html&gt;</span>
+    <span class="nt">&lt;head&gt;</span>
+      <span class="nt">&lt;title&gt;</span>slick new feature<span class="nt">&lt;/title&gt;</span>
+      <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">href=</span><span class="s">&quot;https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css&quot;</span><span class="nt">&gt;</span>   
+    <span class="nt">&lt;/head&gt;</span>
+    <span class="nt">&lt;body&gt;</span>
+
+      <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;text-center&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;h1&gt;</span>A Comment Feature!<span class="nt">&lt;/h1&gt;</span>
+        <span class="nt">&lt;p&gt;</span>Here&#39;s a picture of a dog I found on the internet. How does it make you feel?<span class="nt">&lt;/p&gt;</span>
+        <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">&quot;http://www.billboard.com/files/media/marnie-the-dog-grass-billboard-2014-650x430.jpg&quot;</span> <span class="nt">/&gt;</span>
+      <span class="nt">&lt;/div&gt;</span>
+
+      <span class="nt">&lt;div&gt;</span>
+        <span class="nt">&lt;input</span> <span class="na">class=</span><span class="s">&quot;comment-input form-control&quot;</span> <span class="na">placeholder=</span><span class="s">&quot;it makes me feel great&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">&quot;comment-submit btn btn-primary&quot;</span><span class="nt">&gt;</span>comment<span class="nt">&lt;/button&gt;</span>
+      <span class="nt">&lt;/div&gt;</span>
+
+      <span class="c">&lt;!-- to be populated with comments --&gt;</span>
+      <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;comments-container&quot;</span><span class="nt">&gt;&lt;/div&gt;</span>
+
+      <span class="c">&lt;!-- hbs template for a single comment --&gt;</span>
+      <span class="nt">&lt;script </span><span class="na">id=</span><span class="s">&quot;comment&quot;</span> <span class="na">type=</span><span class="s">&quot;text/x-handlebars-template&quot;</span><span class="nt">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">div</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;comment&quot;</span><span class="o">&gt;</span>
+          <span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="nx">mdash</span><span class="p">;</span> <span class="o">&lt;</span><span class="err">/p&gt;</span>
+        <span class="o">&lt;</span><span class="err">/div&gt;</span>
+      <span class="nt">&lt;/script&gt;</span>
+
+    <span class="nt">&lt;/body&gt;</span>
+
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;//code.jquery.com/jquery-2.1.1.min.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.min.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;/js/client-app.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+
+  <span class="nt">&lt;/html&gt;</span>
+</code></pre></div>
+<p>Besides adding a handlebars template, we&#39;ve also added script tag for <code>/js/client-app.js</code>. This is where we&#39;ll interact with the template and eventually use ajax to communicate with our server. Make a new directory at the root of your application called <code>public</code> with a <code>js</code> folder inside it. Inside <code>js</code> create a new file called <code>client-app.js</code>. It should look like this:</p>
+
+<p><strong>public/js/client-app.js</strong></p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript">  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.comment-submit&#39;</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="kd">var</span> <span class="nx">$comment_el</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.comment-input&#39;</span><span class="p">).</span><span class="nx">first</span><span class="p">()</span>
+      <span class="p">,</span> <span class="nx">comment</span> <span class="o">=</span> <span class="nx">$comment_el</span><span class="p">.</span><span class="nx">val</span><span class="p">()</span>
+      <span class="p">,</span> <span class="nx">time</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">().</span><span class="nx">toDateString</span><span class="p">();</span>
+
+    <span class="kd">var</span> <span class="nx">source</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#comment&#39;</span><span class="p">).</span><span class="nx">html</span><span class="p">()</span>
+      <span class="p">,</span> <span class="nx">html</span> <span class="o">=</span> <span class="nx">Handlebars</span><span class="p">.</span><span class="nx">compile</span><span class="p">(</span><span class="nx">source</span><span class="p">)({</span> <span class="nx">comment</span><span class="o">:</span> <span class="nx">comment</span><span class="p">,</span> <span class="nx">time</span><span class="o">:</span> <span class="nx">time</span> <span class="p">});</span>
+
+    <span class="nx">$comment_el</span><span class="p">.</span><span class="nx">val</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">);</span>
+    <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#comments-container&#39;</span><span class="p">).</span><span class="nx">prepend</span><span class="p">(</span><span class="nx">html</span><span class="p">);</span>
+
+  <span class="p">});</span>
+</code></pre></div>
+<p>Run you server <code>node app.js</code> to see the changes. Play around a bit, but notice that if you post a comment and refresh the page, it&#39;s gone. We&#39;ll need to save our comments to a database. <code>client-app.js</code> is already doing some work for us; it&#39;s compiling a template with an object that contains the text in the input field and the time of posting. Here&#39;s the hook we need to post to our server.</p>
+
+<h2>mongoose introduction</h2>
+
+<p>Make a new directory in the root of your application called <code>models</code> with a file inside of it called <code>comment.js</code>. This is where we&#39;ll define the schema for comments and a useful finder method for the comments collection.</p>
+
+<p><strong>models/comment.js</strong></p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript">  <span class="kd">var</span> <span class="nx">mongoose</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;mongoose&#39;</span><span class="p">)</span>
+    <span class="p">,</span> <span class="nx">Schema</span> <span class="o">=</span> <span class="nx">mongoose</span><span class="p">.</span><span class="nx">Schema</span><span class="p">;</span>
+
+  <span class="c1">// comment document schema</span>
+  <span class="kd">var</span> <span class="nx">commentSchema</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Schema</span><span class="p">({</span>
+    <span class="nx">created</span><span class="o">:</span> <span class="p">{</span> <span class="nx">type</span><span class="o">:</span> <span class="nb">Date</span><span class="p">,</span> <span class="k">default</span><span class="o">:</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span> <span class="p">},</span> 
+    <span class="nx">text</span><span class="o">:</span> <span class="nb">String</span><span class="p">,</span>
+    <span class="nx">author</span><span class="o">:</span> <span class="nb">String</span>
+  <span class="p">},</span> <span class="p">{</span> <span class="nx">collection</span><span class="o">:</span> <span class="s1">&#39;comments&#39;</span> <span class="p">});</span>
+
+  <span class="c1">// static model methods</span>
+  <span class="nx">commentSchema</span><span class="p">.</span><span class="nx">statics</span> <span class="o">=</span> <span class="p">{</span>
+
+    <span class="c1">// all comments sorted by create time</span>
+    <span class="nx">list</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">find</span><span class="p">({},</span> <span class="s1">&#39;text author created&#39;</span><span class="p">)</span>
+          <span class="p">.</span><span class="nx">sort</span><span class="p">(</span><span class="s1">&#39;+created&#39;</span><span class="p">)</span>
+          <span class="p">.</span><span class="nx">exec</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">,</span> <span class="nx">comments</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nx">callback</span><span class="p">(</span><span class="nx">error</span><span class="p">,</span> <span class="nx">comments</span><span class="p">);</span>
+          <span class="p">});</span>
+    <span class="p">}</span>
+
+  <span class="p">};</span>
+
+  <span class="c1">// model instance methods</span>
+  <span class="nx">commentSchema</span><span class="p">.</span><span class="nx">methods</span> <span class="o">=</span> <span class="p">{}</span>
+
+  <span class="c1">// register model</span>
+  <span class="nx">mongoose</span><span class="p">.</span><span class="nx">model</span><span class="p">(</span><span class="s1">&#39;Comment&#39;</span><span class="p">,</span> <span class="nx">commentSchema</span><span class="p">);</span>
+</code></pre></div>
+<p>If the above code looks scary to you, especially considering how radically different it looks compared to typical client-side js, fear not. The most important part is the <code>commentSchema</code> variable. This is the blueprint for all comment objects saved to the database, including type information and an optional default value. <code>commentSchema.statics</code> are methods that can be called on the schema object itself, so you&#39;ll tradionally find collection operations here, ours being the <code>.list</code> method, which retrieves all comments and sorts them by create date. Remember that node.js is asynchronous so callbacks are neccessary for operations like database reads and writes. </p>
+
+<p>Moving on, we now need to update <code>app.js</code> with a route to accept comments and, more importantly, connect to a mongo database. Assuming your mongo install was all good, open up another shell and run <code>mongod</code> anywhere. If it complains at you that the db doesn&#39;t exist, go create an empty <code>data/db</code> in your home directory run again with <code>mongod --dbpath ~/data/db</code>. Open up <code>app.js</code> and make the folling changes.</p>
+
+<p><strong>app.js</strong></p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript">  <span class="kd">var</span> <span class="nx">express</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">)</span>
+    <span class="p">,</span> <span class="nx">mongoose</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;mongoose&#39;</span><span class="p">)</span>
+    <span class="p">,</span> <span class="nx">bodyParser</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;body-parser&#39;</span><span class="p">)</span>
+    <span class="p">,</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">express</span><span class="p">();</span>
+
+  <span class="c1">// parse x-www-form-urlencoded and json</span>
+  <span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">bodyParser</span><span class="p">.</span><span class="nx">urlencoded</span><span class="p">({</span> <span class="nx">extended</span><span class="o">:</span> <span class="kc">false</span> <span class="p">}));</span>
+  <span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">bodyParser</span><span class="p">.</span><span class="nx">json</span><span class="p">());</span>
+
+  <span class="c1">// serve static assets</span>
+  <span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">express</span><span class="p">.</span><span class="kr">static</span><span class="p">(</span><span class="nx">__dirname</span> <span class="o">+</span> <span class="s1">&#39;/public&#39;</span><span class="p">));</span>
+
+  <span class="c1">// db connection</span>
+  <span class="nx">mongoose</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s1">&#39;mongodb://localhost/node-mongo-tutorial&#39;</span><span class="p">);</span>
+
+  <span class="c1">// require all mongoose models</span>
+  <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;fs&#39;</span><span class="p">).</span><span class="nx">readdirSync</span><span class="p">(</span><span class="s1">&#39;./models&#39;</span><span class="p">).</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">file</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./models/&#39;</span> <span class="o">+</span> <span class="nx">file</span><span class="p">)</span>
+  <span class="p">});</span>
+
+  <span class="c1">// open db connection</span>
+  <span class="kd">var</span> <span class="nx">db</span> <span class="o">=</span> <span class="nx">mongoose</span><span class="p">.</span><span class="nx">connection</span><span class="p">;</span>
+  <span class="nx">db</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">,</span> <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="nx">console</span><span class="p">,</span> <span class="s1">&#39;error:&#39;</span><span class="p">));</span>
+  <span class="nx">db</span><span class="p">.</span><span class="nx">once</span><span class="p">(</span><span class="s1">&#39;open&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="nx">callback</span><span class="p">()</span> <span class="p">{</span>
+
+    <span class="c1">// simple sinatra-like syntax</span>
+    <span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">request</span><span class="p">,</span> <span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">response</span><span class="p">.</span><span class="nx">sendFile</span><span class="p">(</span><span class="s1">&#39;index.html&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">root</span><span class="o">:</span> <span class="nx">__dirname</span> <span class="p">})</span>
+    <span class="p">});</span>
+
+    <span class="c1">// comment model</span>
+    <span class="kd">var</span> <span class="nx">Comment</span> <span class="o">=</span> <span class="nx">mongoose</span><span class="p">.</span><span class="nx">model</span><span class="p">(</span><span class="s1">&#39;Comment&#39;</span><span class="p">)</span>
+
+    <span class="c1">// response helper function</span>
+    <span class="kd">function</span> <span class="nx">respondWith</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">error</span><span class="p">,</span> <span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">response</span><span class="p">.</span><span class="nx">json</span><span class="p">({</span> <span class="nx">status</span><span class="o">:</span> <span class="mi">500</span><span class="p">,</span> <span class="nx">error</span><span class="o">:</span> <span class="nx">error</span> <span class="p">});</span>
+      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">response</span><span class="p">.</span><span class="nx">json</span><span class="p">({</span> <span class="nx">status</span><span class="o">:</span> <span class="mi">200</span><span class="p">,</span> <span class="nx">data</span><span class="o">:</span> <span class="nx">data</span> <span class="p">})</span>
+      <span class="p">}</span>
+    <span class="p">}</span> 
+
+    <span class="c1">// POST /comments/create - new comment, responds with comment</span>
+    <span class="c1">// @params author, text </span>
+
+    <span class="nx">app</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">&#39;/comments/create&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">new</span> <span class="nx">Comment</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">).</span><span class="nx">save</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">,</span> <span class="nx">comment</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">respondWith</span><span class="p">(</span><span class="nx">comment</span><span class="p">,</span> <span class="nx">error</span><span class="p">,</span> <span class="nx">res</span><span class="p">);</span>
+      <span class="p">});</span>
+    <span class="p">});</span>
+
+    <span class="c1">// GET /comments - responds with all comments sorted by create date</span>
+    <span class="c1">// @params none</span>
+
+    <span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/comments&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">Comment</span><span class="p">.</span><span class="nx">list</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">,</span> <span class="nx">comments</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">respondWith</span><span class="p">(</span><span class="nx">comments</span><span class="p">,</span> <span class="nx">error</span><span class="p">,</span> <span class="nx">res</span><span class="p">);</span>
+      <span class="p">});</span>
+    <span class="p">});</span>
+
+    <span class="c1">// listen for connections</span>
+    <span class="kd">var</span> <span class="nx">server</span> <span class="o">=</span> <span class="nx">app</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="mi">3000</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;listening on %d&#39;</span><span class="p">,</span> <span class="nx">server</span><span class="p">.</span><span class="nx">address</span><span class="p">().</span><span class="nx">port</span><span class="p">);</span>
+    <span class="p">});</span>
+  <span class="p">});</span>
+</code></pre></div>
+<p>We kept a lot of code from our previous version, but some pretty significant changes have been made. Most notably, we wait to establish a db connection before starting the server. The routing code, which was previously only serving <code>index.html</code> has been updated with rules for posting a comment and getting a list of comments. A few other new things include code to require all files in <code>models/</code> (trust me, it&#39;s overkill for this but a lifesaver for bigger projects) and a small helper function for json responses. Again, take some time to study.</p>
+
+<p>Let&#39;s make a few updates to <code>client-app.js</code> provided we have now have endpoints for saving and fetching comments.</p>
+
+<p><strong>public/js/client-app.js</strong></p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript">  <span class="kd">function</span> <span class="nx">renderComment</span><span class="p">(</span><span class="nx">comment</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="kd">var</span> <span class="nx">source</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#comment&#39;</span><span class="p">).</span><span class="nx">html</span><span class="p">()</span>
+      <span class="p">,</span> <span class="nx">dateString</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="nx">comment</span><span class="p">.</span><span class="nx">created</span><span class="p">).</span><span class="nx">toDateString</span><span class="p">()</span>
+      <span class="p">,</span> <span class="nx">html</span> <span class="o">=</span> <span class="nx">Handlebars</span><span class="p">.</span><span class="nx">compile</span><span class="p">(</span><span class="nx">source</span><span class="p">)({</span> 
+        <span class="nx">comment</span><span class="o">:</span> <span class="nx">comment</span><span class="p">.</span><span class="nx">text</span><span class="p">,</span> 
+        <span class="nx">author</span><span class="o">:</span> <span class="nx">comment</span><span class="p">.</span><span class="nx">author</span><span class="p">,</span>
+        <span class="nx">time</span><span class="o">:</span> <span class="nx">dateString</span> 
+      <span class="p">});</span>
+
+    <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#comments-container&#39;</span><span class="p">).</span><span class="nx">prepend</span><span class="p">(</span><span class="nx">html</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="c1">// create comment</span>
+  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.comment-submit&#39;</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="kd">var</span> <span class="nx">$comment_el</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.comment-input&#39;</span><span class="p">).</span><span class="nx">first</span><span class="p">()</span>
+      <span class="p">,</span> <span class="nx">comment</span> <span class="o">=</span> <span class="nx">$comment_el</span><span class="p">.</span><span class="nx">val</span><span class="p">()</span>
+      <span class="p">,</span> <span class="nx">data</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">text</span><span class="o">:</span> <span class="nx">comment</span><span class="p">,</span> <span class="nx">author</span><span class="o">:</span> <span class="s1">&#39;Anonymous&#39;</span> <span class="p">}</span>
+
+    <span class="nx">$</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">&#39;/comments/create&#39;</span><span class="p">,</span> <span class="nx">data</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">renderComment</span><span class="p">(</span><span class="nx">res</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>
+      <span class="nx">$comment_el</span><span class="p">.</span><span class="nx">val</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">);</span>
+    <span class="p">});</span>
+
+  <span class="p">});</span>
+
+  <span class="c1">// list comments on page load</span>
+  <span class="nx">$</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/comments&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">comment</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">renderComment</span><span class="p">(</span><span class="nx">comment</span><span class="p">)</span>
+    <span class="p">});</span>
+  <span class="p">});</span>
+</code></pre></div>
+<p>We&#39;ve abstracted the handlebars compilation into <code>renderComment()</code>. The comment submit click function now posts to <code>/comments/create</code> with the input text and an &#39;Anonymous&#39; author (we&#39;ll fix that in a bit). On page load, we send a get request to <code>/comments</code> and render the data sent back from the server. We&#39;ll need to update the handlebars template in <code>index.html</code> to account for the data change.</p>
+
+<p><strong>index.html</strong></p>
+<div class="highlight"><pre><code class="language-html" data-lang="html">  ...
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;comment&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;p&gt;</span>
+         <span class="ni">&amp;mdash;</span> 
+        <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">&quot;comment-details&quot;</span><span class="nt">&gt;</span>posted by <span class="nt">&lt;strong&gt;&lt;/strong&gt;</span> at <span class="nt">&lt;/span&gt;</span>
+      <span class="nt">&lt;/p&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>  
+  ...
+</code></pre></div>
+<p>Add <code>&quot;body-parser&quot;: &quot;1.8.2&quot;,</code> to your <code>package.json</code> dependencies and it&#39;s time to take a look at our progress. Run <code>npm install</code>, start your server and go play around with the application &mdash; you should be able to post comments and see a list of them when you reload a page. Persistance, yay! </p>
+
+<h2>express cookies</h2>
+
+<p>Working with cookies in vanilla node can be a pain but express makes it pretty straightforward. We&#39;re going to create another route in <code>app.js</code> that will cookie the author&#39;s name so comments can be saved on the server with the author name fetched from the cookie. At the top of the file, add cookie configuration:</p>
+
+<p><strong>app.js</strong></p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript">  <span class="kd">var</span> <span class="nx">express</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">)</span>
+    <span class="p">,</span> <span class="nx">mongoose</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;mongoose&#39;</span><span class="p">)</span>
+    <span class="p">,</span> <span class="nx">cookieParser</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;cookie-parser&#39;</span><span class="p">)</span> <span class="c1">// &lt;- this</span>
+    <span class="p">,</span> <span class="nx">bodyParser</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;body-parser&#39;</span><span class="p">)</span>
+    <span class="p">,</span> <span class="nx">exSession</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express-session&#39;</span><span class="p">)</span> <span class="c1">// &lt;- this</span>
+    <span class="p">,</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">express</span><span class="p">();</span>
+
+  <span class="c1">// parse x-www-form-urlencoded and json</span>
+  <span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">bodyParser</span><span class="p">.</span><span class="nx">urlencoded</span><span class="p">({</span> <span class="nx">extended</span><span class="o">:</span> <span class="kc">false</span> <span class="p">}));</span>
+  <span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">bodyParser</span><span class="p">.</span><span class="nx">json</span><span class="p">());</span>
+
+  <span class="c1">// cookies!</span>
+  <span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">cookieParser</span><span class="p">());</span> <span class="c1">// &lt;- this</span>
+  <span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">exSession</span><span class="p">({</span> <span class="nx">secret</span><span class="o">:</span> <span class="s1">&#39;supersecret&#39;</span> <span class="p">}));</span> <span class="c1">// &lt;- and this</span>
+</code></pre></div>
+<p>We&#39;re telling our express app to use cookie parser middleware and setting a secret session variable. Add <code>&quot;cookie-parser&quot;: &quot;1.3.3&quot;,</code> to your <code>package.json</code> dependencies. Now that we have cookie support, let&#39;s go ahead and add a route to <code>app.js</code> to accept and cookie the author name. Add these lines below or before your other routes.</p>
+
+<p><strong>app.js</strong></p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript">  <span class="p">...</span> 
+
+  <span class="c1">// POST /session/author - cookie author name, return message</span>
+  <span class="c1">// @params author</span>
+
+  <span class="nx">app</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">&#39;/session/author&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">req</span><span class="p">.</span><span class="nx">session</span><span class="p">.</span><span class="nx">author</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">author</span>
+    <span class="nx">respondWith</span><span class="p">({</span> <span class="nx">author</span><span class="o">:</span> <span class="nx">req</span><span class="p">.</span><span class="nx">session</span><span class="p">.</span><span class="nx">author</span> <span class="p">},</span> <span class="kc">null</span><span class="p">,</span> <span class="nx">res</span><span class="p">);</span>
+  <span class="p">});</span>
+
+  <span class="p">...</span>
+</code></pre></div>
+<p>We&#39;ll also want to update our <code>/comments/create</code> route to use the author cookie value (or &#39;Anonymous&#39; if not set) so the name gets persisted to the database. The method should look like this now:</p>
+
+<p><strong>app.js</strong></p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript">  <span class="p">...</span>
+
+  <span class="c1">// POST /comments/create - new comment, responds with comment</span>
+  <span class="c1">// @params author, text </span>
+
+  <span class="nx">app</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">&#39;/comments/create&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">commentAttr</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">;</span>
+    <span class="nx">commentAttr</span><span class="p">[</span><span class="s1">&#39;author&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">session</span><span class="p">.</span><span class="nx">author</span> <span class="o">||</span> <span class="s2">&quot;Anonymous&quot;</span><span class="p">;</span>
+
+    <span class="k">new</span> <span class="nx">Comment</span><span class="p">(</span><span class="nx">commentAttr</span><span class="p">).</span><span class="nx">save</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">,</span> <span class="nx">comment</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">respondWith</span><span class="p">(</span><span class="nx">comment</span><span class="p">,</span> <span class="nx">error</span><span class="p">,</span> <span class="nx">res</span><span class="p">);</span>
+    <span class="p">});</span>
+  <span class="p">});</span>  
+
+  <span class="p">...</span>
+</code></pre></div>
+<p>Cool, so we have some backend functionality for storing an author name and saving it with each comment the author posts. Our frontend hasn&#39;t accounted for this yet, so let&#39;s update the markup for some kind of author login. Add this to <code>index.html</code> right below the opening <code>body</code> tag.</p>
+
+<p><strong>index.html</strong></p>
+<div class="highlight"><pre><code class="language-html" data-lang="html">  <span class="c">&lt;!-- provide author name --&gt;</span>
+  <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;author-name-submit&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;input</span> <span class="na">class=</span><span class="s">&quot;form-control&quot;</span> <span class="na">placeholder=</span><span class="s">&quot;who are you?&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">&quot;btn btn-save&quot;</span><span class="nt">&gt;</span>submit name<span class="nt">&lt;/button&gt;</span>
+  <span class="nt">&lt;/div&gt;</span>
+
+  <span class="c">&lt;!-- displays author name --&gt;</span>
+  <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;author-name&quot;</span><span class="nt">&gt;&lt;/div&gt;</span>
+</code></pre></div>
+<p>Let&#39;s update the javascript with a simple jquery post to <code>/session/author</code>. Add this click event handler somewhere in <code>client-app.js</code>.</p>
+
+<p><strong>public/js/client-app.js</strong></p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript">  <span class="c1">// session author name</span>
+  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#author-name-submit button&#39;</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">&#39;/session/author&#39;</span><span class="p">,</span> <span class="p">{</span> 
+      <span class="nx">author</span><span class="o">:</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#author-name-submit input&#39;</span><span class="p">).</span><span class="nx">val</span><span class="p">()</span> 
+    <span class="p">},</span> <span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#author-name-submit&#39;</span><span class="p">).</span><span class="nx">hide</span><span class="p">();</span>
+      <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#author-name&#39;</span><span class="p">).</span><span class="nx">text</span><span class="p">(</span><span class="s1">&#39;Welcome, &#39;</span> <span class="o">+</span> <span class="nx">res</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">author</span><span class="p">);</span>
+      <span class="nx">localStorage</span><span class="p">.</span><span class="nx">author</span> <span class="o">=</span> <span class="nx">res</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">author</span><span class="p">;</span>
+    <span class="p">});</span>
+  <span class="p">});</span>
+</code></pre></div>
+<p>Let&#39;s test it out. Install the cookie dependency with <code>npm install</code>, start your server, and post some comments after providing an author name. By this time the application probably looks terrible, so let&#39;s add some css. Make a new directory under <code>public/</code> called <code>css</code> and add this file to it:</p>
+
+<p><strong>global.css</strong></p>
+<div class="highlight"><pre><code class="language-css" data-lang="css">  <span class="nt">body</span> <span class="p">{</span>
+    <span class="k">margin-left</span><span class="o">:</span> <span class="m">20%</span><span class="p">;</span>
+    <span class="k">margin-right</span><span class="o">:</span> <span class="m">20%</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="nt">img</span> <span class="p">{</span>
+    <span class="k">display</span><span class="o">:</span> <span class="k">block</span><span class="p">;</span>
+    <span class="k">margin-left</span><span class="o">:</span> <span class="k">auto</span><span class="p">;</span>
+    <span class="k">margin-right</span><span class="o">:</span> <span class="k">auto</span><span class="p">;</span>
+    <span class="k">max-width</span><span class="o">:</span> <span class="m">500px</span><span class="p">;</span>
+    <span class="k">padding</span><span class="o">:</span> <span class="m">10px</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="nt">p</span> <span class="p">{</span>
+    <span class="k">font-size</span><span class="o">:</span> <span class="m">18px</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="nt">div</span> <span class="p">{</span>
+    <span class="k">padding</span><span class="o">:</span> <span class="m">5px</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="nt">input</span><span class="o">,</span> <span class="nt">button</span> <span class="p">{</span>
+    <span class="k">display</span><span class="o">:</span> <span class="k">inline</span><span class="o">-</span><span class="k">block</span> <span class="cp">!important</span><span class="p">;</span>
+    <span class="k">vertical-align</span><span class="o">:</span> <span class="k">top</span> <span class="cp">!important</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="nt">input</span><span class="nc">.comment-input</span> <span class="p">{</span>
+    <span class="k">width</span><span class="o">:</span> <span class="m">80%</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="nt">button</span><span class="nc">.comment-submit</span> <span class="p">{</span>
+    <span class="k">vertical-align</span><span class="o">:</span> <span class="k">top</span><span class="p">;</span>
+    <span class="k">width</span><span class="o">:</span> <span class="m">19%</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="nc">.comment</span> <span class="p">{</span>
+    <span class="k">padding</span><span class="o">:</span> <span class="m">0px</span><span class="p">;</span>
+    <span class="k">text-align</span><span class="o">:</span> <span class="k">left</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="nc">.comment</span> <span class="nt">p</span> <span class="p">{</span>
+    <span class="k">margin</span><span class="o">:</span> <span class="m">0px</span> <span class="m">0px</span> <span class="m">5px</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="nt">span</span><span class="nc">.comment-details</span> <span class="p">{</span>
+    <span class="k">font-size</span><span class="o">:</span> <span class="m">14px</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="nf">#author-name-submit</span><span class="o">,</span> <span class="nf">#author-name</span> <span class="p">{</span>
+    <span class="k">position</span><span class="o">:</span> <span class="k">fixed</span><span class="p">;</span>
+    <span class="k">right</span><span class="o">:</span> <span class="m">10px</span><span class="p">;</span>
+    <span class="k">top</span><span class="o">:</span> <span class="m">10px</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="nf">#author-name</span> <span class="p">{</span>
+    <span class="k">font-size</span><span class="o">:</span> <span class="m">16px</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="nf">#author-name-submit</span> <span class="nt">input</span> <span class="p">{</span>
+    <span class="k">width</span><span class="o">:</span> <span class="m">150px</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="nf">#comment-count</span> <span class="p">{</span>
+    <span class="k">position</span><span class="o">:</span> <span class="k">fixed</span><span class="p">;</span>
+    <span class="k">left</span><span class="o">:</span> <span class="m">10px</span><span class="p">;</span>
+    <span class="k">top</span><span class="o">:</span> <span class="m">10px</span><span class="p">;</span>
+  <span class="p">}</span>
+</code></pre></div>
+<p>Also, to spice things up, I used <a href="http://bootflat.github.io/">bootflat</a> which you can download on their homepage. Unzip the download and copy <code>path/to/download/bootflat/css/bootflat.min.css</code> into <code>public/css</code>. Update <code>index.html</code> with link tags to the new css files.</p>
+
+<p><strong>index.html</strong></p>
+<div class="highlight"><pre><code class="language-html" data-lang="html">  ...
+
+  <span class="nt">&lt;title&gt;</span>slick new feature<span class="nt">&lt;/title&gt;</span>
+  <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">href=</span><span class="s">&quot;https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">href=</span><span class="s">&quot;/css/bootflat.min.css&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">href=</span><span class="s">&quot;/css/global.css&quot;</span><span class="nt">&gt;</span>
+
+  ...
+</code></pre></div>
+<p>Check it out. That&#39;s better.</p>
+
+<h2>socket.io extra credit</h2>
+
+<p>You&#39;re still here! That&#39;s awesome. Why not learn a little bit more? For this last bit, we&#39;ll use <a href="http://socket.io">socket.io</a> to make our comment feature real-time &mdash; even your mom will think it&#39;s amazing. Socket.io doesn&#39;t strictly use the websocket protocol (it can fall back to long polling, flash, etc.) so it&#39;s ideal if you have to support a bunch of different browsers, plus it&#39;s amazingly well thought out and full of useful features. Let&#39;s create a socket server in <code>app.js</code> that will respond to a comment message and broadcast it to all connected clients. Add these lines to <code>app.js</code> right under the server creation code.</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript">  <span class="p">...</span>
+
+  <span class="c1">// listen for connections</span>
+  <span class="kd">var</span> <span class="nx">server</span> <span class="o">=</span> <span class="nx">app</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="mi">3000</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;listening on %d&#39;</span><span class="p">,</span> <span class="nx">server</span><span class="p">.</span><span class="nx">address</span><span class="p">().</span><span class="nx">port</span><span class="p">);</span>
+  <span class="p">});</span>
+
+  <span class="c1">// add lines below here</span>
+
+  <span class="c1">// socket server</span>
+  <span class="kd">var</span> <span class="nx">io</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;socket.io&#39;</span><span class="p">)(</span><span class="nx">server</span><span class="p">);</span>
+
+  <span class="c1">// comment listener</span>
+  <span class="nx">io</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;connection&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">socket</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">socket</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;comment&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">comment</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">io</span><span class="p">.</span><span class="nx">sockets</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="s1">&#39;newComment&#39;</span><span class="p">,</span> <span class="nx">comment</span><span class="p">);</span>
+    <span class="p">});</span>
+  <span class="p">});</span>
+
+  <span class="p">...</span>
+</code></pre></div>
+<p>Simply put, the socket server, <code>io</code>, waits for a message called &#39;comment&#39; and is capable of recieving some data and emitting to all connected clients. We can see this in action if we make a few updates to <code>client-app.js</code>. I&#39;m providing the whole file now just in case you missed something along the way. The new stuff is mostly socket.io related but I&#39;ve included an improvement on the author name bit at the bottom.</p>
+
+<p><strong>public/js/client-app.js</strong></p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript">  <span class="kd">function</span> <span class="nx">renderComment</span><span class="p">(</span><span class="nx">comment</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="kd">var</span> <span class="nx">source</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#comment&#39;</span><span class="p">).</span><span class="nx">html</span><span class="p">()</span>
+      <span class="p">,</span> <span class="nx">dateString</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="nx">comment</span><span class="p">.</span><span class="nx">created</span><span class="p">).</span><span class="nx">toDateString</span><span class="p">()</span>
+      <span class="p">,</span> <span class="nx">html</span> <span class="o">=</span> <span class="nx">Handlebars</span><span class="p">.</span><span class="nx">compile</span><span class="p">(</span><span class="nx">source</span><span class="p">)({</span> 
+        <span class="nx">comment</span><span class="o">:</span> <span class="nx">comment</span><span class="p">.</span><span class="nx">text</span><span class="p">,</span> 
+        <span class="nx">author</span><span class="o">:</span> <span class="nx">comment</span><span class="p">.</span><span class="nx">author</span><span class="p">,</span>
+        <span class="nx">time</span><span class="o">:</span> <span class="nx">dateString</span> 
+      <span class="p">});</span>
+
+    <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#comments-container&#39;</span><span class="p">).</span><span class="nx">prepend</span><span class="p">(</span><span class="nx">html</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="c1">// socket.io </span>
+  <span class="kd">var</span> <span class="nx">socket</span> <span class="o">=</span> <span class="nx">io</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s1">&#39;http://localhost&#39;</span><span class="p">)</span>
+    <span class="p">,</span> <span class="nx">commentCount</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+  <span class="nx">socket</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;newComment&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">comment</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">renderComment</span><span class="p">(</span><span class="nx">comment</span><span class="p">);</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="nx">comment</span><span class="p">.</span><span class="nx">author</span> <span class="o">!==</span> <span class="nx">localStorage</span><span class="p">.</span><span class="nx">author</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">commentCount</span><span class="o">++</span><span class="p">;</span>
+
+      <span class="kd">var</span> <span class="nx">countString</span> <span class="o">=</span> <span class="nx">commentCount</span> <span class="o">+</span> <span class="s2">&quot; NEW COMMENT&quot;</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">commentCount</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="nx">countString</span> <span class="o">+=</span> <span class="s2">&quot;S&quot;</span><span class="p">;</span>
+
+      <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#comment-count&#39;</span><span class="p">).</span><span class="nx">text</span><span class="p">(</span><span class="nx">countString</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">});</span>
+
+  <span class="c1">// session author name</span>
+  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#author-name-submit button&#39;</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">&#39;/session/author&#39;</span><span class="p">,</span> <span class="p">{</span> 
+      <span class="nx">author</span><span class="o">:</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#author-name-submit input&#39;</span><span class="p">).</span><span class="nx">val</span><span class="p">()</span> 
+    <span class="p">},</span> <span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#author-name-submit&#39;</span><span class="p">).</span><span class="nx">hide</span><span class="p">();</span>
+      <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#author-name&#39;</span><span class="p">).</span><span class="nx">text</span><span class="p">(</span><span class="s1">&#39;Welcome, &#39;</span> <span class="o">+</span> <span class="nx">res</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">author</span><span class="p">);</span>
+      <span class="nx">localStorage</span><span class="p">.</span><span class="nx">author</span> <span class="o">=</span> <span class="nx">res</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">author</span><span class="p">;</span>
+    <span class="p">});</span>
+  <span class="p">});</span>
+
+  <span class="c1">// create comment</span>
+  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.comment-submit&#39;</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="kd">var</span> <span class="nx">$comment_el</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.comment-input&#39;</span><span class="p">).</span><span class="nx">first</span><span class="p">()</span>
+      <span class="p">,</span> <span class="nx">comment</span> <span class="o">=</span> <span class="nx">$comment_el</span><span class="p">.</span><span class="nx">val</span><span class="p">()</span>
+      <span class="p">,</span> <span class="nx">data</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">text</span><span class="o">:</span> <span class="nx">comment</span> <span class="p">}</span>
+
+    <span class="nx">$</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">&#39;/comments/create&#39;</span><span class="p">,</span> <span class="nx">data</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">socket</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="s1">&#39;comment&#39;</span><span class="p">,</span> <span class="nx">res</span><span class="p">.</span><span class="nx">data</span><span class="p">)</span>
+      <span class="nx">$comment_el</span><span class="p">.</span><span class="nx">val</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">);</span>
+    <span class="p">});</span>
+
+  <span class="p">});</span>
+
+  <span class="c1">// list comments on page load</span>
+  <span class="nx">$</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/comments&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">comment</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">renderComment</span><span class="p">(</span><span class="nx">comment</span><span class="p">)</span>
+    <span class="p">});</span>
+  <span class="p">});</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="nx">localStorage</span><span class="p">.</span><span class="nx">author</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#author-name-submit&#39;</span><span class="p">).</span><span class="nx">hide</span><span class="p">();</span>
+    <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#author-name&#39;</span><span class="p">).</span><span class="nx">text</span><span class="p">(</span><span class="nx">localStorage</span><span class="p">.</span><span class="nx">author</span><span class="p">);</span>
+  <span class="p">}</span>
+</code></pre></div>
+<p>Notice we&#39;re also displaying the ammout of new comments recieved since page load. Let&#39;s add the markup for that. Add the folling below the author-name div.</p>
+
+<p><strong>index.html</strong></p>
+<div class="highlight"><pre><code class="language-html" data-lang="html">    <span class="c">&lt;!-- displays new comments since page load --&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;comment-count&quot;</span><span class="nt">&gt;&lt;/div&gt;</span>
+</code></pre></div>
+<p>Let&#39;s take a minute to think about the fundamental changes we made to the application flow. Before, we were simply posting a comment to the server, pretty traditional. We&#39;ve axed that in favor of a client post -&gt; http response -&gt; socket server -&gt; socket emit. This takes some getting used to, but I&#39;ve found it to be a common pattern in real time communication features that require database writes. If you&#39;re struggling with these concepts, study the socket.io docs and get more familiar with the technology.</p>
+
+<p>It&#39;s time to test our app one last time. Start your server, but this time open up two browsers (I used chrome and safari, both support websockets). In both browsers, hit your application, log in as two separate authors and start typing away. You should see a real time comment feature in action, backed by a mongo database and a node server. </p>
+
+
+            </div>
+
+            
+
+            <hr />
+
+            
+            
+            <div class="author-profile">
+  <div class="about">
+    <em>ABOUT THE AUTHOR</em><br/>
+    <strong>John Guest</strong><br/>
+    <p>John has experience in several different programming languages, including Ruby, Java, Scala, JavaScript, php, and Bash. At Grok, his primary focus is Ruby on Rails development. A graduate of The University of North Texas, he studied Linguistics with an emphasis on theoretical syntax, formal semantics, and semiotics.</p> 
+  </div>
+</div>
+            
+
+            
+<h3>Comments</h3>
+<hr />
+<!-- https://developers.facebook.com/docs/reference/plugins/comments/ -->
+<div class='comments'>
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
+  <div class='fb-comments' data-href='http://www.grok-interactive.com/blog/node-express-mongo-socketio-introduction/' data-colorscheme='' data-width='500'></div>
+</div>
+
+
+
+          </div>
+        </div>
+
+
+      </div>
+
+      <div class="col c30">
+
+        <div class="well">
+  <h4><i class="icon fa fa-folder" title="Categories"></i> Categories</h4>
+  <ul class="nav nav-list">
+    
+
+    <li><a href="/blog/category/general/">
+      General
+    </a></li>
+    
+
+    <li><a href="/blog/category/software_development/">
+      Software development
+    </a></li>
+    
+
+    <li><a href="/blog/category/training/">
+      Training
+    </a></li>
+    
+
+    <li><a href="/blog/category/testing/">
+      Testing
+    </a></li>
+    
+
+    <li><a href="/blog/category/environments/">
+      Environments
+    </a></li>
+    
+
+    <li><a href="/blog/category/business_development/">
+      Business development
+    </a></li>
+    
+  </ul>
+</div>
+
+
+        
+<div class="well">
+  <h4><i class="icon fa fa-users" title="Authors"></i> Authors</h4>
+  <ul class="nav nav-list">
+    
+    <li><a href="/blog/author/jason-straughan">Jason Straughan</a></li>
+    
+    <li><a href="/blog/author/jason-ellis">Jason Ellis</a></li>
+    
+    <li><a href="/blog/author/josh-freeman">Josh Freeman</a></li>
+    
+    <li><a href="/blog/author/chris-hardee">Chris Hardee</a></li>
+    
+    <li><a href="/blog/author/john-guest">John Guest</a></li>
+    
+  </ul>
+</div>
+
+
+
+        <div class="well">
+  <h4><i class="icon fa fa-tags" title="Categories"></i> Tags</h4>
+
+  <ul class="nav nav-list">
+    
+    <li><a href="/blog/tag/grok">Grok</a></li>
+    
+    <li><a href="/blog/tag/industry">Industry</a></li>
+    
+    <li><a href="/blog/tag/codeup">Codeup</a></li>
+    
+    <li><a href="/blog/tag/security">Security</a></li>
+    
+    <li><a href="/blog/tag/php">Php</a></li>
+    
+    <li><a href="/blog/tag/phpunit">Phpunit</a></li>
+    
+    <li><a href="/blog/tag/emacs">Emacs</a></li>
+    
+    <li><a href="/blog/tag/expression_engine">Expression engine</a></li>
+    
+    <li><a href="/blog/tag/javascript">Javascript</a></li>
+    
+    <li><a href="/blog/tag/dom">Dom</a></li>
+    
+    <li><a href="/blog/tag/jquery">Jquery</a></li>
+    
+    <li><a href="/blog/tag/git">Git</a></li>
+    
+    <li><a href="/blog/tag/githooks">Githooks</a></li>
+    
+    <li><a href="/blog/tag/source_control">Source control</a></li>
+    
+    <li><a href="/blog/tag/css">Css</a></li>
+    
+    <li><a href="/blog/tag/rails">Rails</a></li>
+    
+    <li><a href="/blog/tag/ubuntu">Ubuntu</a></li>
+    
+    <li><a href="/blog/tag/linux">Linux</a></li>
+    
+    <li><a href="/blog/tag/developers">Developers</a></li>
+    
+    <li><a href="/blog/tag/node.js">Node.js</a></li>
+    
+    <li><a href="/blog/tag/mongodb">Mongodb</a></li>
+    
+    <li><a href="/blog/tag/javascript">Javascript</a></li>
+    
+    <li><a href="/blog/tag/socket.io">Socket.io</a></li>
+    
+    <li><a href="/blog/tag/express.js">Express.js</a></li>
+    
+  </ul>
+</div>
+
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <div class="pull-left">
+        <p>&copy; 2013 Grok Interactive, LLC
+      </div>
+    </div>
+  </footer>
+
+  <script type='text/javascript' src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script type='text/javascript' src='/assets/js/jquery.easing.1.3.js'></script>
+  <script type='text/javascript' src='/assets/js/less-1.3.3.min.js'></script>
+  <script type='text/javascript' src="/assets/js/bootstrap.min.js"></script>
+  <script type='text/javascript' src="/assets/js/default.js"></script>
+  <script src="//static.getclicky.com/js" type="text/javascript"></script>
+  <script type="text/javascript">try{ clicky.init(100585693); }catch(e){}</script>
+  <noscript><p><img alt="Clicky" width="1" height="1" src="//in.getclicky.com/100585693ns.gif" /></p></noscript>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-43998305-2', 'grok-interactive.com');
+    ga('send', 'pageview');
+  </script>
+</body>
+</html>

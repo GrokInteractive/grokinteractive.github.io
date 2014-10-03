@@ -125,7 +125,6 @@ function autoResize(id){
 <p>Because we are working directly with HTML form elements, jQuery is particularly useful for abstracting DOM work. Additionally, we will create a jQuery UI Widget to encapsulate this functionality and apply it easily.</p>
 
 <p>The first thing we will do is create our widget shell with the constructor method &#39;_create&#39;:</p>
-
 <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">$</span><span class="p">.</span><span class="nx">widget</span><span class="p">(</span><span class="s2">&quot;grok.savemenot&quot;</span><span class="p">,</span> <span class="p">{</span>
 
     <span class="nx">_create</span><span class="o">:</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
@@ -133,9 +132,7 @@ function autoResize(id){
     <span class="p">}</span>
 <span class="p">});</span>
 </code></pre></div>
-
 <p>The create method will server as the master method to intialize everything we need. First we will collect all the form elements that store information to be sent to the server. We&#39;ll cache these elements to avoid repeated DOM searches. We&#39;ll also collect the submit button separately.</p>
-
 <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">_create</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
 
     <span class="k">this</span><span class="p">.</span><span class="nx">inputs</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">element</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s1">&#39;input, textarea, select, button&#39;</span><span class="p">);</span>
@@ -144,11 +141,9 @@ function autoResize(id){
 
 <span class="p">}</span>
 </code></pre></div>
-
 <p>Now, we will collect the current values for all the form elements and return the value. When we instantiate the widget, we need to know the beginning state of the form, so we will store those values in the <code>initialFormState</code> property.</p>
 
 <p>We have to treat checkboxes a little differently than other elements. Most form elements will send their name and value (even if empty) to the server upon submission. Checkboxes do not work this way; instead, their name and value is only sent to the server if checked. The value is really inconsequential to a checkbox&mdash;only it is checked attribute matters to us.</p>
-
 <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">_create</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
 
     <span class="p">...</span>
@@ -182,9 +177,7 @@ function autoResize(id){
     <span class="k">return</span> <span class="nx">formValues</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <p>It is time to check the current state of the form to its beginning state. We will create a <code>_formChanged</code> method that will return a simple boolean if the form is different now from when it was instantiated.</p>
-
 <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">_formChanged</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
 
     <span class="kd">var</span> <span class="nx">object1</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">initialFormState</span><span class="p">;</span>
@@ -202,11 +195,9 @@ function autoResize(id){
     <span class="k">return</span> <span class="o">!</span><span class="nx">isEqual</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <p>The whole point of this widget is to update the submit button&#39;s disabled attribute on a form change. So now we listen to form changes. We listen for two kinds of events: <strong>change</strong> and <strong>keyup</strong>. The <strong>change</strong> event fires when the element&#39;s value changes, but only after it looses focus (tab away, click away, etc). The <strong>keyup</strong> event will unsurprising fire when you release a key from your keyboard, but it is blind to mouse events or programattic events. Unfortunately, these events may call the _formChanged method multiple times per change, but we are stuck with this for UX&#39;s sake.</p>
 
 <p>The call is simple. In effect, if the user changes the form, it compares the new state to the original state. If they&#39;re different, the submitting element is enabled; if it is not, it is disabled. Easy peasy.</p>
-
 <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">_inputsOn</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
 
     <span class="kd">var</span> <span class="nx">that</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
@@ -222,13 +213,11 @@ function autoResize(id){
     <span class="p">});</span>
 <span class="p">},</span>
 </code></pre></div>
-
 <p>Now we set all this up when the widget is instantiated. For clarity, all the method calls to setup the inputs are grouped into an _inputSetup method. It is optional, but helped me keep it all straight.</p>
 
 <p>First, we disable the submitting element. We could technically disable the element from the HTML, but this would violate progressive enhancement principles and be a really bad idea. If the user has javascript turned off or an error occurs that prevents the widget from working correctly, the form is unsubmittable from the user.</p>
 
 <p>Now we have to handle a special case with the select element. When a browser loads the form, the option within a select element is automatically chosen. If it is a new form, and the user wants to only submit that element with the first option selected, they are out of luck. In this case, unless the HTML requires that a particular option be selected initially (such as when updating data), we will deselect all options by default.</p>
-
 <div class="highlight"><pre><code class="language-javascript" data-lang="javascript">    <span class="nx">_create</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
 
         <span class="p">...</span>
@@ -261,11 +250,9 @@ function autoResize(id){
         <span class="p">});</span>
     <span class="p">}</span>
 </code></pre></div>
-
 <h2>The Result</h2>
 
 <p>Your final widget should look similar to below:</p>
-
 <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">$</span><span class="p">.</span><span class="nx">widget</span><span class="p">(</span><span class="s2">&quot;grok.savemenot&quot;</span><span class="p">,</span> <span class="p">{</span>
 
     <span class="nx">_create</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
@@ -358,16 +345,12 @@ function autoResize(id){
     <span class="p">}</span>
 <span class="p">});</span>
 </code></pre></div>
-
 <p>So how do we turn it on?</p>
-
 <div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;script&gt;</span>
     <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;form&#39;</span><span class="p">).</span><span class="nx">savemenot</span><span class="p">();</span>
 <span class="nt">&lt;/script&gt;</span>
 </code></pre></div>
-
 <p>Really? Yes, really. That is it. Do not forget to require jQuery and jQueryUI in your head, however. Check out the HTML used for the demo. I have omitted the html required by bootstrap for clarity.</p>
-
 <div class="highlight"><pre><code class="language-html" data-lang="html"><span class="cp">&lt;!DOCTYPE html&gt;</span>
 <span class="nt">&lt;html&gt;</span>
 <span class="nt">&lt;head&gt;</span>
@@ -418,7 +401,6 @@ function autoResize(id){
 <span class="nt">&lt;/body&gt;</span>
 <span class="nt">&lt;/html&gt;</span>
 </code></pre></div>
-
 <p>So there you have it. A widget you can use AND a tutorial on creating widgets. If you want to check out the source, check out my gist over on <a href="https://gist.github.com/jdfreeman/9843445">Github</a>.</p>
 
 
@@ -518,6 +500,8 @@ function autoResize(id){
     
     <li><a href="/blog/author/chris-hardee">Chris Hardee</a></li>
     
+    <li><a href="/blog/author/john-guest">John Guest</a></li>
+    
   </ul>
 </div>
 
@@ -565,6 +549,16 @@ function autoResize(id){
     <li><a href="/blog/tag/linux">Linux</a></li>
     
     <li><a href="/blog/tag/developers">Developers</a></li>
+    
+    <li><a href="/blog/tag/node.js">Node.js</a></li>
+    
+    <li><a href="/blog/tag/mongodb">Mongodb</a></li>
+    
+    <li><a href="/blog/tag/javascript">Javascript</a></li>
+    
+    <li><a href="/blog/tag/socket.io">Socket.io</a></li>
+    
+    <li><a href="/blog/tag/express.js">Express.js</a></li>
     
   </ul>
 </div>

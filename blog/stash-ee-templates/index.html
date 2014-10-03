@@ -97,27 +97,21 @@
               <p>I am not sure if it is still hip and trendy within the ExpressionEngine (EE) community to use Stash. There was so much buzz about it when people started using it and talking about it, and we have received a few EE projects utilizing it.</p>
 
 <p>I like it, it has its quirks but I think it not only helps improve rendering but also cleans up your template code considerably. Traditionally at my old studio, and I want to note there are several ways to do this, we would typically have a section, say About, with a landing page that listed all the entries for that section and a detail page that had the actually content for the entry. To set this up you would create your section group:</p>
-
 <div class="highlight"><pre><code class="language-text" data-lang="text">/about.group
 </code></pre></div>
-
 <p>Within there, you would create the index page along with the <code>.landing</code> and <code>.detail</code> page. So now your structure looks like this:</p>
-
 <div class="highlight"><pre><code class="language-text" data-lang="text">/about.group
     index.html
     .landing.html
     .detail.html
 </code></pre></div>
-
 <p>These would then be embedded within the index page depending on a segment conditional. If <code>segment_2</code> is empty, we embed the landing page, else we show the detail page and let EE figure out the entry.</p>
-
 <div class="highlight"><pre><code class="language-text" data-lang="text">{if segment_2 == &#39;&#39;}
     {embed=&quot;about/.landing&quot;}
 {if:else}
     {embed=&quot;about/.detail&quot;}
 {/if}
 </code></pre></div>
-
 <p>Ok, a little clunky, we now have three files to keep track of whenever we have changes to this section. What if the clients wants to change the container for the content, ie. the index page? We&#39;ll need to go through each index page of each section to change it. Say the client wants the title to be in gold for just the About section? Would you then go into the <code>.detail</code> page and add a class for the <code>h1</code>? Now you will have to be careful that no one comes along and copies over what is usually boilerplate code for the detail section.</p>
 
 <p>Issues like these start adding up: driving up maintenance time and turnaround for client requests. What if instead we have one, well documented, file per section, one container, and a simple tag we can utilize for any custom styling? Not only will this clean things up considerably, but can make edits much more manageable.</p>
@@ -127,7 +121,6 @@
 <p>I will not go over Stash basics, there are <a href="http://www.jamessmith.co.uk/articles/expressionengine-stash-tutorials">some tutorials available</a> on the general structure of using Stash partials. If you do not already have it created, you will want to create a section for all your wrappers. I usually call this <code>/_layouts.group</code>, in here you will want to add your wrapper for all your pages. I want to note that you can create as many wrappers as you&#39;d like, but for this article I am trying to keep the amount of trackable files down. Having one layout for the homepage and one for the inner pages is pretty common.</p>
 
 <p>Within here, I want to set up the container for all your page content so we will be getting all the stash variables we are going to set, starting with the <code>&lt;head&gt;</code>. Now, I am a big fan of SEO lite, so we will put a block in the head to grab a section title:</p>
-
 <div class="highlight"><pre><code class="language-text" data-lang="text">&lt;!DOCTYPE HTML&gt;
 &lt;html&gt;
     &lt;head&gt;
@@ -139,32 +132,24 @@
         {exp:seo_lite url_title=&quot;{segment_2}&quot;}
         {/if}
 </code></pre></div>
-
 <p>This sets it up so if we are on the landing page we will grab a title variable off our page, otherwise we will check to see if we are using category headings (assuming we are using <code>/category/</code> as the segment name). I paste this block within all wrapper regardless of using categories, if we do we will not have to go back through any code. If nothing matches, let&#39;s grab the url_title off the last segment.</p>
 
 <p>After that we will include meta tags, links to stylesheets and web-fonts, and scripts we will be using on all pages. I include a <code>{exp:stash:get name=&quot;head&quot;}</code> for any additional scripts or anything else needed. Remember that calling a get on something that isn&#39;t set is fine, it doesn&#39;t add much overhead and let&#39;s you set up defined blocks within your template to stash.</p>
 
 <p>Down to the <code>&lt;body&gt;</code> tag, I like to add in a section identifier that I can later use as a &#39;hook&#39; for any custom css or script:</p>
-
 <div class="highlight"><pre><code class="language-text" data-lang="text">&lt;body id=&quot;{exp:stash:get name=&#39;id&#39;}&quot;&gt;
 </code></pre></div>
-
 <p>Going down to where you will have your content, you will probably have something like <code>&lt;div id=&quot;main&quot;&gt;</code> or <code>&lt;article&gt;</code> tag, let&#39;s grab our stashed content:</p>
-
 <div class="highlight"><pre><code class="language-text" data-lang="text">&lt;div id=&quot;main&quot;&gt;
     {exp:stash:get name=&quot;content&quot;}
 &lt;/div&gt;
 </code></pre></div>
-
 <p>I also want to grab the secondary content, such as section menu along with any callouts:</p>
-
 <div class="highlight"><pre><code class="language-text" data-lang="text">&lt;div id=&quot;secondary&quot;&gt;
     {exp:stash:get name=&quot;secondary&quot;}
 &lt;/div&gt;
 </code></pre></div>
-
 <p>Now, let&#39;s get to the actually template. First we can devote the first lines to some general comments, Copyright/TOS, documentation, etc. I like have a boiler plate section that lists the developer who last edited it too.</p>
-
 <div class="highlight"><pre><code class="language-text" data-lang="text">{!--
 Page: AwesomeSite.com
 Section: About
@@ -173,33 +158,25 @@ Last Edited On: 03/24/2014 14:10
 Notes: &lt; page notes &gt;
 --}
 </code></pre></div>
-
 <p>I also like to prepend a title before each stash block, along with any notes if needed.</p>
 
 <p>Now let&#39;s add our one and only embed:</p>
-
 <div class="highlight"><pre><code class="language-text" data-lang="text">{!-- Layout --}
 {embed=&quot;_layouts/page&quot;}
 </code></pre></div>
-
 <p>Stash users know you can put the embed anywhere you like, I like to put it front and center.</p>
 
 <p>Next, and I will talk about this in the next section, I like to assign an ID variable that we can use for any css or script for that specific section:</p>
-
 <div class="highlight"><pre><code class="language-text" data-lang="text">{!-- ID --}
 {exp:stash:set name=&quot;id&quot;}about{/exp:stash:set}
 </code></pre></div>
-
 <p>Our SEO Title we are grabbing from earlier:</p>
-
 <div class="highlight"><pre><code class="language-text" data-lang="text">{!-- SEO Title --}
 {exp:stash:set name=&quot;seo-title&quot; parse=&quot;inward&quot;}
 {exp:seo_lite default_title=&quot;About Us&quot;}
 {/exp:stash:set}
 </code></pre></div>
-
 <p>Now let&#39;s start on the content, we will want to first check to see if we are on a landing page or a detail page.</p>
-
 <div class="highlight"><pre><code class="language-text" data-lang="text">{!-- Content --}
 {exp:stash:set name=&quot;content&quot;}
     {if segment_2 == &#39;&#39;}
@@ -207,9 +184,7 @@ Notes: &lt; page notes &gt;
     {/if}
 {/exp:stash:set}
 </code></pre></div>
-
 <p>Looping through our entries depending on whether we are on a landing page or entry page.</p>
-
 <div class="highlight"><pre><code class="language-text" data-lang="text">{!-- Content --}
 {exp:stash:set name=&quot;content&quot;}
     {if segment_2 == &#39;&#39;}
@@ -228,7 +203,6 @@ Notes: &lt; page notes &gt;
     {/if}
 {/exp:stash:set}
 </code></pre></div>
-
 <p>There we go! We now have our detail and landing sections all within one template, with only one embed.</p>
 
 <h2>ID Hooks</h2>
@@ -236,14 +210,12 @@ Notes: &lt; page notes &gt;
 <p>Remember when we set that section ID up? Well let&#39;s say if a client asks us to make all the titles for the event section to be in Comic-Sans. Normally you&#39;d have to set up a class, call it about-font, and add it to all the titles or add it to the main section and let all child title appear in this new font.</p>
 
 <p>Instead what I do is use that ID in a special section or separate file for any changes. In our <code>custom.css</code> file:</p>
-
 <div class="highlight"><pre><code class="language-text" data-lang="text">/* Section Styles */
 
 body#about h1 {
     font-family: Comic Sans, Comic Sans MS, cursive;
 }
 </code></pre></div>
-
 <p>Now we have some clear designation on which sections have differing styles, which is especially helpful when all the inner sections share the same wrapper.</p>
 
 <p>That is it for this blog post, let me know if you have any comments for suggestions on ExpressionEngine or Stash usage. Also let us know if you have an Expression Engine work that needs to be done!</p>
@@ -353,6 +325,8 @@ body#about h1 {
     
     <li><a href="/blog/author/chris-hardee">Chris Hardee</a></li>
     
+    <li><a href="/blog/author/john-guest">John Guest</a></li>
+    
   </ul>
 </div>
 
@@ -400,6 +374,16 @@ body#about h1 {
     <li><a href="/blog/tag/linux">Linux</a></li>
     
     <li><a href="/blog/tag/developers">Developers</a></li>
+    
+    <li><a href="/blog/tag/node.js">Node.js</a></li>
+    
+    <li><a href="/blog/tag/mongodb">Mongodb</a></li>
+    
+    <li><a href="/blog/tag/javascript">Javascript</a></li>
+    
+    <li><a href="/blog/tag/socket.io">Socket.io</a></li>
+    
+    <li><a href="/blog/tag/express.js">Express.js</a></li>
     
   </ul>
 </div>

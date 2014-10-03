@@ -1,22 +1,27 @@
 <?xml version="1.0"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Grok Interactive</title>
-    <link>http://www.grok-interactive.com</link>
-    <atom:link href="http://www.grok-interactive.com/rss.xml" rel="self" type="application/rss+xml" />
-    <description>Grok Interactive's web developers create outstanding applications</description>
-    <language>en-us</language>
-    <pubDate>Fri, 03 Oct 2014 12:05:14 -0400</pubDate>
-    <lastBuildDate>Fri, 03 Oct 2014 12:05:14 -0400</lastBuildDate>
+<feed xmlns="http://www.w3.org/2005/Atom">
 
-    
-    <item>
-      <title>A not so small introduction to 3 parts of the MEAN stack</title>
-      <link>http://www.grok-interactive.com/blog/node-express-mongo-socketio-introduction/</link>
-      <pubDate>Thu, 02 Oct 2014 00:00:00 -0400</pubDate>
-      <author>john.guest@grok-interactive.com (John Guest)</author>
-      <guid>http://www.grok-interactive.com/blog/node-express-mongo-socketio-introduction</guid>
-      <description>&lt;p&gt;&lt;strong&gt;Node.js&lt;/strong&gt; and &lt;strong&gt;MongoDB&lt;/strong&gt; go well together, like lamb and tunafish. This post aims to provide a newcomer with enough knowledge to build out small pieces of common web app functionality. We&amp;#39;ll start with some boilerplate code, setting up Express.js and an http server, then move on to a building a tiny feature with the help of some popular Node.js libraries. If you&amp;#39;re more of a hands on kind of guy or simply want to follow along with some code in front of you, you can find this project on &lt;a href=&quot;https://github.com/jguest/node-mongo-tutorial/&quot;&gt;github&lt;/a&gt;. That said, I highly suggest reading this guide and coding from scratch. &lt;/p&gt;
+  <title>Grok Interactive</title>
+  <link href="http://www.grok-interactive.com/"/>
+  <link type="application/atom+xml" rel="self" href="http://www.grok-interactive.com/atom.xml"/>
+  <updated>2014-10-03T12:05:14-04:00</updated>
+  <id>http://www.grok-interactive.com/</id>
+  <author>
+    <name>Grok Interactive</name>
+  </author>
+
+  
+  <entry>
+    <id>http://www.grok-interactive.com/blog/node-express-mongo-socketio-introduction</id>
+    <link type="text/html" rel="alternate" href="http://www.grok-interactive.com/blog/node-express-mongo-socketio-introduction/"/>
+    <title>A not so small introduction to 3 parts of the MEAN stack</title>
+    <published>2014-10-02T00:00:00-04:00</published>
+    <updated>2014-10-02T00:00:00-04:00</updated>
+    <author>
+      <name>John Guest</name>
+      <email>john.guest@grok-interactive.com</email>
+    </author>
+    <content type="html">&lt;p&gt;&lt;strong&gt;Node.js&lt;/strong&gt; and &lt;strong&gt;MongoDB&lt;/strong&gt; go well together, like lamb and tunafish. This post aims to provide a newcomer with enough knowledge to build out small pieces of common web app functionality. We&amp;#39;ll start with some boilerplate code, setting up Express.js and an http server, then move on to a building a tiny feature with the help of some popular Node.js libraries. If you&amp;#39;re more of a hands on kind of guy or simply want to follow along with some code in front of you, you can find this project on &lt;a href=&quot;https://github.com/jguest/node-mongo-tutorial/&quot;&gt;github&lt;/a&gt;. That said, I highly suggest reading this guide and coding from scratch. &lt;/p&gt;
 
 &lt;h2&gt;install all the things&lt;/h2&gt;
 
@@ -561,16 +566,20 @@
 &lt;p&gt;Let&amp;#39;s take a minute to think about the fundamental changes we made to the application flow. Before, we were simply posting a comment to the server, pretty traditional. We&amp;#39;ve axed that in favor of a client post -&amp;gt; http response -&amp;gt; socket server -&amp;gt; socket emit. This takes some getting used to, but I&amp;#39;ve found it to be a common pattern in real time communication features that require database writes. If you&amp;#39;re struggling with these concepts, study the socket.io docs and get more familiar with the technology.&lt;/p&gt;
 
 &lt;p&gt;It&amp;#39;s time to test our app one last time. Start your server, but this time open up two browsers (I used chrome and safari, both support websockets). In both browsers, hit your application, log in as two separate authors and start typing away. You should see a real time comment feature in action, backed by a mongo database and a node server. &lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Happy Developers are Good Developers</title>
-      <link>http://www.grok-interactive.com/blog/happy-developers-are-good-developers/</link>
-      <pubDate>Thu, 01 May 2014 00:00:00 -0400</pubDate>
-      <author>jasons@grok-interactive.com (Jason Straughan)</author>
-      <guid>http://www.grok-interactive.com/blog/happy-developers-are-good-developers</guid>
-      <description>&lt;p&gt;Any developer can relate to writing depressing code. Our industry is known for long hours and the resulting burnout that follows. Corporate America is full of managers that like to see code written, without caring if the code will ever launch. This grinds on the inner-nerd of every developer and they suffer.&lt;/p&gt;
+</content>
+  </entry>
+  
+  <entry>
+    <id>http://www.grok-interactive.com/blog/happy-developers-are-good-developers</id>
+    <link type="text/html" rel="alternate" href="http://www.grok-interactive.com/blog/happy-developers-are-good-developers/"/>
+    <title>Happy Developers are Good Developers</title>
+    <published>2014-05-01T00:00:00-04:00</published>
+    <updated>2014-05-01T00:00:00-04:00</updated>
+    <author>
+      <name>Jason Straughan</name>
+      <email>jasons@grok-interactive.com</email>
+    </author>
+    <content type="html">&lt;p&gt;Any developer can relate to writing depressing code. Our industry is known for long hours and the resulting burnout that follows. Corporate America is full of managers that like to see code written, without caring if the code will ever launch. This grinds on the inner-nerd of every developer and they suffer.&lt;/p&gt;
 
 &lt;p&gt;When a developer suffers, their code suffers.&lt;/p&gt;
 
@@ -592,16 +601,20 @@
 &lt;p&gt;There were times I would have been happy with a new laptop and an extra week vacation after some large project launches. I did not leave jobs because of the money, I left because I was not happy. Happy devs write good code, code we can be proud of.&lt;/p&gt;
 
 &lt;p&gt;Want to optimize your development team? Make them happy.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Your Presence Is Required</title>
-      <link>http://www.grok-interactive.com/blog/object-inheritance/</link>
-      <pubDate>Fri, 11 Apr 2014 00:00:00 -0400</pubDate>
-      <author>joshf@grok-interactive.com (Josh Freeman)</author>
-      <guid>http://www.grok-interactive.com/blog/object-inheritance</guid>
-      <description>&lt;p&gt;Earlier this week, I ran into an into a self-induced problem.  I was attempting to populate a database with lots of random, but grammatically correct data. In Laravel&amp;#39;s parlance, I was &lt;em&gt;seeding&lt;/em&gt; the database.  The problem was that I could seed my database by running individual seeders, but if I ran them all at once, I had lots of missing data.&lt;/p&gt;
+</content>
+  </entry>
+  
+  <entry>
+    <id>http://www.grok-interactive.com/blog/object-inheritance</id>
+    <link type="text/html" rel="alternate" href="http://www.grok-interactive.com/blog/object-inheritance/"/>
+    <title>Your Presence Is Required</title>
+    <published>2014-04-11T00:00:00-04:00</published>
+    <updated>2014-04-11T00:00:00-04:00</updated>
+    <author>
+      <name>Josh Freeman</name>
+      <email>joshf@grok-interactive.com</email>
+    </author>
+    <content type="html">&lt;p&gt;Earlier this week, I ran into an into a self-induced problem.  I was attempting to populate a database with lots of random, but grammatically correct data. In Laravel&amp;#39;s parlance, I was &lt;em&gt;seeding&lt;/em&gt; the database.  The problem was that I could seed my database by running individual seeders, but if I ran them all at once, I had lots of missing data.&lt;/p&gt;
 
 &lt;p&gt;My attempt was simple: store lists of words by type (nouns, adjectives, first names, etc.) in their own files as an array and return that array when included. I created a base class that on construction requires a list once and sets it to a static property that is accessible from any child classes.&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
@@ -770,16 +783,20 @@
 either object once. If we instantiate either object again, the &lt;code&gt;__construct&lt;/code&gt; method is called &lt;strong&gt;again&lt;/strong&gt;! We already required &lt;code&gt;nouns-list.php&lt;/code&gt;, and because we&amp;#39;re including the list through &lt;code&gt;require_once&lt;/code&gt;, we cannot include the file again. The script will not fail, but neither will the file be included on subsequent instantiations.&lt;/p&gt;
 
 &lt;p&gt;The solution to this problem is deceptively simple, while the root cause is conceptually complex; so what is the solution? Change the way we include our file from &lt;code&gt;require_once&lt;/code&gt; to &lt;code&gt;require&lt;/code&gt;. Each time the object is instantiated, the &lt;code&gt;$nouns&lt;/code&gt; property will now be loaded with the file&amp;#39;s contents. Let the seeding begin...again!&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Setting up Rails in Ubuntu</title>
-      <link>http://www.grok-interactive.com/blog/setting-up-rails-in-ubuntu/</link>
-      <pubDate>Tue, 08 Apr 2014 00:00:00 -0400</pubDate>
-      <author>chris.hardee@grok-interactive.com (Chris Hardee)</author>
-      <guid>http://www.grok-interactive.com/blog/setting-up-rails-in-ubuntu</guid>
-      <description>&lt;p&gt;This week my Mac Book Pro had another kernel panic and while I understand these things happen sometime, this was one of a series I have been having since I acquired it a few months ago. After taking it in to the Apple Store&amp;#39;s &amp;#39;Genius Bar&amp;#39;, I was told it would need to be held overnight to repair it.&lt;/p&gt;
+</content>
+  </entry>
+  
+  <entry>
+    <id>http://www.grok-interactive.com/blog/setting-up-rails-in-ubuntu</id>
+    <link type="text/html" rel="alternate" href="http://www.grok-interactive.com/blog/setting-up-rails-in-ubuntu/"/>
+    <title>Setting up Rails in Ubuntu</title>
+    <published>2014-04-08T00:00:00-04:00</published>
+    <updated>2014-04-08T00:00:00-04:00</updated>
+    <author>
+      <name>Chris Hardee</name>
+      <email>chris.hardee@grok-interactive.com</email>
+    </author>
+    <content type="html">&lt;p&gt;This week my Mac Book Pro had another kernel panic and while I understand these things happen sometime, this was one of a series I have been having since I acquired it a few months ago. After taking it in to the Apple Store&amp;#39;s &amp;#39;Genius Bar&amp;#39;, I was told it would need to be held overnight to repair it.&lt;/p&gt;
 
 &lt;p&gt;Not wanting to be out of communication, nor access to my code, it was time to pull out my old System76 lemur ultrathin laptop that was nearing six years old. It had a floppy lid and the battery life could be counted in minutes on your hand.&lt;/p&gt;
 
@@ -883,16 +900,20 @@ git commit -a -m &amp;quot;Initial Commit&amp;quot;
 
 &lt;!--  LocalWords:  username repoName homebrew RailsInstaller
  --&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>CSS Specificity</title>
-      <link>http://www.grok-interactive.com/blog/css-specificity/</link>
-      <pubDate>Sat, 05 Apr 2014 00:00:00 -0400</pubDate>
-      <author>joshf@grok-interactive.com (Josh Freeman)</author>
-      <guid>http://www.grok-interactive.com/blog/css-specificity</guid>
-      <description>&lt;p&gt;About a year ago, I had a front-end project that was a mess, particularly the CSS. Selectors were often 6 or more selectors long and had &lt;strong&gt;!important&lt;/strong&gt; appended to properties over the code base&amp;mdash;style sheets, style tags, inline styles; if you could override a style and make it important, rest assured, it was.&lt;/p&gt;
+</content>
+  </entry>
+  
+  <entry>
+    <id>http://www.grok-interactive.com/blog/css-specificity</id>
+    <link type="text/html" rel="alternate" href="http://www.grok-interactive.com/blog/css-specificity/"/>
+    <title>CSS Specificity</title>
+    <published>2014-04-05T00:00:00-04:00</published>
+    <updated>2014-04-05T00:00:00-04:00</updated>
+    <author>
+      <name>Josh Freeman</name>
+      <email>joshf@grok-interactive.com</email>
+    </author>
+    <content type="html">&lt;p&gt;About a year ago, I had a front-end project that was a mess, particularly the CSS. Selectors were often 6 or more selectors long and had &lt;strong&gt;!important&lt;/strong&gt; appended to properties over the code base&amp;mdash;style sheets, style tags, inline styles; if you could override a style and make it important, rest assured, it was.&lt;/p&gt;
 
 &lt;p&gt;It was pretty clear that the previous developer either did not understand CSS very well or could not care less (probably a little of both).&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-css&quot; data-lang=&quot;css&quot;&gt;&lt;span class=&quot;o&quot;&gt;//&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;Do&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;Do&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;ever&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;Unless&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;you&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;have&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;to&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.)&lt;/span&gt;
@@ -1113,16 +1134,20 @@ git commit -a -m &amp;quot;Initial Commit&amp;quot;
 &lt;p&gt;Hopefully, you a better understanding of how CSS specficity works. We&amp;#39;ve only touched upon the mechanics of CSS selector rules&amp;mdash;we have not addressed CSS selector performance. For now, it is enough to understand that a 6 selector long selector is very bad for many reasons.&lt;/p&gt;
 
 &lt;p&gt;Ideally, you would go back to the orignal declaration and change it, but sometimes, that&amp;#39;s not an option. If you ever need to override a CSS framework or fix a legacy project, this will definitely come in handy.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Git Hooks for Checking Tabs vs Spaces</title>
-      <link>http://www.grok-interactive.com/blog/githooks/</link>
-      <pubDate>Wed, 02 Apr 2014 00:00:00 -0400</pubDate>
-      <author>joshf@grok-interactive.com (Josh Freeman)</author>
-      <guid>http://www.grok-interactive.com/blog/githooks</guid>
-      <description>&lt;h2&gt;The Problem: Tabs in Source Control&lt;/h2&gt;
+</content>
+  </entry>
+  
+  <entry>
+    <id>http://www.grok-interactive.com/blog/githooks</id>
+    <link type="text/html" rel="alternate" href="http://www.grok-interactive.com/blog/githooks/"/>
+    <title>Git Hooks for Checking Tabs vs Spaces</title>
+    <published>2014-04-02T00:00:00-04:00</published>
+    <updated>2014-04-02T00:00:00-04:00</updated>
+    <author>
+      <name>Josh Freeman</name>
+      <email>joshf@grok-interactive.com</email>
+    </author>
+    <content type="html">&lt;h2&gt;The Problem: Tabs in Source Control&lt;/h2&gt;
 
 &lt;p&gt;Here&amp;#39;s a recent conversation I had:&lt;/p&gt;
 
@@ -1322,16 +1347,20 @@ Tab characters are illegal in &lt;span class=&quot;nb&quot;&gt;source &lt;/span&
 _posts/2014-03-26-githooks.md
     95, 96, 97, 125, 126, 128, 130, 132, 134, 135, 156, 157, 158, 180, 181
     182, 193, 194, 196, 198, 200, 202, 203, 216, 217, 218, 235
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
-    </item>
-    
-    <item>
-      <title>Save Me Not</title>
-      <link>http://www.grok-interactive.com/blog/save-me-not/</link>
-      <pubDate>Sun, 30 Mar 2014 00:00:00 -0400</pubDate>
-      <author>joshf@grok-interactive.com (Josh Freeman)</author>
-      <guid>http://www.grok-interactive.com/blog/save-me-not</guid>
-      <description>&lt;p&gt;Buttons just begged to be pushed. We design them that way. But what if they do not need to be pushed? A while back I hit a project requirement that a form for user data could not be submitted back to the server unless there had been a change. I will not get into too many particulars, but I did &lt;em&gt;way&lt;/em&gt; more work (and made the browser do way more work) than necessary. Lot&amp;#39;s of DOM manipulation and value hashing. Let us fix that.&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content>
+  </entry>
+  
+  <entry>
+    <id>http://www.grok-interactive.com/blog/save-me-not</id>
+    <link type="text/html" rel="alternate" href="http://www.grok-interactive.com/blog/save-me-not/"/>
+    <title>Save Me Not</title>
+    <published>2014-03-30T00:00:00-04:00</published>
+    <updated>2014-03-30T00:00:00-04:00</updated>
+    <author>
+      <name>Josh Freeman</name>
+      <email>joshf@grok-interactive.com</email>
+    </author>
+    <content type="html">&lt;p&gt;Buttons just begged to be pushed. We design them that way. But what if they do not need to be pushed? A while back I hit a project requirement that a form for user data could not be submitted back to the server unless there had been a change. I will not get into too many particulars, but I did &lt;em&gt;way&lt;/em&gt; more work (and made the browser do way more work) than necessary. Lot&amp;#39;s of DOM manipulation and value hashing. Let us fix that.&lt;/p&gt;
 
 &lt;p&gt;Before we begin, let us look at a demo of what we are trying to accomplish. Notice the submit button at the bottom: it is disabled and you are unable to submit the form. Make any change to the form, and the submit button is no longer disabled. If you change the form &lt;em&gt;back&lt;/em&gt; to it is default state from the server, the submit button is disabled again. Awesome.&lt;/p&gt;
 
@@ -1635,16 +1664,20 @@ function autoResize(id){
 &lt;span class=&quot;nt&quot;&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;So there you have it. A widget you can use AND a tutorial on creating widgets. If you want to check out the source, check out my gist over on &lt;a href=&quot;https://gist.github.com/jdfreeman/9843445&quot;&gt;Github&lt;/a&gt;.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>"In Javascript everything is an object!" Mmm, Wrong.</title>
-      <link>http://www.grok-interactive.com/blog/javascript-everything-is-an-object-wrong/</link>
-      <pubDate>Thu, 27 Mar 2014 00:00:00 -0400</pubDate>
-      <author>jasone@grok-interactive.com (Jason Ellis)</author>
-      <guid>http://www.grok-interactive.com/blog/javascript-everything-is-an-object-wrong</guid>
-      <description>&lt;p&gt;I touched on this a little in my Dot versus Bracket notation post. Most people will tell you that in javascript, everything is an object. That is not actually true, but the way javascript behaves fools you into thinking it is.&lt;/p&gt;
+</content>
+  </entry>
+  
+  <entry>
+    <id>http://www.grok-interactive.com/blog/javascript-everything-is-an-object-wrong</id>
+    <link type="text/html" rel="alternate" href="http://www.grok-interactive.com/blog/javascript-everything-is-an-object-wrong/"/>
+    <title>"In Javascript everything is an object!" Mmm, Wrong.</title>
+    <published>2014-03-27T00:00:00-04:00</published>
+    <updated>2014-03-27T00:00:00-04:00</updated>
+    <author>
+      <name>Jason Ellis</name>
+      <email>jasone@grok-interactive.com</email>
+    </author>
+    <content type="html">&lt;p&gt;I touched on this a little in my Dot versus Bracket notation post. Most people will tell you that in javascript, everything is an object. That is not actually true, but the way javascript behaves fools you into thinking it is.&lt;/p&gt;
 
 &lt;p&gt;An object in javascript is best thought of as a simple hashmap of key-value pairs where the key is always a valid string identifier and the value can be anything including a string, an array, a function, or even other objects.&lt;/p&gt;
 
@@ -1686,16 +1719,20 @@ console.log(foo.bar);
 &amp;gt; &amp;quot;bar&amp;quot;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;This simple fact is the basis of all of javascript&amp;#39;s power and how most people use it and abuse it without even knowing whats going on behind the scenes. Personally I believe things like this is what makes javascript an extremely misunderstood and powerful language.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Javascript dot notation versus bracket notation</title>
-      <link>http://www.grok-interactive.com/blog/javascript-dot-notation-vs-bracket-notation/</link>
-      <pubDate>Tue, 25 Mar 2014 00:00:00 -0400</pubDate>
-      <author>jasone@grok-interactive.com (Jason Ellis)</author>
-      <guid>http://www.grok-interactive.com/blog/javascript-dot-notation-vs-bracket-notation</guid>
-      <description>&lt;p&gt;Javascript is one of those fun and unique languages that let you do things differently, just because. An example of this is the javascript object model.&lt;/p&gt;
+</content>
+  </entry>
+  
+  <entry>
+    <id>http://www.grok-interactive.com/blog/javascript-dot-notation-vs-bracket-notation</id>
+    <link type="text/html" rel="alternate" href="http://www.grok-interactive.com/blog/javascript-dot-notation-vs-bracket-notation/"/>
+    <title>Javascript dot notation versus bracket notation</title>
+    <published>2014-03-25T00:00:00-04:00</published>
+    <updated>2014-03-25T00:00:00-04:00</updated>
+    <author>
+      <name>Jason Ellis</name>
+      <email>jasone@grok-interactive.com</email>
+    </author>
+    <content type="html">&lt;p&gt;Javascript is one of those fun and unique languages that let you do things differently, just because. An example of this is the javascript object model.&lt;/p&gt;
 
 &lt;p&gt;Most people will tell you that in javascript, everything is an object. That is not true, but the way javascript behaves fools you into thinking it is.&lt;/p&gt;
 
@@ -1765,16 +1802,20 @@ var obj[&amp;quot;foo&amp;quot;] == 1;  // fastest - speed!
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&quot;jsperf.com/dot-notation-vs-bracket-notation/2&quot;&gt;Dot vs Bracket Speed Test&lt;/a&gt; -- Since I know most wont believe me, here&amp;#39;s proof!&lt;/li&gt;
 &lt;/ul&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Clean Templates with Stash</title>
-      <link>http://www.grok-interactive.com/blog/stash-ee-templates/</link>
-      <pubDate>Mon, 24 Mar 2014 00:00:00 -0400</pubDate>
-      <author>chris.hardee@grok-interactive.com (Chris Hardee)</author>
-      <guid>http://www.grok-interactive.com/blog/stash-ee-templates</guid>
-      <description>&lt;p&gt;I am not sure if it is still hip and trendy within the ExpressionEngine (EE) community to use Stash. There was so much buzz about it when people started using it and talking about it, and we have received a few EE projects utilizing it.&lt;/p&gt;
+</content>
+  </entry>
+  
+  <entry>
+    <id>http://www.grok-interactive.com/blog/stash-ee-templates</id>
+    <link type="text/html" rel="alternate" href="http://www.grok-interactive.com/blog/stash-ee-templates/"/>
+    <title>Clean Templates with Stash</title>
+    <published>2014-03-24T00:00:00-04:00</published>
+    <updated>2014-03-24T00:00:00-04:00</updated>
+    <author>
+      <name>Chris Hardee</name>
+      <email>chris.hardee@grok-interactive.com</email>
+    </author>
+    <content type="html">&lt;p&gt;I am not sure if it is still hip and trendy within the ExpressionEngine (EE) community to use Stash. There was so much buzz about it when people started using it and talking about it, and we have received a few EE projects utilizing it.&lt;/p&gt;
 
 &lt;p&gt;I like it, it has its quirks but I think it not only helps improve rendering but also cleans up your template code considerably. Traditionally at my old studio, and I want to note there are several ways to do this, we would typically have a section, say About, with a landing page that listed all the entries for that section and a detail page that had the actually content for the entry. To set this up you would create your section group:&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;/about.group
@@ -1906,16 +1947,20 @@ body#about h1 {
 &lt;li&gt;&lt;a href=&quot;http://expressionengine.stackexchange.com/questions/1675/stash-embeds-trying-to-be-dry&quot;&gt;Good EE Stack Exchange answer on using template partials with Stash&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;https://github.com/croxton/Stash&quot;&gt;Stash Github page, includes links to documentation&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Laravel &amp; Emacs - Part 1</title>
-      <link>http://www.grok-interactive.com/blog/laravel-emacs-part1/</link>
-      <pubDate>Sun, 23 Mar 2014 00:00:00 -0400</pubDate>
-      <author>chris.hardee@grok-interactive.com (Chris Hardee)</author>
-      <guid>http://www.grok-interactive.com/blog/laravel-emacs-part1</guid>
-      <description>&lt;p&gt;I have been using Emacs for development for four years now, it initially started when I started learning Linux sysadmin work and working from a terminal. I quickly got frustrated with the limitations, and embarrassed from on-lookers, when I would load up Nano for text editing. I got comfortable enough with &lt;code&gt;vi&lt;/code&gt; to do some simple things and started learning regular expressions. The time soon came to learn something I can start calling my own that could handle much more than what &lt;code&gt;vi&lt;/code&gt; was initially setup for.&lt;/p&gt;
+</content>
+  </entry>
+  
+  <entry>
+    <id>http://www.grok-interactive.com/blog/laravel-emacs-part1</id>
+    <link type="text/html" rel="alternate" href="http://www.grok-interactive.com/blog/laravel-emacs-part1/"/>
+    <title>Laravel &amp; Emacs - Part 1</title>
+    <published>2014-03-23T00:00:00-04:00</published>
+    <updated>2014-03-23T00:00:00-04:00</updated>
+    <author>
+      <name>Chris Hardee</name>
+      <email>chris.hardee@grok-interactive.com</email>
+    </author>
+    <content type="html">&lt;p&gt;I have been using Emacs for development for four years now, it initially started when I started learning Linux sysadmin work and working from a terminal. I quickly got frustrated with the limitations, and embarrassed from on-lookers, when I would load up Nano for text editing. I got comfortable enough with &lt;code&gt;vi&lt;/code&gt; to do some simple things and started learning regular expressions. The time soon came to learn something I can start calling my own that could handle much more than what &lt;code&gt;vi&lt;/code&gt; was initially setup for.&lt;/p&gt;
 
 &lt;p&gt;Googling for something akin to &amp;quot;What editor should I learn after vi?&amp;quot; and you will run amuck with suggestions for using Vim. But instead of that you should learn Emacs. Really now, you should learn Vim and just &lt;em&gt;Deal With It&lt;/em&gt;. Then there is a picture of Richard M. Stallman in a christlike outfit, devoted to The Church of Emacs.&lt;/p&gt;
 
@@ -1971,16 +2016,20 @@ body#about h1 {
 &lt;li&gt;&lt;a href=&quot;http://web-mode.org&quot;&gt;web-mode&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;https://stallman.org/saintignucius.jpg&quot;&gt;Saint IGNUcius&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Setting Up a PHPUnit Testing Environment</title>
-      <link>http://www.grok-interactive.com/blog/setting-up-a-phpunit-testing-environment/</link>
-      <pubDate>Fri, 21 Mar 2014 00:00:00 -0400</pubDate>
-      <author>joshf@grok-interactive.com (Josh Freeman)</author>
-      <guid>http://www.grok-interactive.com/blog/setting-up-a-phpunit-testing-environment</guid>
-      <description>&lt;p&gt;You should be testing. You know you should be testing. But you are not testing. Why?&lt;/p&gt;
+</content>
+  </entry>
+  
+  <entry>
+    <id>http://www.grok-interactive.com/blog/setting-up-a-phpunit-testing-environment</id>
+    <link type="text/html" rel="alternate" href="http://www.grok-interactive.com/blog/setting-up-a-phpunit-testing-environment/"/>
+    <title>Setting Up a PHPUnit Testing Environment</title>
+    <published>2014-03-21T00:00:00-04:00</published>
+    <updated>2014-03-21T00:00:00-04:00</updated>
+    <author>
+      <name>Josh Freeman</name>
+      <email>joshf@grok-interactive.com</email>
+    </author>
+    <content type="html">&lt;p&gt;You should be testing. You know you should be testing. But you are not testing. Why?&lt;/p&gt;
 
 &lt;p&gt;More often than not, it is probably because you have spent more time debugging your testing environment than your application and you&amp;#39;ve lost all motivation to continue.  That was me for quite a while.&lt;/p&gt;
 
@@ -2220,16 +2269,20 @@ OK (1 test, 1 assertion)
 &lt;p&gt;Voila! Now we have our testing environment set up and our first passing test! Now it is time for you start reading &lt;a href=&quot;http://phpunit.de&quot;&gt;PHPUnit Documentation&lt;/a&gt; and learn all that PHPUnit can bring to the table.&lt;/p&gt;
 
 &lt;p&gt;If you would like to peruse source files I used to create this tutorial, check out my &lt;a href=&quot;https://github.com/jdfreeman/phpunit-example&quot; title=&quot;jdfreeman/phpunit-example&quot;&gt;repository&lt;/a&gt; on Github.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Avoid obvious avenues of attack</title>
-      <link>http://www.grok-interactive.com/blog/avoid-avenues-of-attack/</link>
-      <pubDate>Wed, 05 Mar 2014 00:00:00 -0500</pubDate>
-      <author>jasone@grok-interactive.com (Jason Ellis)</author>
-      <guid>http://www.grok-interactive.com/blog/avoid-avenues-of-attack</guid>
-      <description>&lt;p&gt;This may seem like a no-brainer; When creating a new web application you should be conscious of and avoid obvious avenues of attack.&lt;/p&gt;
+</content>
+  </entry>
+  
+  <entry>
+    <id>http://www.grok-interactive.com/blog/avoid-avenues-of-attack</id>
+    <link type="text/html" rel="alternate" href="http://www.grok-interactive.com/blog/avoid-avenues-of-attack/"/>
+    <title>Avoid obvious avenues of attack</title>
+    <published>2014-03-05T00:00:00-05:00</published>
+    <updated>2014-03-05T00:00:00-05:00</updated>
+    <author>
+      <name>Jason Ellis</name>
+      <email>jasone@grok-interactive.com</email>
+    </author>
+    <content type="html">&lt;p&gt;This may seem like a no-brainer; When creating a new web application you should be conscious of and avoid obvious avenues of attack.&lt;/p&gt;
 
 &lt;p&gt;I said it was a no-brainer, but you would be shocked at how often I see sites created by professional developers who take things for granted and end up yielding information to dataminers and attackers who know what to look for.&lt;/p&gt;
 
@@ -2249,30 +2302,38 @@ Think of all the ways that can be abused. How hard would it be to create a bot t
 &lt;p&gt;Be consistent. Consider what information you are leaking by having inconsistent or overly verbose error messages. Be mindful that each nugget of information, while likely useless on it&amp;#39;s own, helps the clever attacker build a bigger picture.&lt;/p&gt;
 
 &lt;p&gt;I am not a proponent of security through obscurity, but every layer helps. Think about it.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Grok Welcomes Joshua Freeman to the Team</title>
-      <link>http://www.grok-interactive.com/blog/introducing-josh-freeman/</link>
-      <pubDate>Sat, 01 Mar 2014 00:00:00 -0500</pubDate>
-      <author>jasons@grok-interactive.com (Jason Straughan)</author>
-      <guid>http://www.grok-interactive.com/blog/introducing-josh-freeman</guid>
-      <description>&lt;p&gt;We are growing the team again. This time, we are welcoming our newest Groker, &lt;a href=&quot;https://www.linkedin.com/pub/josh-freeman/7a/1ab/9a2&quot;&gt;Joshua Freeman&lt;/a&gt; as a software engineer. He will be joining our team as a PHP and Ruby on Rails developer.&lt;/p&gt;
+</content>
+  </entry>
+  
+  <entry>
+    <id>http://www.grok-interactive.com/blog/introducing-josh-freeman</id>
+    <link type="text/html" rel="alternate" href="http://www.grok-interactive.com/blog/introducing-josh-freeman/"/>
+    <title>Grok Welcomes Joshua Freeman to the Team</title>
+    <published>2014-03-01T00:00:00-05:00</published>
+    <updated>2014-03-01T00:00:00-05:00</updated>
+    <author>
+      <name>Jason Straughan</name>
+      <email>jasons@grok-interactive.com</email>
+    </author>
+    <content type="html">&lt;p&gt;We are growing the team again. This time, we are welcoming our newest Groker, &lt;a href=&quot;https://www.linkedin.com/pub/josh-freeman/7a/1ab/9a2&quot;&gt;Joshua Freeman&lt;/a&gt; as a software engineer. He will be joining our team as a PHP and Ruby on Rails developer.&lt;/p&gt;
 
 &lt;p&gt;Josh has a strong pedigree, including a mechanical engineering degree from &lt;a href=&quot;https://www.tamu.edu/&quot;&gt;Texas A&amp;amp;M University&lt;/a&gt;. He has a strong knowledge of PHP, object oriented design, and the software development lifecycle. His front-end chops are not to be trifled with either; he can HTML and CSS with the best of them. We interviewed dozens of candidates over several months before we found Josh; great developers are hard to find.&lt;/p&gt;
 
 &lt;p&gt;An avid learner, Josh&amp;#39;s autodidactic nature, eagerness to share knowledge, and constant optimism make him a valuable addition to the Grok team. Welcome abord, Josh, we look forward to building some great applications together.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Codeup for a Brighter Future</title>
-      <link>http://www.grok-interactive.com/blog/codeup-for-a-brighter-future/</link>
-      <pubDate>Tue, 04 Feb 2014 00:00:00 -0500</pubDate>
-      <author>jasons@grok-interactive.com (Jason Straughan)</author>
-      <guid>http://www.grok-interactive.com/blog/codeup-for-a-brighter-future</guid>
-      <description>&lt;p&gt;Last fall &lt;a href=&quot;http://www.grok-interactive.com/&quot;&gt;Grok Interactive&lt;/a&gt; was needing to hire a developer and expand the team. We had read hundreds of resumes, most with little to no practical programming experience.  We quickly learned that many people wanted to be developers, but there were none to be found. The market was worse than we had realized.&lt;/p&gt;
+</content>
+  </entry>
+  
+  <entry>
+    <id>http://www.grok-interactive.com/blog/codeup-for-a-brighter-future</id>
+    <link type="text/html" rel="alternate" href="http://www.grok-interactive.com/blog/codeup-for-a-brighter-future/"/>
+    <title>Codeup for a Brighter Future</title>
+    <published>2014-02-04T00:00:00-05:00</published>
+    <updated>2014-02-04T00:00:00-05:00</updated>
+    <author>
+      <name>Jason Straughan</name>
+      <email>jasons@grok-interactive.com</email>
+    </author>
+    <content type="html">&lt;p&gt;Last fall &lt;a href=&quot;http://www.grok-interactive.com/&quot;&gt;Grok Interactive&lt;/a&gt; was needing to hire a developer and expand the team. We had read hundreds of resumes, most with little to no practical programming experience.  We quickly learned that many people wanted to be developers, but there were none to be found. The market was worse than we had realized.&lt;/p&gt;
 
 &lt;p&gt;Too many of our applicants had CS degrees, but could not answer basic web development interview questions. They had learned &lt;a href=&quot;http://en.wikipedia.org/wiki/Big_O_notation&quot;&gt;big O notation&lt;/a&gt;, could implement &lt;a href=&quot;http://en.wikipedia.org/wiki/Sorting_algorithm&quot;&gt;sorting algorithms&lt;/a&gt;, and had a basic understanding of [pointer arithmetic](&lt;a href=&quot;http://en.wikipedia.org/wiki/Pointer_(computer_programming)&quot;&gt;http://en.wikipedia.org/wiki/Pointer_(computer_programming)&lt;/a&gt;. Despite all this knowledge, most had trouble creating solutions for entry-level web development problems.&lt;/p&gt;
 
@@ -2287,16 +2348,20 @@ Think of all the ways that can be abused. How hard would it be to create a bot t
 &lt;p&gt;Check out the live-stream on &lt;a href=&quot;http://codeup.com&quot;&gt;Codeup.com&lt;/a&gt; to see us in action, or visit the web site to learn more.&lt;/p&gt;
 
 &lt;p&gt;If you need a custom web application, contact me at Grok Interactive. If you want to be a web developer, see me at &lt;a href=&quot;http://codeup.com&quot;&gt;Codeup.com&lt;/a&gt;!&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>State of the Industry Concerns</title>
-      <link>http://www.grok-interactive.com/blog/state-of-the-industry/</link>
-      <pubDate>Wed, 15 Jan 2014 00:00:00 -0500</pubDate>
-      <author>jasone@grok-interactive.com (Jason Ellis)</author>
-      <guid>http://www.grok-interactive.com/blog/state-of-the-industry</guid>
-      <description>&lt;p&gt;I gotta be honest with you; I am exceedingly concerned with the state of my industry. I take umbrage with what frameworks like WordPress and jQuery have done to us. On the one hand they are great tools that serve a purpose and fill a need, but on the other you have a whole generation of people who have only ever learned how to use them and do not understand the underlying technology.. At all.&lt;/p&gt;
+</content>
+  </entry>
+  
+  <entry>
+    <id>http://www.grok-interactive.com/blog/state-of-the-industry</id>
+    <link type="text/html" rel="alternate" href="http://www.grok-interactive.com/blog/state-of-the-industry/"/>
+    <title>State of the Industry Concerns</title>
+    <published>2014-01-15T00:00:00-05:00</published>
+    <updated>2014-01-15T00:00:00-05:00</updated>
+    <author>
+      <name>Jason Ellis</name>
+      <email>jasone@grok-interactive.com</email>
+    </author>
+    <content type="html">&lt;p&gt;I gotta be honest with you; I am exceedingly concerned with the state of my industry. I take umbrage with what frameworks like WordPress and jQuery have done to us. On the one hand they are great tools that serve a purpose and fill a need, but on the other you have a whole generation of people who have only ever learned how to use them and do not understand the underlying technology.. At all.&lt;/p&gt;
 
 &lt;p&gt;At &lt;a href=&quot;http://grok-interactive.com&quot;&gt;Grok Interactive&lt;/a&gt;, we are interviewing developers and trying to find that right hire. But the number of folks that have come forward claiming to be PHP experts have apparently really only ever worked with WordPress and as such have virtually zero understanding of PHP as a language. How can you call yourself a PHP expert and not understand the object model? Or even what an object is in a couple cases.&lt;/p&gt;
 
@@ -2321,16 +2386,20 @@ Think of all the ways that can be abused. How hard would it be to create a bot t
 &lt;p&gt;A PHP expert should be able to write WordPress from scratch. etc.. (Come to think of it, a true PHP expert would look at the WordPress source and shudder.. )&lt;/p&gt;
 
 &lt;p&gt;When your software goes from &amp;#39;magic&amp;#39; to just another tool in your toolbox that you fully understand, then you can call yourself an expert. Until then, you have some learning to do.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Grok Welcomes Chris Hardee to the Team</title>
-      <link>http://www.grok-interactive.com/blog/introducting-chris-hardee/</link>
-      <pubDate>Mon, 11 Nov 2013 00:00:00 -0500</pubDate>
-      <author>jasons@grok-interactive.com (Jason Straughan)</author>
-      <guid>http://www.grok-interactive.com/blog/introducting-chris-hardee</guid>
-      <description>&lt;p&gt;We are pleased to announce that &lt;a href=&quot;https://www.linkedin.com/pub/chris-hardee/2/b07/bb5&quot;&gt;Chris Hardee&lt;/a&gt; is joining the &lt;a href=&quot;http://www.grok-interactive.com/&quot;&gt;Grok Interactive&lt;/a&gt; team.&lt;/p&gt;
+</content>
+  </entry>
+  
+  <entry>
+    <id>http://www.grok-interactive.com/blog/introducting-chris-hardee</id>
+    <link type="text/html" rel="alternate" href="http://www.grok-interactive.com/blog/introducting-chris-hardee/"/>
+    <title>Grok Welcomes Chris Hardee to the Team</title>
+    <published>2013-11-11T00:00:00-05:00</published>
+    <updated>2013-11-11T00:00:00-05:00</updated>
+    <author>
+      <name>Jason Straughan</name>
+      <email>jasons@grok-interactive.com</email>
+    </author>
+    <content type="html">&lt;p&gt;We are pleased to announce that &lt;a href=&quot;https://www.linkedin.com/pub/chris-hardee/2/b07/bb5&quot;&gt;Chris Hardee&lt;/a&gt; is joining the &lt;a href=&quot;http://www.grok-interactive.com/&quot;&gt;Grok Interactive&lt;/a&gt; team.&lt;/p&gt;
 
 &lt;p&gt;Chris is a cofounder and CEO of &lt;a href=&quot;https://www.10bitworks.com/&quot;&gt;10BitWorks.com&lt;/a&gt;, also known as the San Antonio Hackerspace. Helping grow the tech and hacker communities in San Antonio is an important mission, and we are very excited to have Chris on our team.&lt;/p&gt;
 
@@ -2339,16 +2408,20 @@ Think of all the ways that can be abused. How hard would it be to create a bot t
 &lt;p&gt;We knew we liked Chris when he fired up Emacs and quickly defended his opinions. Any geek that will wrestle that IDE while building 3D printers on the weekends has a place on our team.&lt;/p&gt;
 
 &lt;p&gt;Welcome to Grok, Chris. We hope you enjoy your stay.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Groking the Web</title>
-      <link>http://www.grok-interactive.com/blog/groking-the-web/</link>
-      <pubDate>Mon, 01 Apr 2013 00:00:00 -0400</pubDate>
-      <author>jasons@grok-interactive.com (Jason Straughan)</author>
-      <guid>http://www.grok-interactive.com/blog/groking-the-web</guid>
-      <description>&lt;p&gt;Today &lt;a href=&quot;http://www.grok-interactive.com/&quot;&gt;Grok Interactive, LLC&lt;/a&gt; officially opens our doors. For months we have been laying the foundation; creating the LLC, lawyers writing contracts, designers making logos, blogs being built. Today. Today it all goes live.&lt;/p&gt;
+</content>
+  </entry>
+  
+  <entry>
+    <id>http://www.grok-interactive.com/blog/groking-the-web</id>
+    <link type="text/html" rel="alternate" href="http://www.grok-interactive.com/blog/groking-the-web/"/>
+    <title>Groking the Web</title>
+    <published>2013-04-01T00:00:00-04:00</published>
+    <updated>2013-04-01T00:00:00-04:00</updated>
+    <author>
+      <name>Jason Straughan</name>
+      <email>jasons@grok-interactive.com</email>
+    </author>
+    <content type="html">&lt;p&gt;Today &lt;a href=&quot;http://www.grok-interactive.com/&quot;&gt;Grok Interactive, LLC&lt;/a&gt; officially opens our doors. For months we have been laying the foundation; creating the LLC, lawyers writing contracts, designers making logos, blogs being built. Today. Today it all goes live.&lt;/p&gt;
 
 &lt;p&gt;This is not our first launch. Our team has worked together before, like a band whose members always played with different sets. Today the old bandmates are back together, under a new roof.&lt;/p&gt;
 
@@ -2357,9 +2430,8 @@ Think of all the ways that can be abused. How hard would it be to create a bot t
 &lt;p&gt;I have been writing code my entire life. Grok may have opened her doors today, but the dream came alive for me in Flynn&amp;#39;s Arcade in 1982. I was seven then; within a few years I was crafting programs in BASIC and fighting for the user.&lt;/p&gt;
 
 &lt;p&gt;Today we still fight for the user and the dream is still alive.&lt;/p&gt;
-</description>
-    </item>
-    
+</content>
+  </entry>
+  
 
-  </channel>
-</rss>
+</feed>
