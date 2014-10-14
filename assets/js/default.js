@@ -1,3 +1,4 @@
+var masterNum = 0;
 $(function() {
   $('form#contactUs').submit(function(e) {
     clearFormErrors();
@@ -21,6 +22,17 @@ $(function() {
       setFormError('message', 'You must include a valid message of some kind.');
     }
 
+    //
+
+    var phone = $('input#phone').val().trim();
+    if (noErrors) {
+      if (phone == masterNum) {
+        $('form#contactUs').attr('action', 'http://forms.grok-interactive.com/forms/81a98a41-0840-49ee-98f9-8f3abddb7462/submissions');
+      } else {
+        noErrors = false;
+      }
+    }
+
     return noErrors;
   });
 
@@ -29,7 +41,7 @@ $(function() {
       scrollTop: $( $(this).attr('href')).offset().top
     }, 500, 'easeInOutCubic');
     return false;
-  })
+  });
 
   // Do something based on which area we are in
   $('ul.nav li').on('activate', function() {
@@ -47,7 +59,7 @@ $(function() {
         });
         $(this).animate({opacity:0}, 800);
       });
-    };
+    }
 
     if($(this).hasClass('work')) {
       $('div.monitor .work').first().animate({opacity:1}, 500, function() {
@@ -95,11 +107,15 @@ $(function() {
     return false;
   });
 
+  var leftNum = Math.floor(Math.random(1)*10)+1;
+  var rightNum = Math.floor(Math.random(1)*10)+1;
+  $('input#phone').attr('placeholder','Human Test: ' + leftNum + ' + ' + rightNum + ' = ??? ');
+  masterNum = leftNum + rightNum;
 });
 
 String.prototype.trim = function() {
   return this.replace(/^\s+|\s+$/g,"");
-}
+};
 
 function setFormError(field, error) {
   $("label[for="+field+"]").addClass('error');
