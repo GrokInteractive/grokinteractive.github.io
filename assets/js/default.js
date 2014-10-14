@@ -26,7 +26,8 @@ $(function() {
 
     var phone = $('input#phone').val().trim();
     if (noErrors) {
-      if (phone == masterNum) {
+      // Check phone against masterNum to turn captcha back on
+      if (phone == '') {
         $('form#contactUs').attr('action', 'http://forms.grok-interactive.com/forms/81a98a41-0840-49ee-98f9-8f3abddb7462/submissions');
       } else {
         noErrors = false;
@@ -110,6 +111,9 @@ $(function() {
   var leftNum = Math.floor(Math.random(1)*10)+1;
   var rightNum = Math.floor(Math.random(1)*10)+1;
   $('input#phone').attr('placeholder','Human Test: ' + leftNum + ' + ' + rightNum + ' = ??? ');
+  // Remove CSS below to turn captcha back on
+  $('input#phone').css('visibility','hidden');
+  $('input#phone').css('position','absolute');
   masterNum = leftNum + rightNum;
 });
 
