@@ -2,93 +2,97 @@
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
         <loc>http://www.grok-interactive.com/blog/groking-the-web/</loc>
-        <lastmod>2014-10-14T10:35:01-04:00</lastmod>
+        <lastmod>2014-11-11T14:39:37-05:00</lastmod>
     </url>
     <url>
         <loc>http://www.grok-interactive.com/blog/introducting-chris-hardee/</loc>
-        <lastmod>2014-10-14T10:35:01-04:00</lastmod>
+        <lastmod>2014-11-11T14:39:37-05:00</lastmod>
     </url>
     <url>
         <loc>http://www.grok-interactive.com/blog/state-of-the-industry/</loc>
-        <lastmod>2014-10-14T10:35:01-04:00</lastmod>
+        <lastmod>2014-11-11T14:39:37-05:00</lastmod>
     </url>
     <url>
         <loc>http://www.grok-interactive.com/blog/codeup-for-a-brighter-future/</loc>
-        <lastmod>2014-10-14T10:35:01-04:00</lastmod>
+        <lastmod>2014-11-11T14:39:37-05:00</lastmod>
     </url>
     <url>
         <loc>http://www.grok-interactive.com/blog/introducing-josh-freeman/</loc>
-        <lastmod>2014-10-14T10:35:01-04:00</lastmod>
+        <lastmod>2014-11-11T14:39:37-05:00</lastmod>
     </url>
     <url>
         <loc>http://www.grok-interactive.com/blog/avoid-avenues-of-attack/</loc>
-        <lastmod>2014-10-14T10:35:01-04:00</lastmod>
+        <lastmod>2014-11-11T14:39:37-05:00</lastmod>
     </url>
     <url>
         <loc>http://www.grok-interactive.com/blog/setting-up-a-phpunit-testing-environment/</loc>
-        <lastmod>2014-10-14T10:35:01-04:00</lastmod>
+        <lastmod>2014-11-11T14:39:37-05:00</lastmod>
     </url>
     <url>
         <loc>http://www.grok-interactive.com/blog/laravel-emacs-part1/</loc>
-        <lastmod>2014-10-14T10:35:01-04:00</lastmod>
+        <lastmod>2014-11-11T14:39:37-05:00</lastmod>
     </url>
     <url>
         <loc>http://www.grok-interactive.com/blog/stash-ee-templates/</loc>
-        <lastmod>2014-10-14T10:35:01-04:00</lastmod>
+        <lastmod>2014-11-11T14:39:37-05:00</lastmod>
     </url>
     <url>
         <loc>
             http://www.grok-interactive.com/blog/javascript-dot-notation-vs-bracket-notation/
         </loc>
-        <lastmod>2014-10-14T10:35:01-04:00</lastmod>
+        <lastmod>2014-11-11T14:39:37-05:00</lastmod>
     </url>
     <url>
         <loc>http://www.grok-interactive.com/blog/javascript-everything-is-an-object-wrong/</loc>
-        <lastmod>2014-10-14T10:35:01-04:00</lastmod>
+        <lastmod>2014-11-11T14:39:37-05:00</lastmod>
     </url>
     <url>
         <loc>http://www.grok-interactive.com/blog/save-me-not/</loc>
-        <lastmod>2014-10-14T10:35:01-04:00</lastmod>
+        <lastmod>2014-11-11T14:39:37-05:00</lastmod>
     </url>
     <url>
         <loc>http://www.grok-interactive.com/blog/githooks/</loc>
-        <lastmod>2014-10-14T10:35:01-04:00</lastmod>
+        <lastmod>2014-11-11T14:39:37-05:00</lastmod>
     </url>
     <url>
         <loc>http://www.grok-interactive.com/blog/css-specificity/</loc>
-        <lastmod>2014-10-14T10:35:01-04:00</lastmod>
+        <lastmod>2014-11-11T14:39:37-05:00</lastmod>
     </url>
     <url>
         <loc>http://www.grok-interactive.com/blog/setting-up-rails-in-ubuntu/</loc>
-        <lastmod>2014-10-14T10:35:01-04:00</lastmod>
+        <lastmod>2014-11-11T14:39:37-05:00</lastmod>
     </url>
     <url>
         <loc>http://www.grok-interactive.com/blog/object-inheritance/</loc>
-        <lastmod>2014-10-14T10:35:01-04:00</lastmod>
+        <lastmod>2014-11-11T14:39:37-05:00</lastmod>
     </url>
     <url>
         <loc>http://www.grok-interactive.com/blog/happy-developers-are-good-developers/</loc>
-        <lastmod>2014-10-14T10:35:01-04:00</lastmod>
+        <lastmod>2014-11-11T14:39:37-05:00</lastmod>
     </url>
     <url>
         <loc>http://www.grok-interactive.com/blog/node-express-mongo-socketio-introduction/</loc>
-        <lastmod>2014-10-14T10:35:01-04:00</lastmod>
+        <lastmod>2014-11-11T14:39:37-05:00</lastmod>
     </url>
     <url>
         <loc>http://www.grok-interactive.com/blog/emails-in-outlook/</loc>
-        <lastmod>2014-10-14T10:35:01-04:00</lastmod>
+        <lastmod>2014-11-11T14:39:37-05:00</lastmod>
     </url>
     <url>
         <loc>http://www.grok-interactive.com/</loc>
-        <lastmod>2014-10-14T10:35:01-04:00</lastmod>
+        <lastmod>2014-11-11T14:39:37-05:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.grok-interactive.com/careers/</loc>
+        <lastmod>2014-11-11T14:39:37-05:00</lastmod>
     </url>
     <url>
         <loc>http://www.grok-interactive.com/thankyou/</loc>
-        <lastmod>2014-10-14T10:35:01-04:00</lastmod>
+        <lastmod>2014-11-11T14:39:37-05:00</lastmod>
     </url>
     <url>
         <loc>http://www.grok-interactive.com/blog/</loc>
-        <lastmod>2014-10-14T10:35:01-04:00</lastmod>
+        <lastmod>2014-11-11T14:39:37-05:00</lastmod>
     </url>
     <url>
         <loc>http://www.grok-interactive.com/rss.xml</loc>
