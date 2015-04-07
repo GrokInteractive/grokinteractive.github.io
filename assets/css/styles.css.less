@@ -73,12 +73,10 @@ body {
     }
 
     &.blog {
-//      background: #ffffff url(/assets/img/blog-background-office.png);
       background-size: 100% 378px;
       background-position: top;
       background-repeat: no-repeat;
       div.inner {
-//        background: #ffffff url(/assets/img/blog-background-body.png);
         background-position: top;
         background-repeat: repeat-x;
         padding: 0 1px;
@@ -296,7 +294,6 @@ body {
     }
 
     &.work {
-      min-height: 725px;
       text-align: center;
       color: #000000;
       padding: 45px 0;
@@ -318,93 +315,59 @@ body {
         padding-bottom: 45px;
       }
 
-      a {
-        &.site {
-          margin-top: 8px;
-          .opensans();
-          font-size: 21px;
-          font-weight: 300;
-          display: block;
-          background: #000000;
-          text-transform: uppercase;
-          padding: 20px;
-          color: #bababa;
-          text-align: left;
-          &:hover {
-            color: #bababa;
+      div.client {
+        position: relative;
+        border: 1px solid #aeaeae;
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 20px;
+        div.about {
+          opacity: 0;
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: rgba(211,84,0,0.8);
+          color: #ffffff;
+          .transition-event(all 0.8s ease-in-out);
+          border-radius: 8px;
+          h3 {
+            margin:auto;
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            margin-top: -10px;
+            line-height: 100%;
+            font-size: 2vw;
           }
         }
-        &.link {
-          .opensans();
-          font-weight: 500;
-          font-size: 18px;
-          padding: 20px 60px;
-          border: 1px solid #d35400;
-          color: #d35400;
-          text-transform: uppercase;
+        &:hover,
+        &.active {
+          div.about {
+            opacity: 1;
+          }
         }
       }
-      p {
-        .opensans();
-        font-weight: 500;
-        font-size: 15px;
-        line-height: 35px;
-        margin: 20px 0;
-        text-align: left;
+
+      div.row.wide {
+        margin-right: -30px;
       }
-      div.monitor {
-        position: relative;
-        height: 425px;
+
+      div.case-study {
+        display: none;
+        margin-bottom: 20px;
+        max-height: 300px;
+        overflow: hidden;
+        border-bottom: 1px solid #AEAEAE;
         img {
-          position: absolute;
-          left: 50%;
-          margin-left: -207.5px;
-        }
-        img.work {
-          opacity: 0;
-          &.active {
-            opacity: 1;
-            z-index: 1;
-          }
+          border: 1px solid #AEAEAE;
+          border-radius: 10px;
+          width: 95%;
+          float:right;
         }
       }
-      div.description {
-        position: relative;
-        min-height: 300px;
-        div.work {
-          position: absolute;
-          top:0;
-          left:0;
-          width: 100%;
-          max-width: 100%;
-          opacity: 0;
-          &.active {
-            opacity: 1;
-            z-index: 1;
-          }
-        }
-      }
-
-      div.arrows {
-        a {
-          width: 32px;
-          height: 61px;
-          display:inline-block;
-          &.directional.left {
-            background: url(/assets/img/index-arrow-left.png);
-            &:hover {
-              background: url(/assets/img/index-arrow-left-active.png);
-            }
-          }
-          &.directional.right {
-            background: url(/assets/img/index-arrow-right.png);
-            &:hover {
-              background: url(/assets/img/index-arrow-right-active.png);
-            }
-          }
-        }
-      }
-
 
     }
 
@@ -911,6 +874,31 @@ body {
   address {
     padding-left: 10px;
   }
+
+  body section.work {
+    div.client {
+      width: 80%;
+      margin: 20px auto;
+      div.about {
+        h3 {
+          font-size: 5vw;
+        }
+      }
+    }
+    div.row.wide {
+      width: 100%;
+      div.case-study {
+        max-height: none;
+      }
+      div.span6 {
+        img {
+          width: 90%;
+          float: none;
+        }
+      }
+    }
+  }
+
 }
 
 body section.form form fieldset {
@@ -957,6 +945,29 @@ body section.form form fieldset {
     }
   }
 
+  body section.work {
+    div.client {
+      width: 80%;
+      margin: 20px auto;
+      div.about {
+        h3 {
+          font-size: 5vw;
+        }
+      }
+    }
+    div.row.wide {
+      width: 100%;
+      div.case-study {
+        max-height: none;
+      }
+      div.span6 {
+        img {
+          width: 90%;
+          float: none;
+        }
+      }
+    }
+  }
 }
 
 .grok-logo {

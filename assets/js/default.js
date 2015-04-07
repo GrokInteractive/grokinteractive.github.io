@@ -22,13 +22,11 @@ $(function() {
       setFormError('message', 'You must include a valid message of some kind.');
     }
 
-    //
-
     var phone = $('input#phone').val().trim();
     if (noErrors) {
       // Check phone against masterNum to turn captcha back on
       if (phone == '') {
-        $('form#contactUs').attr('action', 'http://forms.grok-interactive.com/forms/81a98a41-0840-49ee-98f9-8f3abddb7462/submissions');
+        $('form#contactUs').attr('action', 'https://www.elformo.com/forms/f26b8214-3141-4d6f-8026-b810620d9210');
       } else {
         noErrors = false;
       }
@@ -61,59 +59,35 @@ $(function() {
         $(this).animate({opacity:0}, 800);
       });
     }
-
-    if($(this).hasClass('work')) {
-      $('div.monitor .work').first().animate({opacity:1}, 500, function() {
-        $(this).addClass('active');
-      });
-      $('div.description .work').first().animate({opacity:1}, 500, function() {
-        $(this).addClass('active');
-      });
-    } else {
-      $('div.monitor .active').animate({opacity:0}, 500, function() {
-        $(this).removeClass('active');
-      });
-      $('div.description .active').animate({opacity:0}, 500, function() {
-        $(this).removeClass('active');
-      });
-    }
-
   });
 
-  var preventAdvance = false;
-  $('a.directional').on('click', function() {
-    if (preventAdvance) return false;
-    preventAdvance = true;
-    if ($(this).hasClass('left')) {
-      var next = ($('div.monitor .work.active').prev()[0] != undefined) ? $('div.monitor .work.active').prev()[0] : $('div.monitor .work').last()[0];
-    } else {
-      var next = ($('div.monitor .work.active').next()[0] != undefined) ? $('div.monitor .work.active').next()[0] : $('div.monitor .work').first()[0];
+  // On click client, make it active and show it
+  $('.client').on('click', function() {
+    // Make all the buttons inactive
+    $('.client').removeClass('active');
+    // Make this button active
+    $(this).addClass('active');
+    // Hide all other case studies
+    $('.case-study').hide();
+    // Make sure we have a case study
+    var id = $(this).data('id');
+    if (id) {
+      // Show it.
+      $(id).show();
+      // Move the screen to it.
+      window.scrollTo(0, $("#work").offset()['top']);
     }
-    var rel = $(next).attr('rel');
-    // Animate the text
-    $('div.description .work.active').animate({opacity:0}, 300, function() {
-      $('div.description .work.'+rel).animate({opacity:1}, 300, function() {
-        $(this).addClass('active');
-      });
-      $(this).removeClass('active');
-    });
-    // Animate the screen
-    $('div.monitor .work.active').animate({opacity:0}, 500, function() {
-      $(next).animate({opacity:1},500, function() {
-        $(this).addClass('active');
-        preventAdvance = false;
-      });
-      $(this).removeClass('active');
-    });
-    return false;
   });
 
   var leftNum = Math.floor(Math.random(1)*10)+1;
   var rightNum = Math.floor(Math.random(1)*10)+1;
   $('input#phone').attr('placeholder','Human Test: ' + leftNum + ' + ' + rightNum + ' = ??? ');
   // Remove CSS below to turn captcha back on
-  $('input#phone').css('visibility','hidden');
-  $('input#phone').css('position','absolute');
+  $('input#phone').css({
+    'visibility': 'hidden',
+    'position': 'absolute',
+    'left': 0
+  });
   masterNum = leftNum + rightNum;
 });
 
