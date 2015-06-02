@@ -1,5 +1,8 @@
 var masterNum = 0;
 $(function() {
+
+  $('body').fadeIn();
+
   $('form#contactUs').submit(function(e) {
     clearFormErrors();
     var noErrors = true;
