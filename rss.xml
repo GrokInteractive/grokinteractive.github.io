@@ -6,9 +6,130 @@
     <atom:link href="http://www.grok-interactive.com/rss.xml" rel="self" type="application/rss+xml" />
     <description>Grok Interactive's web developers create outstanding applications</description>
     <language>en-us</language>
-    <pubDate>Tue, 02 Jun 2015 16:30:15 -0400</pubDate>
-    <lastBuildDate>Tue, 02 Jun 2015 16:30:15 -0400</lastBuildDate>
+    <pubDate>Wed, 03 Jun 2015 12:43:13 -0400</pubDate>
+    <lastBuildDate>Wed, 03 Jun 2015 12:43:13 -0400</lastBuildDate>
 
+    
+    <item>
+      <title>Great APIs Start with a Great Design</title>
+      <link>http://www.grok-interactive.com/blog/great-apis-start-with-great-design/</link>
+      <pubDate>Tue, 02 Jun 2015 00:00:00 -0400</pubDate>
+      <author>jasons@grok-interactive.com (Jason Straughan)</author>
+      <guid>http://www.grok-interactive.com/blog/great-apis-start-with-great-design</guid>
+      <description>&lt;p&gt;Everyday the web becomes more connected; not just in the sense of more nodes, more people, and more content, but in the sense of being interconnected. Web services and &lt;a href=&quot;http://en.wikipedia.org/wiki/Application_programming_interface&quot;&gt;APIs (Application Program Interfaces)&lt;/a&gt; allow  access to an application&amp;#39;s features, usually for integration into other applications. When you use an app to share something on Facebook, login with Google, or upload a photo to Flickr, for example, there is an API in use. &lt;/p&gt;
+
+&lt;p&gt;As web developers, we spend more time every year interacting with these third-party services to handle everything from credit card processing to blog comments. More web applications and services mean more APIs. &lt;/p&gt;
+
+&lt;p&gt;Unfortunately very few of these APIs are easy to work with, it is like &lt;a href=&quot;http://en.wikipedia.org/wiki/Rube_Goldberg_machine&quot;&gt;Rube Goldberg invented the School of API Architecture&lt;/a&gt;. Behind every mobile, web, or desktop application is code, and that code was written by a human. The design of these APIs means a lot to the people that write applications.&lt;/p&gt;
+
+&lt;h3&gt;A Means to an Endpoint&lt;/h3&gt;
+
+&lt;p&gt;Most APIs we encounter seem like an afterthought. It appears the typical API planning meeting goes like this:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Sales Team: That new web site app thingy we launched is going great. Lets create one of those new-fangled API on Ajaxes so we can be cool, like Microsoft.&lt;/p&gt;
+
+&lt;p&gt;Mobile Team: As much as we hate to agree with Bob, having an API would allow us to harness all the power of the web app&amp;#39;s backend with a clean native experience.&lt;/p&gt;
+
+&lt;p&gt;Web Team: Sure, can we have time to design this properly and roll it out in stages? We want this to be done right.&lt;/p&gt;
+
+&lt;p&gt;Sales Team: You already wrote all that CRUD stuff, just expose that and everyone will be happy. I bet you can have it up and running by lunchtime.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;So what we end up with are basically web view variables dumped as JSON and endpoints that expect the exact information that is in some web form for all creates and updates.&lt;/p&gt;
+
+&lt;p&gt;Making the assumption that the API should just reflect the controller actions of the web application is rarely the best solution, believe me, we&amp;#39;ve tried. An API should not just be a means to an end, shoehorned in months after launch. An API should be well thought out, with each endpoint handling one task, and each namespace grouping actions into intelligent classifications.&lt;/p&gt;
+
+&lt;p&gt;Exploring use cases and developing a sound API architecture should be the first step in rolling out any interface to your software. Considering the needs of the consumer, planning out the URI and endpoints prior to writing code, determining required fields, mocking up return values, and defining response handling are all vital to a successful API.&lt;/p&gt;
+
+&lt;h3&gt;The Art of Discovery&lt;/h3&gt;
+
+&lt;p&gt;Finding your way around an API should not be like Columbus discovering the New World. Developers are notorious for releasing or updating features prior to updating the docs, if the docs ever get updated at all. This makes learning the ins and outs of web APIs a process of discovery, which some systems could use help on making easier.&lt;/p&gt;
+
+&lt;p&gt;A well written API should essentially be self documenting. A list of namespaces, endpoints, and example requests and responses will act as a map for the future voyages of other developers into the worlds you create. I am not advocating dumping the docs, but at the very least follow some convention and style to make the process easier.&lt;/p&gt;
+
+&lt;p&gt;As developers, we spend most of our lives naming things: variables, classes, functions, filenames, and every other thing that requires a name. We strive to assign names that make sense and will remind us of what the thing in question is doing. Some developers argue that well written code needs no documentation, though that discussion has been known to end in flame-wars of epic proportions.&lt;/p&gt;
+
+&lt;p&gt;If we craft our endpoints with this same mindset, everything else seems to fall into place and makes more sense to the implementing developer. The documentation is easier to consume when the naming conventions follow common sense. Responses that return consistently formated data result in happier developers. Lastly, error codes and messages that can be understood by a human are paramount.&lt;/p&gt;
+
+&lt;h4&gt;418 &amp;mdash; I&amp;#39;m a Teapot&lt;/h4&gt;
+
+&lt;p&gt;Once the appropriate endpoint has been found, one must figure out how to communicate with it. There is nothing like sending what appears to be a properly formed request to a documented endpoint and getting a response like&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;99999 - Error&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;First of all, the Phoenicians invented &lt;a href=&quot;http://en.wikipedia.org/wiki/List_of_HTTP_status_codes&quot;&gt;HTTP Status Codes&lt;/a&gt; right after the written alphabet, they have been around forever so do not be afraid to use them. If you are going to use a custom status code, like &lt;code&gt;99999&lt;/code&gt;, please be kind enough to provide a good error message.&lt;/p&gt;
+
+&lt;p&gt;In that particular case we were passing expired credentials. A simple &lt;code&gt;401 - Unauthorized&lt;/code&gt; would have been a lot more helpful. If you are authoring an API, please be compassionate to your users &amp;mdash; call it professional courtesy. &lt;/p&gt;
+
+&lt;p&gt;It is much easier to handle errors programmatically when different errors have different codes or messages. The support staff will get less emails if the words in the error message actually mean something, and the final product will be less brittle.&lt;/p&gt;
+
+&lt;p&gt;Like endpoints, your API&amp;#39;s error messages should be well thought out and reflect a level of sophistication that represents your underlying product.&lt;/p&gt;
+
+&lt;h4&gt;Moving Targets&lt;/h4&gt;
+
+&lt;p&gt;APIs should be reliable, period. If we build an application that is in production, we expect it to work all the time. If a third-party API changes, especially without notice, our production server is affected, usually in a bad way.&lt;/p&gt;
+
+&lt;p&gt;There are some things that we realize are going to happen from time to time with various 3rd party services. While some outages or other issues are hard to predict, breaking changes to an API are something the development team has full control over. &lt;/p&gt;
+
+&lt;p&gt;Versioning, deprecating features, staged rollouts, even postcards with notification of pending changes written in &lt;a href=&quot;http://en.wikipedia.org/wiki/Vogon#Poetry&quot;&gt;Vogon poetry&lt;/a&gt; are better than just making breaking changes to APIs that people are using without notice. Developers are depending on these services, they should should not be a moving target.&lt;/p&gt;
+
+&lt;h3&gt;Sensible Security&lt;/h3&gt;
+
+&lt;p&gt;Recently we interacted with a third-party web API that had some very strenuous authentication and security restrictions. For each request, we had to use white-listed IP addresses, pass authentication headers with preassigned keys on top of OAuthing, and send a signed certificate with each request. It seems like each time they heard of a new way of authentication, they just added it to the stack like a door with 15 deadbolts on it.&lt;/p&gt;
+
+&lt;p&gt;In one of my lectures on security at &lt;a href=&quot;http://codeup.com/&quot;&gt;Codeup&lt;/a&gt;, I have the students envision the most secure house they could possibly conceive. Think of moats with drawbridges, filled with sharks armed with lasers beams on their heads, rocket turrets everywhere, razor wire fences, biometric locks, concrete doors two feet thick. Think of the kind of place you would want to be if the zombie apocalypse broke out at the same time as World War III.&lt;/p&gt;
+
+&lt;p&gt;Then we talk about what that house would be like if we were driving back from the grocery store, in torrential rain, with two screaming infants in the back seat. The entry process to make it through security would make our house almost unusable, and under normal, peace-time conditions that level of security makes for a bad user experience.&lt;/p&gt;
+
+&lt;p&gt;A good design can strike a balance between security and usability, especially for API users. Developing a strategy that makes sense for your product and market while maintaining a usable interface is very important. Stripe has one of best designed APIs on the market, and they process millions of dollars in transactions without the razor wire and hellfire missiles. &lt;/p&gt;
+
+&lt;h2&gt;The Solution?&lt;/h2&gt;
+
+&lt;p&gt;How do we overcome the thrown together heap of endpoints with super-max security restrictions that are constantly changing and throwing error messages that require the Rosetta Stone and a team of engineers to decipher?&lt;/p&gt;
+
+&lt;p&gt;We simply need to rethink the approach to API architecture.&lt;/p&gt;
+
+&lt;h3&gt;API First&lt;/h3&gt;
+
+&lt;p&gt;Before wearables and mobile devices, there was the simple web, the thin web, and it was all about the screen. We developed the web for the screen, and sometimes the pesky printer, and all was good. Then came mobile, and the &lt;em&gt;mobile first&lt;/em&gt; movement. &lt;/p&gt;
+
+&lt;p&gt;Now, in the time of mobile app wonderland, wearable tech, interconnected everything, and front-end MVCs galore, we expect a popular application to have tailored experiences for each device. To achieve this with equal sophistication and elegance we must design the API to be robust, not just expose the web app&amp;#39;s endpoints. Embracing an API first mentality is important to staying nimble in the ever changing world where consumption methods grow almost daily.&lt;/p&gt;
+
+&lt;h3&gt;Embrace Hypermedia&lt;/h3&gt;
+
+&lt;p&gt;Using hypermedia to build your API can solve the painful problems associated with API versioning and discoverability.  &lt;/p&gt;
+
+&lt;p&gt;Many services claim to provide RESTful interfaces or APIs.  Often times, this only means that they use HTTP methods like &lt;code&gt;PUT/PATCH/DELETE&lt;/code&gt; (in addition to &lt;code&gt;GET/POST&lt;/code&gt;) and ignore hypermedia altogether.  Hypermedia usage is a &lt;strong&gt;constraint&lt;/strong&gt; of REST, not optional or a nice-to-have.  If you are building a RESTful API, but you are not using hypermedia, it&amp;#39;s not &lt;a href=&quot;http://en.wikipedia.org/wiki/Representational_state_transfer&quot;&gt;REST&lt;/a&gt;. &lt;/p&gt;
+
+&lt;p&gt;By serving hypermedia, your API can change independently of any clients without suffering the effects of backwards incompatibility.&lt;/p&gt;
+
+&lt;p&gt;There are several existing and emerging conventions and specifications for API responses, including:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://en.wikipedia.org/wiki/Atom_%28standard%29&quot;&gt;Atom&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://en.wikipedia.org/wiki/Hypertext_Application_Language&quot;&gt;Hypertext Application Language&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://amundsen.com/media-types/collection/format/&quot;&gt;Collection+JSON Document Format&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://jsonapi.org/&quot;&gt;JSON-API&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;If your API has endpoints like &lt;code&gt;/api/v1/resource&lt;/code&gt; to indicate different document structures, something is likely wrong. Love your users, love your clients, serve hypermedia.&lt;/p&gt;
+
+&lt;h3&gt;API4H &amp;mdash; Application Program Interfaces for Humans&lt;/h3&gt;
+
+&lt;p&gt;Remember, before your API is being used by a program, it is first being consumed by a programmer. Until servers become sentient we rely on humans to understand the services they are integrating before they can automate the processes.&lt;/p&gt;
+
+&lt;p&gt;By designing your APIs for human consumption, and as a foundation for your application versus an add-on, you make happier developers and increase the likelihood of people building applications around your services.&lt;/p&gt;
+
+&lt;h4&gt;Shameless Plug&lt;/h4&gt;
+
+&lt;p&gt;At Grok Interactive, we design and build custom APIs for our clients. If you need assistance creating a back-end solution for your mobile or web application, please do not hesitate to &lt;a href=&quot;http://www.grok-interactive.com/#contact&quot;&gt;contact us for assistance&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Special thanks to &lt;a href=&quot;http://www.grok-interactive.com/blog/author/josh-freeman/&quot;&gt;Josh Freeman&lt;/a&gt; and the rest of the &lt;a href=&quot;http://www.grok-interactive.com/#about&quot;&gt;Grok team&lt;/a&gt; on this blog post.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Make your emails look right everywhere</title>
