@@ -79,43 +79,46 @@
 
       <div class="content">
   <div class="container">
-    <div class="columns">
-      <div class="col c70">
+    <div class="inner">
+      <div class="canvas">
 
-        
-        
+        <div class="columns">
+          <div class="col c70">
 
-        <div class="canvas">
+            
+            
 
-          <div class="post">
+            <div class="canvas">
 
-            <h1><a href="/blog/object-inheritance/" rel="bookmark" title="Link to Your Presence Is Required">Your Presence Is Required</a></h1>
-            <h5>by <a href="/blog/josh-freeman" class="author">Josh Freeman</a>
-              &nbsp;&nbsp;&nbsp;<strong>Apr 11, 2014</strong>&nbsp;&nbsp;&nbsp;
-              
-              <i class="icon fa fa-folder" title="Categories"></i>
-              
-              <a href="/blog/category/training/" class="category">Training</a>
-              
-              
+              <div class="post">
 
-              
-              <i class="icon fa fa-tags" title="Tags"></i>
-              
-              <a href="/blog/tag/php/" class="tag">Php</a>
-              
-              
+                <h1><a href="/blog/object-inheritance/" rel="bookmark" title="Link to Your Presence Is Required">Your Presence Is Required</a></h1>
+                <h5>by <a href="/blog/josh-freeman" class="author">Josh Freeman</a>
+                  &nbsp;&nbsp;&nbsp;<strong>Apr 11, 2014</strong>&nbsp;&nbsp;&nbsp;
+                  
+                  <i class="icon fa fa-folder" title="Categories"></i>
+                  
+                  <a href="/blog/category/training/" class="category">Training</a>
+                  
+                  
 
-              
-            </h5>
+                  
+                  <i class="icon fa fa-tags" title="Tags"></i>
+                  
+                  <a href="/blog/tag/php/" class="tag">Php</a>
+                  
+                  
 
-            <div class=''>
+                  
+                </h5>
 
-              
-              <img src="/images/2014/05/php.svg" width="150" height="150" class="pull-right" />
-              
+                <div class=''>
 
-              <p>Earlier this week, I ran into an into a self-induced problem.  I was attempting to populate a database with lots of random, but grammatically correct data. In Laravel&#39;s parlance, I was <em>seeding</em> the database.  The problem was that I could seed my database by running individual seeders, but if I ran them all at once, I had lots of missing data.</p>
+                  
+                  <img src="/images/2014/05/php.svg" width="150" height="150" class="pull-right" />
+                  
+
+                  <p>Earlier this week, I ran into an into a self-induced problem.  I was attempting to populate a database with lots of random, but grammatically correct data. In Laravel&#39;s parlance, I was <em>seeding</em> the database.  The problem was that I could seed my database by running individual seeders, but if I ran them all at once, I had lots of missing data.</p>
 
 <p>My attempt was simple: store lists of words by type (nouns, adjectives, first names, etc.) in their own files as an array and return that array when included. I created a base class that on construction requires a list once and sets it to a static property that is accessible from any child classes.</p>
 <div class="highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
@@ -286,15 +289,15 @@ either object once. If we instantiate either object again, the <code>__construct
 <p>The solution to this problem is deceptively simple, while the root cause is conceptually complex; so what is the solution? Change the way we include our file from <code>require_once</code> to <code>require</code>. Each time the object is instantiated, the <code>$nouns</code> property will now be loaded with the file&#39;s contents. Let the seeding begin...again!</p>
 
 
-            </div>
+                </div>
 
-            
+                
 
-            <hr />
+                <hr />
 
-            
-            
-            <div class="author-profile">
+                
+                
+                <div class="author-profile">
   <div class="about">
     <em>ABOUT THE AUTHOR</em><br/>
     <strong>Josh Freeman</strong><br/>
@@ -303,9 +306,9 @@ either object once. If we instantiate either object again, the <code>__construct
   <img src="/assets/img/portrait-joshua-freeman.jpg" />
 </div>
 
-            
+                
 
-            
+                
 <h3>Comments</h3>
 <hr />
 <!-- https://developers.facebook.com/docs/reference/plugins/comments/ -->
@@ -327,15 +330,15 @@ either object once. If we instantiate either object again, the <code>__construct
 
 
 
+              </div>
+            </div>
+
+
           </div>
-        </div>
 
+          <div class="col c30">
 
-      </div>
-
-      <div class="col c30">
-
-        <div class="well">
+            <div class="well">
   <h4><i class="icon fa fa-folder" title="Categories"></i> Categories</h4>
   <ul class="nav nav-list">
     
@@ -373,7 +376,7 @@ either object once. If we instantiate either object again, the <code>__construct
 </div>
 
 
-        
+            
 <div class="well">
   <h4><i class="icon fa fa-users" title="Authors"></i> Authors</h4>
   <ul class="nav nav-list">
@@ -395,7 +398,7 @@ either object once. If we instantiate either object again, the <code>__construct
 
 
 
-        <div class="well">
+            <div class="well">
   <h4><i class="icon fa fa-tags" title="Categories"></i> Tags</h4>
 
   <ul class="nav nav-list">
@@ -459,6 +462,9 @@ either object once. If we instantiate either object again, the <code>__construct
   </ul>
 </div>
 
+
+          </div>
+        </div>
 
       </div>
     </div>
