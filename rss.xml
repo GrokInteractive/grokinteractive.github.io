@@ -6,9 +6,129 @@
     <atom:link href="http://www.grok-interactive.com/rss.xml" rel="self" type="application/rss+xml" />
     <description>Grok Interactive's web developers create outstanding applications</description>
     <language>en-us</language>
-    <pubDate>Thu, 25 Jun 2015 14:01:35 -0400</pubDate>
-    <lastBuildDate>Thu, 25 Jun 2015 14:01:35 -0400</lastBuildDate>
+    <pubDate>Mon, 24 Aug 2015 12:37:32 -0400</pubDate>
+    <lastBuildDate>Mon, 24 Aug 2015 12:37:32 -0400</lastBuildDate>
 
+    
+    <item>
+      <title>Moving on from MVC&#58; CQRS</title>
+      <link>http://www.grok-interactive.com/blog/command-query-responsibility-segregation/</link>
+      <pubDate>Wed, 19 Aug 2015 00:00:00 -0400</pubDate>
+      <author>josephv@grok-interactive.com (Joseph Villafranca)</author>
+      <guid>http://www.grok-interactive.com/blog/command-query-responsibility-segregation</guid>
+      <description>&lt;h1&gt;Moving on from MVC: CQRS&lt;/h1&gt;
+
+&lt;p&gt;Do you sometimes forget what your models model? Are your controllers getting out of control? Modern MVC frameworks like Ruby on Rails and Laravel have made it extremely easy to get full-fledged web applications production-ready at blazingly fast speeds. With the help of CRUD style resourceful controllers a small team, sometimes consisting of one, can launch a ReSTful web application complete with users, blog posts, comments, and administrative abilities within a matter of hours. It&amp;#39;s a beautiful thing when it bears the weight of a project&amp;#39;s scope, but we all know projects can quickly grow into codebases that become nightmares to expand and maintain without solid organization. Command Query Responsibility Segregation (CQRS) is one of the patterns we at Grok have used when our MVC based applications evolve into more sophisticated pieces of software.&lt;/p&gt;
+
+&lt;p&gt;CQRS is a simple, yet powerful design pattern you can use to keep your models and controllers (and views, if you like to abuse every part of the MVC acronym) dry. The main idea behind it is that all actions being done in those hundreds (thousands?) of lines of code in your controllers and models should be separated into &lt;strong&gt;Commands&lt;/strong&gt; -- actions that write data, and &lt;strong&gt;Queries&lt;/strong&gt; -- actions that read data. Don&amp;#39;t ever mix the two, EVER. Doing so would be breaking the one and only rule of CQRS. Commands should always have a void return type, thus altering data but not returning anything, and Queries should always return some type of data without making any changes to the system.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2015/08/cqrs.png&quot; alt=&quot;Command Query Separation&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;There seems to be some debate (what a surprise) between proponents of CQRS over whether or not it requires the use of different models for writing and reading data. Separate models at this layer in your application can help begin to pave the way into other design patterns that further the versatility of your software such as Task-based UI, Event Sourcing, and Domain Objects.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2015/08/cqrs_different_read_write.png&quot; alt=&quot;Command Query Separation&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;Every layer of software adds to the complexity of development and upkeep though, so making use of the same model for reads/writes while still tasking different objects to command and query may be the most viable solution for certain projects:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2015/08/cqrs_same_read_write.png&quot; alt=&quot;Command Query Separation&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;Consider the following code you might see in a Laravel controller:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&amp;lt;?php
+class UserController {
+    public function index()
+    {
+        if ($user_preferences = Auth::user()-&amp;gt;preferences) {
+            $users = User::where(&amp;#39;region&amp;#39;, $user_preferences-&amp;gt;region)
+                         -&amp;gt;where(&amp;#39;group&amp;#39;, $user_preferences-&amp;gt;group)
+                         -&amp;gt;where(&amp;#39;role&amp;#39;, $user_preferences-&amp;gt;role)
+                         -&amp;gt;paginate(20);
+        } else {
+            $users = User::all()-&amp;gt;paginate(20);
+        }
+
+        return View::make(&amp;#39;users.index&amp;#39;)-&amp;gt;with(&amp;#39;users&amp;#39;, $users);
+    }
+
+    public function store()
+    {
+        $input = Input::all();
+
+        $user = User::where(&amp;#39;email&amp;#39;, $input[&amp;#39;email&amp;#39;])-&amp;gt;first();
+
+        // Check to see if email exists
+        if ($user) {
+            $message = &amp;#39;Email already exists&amp;#39;;
+            return Redirect::back()-&amp;gt;with(&amp;#39;message&amp;#39;, $message);
+        }
+
+        // Validate input
+        $user_attributes = array_intersect($input, User::$rules);
+        $validator = Validator::make($user, $user_attributes);
+
+        if ($validator-&amp;gt;fails()) {
+            return Redirect::back()-&amp;gt;withErrors($validator);
+        }
+
+        // Store User
+        $user = new User;
+
+        $user-&amp;gt;first_name = $input[&amp;#39;first_name&amp;#39;];
+        $user-&amp;gt;last_name  = $input[&amp;#39;last_name&amp;#39;];
+        $user-&amp;gt;email      = $input[&amp;#39;email&amp;#39;];
+        $user-&amp;gt;password   = Hash::make($input[&amp;#39;password&amp;#39;]);
+        $user-&amp;gt;region     = $input[&amp;#39;region&amp;#39;];
+
+        if (!$user-&amp;gt;save()) {
+            $message = &amp;#39;Unknown Error Occurred&amp;#39;;
+            return Redirect::back()-&amp;gt;with(&amp;#39;message&amp;#39;, $message);
+        }
+
+        return Redirect::action(&amp;#39;Controller@index&amp;#39;);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;There isn&amp;#39;t a lot of logic being executed here. The index method queries with the User model for users with pagination and optional search preferences if a relational model for search preferences is found. The store method does a couple of basic validation steps and then attempts to create the new user with attributes set in the POST request.&lt;/p&gt;
+
+&lt;p&gt;It still amounts to over 50 lines of code! That may not seem like much of a problem to you, but it also does nothing to limit the potential growth of these methods over time. What happens when the user entity doubles in size?&lt;/p&gt;
+
+&lt;p&gt;Now lets look at the same controller using separate command and query services as injected dependencies:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&amp;lt;?php
+use app\Users\UserCommandService;
+use app\Users\UserQueryService;
+
+class UserController {
+
+    public function construct(UserCommandService $user_command_service, UserQueryService $user_query_service)
+    {
+        $this-&amp;gt;user_command_service = $user_command_service;
+        $this-&amp;gt;user_query_service = $user_query_service;
+    }
+
+    public function index()
+    {
+        $users = $this-&amp;gt;user_query_service-&amp;gt;getAllUsersWithSearchPreferences();
+        return View::make(&amp;#39;users.index&amp;#39;)-&amp;gt;with(&amp;#39;users&amp;#39;, $users);
+    }
+
+    public function store()
+    {
+        $this-&amp;gt;user_command_service-&amp;gt;createUserCommand();
+        return Redirect::action(&amp;#39;Controller@index&amp;#39;);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Simply moving all logic from the controller to service classes separated by reading from and writing to our storage has trimmed the code down by more than half the amount of lines, and better yet, has helped define a single action being taken in each of our controller actions.&lt;/p&gt;
+
+&lt;p&gt;If you search the web for CQRS you will no doubt run into larger software design concepts like Domain Driven Design or Event Sourcing and quickly be tempted to jump into the wormhole of information covering them (or jump off the nearest ledge). Don&amp;#39;t do either! At least for the time being. Stick to understanding the simple building block that is CQRS and you will improve your code dramatically.&lt;/p&gt;
+
+&lt;h3&gt;Sources&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://martinfowler.com/bliki/CQRS.html&quot;&gt;http://martinfowler.com/bliki/CQRS.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://codebetter.com/gregyoung/2010/02/16/cqrs-task-based-uis-event-sourcing-agh/&quot;&gt;http://codebetter.com/gregyoung/2010/02/16/cqrs-task-based-uis-event-sourcing-agh/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
     
     <item>
       <title>Professional Development Activities for Professional Developers</title>
