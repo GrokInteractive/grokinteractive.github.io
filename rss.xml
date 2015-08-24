@@ -6,8 +6,8 @@
     <atom:link href="http://www.grok-interactive.com/rss.xml" rel="self" type="application/rss+xml" />
     <description>Grok Interactive's web developers create outstanding applications</description>
     <language>en-us</language>
-    <pubDate>Mon, 24 Aug 2015 12:37:32 -0400</pubDate>
-    <lastBuildDate>Mon, 24 Aug 2015 12:37:32 -0400</lastBuildDate>
+    <pubDate>Mon, 24 Aug 2015 12:51:49 -0400</pubDate>
+    <lastBuildDate>Mon, 24 Aug 2015 12:51:49 -0400</lastBuildDate>
 
     
     <item>
@@ -16,9 +16,7 @@
       <pubDate>Wed, 19 Aug 2015 00:00:00 -0400</pubDate>
       <author>josephv@grok-interactive.com (Joseph Villafranca)</author>
       <guid>http://www.grok-interactive.com/blog/command-query-responsibility-segregation</guid>
-      <description>&lt;h1&gt;Moving on from MVC: CQRS&lt;/h1&gt;
-
-&lt;p&gt;Do you sometimes forget what your models model? Are your controllers getting out of control? Modern MVC frameworks like Ruby on Rails and Laravel have made it extremely easy to get full-fledged web applications production-ready at blazingly fast speeds. With the help of CRUD style resourceful controllers a small team, sometimes consisting of one, can launch a ReSTful web application complete with users, blog posts, comments, and administrative abilities within a matter of hours. It&amp;#39;s a beautiful thing when it bears the weight of a project&amp;#39;s scope, but we all know projects can quickly grow into codebases that become nightmares to expand and maintain without solid organization. Command Query Responsibility Segregation (CQRS) is one of the patterns we at Grok have used when our MVC based applications evolve into more sophisticated pieces of software.&lt;/p&gt;
+      <description>&lt;p&gt;Do you sometimes forget what your models model? Are your controllers getting out of control? Modern MVC frameworks like Ruby on Rails and Laravel have made it extremely easy to get full-fledged web applications production-ready at blazingly fast speeds. With the help of CRUD style resourceful controllers a small team, sometimes consisting of one, can launch a ReSTful web application complete with users, blog posts, comments, and administrative abilities within a matter of hours. It&amp;#39;s a beautiful thing when it bears the weight of a project&amp;#39;s scope, but we all know projects can quickly grow into codebases that become nightmares to expand and maintain without solid organization. Command Query Responsibility Segregation (CQRS) is one of the patterns we at Grok have used when our MVC based applications evolve into more sophisticated pieces of software.&lt;/p&gt;
 
 &lt;p&gt;CQRS is a simple, yet powerful design pattern you can use to keep your models and controllers (and views, if you like to abuse every part of the MVC acronym) dry. The main idea behind it is that all actions being done in those hundreds (thousands?) of lines of code in your controllers and models should be separated into &lt;strong&gt;Commands&lt;/strong&gt; -- actions that write data, and &lt;strong&gt;Queries&lt;/strong&gt; -- actions that read data. Don&amp;#39;t ever mix the two, EVER. Doing so would be breaking the one and only rule of CQRS. Commands should always have a void return type, thus altering data but not returning anything, and Queries should always return some type of data without making any changes to the system.&lt;/p&gt;
 
