@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:itunesu="http://www.itunesu.com/feed" version="2.0">
+    <channel>
+        <link>http://www.grok-interactive.com/podcast/</link>
+        <language>en-us</language>
+        <copyright>&#xA9;2015</copyright>
+        <webMaster>jason@grok-interactive.com (Grok Interactive)</webMaster>
+        <managingEditor>jasons@grok-interactive.com (Jason Straughan)</managingEditor>
+        <itunes:owner>
+            <itunes:name>Grok Interactive, LLC</itunes:name>
+            <itunes:email>podcast@grok-interactive.com</itunes:email>
+        </itunes:owner>
+        <itunes:category text="Technology">
+            <itunes:category text="Tech News" />
+        </itunes:category>
+        <itunes:category text="Technology">
+            <itunes:category text="Software How-To" />
+        </itunes:category>
+        <itunes:explicit>no</itunes:explicit>
+        <itunes:image href="http://grokfm-audio-files.s3.amazonaws.com/thegrokcast/images/show-image-v3-1400.jpg" />
+        <atom:link href="http://www.grok-interactive.com/thegrokcast.xml" rel="self" type="application/rss+xml" />
+        <pubDate>Tue, 01 Sep 2015 18:51:44 -0400</pubDate>
+        <title>The Grok Cast</title>
+        <itunes:author>The Team at Grok Interactive, LLC</itunes:author>
+        <description>Join the team of web developers from Grok Interactive as they discuss the topics, trends, and top stories that impact the world of web professionals. If you work in any capacity with web developers, designers, or marketers, you will be right at home with The Grok Cast.</description>
+        <itunes:keywords>web, developer, internet, designer, ruby, rails, elixir, php, javascript, html, css, webdev, code, git</itunes:keywords>
+        <itunes:summary>Join the team of web developers from Grok Interactive as they discuss the topics, trends, and top stories that impact the world of web professionals. If you work in any capacity with web developers, designers, or marketers, you will be right at home with The Grok Cast.</itunes:summary>
+        <itunes:subtitle>Join the team of web developers from Grok Interactive as they discuss the topics, trends, and top stories that impact the world of web professionals. If you work in any capacity with web developers, designers, or marketers, you will be right at home.</itunes:subtitle>
+        <lastBuildDate>Tue, 01 Sep 2015 18:51:44 -0400</lastBuildDate>
+        
+        <item>
+            <title>Pilot - Impostor Syndrome</title>
+            <itunes:image href="http://grokfm-audio-files.s3.amazonaws.com/thegrokcast/images/show-image-v3-1400.jpg" />
+            <description>The Jasons, Josh, and Joseph all sit down to discuss impostor syndrome and how it has impacted each of them during their careers as web developers.</description>
+            <itunes:keywords>impostor, syndrome, developer, webdev, ruby, php, code</itunes:keywords>
+            <itunes:subtitle>The Jasons, Josh, and Joseph all sit down to discuss impostor syndrome and how it has impacted each of them during their careers as web developers.</itunes:subtitle>
+            <itunes:summary>The Jasons, Josh, and Joseph all sit down to discuss impostor syndrome and how it has impacted each of them during their careers as web developers.</itunes:summary>
+            <enclosure url="http://grokfm-audio-files.s3.amazonaws.com/thegrokcast/00-pilot-impostor-syndrome.mp3" type="audio/mpeg" length="31461304" />
+            <guid isPermaLink="false">http://www.grok-interactive.com/blog/pilot-impostor-syndrome/</guid>
+            <itunes:explicit>no</itunes:explicit>
+            <itunes:duration>32:46</itunes:duration>
+            <pubDate>Tue, 01 Sep 2015 00:00:00 -0400</pubDate>
+        </item>
+        
+    </channel>
+</rss>

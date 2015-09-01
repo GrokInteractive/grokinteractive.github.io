@@ -4,7 +4,7 @@
   <title>Grok Interactive</title>
   <link href="http://www.grok-interactive.com/"/>
   <link type="application/atom+xml" rel="self" href="http://www.grok-interactive.com/atom.xml"/>
-  <updated>2015-09-01T10:04:34-04:00</updated>
+  <updated>2015-09-01T18:51:44-04:00</updated>
   <id>http://www.grok-interactive.com/</id>
   <author>
     <name>Grok Interactive</name>
@@ -148,6 +148,19 @@ data, eliminating one source of bugs.&lt;/p&gt;
 using a custom value object? Physical addresses pop out to me but what about a
 person&amp;#39;s name?&lt;/p&gt;
 </content>
+  </entry>
+  
+  <entry>
+    <id>http://www.grok-interactive.com/blog/pilot-impostor-syndrome</id>
+    <link type="text/html" rel="alternate" href="http://www.grok-interactive.com/blog/pilot-impostor-syndrome/"/>
+    <title>Pilot - Impostor Syndrome</title>
+    <published>2015-09-01T00:00:00-04:00</published>
+    <updated>2015-09-01T00:00:00-04:00</updated>
+    <author>
+      <name></name>
+      <email></email>
+    </author>
+    <content type="html"></content>
   </entry>
   
   <entry>
