@@ -6,9 +6,144 @@
     <atom:link href="http://www.grok-interactive.com/rss.xml" rel="self" type="application/rss+xml" />
     <description>Grok Interactive's web developers create outstanding applications</description>
     <language>en-us</language>
-    <pubDate>Mon, 24 Aug 2015 12:51:49 -0400</pubDate>
-    <lastBuildDate>Mon, 24 Aug 2015 12:51:49 -0400</lastBuildDate>
+    <pubDate>Tue, 01 Sep 2015 10:04:34 -0400</pubDate>
+    <lastBuildDate>Tue, 01 Sep 2015 10:04:34 -0400</lastBuildDate>
 
+    
+    <item>
+      <title>Value objects in Ruby: Creating custom data types</title>
+      <link>http://www.grok-interactive.com/blog/value-objects-in-ruby-part-1/</link>
+      <pubDate>Tue, 01 Sep 2015 00:00:00 -0400</pubDate>
+      <author>christopher.moeller@grok-interactive.com (Christopher Moeller)</author>
+      <guid>http://www.grok-interactive.com/blog/value-objects-in-ruby-part-1</guid>
+      <description>&lt;p&gt;This is the first in a two-part series on value objects in Ruby and using them
+with a database. In the first part, we&amp;#39;ll explore the benefits of using value
+objects in Ruby. The second part will be a tutorial on how to use a custom data
+type with ActiveRecord in a Ruby on Rails application.&lt;/p&gt;
+
+&lt;h2&gt;Introduction&lt;/h2&gt;
+
+&lt;p&gt;Ruby provides a rich set of value objects for things like IP addresses, Dates,
+Strings, Hashes, Arrays, etc. When working with data in our applications we can
+usually start with one of the types that Ruby gives us. This helps us get
+started very quickly but it can get out of hand as requirements change. Just
+about every application needs data in a particular format, like an email address
+or a list of investments.&lt;/p&gt;
+
+&lt;p&gt;Let&amp;#39;s take a look at something we all do: using Ruby Strings to store email
+addresses and work with them.&lt;/p&gt;
+
+&lt;h2&gt;Using a Ruby String to store an email address&lt;/h2&gt;
+
+&lt;p&gt;We&amp;#39;ll leave out data persistence for this post and focus on our application
+code. For now, we&amp;#39;ll use &lt;code&gt;irb&lt;/code&gt; as a playground. Let&amp;#39;s fire it up and take a poke
+around with some email addresses.&lt;/p&gt;
+
+&lt;p&gt;It should come as no surprise that if we have two Strings with the same sequence
+of characters, they&amp;#39;re equivalent:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;irb
+&amp;gt;&amp;gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;user@example.com&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;user@example.com&amp;quot;&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#=&amp;gt; true&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;But what happens if somehow one of the Strings started with an upper case
+letter? Again, no surprise here:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;irb
+&amp;gt;&amp;gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;user@example.com&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;User@example.com&amp;quot;&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#=&amp;gt; false&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;One quick and dirty way to solve this is by calling &lt;code&gt;downcase&lt;/code&gt; on both strings:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;irb
+&amp;gt;&amp;gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;user@example.com&amp;quot;&lt;/span&gt;.downcase &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;User@example.com&amp;quot;&lt;/span&gt;.downcase &lt;span class=&quot;c&quot;&gt;#=&amp;gt; true&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Perfect! But what did we do here? For all practical purposes, we &lt;em&gt;know&lt;/em&gt; that
+email addresses are not case sensitive, so we added a little bit of code to
+handle that characteristic when comparing them. Now every time we need to
+compare a pair email addresses we just need to remember to call &lt;code&gt;downcase&lt;/code&gt;. No
+big deal, right? Well, until we miss one. Or two. And then we&amp;#39;re sending invalid
+data throughout our application, meaning that we&amp;#39;ll have unexpected
+hard-to-track-down bugs.&lt;/p&gt;
+
+&lt;p&gt;It turns out that email addresses aren&amp;#39;t just strings — they&amp;#39;re strings &lt;em&gt;in a
+specific format&lt;/em&gt;. There are some specific rules that every email address follows
+(this is not an exhaustive list):
+* It is case insensitive (as mentioned above)
+* It has a local part and a domain part separated by an &amp;quot;@&amp;quot;
+* There are other requirements such as character requirements. Some characters
+  are required, some are optional, and some are not permitted (like brackets and
+  semicolons)&lt;/p&gt;
+
+&lt;h2&gt;Using a value object&lt;/h2&gt;
+
+&lt;p&gt;While all of the rules for email address formatting are very complex (&lt;a href=&quot;https://en.wikipedia.org/wiki/Email_address&quot;&gt;the
+Wikipedia page&lt;/a&gt; is a good place to
+start), we don&amp;#39;t need to validate against every single one. At the end of the
+day, the only way to verify an email address is to send it an email. That said,
+we do need to encode the email address rules that are important to our
+application somewhere.&lt;/p&gt;
+
+&lt;p&gt;Let&amp;#39;s start with a basic &lt;code&gt;EmailAddress&lt;/code&gt; class:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;EmailAddress&lt;/span&gt;
+  &lt;span class=&quot;kp&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Comparable&lt;/span&gt;
+
+  &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;initialize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=~&lt;/span&gt; &lt;span class=&quot;sr&quot;&gt;/@/&lt;/span&gt;
+      &lt;span class=&quot;vi&quot;&gt;@raw_email_address&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;downcase&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;strip&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;raise&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;ArgumentError&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;email address must have an &amp;#39;@&amp;#39;&amp;quot;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+
+  &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;&amp;lt;=&amp;gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;other&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;raw_email_address&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;other&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to_s&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+
+  &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;to_s&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;raw_email_address&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+
+  &lt;span class=&quot;kp&quot;&gt;protected&lt;/span&gt;
+
+  &lt;span class=&quot;kp&quot;&gt;attr_reader&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:raw_email_address&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;With some very basic validation in the initializer, we have a class we can use
+to compare two email addresses.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;irb
+&amp;gt;&amp;gt; require &lt;span class=&quot;s2&quot;&gt;&amp;quot;./email_address&amp;quot;&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#=&amp;gt; true&lt;/span&gt;
+&amp;gt;&amp;gt; EmailAddress.new&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;user@example.com&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; EmailAddress.new&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;user@example.com&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#=&amp;gt; true&lt;/span&gt;
+&amp;gt;&amp;gt; EmailAddress.new&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;user@example.com&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; EmailAddress.new&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;User@example.com&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#=&amp;gt; true&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;We can also sort a list of email addresses because we included &lt;code&gt;Comparable&lt;/code&gt; and
+implemented &lt;code&gt;&amp;lt;=&amp;gt;&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;irb
+&amp;gt;&amp;gt; require &lt;span class=&quot;s2&quot;&gt;&amp;quot;./email_address&amp;quot;&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#=&amp;gt; true&lt;/span&gt;
+&amp;gt;&amp;gt; &lt;span class=&quot;nv&quot;&gt;email1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; EmailAddress.new&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;jason@example.com&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#=&amp;gt; #&amp;lt;EmailAddress:0x007fa45a0a3e98 @raw_email_address=&amp;quot;jason@example.com&amp;quot;&amp;gt;&lt;/span&gt;
+&amp;gt;&amp;gt; &lt;span class=&quot;nv&quot;&gt;email2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; EmailAddress.new&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;apple@example.com&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#=&amp;gt; #&amp;lt;EmailAddress:0x007fa45a0a3e98 @raw_email_address=&amp;quot;apple@example.com&amp;quot;&amp;gt;&lt;/span&gt;
+&amp;gt;&amp;gt; &lt;span class=&quot;nv&quot;&gt;email3&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; EmailAddress.new&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;zebra@example.com&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#=&amp;gt; #&amp;lt;EmailAddress:0x007fa45a0a3e98 @raw_email_address=&amp;quot;zebra@example.com&amp;quot;&amp;gt;&lt;/span&gt;
+&amp;gt;&amp;gt; &lt;span class=&quot;nv&quot;&gt;emails&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;email1, email2, email3&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#=&amp;gt; [#&amp;lt;EmailAddress:0x007fa45a0a3e98 @raw_email_address=&amp;quot;jason@example.com&amp;quot;&amp;gt;, #&amp;lt;EmailAddress:0x007fa459ca8f78 @raw_email_address=&amp;quot;apple@example.com&amp;quot;&amp;gt;, #&amp;lt;EmailAddress:0x007fa45a092e68 @raw_email_address=&amp;quot;zebra@example.com&amp;quot;&amp;gt;]&lt;/span&gt;
+&amp;gt;&amp;gt; emails.sort
+&lt;span class=&quot;c&quot;&gt;#=&amp;gt; [#&amp;lt;EmailAddress:0x007fa459ca8f78 @raw_email_address=&amp;quot;apple@example.com&amp;quot;&amp;gt;, #&amp;lt;EmailAddress:0x007fa45a0a3e98 @raw_email_address=&amp;quot;jason@example.com&amp;quot;&amp;gt;, #&amp;lt;EmailAddress:0x007fa45a092e68 @raw_email_address=&amp;quot;zebra@example.com&amp;quot;&amp;gt;]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;If someone tries to build an email address that doesn&amp;#39;t match the regex, Ruby
+will blow up, preventing invalid data from being passed around in your
+application:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;irb&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;require&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;./email_address&amp;quot;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;#=&amp;gt; true&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;EmailAddress&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;new&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;yo!&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;ss&quot;&gt;ArgumentError&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;email&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;address&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;must&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;have&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;an&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;@&amp;#39;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;Nearly every production application I&amp;#39;ve seen passes around built-in data types
+for almost everything that isn&amp;#39;t considered a composite type (like a user).
+There&amp;#39;s an up-front investment in time to do this, yes, but using custom types
+also means more robust code since you can &lt;em&gt;know&lt;/em&gt; you&amp;#39;re passing around valid
+data, eliminating one source of bugs.&lt;/p&gt;
+
+&lt;p&gt;What do you think? Where have you been using a built-in type when you should be
+using a custom value object? Physical addresses pop out to me but what about a
+person&amp;#39;s name?&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Moving on from MVC&#58; CQRS</title>

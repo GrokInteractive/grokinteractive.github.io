@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-<title>Grok Interactive, LLC | Moving on from MVC&#58; CQRS</title>
+<title>Grok Interactive, LLC | Value objects in Ruby: Creating custom data types</title>
 <meta name="description" content="">
 <meta name="author" content="Grok Interactive, LLC">
 
@@ -89,9 +89,9 @@
 
               <div class="post">
 
-                <h1><a href="/blog/command-query-responsibility-segregation/" rel="bookmark" title="Link to Moving on from MVC&#58; CQRS">Moving on from MVC&#58; CQRS</a></h1>
-                <h5>by <a href="/blog/author/joseph-villafranca" class="author">Joseph Villafranca</a>
-                  &nbsp;&nbsp;&nbsp;<strong>Aug 19, 2015</strong>&nbsp;&nbsp;&nbsp;
+                <h1><a href="/blog/value-objects-in-ruby-part-1/" rel="bookmark" title="Link to Value objects in Ruby: Creating custom data types">Value objects in Ruby: Creating custom data types</a></h1>
+                <h5>by <a href="/blog/author/christopher-moeller" class="author">Christopher Moeller</a>
+                  &nbsp;&nbsp;&nbsp;<strong>Sep 01, 2015</strong>&nbsp;&nbsp;&nbsp;
                   
                   <i class="icon fa fa-folder" title="Categories"></i>
                   
@@ -102,11 +102,11 @@
                   
                   <i class="icon fa fa-tags" title="Tags"></i>
                   
-                  <a href="/blog/tag/mvc/" class="tag">Mvc</a>,
-                  
                   <a href="/blog/tag/object_oriented_programming/" class="tag">Object oriented programming</a>,
                   
-                  <a href="/blog/tag/domain_driven_design/" class="tag">Domain driven design</a>
+                  <a href="/blog/tag/value_objects/" class="tag">Value objects</a>,
+                  
+                  <a href="/blog/tag/types/" class="tag">Types</a>
                   
                   
 
@@ -116,118 +116,135 @@
                 <div class=''>
 
                   
-                  <img src="/images/2015/08/bad_design_kills.png" width="150" height="150" class="pull-right" />
+                  <img src="/images/2015/08/value_objects.jpg" width="150" height="150" class="pull-right" />
                   
 
-                  <p>Do you sometimes forget what your models model? Are your controllers getting out of control? Modern MVC frameworks like Ruby on Rails and Laravel have made it extremely easy to get full-fledged web applications production-ready at blazingly fast speeds. With the help of CRUD style resourceful controllers a small team, sometimes consisting of one, can launch a ReSTful web application complete with users, blog posts, comments, and administrative abilities within a matter of hours. It&#39;s a beautiful thing when it bears the weight of a project&#39;s scope, but we all know projects can quickly grow into codebases that become nightmares to expand and maintain without solid organization. Command Query Responsibility Segregation (CQRS) is one of the patterns we at Grok have used when our MVC based applications evolve into more sophisticated pieces of software.</p>
+                  <p>This is the first in a two-part series on value objects in Ruby and using them
+with a database. In the first part, we&#39;ll explore the benefits of using value
+objects in Ruby. The second part will be a tutorial on how to use a custom data
+type with ActiveRecord in a Ruby on Rails application.</p>
 
-<p>CQRS is a simple, yet powerful design pattern you can use to keep your models and controllers (and views, if you like to abuse every part of the MVC acronym) dry. The main idea behind it is that all actions being done in those hundreds (thousands?) of lines of code in your controllers and models should be separated into <strong>Commands</strong> -- actions that write data, and <strong>Queries</strong> -- actions that read data. Don&#39;t ever mix the two, EVER. Doing so would be breaking the one and only rule of CQRS. Commands should always have a void return type, thus altering data but not returning anything, and Queries should always return some type of data without making any changes to the system.</p>
+<h2>Introduction</h2>
 
-<p><img src="/images/2015/08/cqrs.png" alt="Command Query Separation"></p>
+<p>Ruby provides a rich set of value objects for things like IP addresses, Dates,
+Strings, Hashes, Arrays, etc. When working with data in our applications we can
+usually start with one of the types that Ruby gives us. This helps us get
+started very quickly but it can get out of hand as requirements change. Just
+about every application needs data in a particular format, like an email address
+or a list of investments.</p>
 
-<p>There seems to be some debate (what a surprise) between proponents of CQRS over whether or not it requires the use of different models for writing and reading data. Separate models at this layer in your application can help begin to pave the way into other design patterns that further the versatility of your software such as Task-based UI, Event Sourcing, and Domain Objects.</p>
+<p>Let&#39;s take a look at something we all do: using Ruby Strings to store email
+addresses and work with them.</p>
 
-<p><img src="/images/2015/08/cqrs_different_read_write.png" alt="Command Query Separation"></p>
+<h2>Using a Ruby String to store an email address</h2>
 
-<p>Every layer of software adds to the complexity of development and upkeep though, so making use of the same model for reads/writes while still tasking different objects to command and query may be the most viable solution for certain projects:</p>
+<p>We&#39;ll leave out data persistence for this post and focus on our application
+code. For now, we&#39;ll use <code>irb</code> as a playground. Let&#39;s fire it up and take a poke
+around with some email addresses.</p>
 
-<p><img src="/images/2015/08/cqrs_same_read_write.png" alt="Command Query Separation"></p>
-
-<p>Consider the following code you might see in a Laravel controller:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">&lt;?php
-class UserController {
-    public function index()
-    {
-        if ($user_preferences = Auth::user()-&gt;preferences) {
-            $users = User::where(&#39;region&#39;, $user_preferences-&gt;region)
-                         -&gt;where(&#39;group&#39;, $user_preferences-&gt;group)
-                         -&gt;where(&#39;role&#39;, $user_preferences-&gt;role)
-                         -&gt;paginate(20);
-        } else {
-            $users = User::all()-&gt;paginate(20);
-        }
-
-        return View::make(&#39;users.index&#39;)-&gt;with(&#39;users&#39;, $users);
-    }
-
-    public function store()
-    {
-        $input = Input::all();
-
-        $user = User::where(&#39;email&#39;, $input[&#39;email&#39;])-&gt;first();
-
-        // Check to see if email exists
-        if ($user) {
-            $message = &#39;Email already exists&#39;;
-            return Redirect::back()-&gt;with(&#39;message&#39;, $message);
-        }
-
-        // Validate input
-        $user_attributes = array_intersect($input, User::$rules);
-        $validator = Validator::make($user, $user_attributes);
-
-        if ($validator-&gt;fails()) {
-            return Redirect::back()-&gt;withErrors($validator);
-        }
-
-        // Store User
-        $user = new User;
-
-        $user-&gt;first_name = $input[&#39;first_name&#39;];
-        $user-&gt;last_name  = $input[&#39;last_name&#39;];
-        $user-&gt;email      = $input[&#39;email&#39;];
-        $user-&gt;password   = Hash::make($input[&#39;password&#39;]);
-        $user-&gt;region     = $input[&#39;region&#39;];
-
-        if (!$user-&gt;save()) {
-            $message = &#39;Unknown Error Occurred&#39;;
-            return Redirect::back()-&gt;with(&#39;message&#39;, $message);
-        }
-
-        return Redirect::action(&#39;Controller@index&#39;);
-    }
-}
+<p>It should come as no surprise that if we have two Strings with the same sequence
+of characters, they&#39;re equivalent:</p>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nv">$ </span>irb
+&gt;&gt; <span class="s2">&quot;user@example.com&quot;</span> <span class="o">==</span> <span class="s2">&quot;user@example.com&quot;</span> <span class="c">#=&gt; true</span>
 </code></pre></div>
-<p>There isn&#39;t a lot of logic being executed here. The index method queries with the User model for users with pagination and optional search preferences if a relational model for search preferences is found. The store method does a couple of basic validation steps and then attempts to create the new user with attributes set in the POST request.</p>
-
-<p>It still amounts to over 50 lines of code! That may not seem like much of a problem to you, but it also does nothing to limit the potential growth of these methods over time. What happens when the user entity doubles in size?</p>
-
-<p>Now lets look at the same controller using separate command and query services as injected dependencies:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">&lt;?php
-use app\Users\UserCommandService;
-use app\Users\UserQueryService;
-
-class UserController {
-
-    public function construct(UserCommandService $user_command_service, UserQueryService $user_query_service)
-    {
-        $this-&gt;user_command_service = $user_command_service;
-        $this-&gt;user_query_service = $user_query_service;
-    }
-
-    public function index()
-    {
-        $users = $this-&gt;user_query_service-&gt;getAllUsersWithSearchPreferences();
-        return View::make(&#39;users.index&#39;)-&gt;with(&#39;users&#39;, $users);
-    }
-
-    public function store()
-    {
-        $this-&gt;user_command_service-&gt;createUserCommand();
-        return Redirect::action(&#39;Controller@index&#39;);
-    }
-}
+<p>But what happens if somehow one of the Strings started with an upper case
+letter? Again, no surprise here:</p>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nv">$ </span>irb
+&gt;&gt; <span class="s2">&quot;user@example.com&quot;</span> <span class="o">==</span> <span class="s2">&quot;User@example.com&quot;</span> <span class="c">#=&gt; false</span>
 </code></pre></div>
-<p>Simply moving all logic from the controller to service classes separated by reading from and writing to our storage has trimmed the code down by more than half the amount of lines, and better yet, has helped define a single action being taken in each of our controller actions.</p>
+<p>One quick and dirty way to solve this is by calling <code>downcase</code> on both strings:</p>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nv">$ </span>irb
+&gt;&gt; <span class="s2">&quot;user@example.com&quot;</span>.downcase <span class="o">==</span> <span class="s2">&quot;User@example.com&quot;</span>.downcase <span class="c">#=&gt; true</span>
+</code></pre></div>
+<p>Perfect! But what did we do here? For all practical purposes, we <em>know</em> that
+email addresses are not case sensitive, so we added a little bit of code to
+handle that characteristic when comparing them. Now every time we need to
+compare a pair email addresses we just need to remember to call <code>downcase</code>. No
+big deal, right? Well, until we miss one. Or two. And then we&#39;re sending invalid
+data throughout our application, meaning that we&#39;ll have unexpected
+hard-to-track-down bugs.</p>
 
-<p>If you search the web for CQRS you will no doubt run into larger software design concepts like Domain Driven Design or Event Sourcing and quickly be tempted to jump into the wormhole of information covering them (or jump off the nearest ledge). Don&#39;t do either! At least for the time being. Stick to understanding the simple building block that is CQRS and you will improve your code dramatically.</p>
+<p>It turns out that email addresses aren&#39;t just strings — they&#39;re strings <em>in a
+specific format</em>. There are some specific rules that every email address follows
+(this is not an exhaustive list):
+* It is case insensitive (as mentioned above)
+* It has a local part and a domain part separated by an &quot;@&quot;
+* There are other requirements such as character requirements. Some characters
+  are required, some are optional, and some are not permitted (like brackets and
+  semicolons)</p>
 
-<h3>Sources</h3>
+<h2>Using a value object</h2>
 
-<ul>
-<li><a href="http://martinfowler.com/bliki/CQRS.html">http://martinfowler.com/bliki/CQRS.html</a></li>
-<li><a href="http://codebetter.com/gregyoung/2010/02/16/cqrs-task-based-uis-event-sourcing-agh/">http://codebetter.com/gregyoung/2010/02/16/cqrs-task-based-uis-event-sourcing-agh/</a></li>
-</ul>
+<p>While all of the rules for email address formatting are very complex (<a href="https://en.wikipedia.org/wiki/Email_address">the
+Wikipedia page</a> is a good place to
+start), we don&#39;t need to validate against every single one. At the end of the
+day, the only way to verify an email address is to send it an email. That said,
+we do need to encode the email address rules that are important to our
+application somewhere.</p>
+
+<p>Let&#39;s start with a basic <code>EmailAddress</code> class:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">EmailAddress</span>
+  <span class="kp">include</span> <span class="no">Comparable</span>
+
+  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">string</span> <span class="o">=~</span> <span class="sr">/@/</span>
+      <span class="vi">@raw_email_address</span> <span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="n">downcase</span><span class="o">.</span><span class="n">strip</span>
+    <span class="k">else</span>
+      <span class="k">raise</span> <span class="no">ArgumentError</span><span class="p">,</span> <span class="s2">&quot;email address must have an &#39;@&#39;&quot;</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">&lt;=&gt;</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+    <span class="n">raw_email_address</span> <span class="o">&lt;=&gt;</span> <span class="n">other</span><span class="o">.</span><span class="n">to_s</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">to_s</span>
+    <span class="n">raw_email_address</span>
+  <span class="k">end</span>
+
+  <span class="kp">protected</span>
+
+  <span class="kp">attr_reader</span> <span class="ss">:raw_email_address</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>With some very basic validation in the initializer, we have a class we can use
+to compare two email addresses.</p>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nv">$ </span>irb
+&gt;&gt; require <span class="s2">&quot;./email_address&quot;</span> <span class="c">#=&gt; true</span>
+&gt;&gt; EmailAddress.new<span class="o">(</span><span class="s2">&quot;user@example.com&quot;</span><span class="o">)</span> <span class="o">==</span> EmailAddress.new<span class="o">(</span><span class="s2">&quot;user@example.com&quot;</span><span class="o">)</span> <span class="c">#=&gt; true</span>
+&gt;&gt; EmailAddress.new<span class="o">(</span><span class="s2">&quot;user@example.com&quot;</span><span class="o">)</span> <span class="o">==</span> EmailAddress.new<span class="o">(</span><span class="s2">&quot;User@example.com&quot;</span><span class="o">)</span> <span class="c">#=&gt; true</span>
+</code></pre></div>
+<p>We can also sort a list of email addresses because we included <code>Comparable</code> and
+implemented <code>&lt;=&gt;</code>:</p>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nv">$ </span>irb
+&gt;&gt; require <span class="s2">&quot;./email_address&quot;</span> <span class="c">#=&gt; true</span>
+&gt;&gt; <span class="nv">email1</span> <span class="o">=</span> EmailAddress.new<span class="o">(</span><span class="s2">&quot;jason@example.com&quot;</span><span class="o">)</span> <span class="c">#=&gt; #&lt;EmailAddress:0x007fa45a0a3e98 @raw_email_address=&quot;jason@example.com&quot;&gt;</span>
+&gt;&gt; <span class="nv">email2</span> <span class="o">=</span> EmailAddress.new<span class="o">(</span><span class="s2">&quot;apple@example.com&quot;</span><span class="o">)</span> <span class="c">#=&gt; #&lt;EmailAddress:0x007fa45a0a3e98 @raw_email_address=&quot;apple@example.com&quot;&gt;</span>
+&gt;&gt; <span class="nv">email3</span> <span class="o">=</span> EmailAddress.new<span class="o">(</span><span class="s2">&quot;zebra@example.com&quot;</span><span class="o">)</span> <span class="c">#=&gt; #&lt;EmailAddress:0x007fa45a0a3e98 @raw_email_address=&quot;zebra@example.com&quot;&gt;</span>
+&gt;&gt; <span class="nv">emails</span> <span class="o">=</span> <span class="o">[</span>email1, email2, email3<span class="o">]</span>
+<span class="c">#=&gt; [#&lt;EmailAddress:0x007fa45a0a3e98 @raw_email_address=&quot;jason@example.com&quot;&gt;, #&lt;EmailAddress:0x007fa459ca8f78 @raw_email_address=&quot;apple@example.com&quot;&gt;, #&lt;EmailAddress:0x007fa45a092e68 @raw_email_address=&quot;zebra@example.com&quot;&gt;]</span>
+&gt;&gt; emails.sort
+<span class="c">#=&gt; [#&lt;EmailAddress:0x007fa459ca8f78 @raw_email_address=&quot;apple@example.com&quot;&gt;, #&lt;EmailAddress:0x007fa45a0a3e98 @raw_email_address=&quot;jason@example.com&quot;&gt;, #&lt;EmailAddress:0x007fa45a092e68 @raw_email_address=&quot;zebra@example.com&quot;&gt;]</span>
+</code></pre></div>
+<p>If someone tries to build an email address that doesn&#39;t match the regex, Ruby
+will blow up, preventing invalid data from being passed around in your
+application:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">$</span> <span class="n">irb</span>
+<span class="o">&gt;&gt;</span> <span class="nb">require</span> <span class="s2">&quot;./email_address&quot;</span> <span class="c1">#=&gt; true</span>
+<span class="o">&gt;&gt;</span> <span class="no">EmailAddress</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;yo!&quot;</span><span class="p">)</span>
+<span class="ss">ArgumentError</span><span class="p">:</span> <span class="n">email</span> <span class="n">address</span> <span class="n">must</span> <span class="n">have</span> <span class="n">an</span> <span class="s1">&#39;@&#39;</span>
+</code></pre></div>
+<h2>Conclusion</h2>
+
+<p>Nearly every production application I&#39;ve seen passes around built-in data types
+for almost everything that isn&#39;t considered a composite type (like a user).
+There&#39;s an up-front investment in time to do this, yes, but using custom types
+also means more robust code since you can <em>know</em> you&#39;re passing around valid
+data, eliminating one source of bugs.</p>
+
+<p>What do you think? Where have you been using a built-in type when you should be
+using a custom value object? Physical addresses pop out to me but what about a
+person&#39;s name?</p>
 
 
                 </div>
@@ -241,10 +258,16 @@ class UserController {
                 <div class="author-profile">
   <div class="about">
     <em>ABOUT THE AUTHOR</em><br/>
-    <strong>Joseph Villafranca</strong><br/>
-    <p>Joseph is a product of <a href="http://codeup.com">Codeup's</a> first graduating class. His upbringing in web development consisted mostly of LAMP stack technologies with a heavy dose of Javascript and HTML/CSS. He prefers the back-end side of software development and enjoys data design and application architecture way more than a 2nd year coder should. He also holds a BBA from Texas A&amp;M University and loves being a part of the small business tech scene in San Antonio, TX.</p>
+    <strong>Christopher Moeller</strong><br/>
+    <p>
+      Christopher is a self-taught developer and has been working with Ruby and
+      Ruby on Rails since 2010. He enjoys building the simple, elegant solution
+      to current problem he's solving and has recently picked up functional
+      programming, mostly with the
+      <a href="http://elixir-lang.org">Elixir programming language</a>.
+    </p>
   </div>
-  <img src="/images/portrait-joseph-villafranca.jpg" />
+  <img src="/images/portrait-christopher-moeller.jpg" />
 </div>
 
                 
