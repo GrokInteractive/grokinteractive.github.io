@@ -4,12 +4,211 @@
   <title>Grok Interactive</title>
   <link href="http://www.grok-interactive.com/"/>
   <link type="application/atom+xml" rel="self" href="http://www.grok-interactive.com/atom.xml"/>
-  <updated>2015-09-01T19:13:40-04:00</updated>
+  <updated>2015-09-03T11:23:56-04:00</updated>
   <id>http://www.grok-interactive.com/</id>
   <author>
     <name>Grok Interactive</name>
   </author>
 
+  
+  <entry>
+    <id>http://www.grok-interactive.com/blog/value-objects-in-ruby-part-2</id>
+    <link type="text/html" rel="alternate" href="http://www.grok-interactive.com/blog/value-objects-in-ruby-part-2/"/>
+    <title>Value objects in Ruby: Serializing your custom objects with ActiveRecord</title>
+    <published>2015-09-03T00:00:00-04:00</published>
+    <updated>2015-09-03T00:00:00-04:00</updated>
+    <author>
+      <name>Christopher Moeller</name>
+      <email>christopher.moeller@grok-interactive.com</email>
+    </author>
+    <content type="html">&lt;p&gt;In the last post I discussed the value in moving beyond Ruby&amp;#39;s built-in data types like Strings, Arrays, and Hashes in favor of using custom data types (or value objects). There are many benefits in designing a system with custom types, one of the greatest being that your intent is the code itself instead of in documentation or a wiki. &lt;a href=&quot;/blog/value-objects-in-ruby-part-1/&quot;&gt;Check out part 1 if you haven&amp;#39;t had a chance yet&lt;/a&gt;. This post will show you how you can use your custom data types with ActiveRecord.&lt;/p&gt;
+
+&lt;h2&gt;Introduction&lt;/h2&gt;
+
+&lt;p&gt;Most web applications we work on require storing data in a database. Like many Rails shops our default database of choice at Grok is &lt;a href=&quot;http://www.postgresql.org&quot;&gt;Postgres&lt;/a&gt;. We can store the vast majority of data using its text types, numeric types, dates and times, and booleans. Postgres also provides support for collections with arrays and hstore as well as more specific types like UUIDs and IP addresses, allowing us to store that data in a more structured way instead of as text. This is &lt;a href=&quot;http://www.postgresql.org/docs/9%204/static/datatype-net-types.html&quot;&gt;how Postgres describes using the Network Address Types&lt;/a&gt;:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;It is better to use these types instead of plain text types to store network
+addresses, because these types offer input error checking and specialized
+operators and functions.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;So, we get database-level validation simply by using a data type designed for
+the data we&amp;#39;re going to store in it anyway, making it impossible to store the
+strings like &amp;quot;coffee is delicious&amp;quot; in a column designed for just IP addresses.
+Brilliant!&lt;/p&gt;
+
+&lt;p&gt;But what if the database doesn&amp;#39;t have a specific type for the data we need to
+store? We have &lt;code&gt;ActiveRecord::Validations&lt;/code&gt;, of course! Now, how do we validate
+data if someone opens a database console and inserts records, or someone needs
+to work quickly and calls &lt;code&gt;model.save(validate: false)&lt;/code&gt;?  More recently people
+have been using constraints to &lt;a href=&quot;http://shuber.io/porting-activerecord-validations-to-postgres/&quot;&gt;push validations down to the database level&lt;/a&gt;, which is
+very intriguing but seems like it may be duplicating work. &lt;/p&gt;
+
+&lt;p&gt;You&amp;#39;d still want application-level validations to avoid a round-trip to the database just for
+validations. And keeping things like that in sync can be a nightmare. (Please
+let me know if you have a solution to that problem!) Though they aren&amp;#39;t the
+preferred way to interact with the database, adding records using the database
+console or calling &lt;code&gt;model.save(validate: false)&lt;/code&gt; aren&amp;#39;t unheard of or too far
+out of the ordinary. To ensure we&amp;#39;re working with known data we need something
+that fits in the middle of &lt;code&gt;ActiveRecord::Validations&lt;/code&gt; and database-level
+validations. Enter &lt;code&gt;ActiveRecord::serialize&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h2&gt;ActiveRecord#serialize with built in Ruby classes&lt;/h2&gt;
+
+&lt;p&gt;To fill this need ActiveRecord offers the &lt;code&gt;serialize&lt;/code&gt; class macro. For example,
+say you have a &lt;code&gt;User&lt;/code&gt; class and the &lt;code&gt;users&lt;/code&gt; table has a &lt;code&gt;text&lt;/code&gt; column, for
+&lt;code&gt;preferences&lt;/code&gt;. The intent with the &lt;code&gt;preferences&lt;/code&gt; column is to store a collection
+of key-value pairs for a each user&amp;#39;s preferences. Instead of manually parsing
+the stored text using &lt;code&gt;String&lt;/code&gt; methods, ActiveRecord will coerce it into a
+&lt;code&gt;Hash&lt;/code&gt; for you. Granted, in Postgres we would normally use hstore for this but
+there are other reasons to use &lt;code&gt;serialize&lt;/code&gt; in this way, such as if you&amp;#39;re using
+MySQL. Here&amp;#39;s what the model would look like, just a one-line change:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;User&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;ActiveRecord&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Base&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;serialize&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:preferences&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Hash&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Now when we instantiate a new user and call &lt;code&gt;preferences&lt;/code&gt; on that user, we will
+get back a hash. It also works for assignment. Let&amp;#39;s take a look at what this
+looks like in the console:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;bin/rails c
+Loading development environment &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Rails 4.2.3&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+irb&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;main&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;:001:0&amp;gt; &lt;span class=&quot;nv&quot;&gt;user&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; User.new
+&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&amp;gt; &lt;span class=&quot;c&quot;&gt;#&amp;lt;User id: nil, name: nil, email: nil, preferences: {}, created_at: nil, updated_at: nil&amp;gt;&lt;/span&gt;
+irb&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;main&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;:002:0&amp;gt; user.preferences &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; language: &lt;span class=&quot;s2&quot;&gt;&amp;quot;ruby&amp;quot;&lt;/span&gt;, city: &lt;span class=&quot;s2&quot;&gt;&amp;quot;San Antonio&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&amp;gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;:language&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&amp;gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;ruby&amp;quot;&lt;/span&gt;, :city&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&amp;gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;San Antonio&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+irb&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;main&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;:003:0&amp;gt; user.save
+   &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;0.5ms&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;  BEGIN
+  SQL &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;5.8ms&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;  INSERT INTO &lt;span class=&quot;s2&quot;&gt;&amp;quot;users&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;preferences&amp;quot;&lt;/span&gt;, &lt;span class=&quot;s2&quot;&gt;&amp;quot;created_at&amp;quot;&lt;/span&gt;, &lt;span class=&quot;s2&quot;&gt;&amp;quot;updated_at&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; VALUES &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$1&lt;/span&gt;, &lt;span class=&quot;nv&quot;&gt;$2&lt;/span&gt;, &lt;span class=&quot;nv&quot;&gt;$3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; RETURNING &lt;span class=&quot;s2&quot;&gt;&amp;quot;id&amp;quot;&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;[[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;preferences&amp;quot;&lt;/span&gt;, &lt;span class=&quot;s2&quot;&gt;&amp;quot;---\n:language: ruby\n:city: San Antonio\n&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;, &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;created_at&amp;quot;&lt;/span&gt;, &lt;span class=&quot;s2&quot;&gt;&amp;quot;2015-08-17 23:10:40.429329&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;, &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;updated_at&amp;quot;&lt;/span&gt;, &lt;span class=&quot;s2&quot;&gt;&amp;quot;2015-08-17 23:10:40.429329&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]]&lt;/span&gt;
+   &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;62.6ms&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;  &lt;span class=&quot;nv&quot;&gt;COMMIT&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&amp;gt; &lt;span class=&quot;nb&quot;&gt;true&lt;/span&gt;
+irb&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;main&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;:003:0&amp;gt; &lt;span class=&quot;nb&quot;&gt;exit&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;As demonstrated above, to set a user&amp;#39;s preferences, we use a &lt;code&gt;Hash&lt;/code&gt;.
+ActiveRecord also serializes the text into a &lt;code&gt;Hash&lt;/code&gt; when we pull the record out
+of the database.&lt;/p&gt;
+
+&lt;p&gt;That&amp;#39;s the basics around &lt;code&gt;ActiveRecord#serialize&lt;/code&gt;, and there are pretty big wins
+with it. The biggest wins come, though, when we write our own serializers using
+value objects.&lt;/p&gt;
+
+&lt;h2&gt;Using a custom EmailAddress class with ActiveRecord#serialize&lt;/h2&gt;
+
+&lt;p&gt;In the last post we created a basic &lt;code&gt;EmailAddress&lt;/code&gt; class that included some
+basic validation and comparison. Here&amp;#39;s the same class again after some
+refactoring:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;nb&quot;&gt;require&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;forwardable&amp;quot;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;EmailAddress&lt;/span&gt;
+  &lt;span class=&quot;kp&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Comparable&lt;/span&gt;
+  &lt;span class=&quot;kp&quot;&gt;extend&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Forwardable&lt;/span&gt;
+
+  &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;initialize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=~&lt;/span&gt; &lt;span class=&quot;sr&quot;&gt;/\A\z|@/&lt;/span&gt;
+      &lt;span class=&quot;vi&quot;&gt;@raw_email_address&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;downcase&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;strip&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;raise&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;ArgumentError&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;email address must have an &amp;#39;@&amp;#39;&amp;quot;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+
+  &lt;span class=&quot;n&quot;&gt;delegate&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:to_s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:&amp;lt;=&amp;gt;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:raw_email_address&lt;/span&gt;
+
+  &lt;span class=&quot;kp&quot;&gt;protected&lt;/span&gt;
+
+  &lt;span class=&quot;kp&quot;&gt;attr_reader&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:raw_email_address&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;I&amp;#39;m leaving out the tests for the sake of simplicity but you can check them out
+in &lt;a href=&quot;https://github.com/GrokInteractive/activerecord-serialize-example&quot;&gt;the GitHub
+repo&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;An &lt;code&gt;EmailAddress&lt;/code&gt; gets initialized with a String, performs some basic validation
+(the string can either be blank or must contain an &amp;quot;@&amp;quot;), and can be compared
+against other EmailAddresses and Strings. &lt;code&gt;ActiveRecord&lt;/code&gt; requires 2 class
+methods to serialize an attribute with our custom data type: &lt;code&gt;self.load&lt;/code&gt; and
+&lt;code&gt;self.dump&lt;/code&gt;. &lt;code&gt;.load&lt;/code&gt; takes the value as it will be stored in the database and
+returns an object of the type. &lt;code&gt;.dump&lt;/code&gt; takes an object of the type and returns
+the value to be stored in the database. Let&amp;#39;s add those methods to our
+&lt;code&gt;EmailAddress&lt;/code&gt; class:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;nb&quot;&gt;require&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;forwardable&amp;quot;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;EmailAddress&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;# ...&lt;/span&gt;
+
+  &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;load&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;raw_string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;kp&quot;&gt;new&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;raw_string&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+
+  &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;dump&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;email_address&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;email_address&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;empty?&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;email_address&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to_s&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+
+  &lt;span class=&quot;c1&quot;&gt;# ...&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;I&amp;#39;m using the &lt;code&gt;||&lt;/code&gt; operator in &lt;code&gt;.load&lt;/code&gt; to handle the case when the stored value
+is &lt;code&gt;nil&lt;/code&gt; or when calling &lt;code&gt;User.new&lt;/code&gt; (which will also be &lt;code&gt;nil&lt;/code&gt;). &lt;code&gt;.dump&lt;/code&gt; is also
+handling &lt;code&gt;nil&lt;/code&gt; checks for us: only store non-empty values or &lt;code&gt;nil&lt;/code&gt;. As far as
+email addresses are concerned, this is the only place we need to account for nil
+in our system — we&amp;#39;ll always have a valid &lt;code&gt;EmailAddress&lt;/code&gt; type.&lt;/p&gt;
+
+&lt;p&gt;Using our custom class is the same as using the built-in, all we need to do is
+require it:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;nb&quot;&gt;require&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;email_address&amp;quot;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;User&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;ActiveRecord&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Base&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;serialize&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:preferences&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Hash&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;serialize&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:email&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;EmailAddress&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Now let&amp;#39;s see how this works in the console:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;bin/rails c
+Loading development environment &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Rails 4.2.3&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+irb&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;main&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;:001:0&amp;gt; User.first
+  User Load &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;1.3ms&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;  SELECT  &lt;span class=&quot;s2&quot;&gt;&amp;quot;users&amp;quot;&lt;/span&gt;.* FROM &lt;span class=&quot;s2&quot;&gt;&amp;quot;users&amp;quot;&lt;/span&gt;  ORDER BY &lt;span class=&quot;s2&quot;&gt;&amp;quot;users&amp;quot;&lt;/span&gt;.&lt;span class=&quot;s2&quot;&gt;&amp;quot;id&amp;quot;&lt;/span&gt; ASC LIMIT &lt;span class=&quot;nv&quot;&gt;1&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&amp;gt; &lt;span class=&quot;c&quot;&gt;#&amp;lt;User id: 1, name: nil, email: #&amp;lt;EmailAddress:0x007f8edfe4de80 @raw_email_address=&amp;quot;&amp;quot;&amp;gt;, preferences: {:language=&amp;gt;&amp;quot;ruby&amp;quot;, :city=&amp;gt;&amp;quot;San Antonio&amp;quot;}, created_at: &amp;quot;2015-08-17 23:10:40&amp;quot;, updated_at: &amp;quot;2015-08-19 19:14:52&amp;quot;&amp;gt;&lt;/span&gt;
+irb&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;main&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;:002:0&amp;gt; &lt;span class=&quot;nv&quot;&gt;user&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; User.new
+&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&amp;gt; &lt;span class=&quot;c&quot;&gt;#&amp;lt;User id: nil, name: nil, email: #&amp;lt;EmailAddress:0x007fefa4e551f0 @raw_email_address=&amp;quot;&amp;quot;&amp;gt;, preferences: {}, created_at: nil, updated_at: nil&amp;gt;&lt;/span&gt;
+irb&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;main&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;:003:0&amp;gt; user.email &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;hello@example.com&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&amp;gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;hello@example.com&amp;quot;&lt;/span&gt;
+irb&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;main&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;:004:0&amp;gt; &lt;span class=&quot;nv&quot;&gt;user&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&amp;gt; &lt;span class=&quot;c&quot;&gt;#&amp;lt;User id: nil, name: nil, email: #&amp;lt;EmailAddress:0x007fefa4e5d058 @raw_email_address=&amp;quot;hello@example.com&amp;quot;&amp;gt;, preferences: {}, created_at: nil, updated_at: nil&amp;gt;&lt;/span&gt;
+irb&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;main&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;:005:0&amp;gt; user.save
+   &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;0.2ms&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;  BEGIN
+  SQL &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;0.6ms&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;  INSERT INTO &lt;span class=&quot;s2&quot;&gt;&amp;quot;users&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;email&amp;quot;&lt;/span&gt;, &lt;span class=&quot;s2&quot;&gt;&amp;quot;created_at&amp;quot;&lt;/span&gt;, &lt;span class=&quot;s2&quot;&gt;&amp;quot;updated_at&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; VALUES &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$1&lt;/span&gt;, &lt;span class=&quot;nv&quot;&gt;$2&lt;/span&gt;, &lt;span class=&quot;nv&quot;&gt;$3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; RETURNING &lt;span class=&quot;s2&quot;&gt;&amp;quot;id&amp;quot;&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;[[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;email&amp;quot;&lt;/span&gt;, &lt;span class=&quot;s2&quot;&gt;&amp;quot;hello@example.com&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;, &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;created_at&amp;quot;&lt;/span&gt;, &lt;span class=&quot;s2&quot;&gt;&amp;quot;2015-08-21 19:40:37.639952&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;, &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;updated_at&amp;quot;&lt;/span&gt;, &lt;span class=&quot;s2&quot;&gt;&amp;quot;2015-08-21 19:40:37.639952&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]]&lt;/span&gt;
+   &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;2.5ms&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;  &lt;span class=&quot;nv&quot;&gt;COMMIT&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&amp;gt; &lt;span class=&quot;nb&quot;&gt;true&lt;/span&gt;
+irb&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;main&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;:006:0&amp;gt; user.reload
+  User Load &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;0.5ms&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;  SELECT  &lt;span class=&quot;s2&quot;&gt;&amp;quot;users&amp;quot;&lt;/span&gt;.* FROM &lt;span class=&quot;s2&quot;&gt;&amp;quot;users&amp;quot;&lt;/span&gt; WHERE &lt;span class=&quot;s2&quot;&gt;&amp;quot;users&amp;quot;&lt;/span&gt;.&lt;span class=&quot;s2&quot;&gt;&amp;quot;id&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$1&lt;/span&gt; LIMIT &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;[[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;id&amp;quot;&lt;/span&gt;, 4&lt;span class=&quot;o&quot;&gt;]]&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&amp;gt; &lt;span class=&quot;c&quot;&gt;#&amp;lt;User id: 2, name: nil, email: #&amp;lt;EmailAddress:0x007fefa49ba668 @raw_email_address=&amp;quot;hello@example.com&amp;quot;&amp;gt;, preferences: {}, created_at: &amp;quot;2015-08-21 19:40:37&amp;quot;, updated_at: &amp;quot;2015-08-21 19:40:37&amp;quot;&amp;gt;&lt;/span&gt;
+irb&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;main&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;:007:0&amp;gt; user.email &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;hello@example.com&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&amp;gt; &lt;span class=&quot;nb&quot;&gt;true&lt;/span&gt;
+irb&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;main&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;:008:0&amp;gt; User.find_by&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;email: &lt;span class=&quot;s2&quot;&gt;&amp;quot;hello@example.com&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+  User Load &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;1.8ms&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;  SELECT  &lt;span class=&quot;s2&quot;&gt;&amp;quot;users&amp;quot;&lt;/span&gt;.* FROM &lt;span class=&quot;s2&quot;&gt;&amp;quot;users&amp;quot;&lt;/span&gt; WHERE &lt;span class=&quot;s2&quot;&gt;&amp;quot;users&amp;quot;&lt;/span&gt;.&lt;span class=&quot;s2&quot;&gt;&amp;quot;email&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$1&lt;/span&gt; LIMIT &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;[[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;email&amp;quot;&lt;/span&gt;, &lt;span class=&quot;s2&quot;&gt;&amp;quot;hello@example.com&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]]&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&amp;gt; &lt;span class=&quot;c&quot;&gt;#&amp;lt;User id: 2, name: nil, email: #&amp;lt;EmailAddress:0x007fefa4ecc840 @raw_email_address=&amp;quot;hello@example.com&amp;quot;&amp;gt;, preferences: {}, created_at: &amp;quot;2015-08-21 19:40:37&amp;quot;, updated_at: &amp;quot;2015-08-21 19:40:37&amp;quot;&amp;gt;&lt;/span&gt;
+irb&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;main&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;:009:0&amp;gt; User.find_by&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;email: EmailAddress.new&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;hello@example.com&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;))&lt;/span&gt;
+  User Load &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;0.5ms&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;  SELECT  &lt;span class=&quot;s2&quot;&gt;&amp;quot;users&amp;quot;&lt;/span&gt;.* FROM &lt;span class=&quot;s2&quot;&gt;&amp;quot;users&amp;quot;&lt;/span&gt; WHERE &lt;span class=&quot;s2&quot;&gt;&amp;quot;users&amp;quot;&lt;/span&gt;.&lt;span class=&quot;s2&quot;&gt;&amp;quot;email&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$1&lt;/span&gt; LIMIT &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;[[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;email&amp;quot;&lt;/span&gt;, &lt;span class=&quot;s2&quot;&gt;&amp;quot;hello@example.com&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]]&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&amp;gt; &lt;span class=&quot;c&quot;&gt;#&amp;lt;User id: 2, name: nil, email: #&amp;lt;EmailAddress:0x007fefa4ed6458 @raw_email_address=&amp;quot;hello@example.com&amp;quot;&amp;gt;, preferences: {}, created_at: &amp;quot;2015-08-21 19:40:37&amp;quot;, updated_at: &amp;quot;2015-08-21 19:40:37&amp;quot;&amp;gt;&lt;/span&gt;
+irb&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;main&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;:010:0&amp;gt; &lt;span class=&quot;nb&quot;&gt;exit&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;As you can see from the above console session, we can use all the same
+&lt;code&gt;ActiveRecord&lt;/code&gt; methods we&amp;#39;re accustomed to using in everyday Rails: &lt;code&gt;attr=&lt;/code&gt;,
+&lt;code&gt;find_by&lt;/code&gt;, etc. We don&amp;#39;t lose anything there. But there are real productivity
+gains such as never having to deal with &lt;code&gt;nil&lt;/code&gt; when it comes to a user&amp;#39;s email.&lt;/p&gt;
+
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;We&amp;#39;ve come a long way. We can serialize and deserialize a User&amp;#39;s email
+address with a custom class that can compare email addresses without &lt;code&gt;downcase&lt;/code&gt;
+being littered all over the codebase. We know we&amp;#39;ll always have a valid email
+address no matter where we are in the application.&lt;/p&gt;
+
+&lt;p&gt;Where should we go from here? What else would you add to the &lt;code&gt;EmailAddress&lt;/code&gt;
+class?&lt;/p&gt;
+</content>
+  </entry>
   
   <entry>
     <id>http://www.grok-interactive.com/blog/value-objects-in-ruby-part-1</id>

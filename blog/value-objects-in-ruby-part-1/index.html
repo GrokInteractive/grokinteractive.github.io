@@ -1,21 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-<title>Grok Interactive, LLC | Value objects in Ruby: Creating custom data types</title>
-<meta name="description" content="">
-<meta name="author" content="Grok Interactive, LLC">
+  <title>Value objects in Ruby: Creating custom data types</title>
 
-<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+<meta charset="utf-8">
 <meta http-equiv="Content-Language" content="en" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+<meta name="author" content="Grok Interactive, LLC">
+<meta name="description" content="Ruby provides a rich set of value objects for things like IP addresses, Dates, Strings, Hashes, Arrays, etc. When working with data in our applications we can usually start with one of the types that Ruby gives us. This helps us get started very quickly but it can get out of hand as requirements change. Just about every application needs data in a particular format, like an email address or a list of investments.">
 <meta name="MS.LOCALE" content="EN-US" />
+<meta name="revisit-after" content="10 days" />
 <meta name="robots" content="index,follow" />
 <meta name="URL" content="http://www.grok-interactive.com" />
-<meta name="revisit-after" content="10 days" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="fb:admins" content="440639386014676"/>
 <meta property="fb:admins" content="621293620"/>
 <meta property="fb:admins" content="710704899"/>
-<meta property="fb:admins" content="440639386014676"/>
+
+<meta property="og:title" content="Value objects in Ruby: Creating custom data types">
+
+<meta property="og:type" content="article">
+
+<meta property="og:url" content="http://www.grok-interactive.com/blog/value-objects-in-ruby-part-1/">
+
+
+<meta property="og:image" content="http://www.grok-interactive.com/images/2015/08/value_objects.jpg">
+
+
+
+<meta property="og:description" content="Ruby provides a rich set of value objects for things like IP addresses, Dates, Strings, Hashes, Arrays, etc. When working with data in our applications we ca...">
+
+
+<meta property="og:site_name" content="">
+
+<meta property="og:locale" content="en_US">
+
+
+<meta property="article:published_time" content="2015-09-01T00:00:00-04:00">
+
+
+<meta property="fb:admins" content="">
+<meta property="fb:app_id" content="">
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@GrokInteractive" />
+<meta name="twitter:title" content="Value objects in Ruby: Creating custom data types" />
+<meta name="twitter:description" content="Ruby provides a rich set of value objects for things like IP addresses, Dates, Strings, Hashes, Arrays, etc. When working with data in our applications we can usually start with one of the types that Ruby gives us. This helps us get started very quickly but it can get out of hand as requirements change. Just about every application needs data in a particular format, like an email address or a list of investments." />
+<meta name="twitter:url" content="http://www.grok-interactive.com/blog/value-objects-in-ruby-part-1/" />
+
+
+<meta name="twitter:image" content="http://www.grok-interactive.com/images/2015/08/value_objects.jpg" />
+
+
+
 
 <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800,300|Open+Sans+Condensed:300' type='text/css' />
 <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.min.css' type='text/css' media='all' />
@@ -42,6 +80,7 @@
 <meta name="msapplication-square150x150logo" content="/assets/img/favicons/mstile-150x150.png" />
 <meta name="msapplication-wide310x150logo" content="/assets/img/favicons/mstile-310x150.png" />
 <meta name="msapplication-square310x310logo" content="/assets/img/favicons/mstile-310x310.png" />
+
 
 </head>
 
@@ -457,12 +496,13 @@ person&#39;s name?</p>
   </div>
 
   <footer>
-    <div class="container">
-      <div class="pull-left">
-        <p>&copy; 2013 Grok Interactive, LLC
-      </div>
+  <div class="container">
+    <div class="pull-left">
+      <p>&copy; 2013&ndash;2015 Grok Interactive, LLC</p>
     </div>
-  </footer>
+  </div>
+</footer>
+
 
   <script type='text/javascript' src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js'></script>

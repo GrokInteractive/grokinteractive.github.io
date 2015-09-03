@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Value objects in Ruby: Serializing your custom objects with ActiveRecord</title>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Language" content="en" />
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+<meta name="author" content="Grok Interactive, LLC">
+<meta name="description" content="Most web applications we work on require storing data in a database. Like many Rails shops our default database of choice at Grok is Postgres. We can store the vast majority of data using its text types, numeric types, dates and times, and booleans. Postgres also provides support for collections with arrays and hstore as well as more specific types like UUIDs and IP addresses, allowing us to store that data in a more structured way instead of as text.">
+<meta name="MS.LOCALE" content="EN-US" />
+<meta name="revisit-after" content="10 days" />
+<meta name="robots" content="index,follow" />
+<meta name="URL" content="http://www.grok-interactive.com" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="fb:admins" content="440639386014676"/>
+<meta property="fb:admins" content="621293620"/>
+<meta property="fb:admins" content="710704899"/>
+
+<meta property="og:title" content="Value objects in Ruby: Serializing your custom objects with ActiveRecord">
+
+<meta property="og:type" content="article">
+
+<meta property="og:url" content="http://www.grok-interactive.com/blog/value-objects-in-ruby-part-2/">
+
+
+<meta property="og:image" content="http://www.grok-interactive.com/images/2015/08/activerecord_serialize.jpg">
+
+
+
+<meta property="og:description" content="Most web applications we work on require storing data in a database. Like many Rails shops our default database of choice at Grok is Postgres. We can store t...">
+
+
+<meta property="og:site_name" content="">
+
+<meta property="og:locale" content="en_US">
+
+
+<meta property="article:published_time" content="2015-09-03T00:00:00-04:00">
+
+
+<meta property="fb:admins" content="">
+<meta property="fb:app_id" content="">
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@GrokInteractive" />
+<meta name="twitter:title" content="Value objects in Ruby: Serializing your custom objects with ActiveRecord" />
+<meta name="twitter:description" content="Most web applications we work on require storing data in a database. Like many Rails shops our default database of choice at Grok is Postgres. We can store the vast majority of data using its text types, numeric types, dates and times, and booleans. Postgres also provides support for collections with arrays and hstore as well as more specific types like UUIDs and IP addresses, allowing us to store that data in a more structured way instead of as text." />
+<meta name="twitter:url" content="http://www.grok-interactive.com/blog/value-objects-in-ruby-part-2/" />
+
+
+<meta name="twitter:image" content="http://www.grok-interactive.com/images/2015/08/activerecord_serialize.jpg" />
+
+
+
+
+<link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800,300|Open+Sans+Condensed:300' type='text/css' />
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.min.css' type='text/css' media='all' />
+
+<link href='/assets/global-d1dafda850c34cfda5d918a66db37705.css' rel='stylesheet' type='text/css' />
+
+<link rel="apple-touch-icon-precomposed" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png" />
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png" />
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png" />
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png" />
+<link rel="apple-touch-icon-precomposed" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png" />
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon-precomposed" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png" />
+<link rel="icon" type="image/png" href="/images/favicons/favicon-196x196.png" sizes="196x196" />
+<link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32" />
+<link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16" />
+<link rel="icon" type="image/png" href="/images/favicons/favicon-128.png" sizes="128x128" />
+<meta name="application-name" content="Grok Interactive, LLC"/>
+<meta name="msapplication-TileColor" content="#000000" />
+<meta name="msapplication-TileImage" content="/assets/img/favicons/mstile-144x144.png" />
+<meta name="msapplication-square70x70logo" content="/assets/img/favicons/mstile-70x70.png" />
+<meta name="msapplication-square150x150logo" content="/assets/img/favicons/mstile-150x150.png" />
+<meta name="msapplication-wide310x150logo" content="/assets/img/favicons/mstile-310x150.png" />
+<meta name="msapplication-square310x310logo" content="/assets/img/favicons/mstile-310x310.png" />
+
+
+</head>
+
+<body style="display: none;">
+
+  <div id="wrap">
+    <div id="main">
+      <header>
+        <div class="navbar navbar-inverse navbar-static-top">
+          <div class="navbar-inner">
+            <div class="container">
+              <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="brand grok-logo" href="/">Grok Interactive, LLC Home Page</a>
+              <div class="nav-collapse collapse pull-right">
+                <ul class="nav">
+                  <li class='blog active'><a href="/blog/">Blog</a></li>
+                  <li class='podcast'><a href="/podcast/">Podcast</a></li>
+                  <li class='about'><a href="/#about" class='slide'>About</a></li>
+                  <li class='service'><a href="/#service" class='slide'>Service</a></li>
+                  <li class='work'><a href="/#work" class='slide'>Work</a></li>
+                  <li class='contact'><a href="/#contact" class='slide'>Contact</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div class="content">
+  <div class="container">
+    <div class="inner">
+      <div class="canvas">
+
+        <div class="columns">
+          <div class="col c70">
+
+            
+            
+
+            <div class="canvas">
+
+              <div class="post">
+
+                <h1><a href="/blog/value-objects-in-ruby-part-2/" rel="bookmark" title="Link to Value objects in Ruby: Serializing your custom objects with ActiveRecord">Value objects in Ruby: Serializing your custom objects with ActiveRecord</a></h1>
+                <h5>by <a href="/blog/author/christopher-moeller" class="author">Christopher Moeller</a>
+                  &nbsp;&nbsp;&nbsp;<strong>Sep 03, 2015</strong>&nbsp;&nbsp;&nbsp;
+                  
+                  <i class="icon fa fa-folder" title="Categories"></i>
+                  
+                  <a href="/blog/category/software_development/" class="category">Software development</a>
+                  
+                  
+
+                  
+                  <i class="icon fa fa-tags" title="Tags"></i>
+                  
+                  <a href="/blog/tag/object_oriented_programming/" class="tag">Object oriented programming</a>,
+                  
+                  <a href="/blog/tag/value_objects/" class="tag">Value objects</a>,
+                  
+                  <a href="/blog/tag/types/" class="tag">Types</a>
+                  
+                  
+
+                  
+                </h5>
+
+                <div class=''>
+
+                  
+                  <img src="/images/2015/08/activerecord_serialize.jpg" width="150" height="150" class="pull-right" />
+                  
+
+                  <p>In the last post I discussed the value in moving beyond Ruby&#39;s built-in data types like Strings, Arrays, and Hashes in favor of using custom data types (or value objects). There are many benefits in designing a system with custom types, one of the greatest being that your intent is the code itself instead of in documentation or a wiki. <a href="/blog/value-objects-in-ruby-part-1/">Check out part 1 if you haven&#39;t had a chance yet</a>. This post will show you how you can use your custom data types with ActiveRecord.</p>
+
+<h2>Introduction</h2>
+
+<p>Most web applications we work on require storing data in a database. Like many Rails shops our default database of choice at Grok is <a href="http://www.postgresql.org">Postgres</a>. We can store the vast majority of data using its text types, numeric types, dates and times, and booleans. Postgres also provides support for collections with arrays and hstore as well as more specific types like UUIDs and IP addresses, allowing us to store that data in a more structured way instead of as text. This is <a href="http://www.postgresql.org/docs/9%204/static/datatype-net-types.html">how Postgres describes using the Network Address Types</a>:</p>
+
+<blockquote>
+<p>It is better to use these types instead of plain text types to store network
+addresses, because these types offer input error checking and specialized
+operators and functions.</p>
+</blockquote>
+
+<p>So, we get database-level validation simply by using a data type designed for
+the data we&#39;re going to store in it anyway, making it impossible to store the
+strings like &quot;coffee is delicious&quot; in a column designed for just IP addresses.
+Brilliant!</p>
+
+<p>But what if the database doesn&#39;t have a specific type for the data we need to
+store? We have <code>ActiveRecord::Validations</code>, of course! Now, how do we validate
+data if someone opens a database console and inserts records, or someone needs
+to work quickly and calls <code>model.save(validate: false)</code>?  More recently people
+have been using constraints to <a href="http://shuber.io/porting-activerecord-validations-to-postgres/">push validations down to the database level</a>, which is
+very intriguing but seems like it may be duplicating work. </p>
+
+<p>You&#39;d still want application-level validations to avoid a round-trip to the database just for
+validations. And keeping things like that in sync can be a nightmare. (Please
+let me know if you have a solution to that problem!) Though they aren&#39;t the
+preferred way to interact with the database, adding records using the database
+console or calling <code>model.save(validate: false)</code> aren&#39;t unheard of or too far
+out of the ordinary. To ensure we&#39;re working with known data we need something
+that fits in the middle of <code>ActiveRecord::Validations</code> and database-level
+validations. Enter <code>ActiveRecord::serialize</code>.</p>
+
+<h2>ActiveRecord#serialize with built in Ruby classes</h2>
+
+<p>To fill this need ActiveRecord offers the <code>serialize</code> class macro. For example,
+say you have a <code>User</code> class and the <code>users</code> table has a <code>text</code> column, for
+<code>preferences</code>. The intent with the <code>preferences</code> column is to store a collection
+of key-value pairs for a each user&#39;s preferences. Instead of manually parsing
+the stored text using <code>String</code> methods, ActiveRecord will coerce it into a
+<code>Hash</code> for you. Granted, in Postgres we would normally use hstore for this but
+there are other reasons to use <code>serialize</code> in this way, such as if you&#39;re using
+MySQL. Here&#39;s what the model would look like, just a one-line change:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+  <span class="n">serialize</span> <span class="ss">:preferences</span><span class="p">,</span> <span class="no">Hash</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>Now when we instantiate a new user and call <code>preferences</code> on that user, we will
+get back a hash. It also works for assignment. Let&#39;s take a look at what this
+looks like in the console:</p>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nv">$ </span>bin/rails c
+Loading development environment <span class="o">(</span>Rails 4.2.3<span class="o">)</span>
+irb<span class="o">(</span>main<span class="o">)</span>:001:0&gt; <span class="nv">user</span> <span class="o">=</span> User.new
+<span class="o">=</span>&gt; <span class="c">#&lt;User id: nil, name: nil, email: nil, preferences: {}, created_at: nil, updated_at: nil&gt;</span>
+irb<span class="o">(</span>main<span class="o">)</span>:002:0&gt; user.preferences <span class="o">=</span> <span class="o">{</span> language: <span class="s2">&quot;ruby&quot;</span>, city: <span class="s2">&quot;San Antonio&quot;</span> <span class="o">}</span>
+<span class="o">=</span>&gt; <span class="o">{</span>:language<span class="o">=</span>&gt;<span class="s2">&quot;ruby&quot;</span>, :city<span class="o">=</span>&gt;<span class="s2">&quot;San Antonio&quot;</span><span class="o">}</span>
+irb<span class="o">(</span>main<span class="o">)</span>:003:0&gt; user.save
+   <span class="o">(</span>0.5ms<span class="o">)</span>  BEGIN
+  SQL <span class="o">(</span>5.8ms<span class="o">)</span>  INSERT INTO <span class="s2">&quot;users&quot;</span> <span class="o">(</span><span class="s2">&quot;preferences&quot;</span>, <span class="s2">&quot;created_at&quot;</span>, <span class="s2">&quot;updated_at&quot;</span><span class="o">)</span> VALUES <span class="o">(</span><span class="nv">$1</span>, <span class="nv">$2</span>, <span class="nv">$3</span><span class="o">)</span> RETURNING <span class="s2">&quot;id&quot;</span>  <span class="o">[[</span><span class="s2">&quot;preferences&quot;</span>, <span class="s2">&quot;---\n:language: ruby\n:city: San Antonio\n&quot;</span><span class="o">]</span>, <span class="o">[</span><span class="s2">&quot;created_at&quot;</span>, <span class="s2">&quot;2015-08-17 23:10:40.429329&quot;</span><span class="o">]</span>, <span class="o">[</span><span class="s2">&quot;updated_at&quot;</span>, <span class="s2">&quot;2015-08-17 23:10:40.429329&quot;</span><span class="o">]]</span>
+   <span class="o">(</span>62.6ms<span class="o">)</span>  <span class="nv">COMMIT</span>
+<span class="o">=</span>&gt; <span class="nb">true</span>
+irb<span class="o">(</span>main<span class="o">)</span>:003:0&gt; <span class="nb">exit</span>
+</code></pre></div>
+<p>As demonstrated above, to set a user&#39;s preferences, we use a <code>Hash</code>.
+ActiveRecord also serializes the text into a <code>Hash</code> when we pull the record out
+of the database.</p>
+
+<p>That&#39;s the basics around <code>ActiveRecord#serialize</code>, and there are pretty big wins
+with it. The biggest wins come, though, when we write our own serializers using
+value objects.</p>
+
+<h2>Using a custom EmailAddress class with ActiveRecord#serialize</h2>
+
+<p>In the last post we created a basic <code>EmailAddress</code> class that included some
+basic validation and comparison. Here&#39;s the same class again after some
+refactoring:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="nb">require</span> <span class="s2">&quot;forwardable&quot;</span>
+
+<span class="k">class</span> <span class="nc">EmailAddress</span>
+  <span class="kp">include</span> <span class="no">Comparable</span>
+  <span class="kp">extend</span> <span class="no">Forwardable</span>
+
+  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">string</span> <span class="o">=~</span> <span class="sr">/\A\z|@/</span>
+      <span class="vi">@raw_email_address</span> <span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="n">downcase</span><span class="o">.</span><span class="n">strip</span>
+    <span class="k">else</span>
+      <span class="k">raise</span> <span class="no">ArgumentError</span><span class="p">,</span> <span class="s2">&quot;email address must have an &#39;@&#39;&quot;</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+  <span class="n">delegate</span> <span class="o">[</span><span class="ss">:to_s</span><span class="p">,</span> <span class="ss">:&lt;=&gt;</span><span class="o">]</span> <span class="o">=&gt;</span> <span class="ss">:raw_email_address</span>
+
+  <span class="kp">protected</span>
+
+  <span class="kp">attr_reader</span> <span class="ss">:raw_email_address</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>I&#39;m leaving out the tests for the sake of simplicity but you can check them out
+in <a href="https://github.com/GrokInteractive/activerecord-serialize-example">the GitHub
+repo</a>.</p>
+
+<p>An <code>EmailAddress</code> gets initialized with a String, performs some basic validation
+(the string can either be blank or must contain an &quot;@&quot;), and can be compared
+against other EmailAddresses and Strings. <code>ActiveRecord</code> requires 2 class
+methods to serialize an attribute with our custom data type: <code>self.load</code> and
+<code>self.dump</code>. <code>.load</code> takes the value as it will be stored in the database and
+returns an object of the type. <code>.dump</code> takes an object of the type and returns
+the value to be stored in the database. Let&#39;s add those methods to our
+<code>EmailAddress</code> class:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="nb">require</span> <span class="s2">&quot;forwardable&quot;</span>
+
+<span class="k">class</span> <span class="nc">EmailAddress</span>
+  <span class="c1"># ...</span>
+
+  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">load</span><span class="p">(</span><span class="n">raw_string</span><span class="p">)</span>
+    <span class="kp">new</span><span class="p">(</span><span class="n">raw_string</span> <span class="o">||</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">dump</span><span class="p">(</span><span class="n">email_address</span><span class="p">)</span>
+    <span class="k">if</span> <span class="o">!</span><span class="n">email_address</span><span class="o">.</span><span class="n">empty?</span>
+      <span class="n">email_address</span><span class="o">.</span><span class="n">to_s</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+  <span class="c1"># ...</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>I&#39;m using the <code>||</code> operator in <code>.load</code> to handle the case when the stored value
+is <code>nil</code> or when calling <code>User.new</code> (which will also be <code>nil</code>). <code>.dump</code> is also
+handling <code>nil</code> checks for us: only store non-empty values or <code>nil</code>. As far as
+email addresses are concerned, this is the only place we need to account for nil
+in our system — we&#39;ll always have a valid <code>EmailAddress</code> type.</p>
+
+<p>Using our custom class is the same as using the built-in, all we need to do is
+require it:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="nb">require</span> <span class="s2">&quot;email_address&quot;</span>
+
+<span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+  <span class="n">serialize</span> <span class="ss">:preferences</span><span class="p">,</span> <span class="no">Hash</span>
+  <span class="n">serialize</span> <span class="ss">:email</span><span class="p">,</span> <span class="no">EmailAddress</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>Now let&#39;s see how this works in the console:</p>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nv">$ </span>bin/rails c
+Loading development environment <span class="o">(</span>Rails 4.2.3<span class="o">)</span>
+irb<span class="o">(</span>main<span class="o">)</span>:001:0&gt; User.first
+  User Load <span class="o">(</span>1.3ms<span class="o">)</span>  SELECT  <span class="s2">&quot;users&quot;</span>.* FROM <span class="s2">&quot;users&quot;</span>  ORDER BY <span class="s2">&quot;users&quot;</span>.<span class="s2">&quot;id&quot;</span> ASC LIMIT <span class="nv">1</span>
+<span class="o">=</span>&gt; <span class="c">#&lt;User id: 1, name: nil, email: #&lt;EmailAddress:0x007f8edfe4de80 @raw_email_address=&quot;&quot;&gt;, preferences: {:language=&gt;&quot;ruby&quot;, :city=&gt;&quot;San Antonio&quot;}, created_at: &quot;2015-08-17 23:10:40&quot;, updated_at: &quot;2015-08-19 19:14:52&quot;&gt;</span>
+irb<span class="o">(</span>main<span class="o">)</span>:002:0&gt; <span class="nv">user</span> <span class="o">=</span> User.new
+<span class="o">=</span>&gt; <span class="c">#&lt;User id: nil, name: nil, email: #&lt;EmailAddress:0x007fefa4e551f0 @raw_email_address=&quot;&quot;&gt;, preferences: {}, created_at: nil, updated_at: nil&gt;</span>
+irb<span class="o">(</span>main<span class="o">)</span>:003:0&gt; user.email <span class="o">=</span> <span class="s2">&quot;hello@example.com&quot;</span>
+<span class="o">=</span>&gt; <span class="s2">&quot;hello@example.com&quot;</span>
+irb<span class="o">(</span>main<span class="o">)</span>:004:0&gt; <span class="nv">user</span>
+<span class="o">=</span>&gt; <span class="c">#&lt;User id: nil, name: nil, email: #&lt;EmailAddress:0x007fefa4e5d058 @raw_email_address=&quot;hello@example.com&quot;&gt;, preferences: {}, created_at: nil, updated_at: nil&gt;</span>
+irb<span class="o">(</span>main<span class="o">)</span>:005:0&gt; user.save
+   <span class="o">(</span>0.2ms<span class="o">)</span>  BEGIN
+  SQL <span class="o">(</span>0.6ms<span class="o">)</span>  INSERT INTO <span class="s2">&quot;users&quot;</span> <span class="o">(</span><span class="s2">&quot;email&quot;</span>, <span class="s2">&quot;created_at&quot;</span>, <span class="s2">&quot;updated_at&quot;</span><span class="o">)</span> VALUES <span class="o">(</span><span class="nv">$1</span>, <span class="nv">$2</span>, <span class="nv">$3</span><span class="o">)</span> RETURNING <span class="s2">&quot;id&quot;</span>  <span class="o">[[</span><span class="s2">&quot;email&quot;</span>, <span class="s2">&quot;hello@example.com&quot;</span><span class="o">]</span>, <span class="o">[</span><span class="s2">&quot;created_at&quot;</span>, <span class="s2">&quot;2015-08-21 19:40:37.639952&quot;</span><span class="o">]</span>, <span class="o">[</span><span class="s2">&quot;updated_at&quot;</span>, <span class="s2">&quot;2015-08-21 19:40:37.639952&quot;</span><span class="o">]]</span>
+   <span class="o">(</span>2.5ms<span class="o">)</span>  <span class="nv">COMMIT</span>
+<span class="o">=</span>&gt; <span class="nb">true</span>
+irb<span class="o">(</span>main<span class="o">)</span>:006:0&gt; user.reload
+  User Load <span class="o">(</span>0.5ms<span class="o">)</span>  SELECT  <span class="s2">&quot;users&quot;</span>.* FROM <span class="s2">&quot;users&quot;</span> WHERE <span class="s2">&quot;users&quot;</span>.<span class="s2">&quot;id&quot;</span> <span class="o">=</span> <span class="nv">$1</span> LIMIT <span class="m">1</span>  <span class="o">[[</span><span class="s2">&quot;id&quot;</span>, 4<span class="o">]]</span>
+<span class="o">=</span>&gt; <span class="c">#&lt;User id: 2, name: nil, email: #&lt;EmailAddress:0x007fefa49ba668 @raw_email_address=&quot;hello@example.com&quot;&gt;, preferences: {}, created_at: &quot;2015-08-21 19:40:37&quot;, updated_at: &quot;2015-08-21 19:40:37&quot;&gt;</span>
+irb<span class="o">(</span>main<span class="o">)</span>:007:0&gt; user.email <span class="o">==</span> <span class="s2">&quot;hello@example.com&quot;</span>
+<span class="o">=</span>&gt; <span class="nb">true</span>
+irb<span class="o">(</span>main<span class="o">)</span>:008:0&gt; User.find_by<span class="o">(</span>email: <span class="s2">&quot;hello@example.com&quot;</span><span class="o">)</span>
+  User Load <span class="o">(</span>1.8ms<span class="o">)</span>  SELECT  <span class="s2">&quot;users&quot;</span>.* FROM <span class="s2">&quot;users&quot;</span> WHERE <span class="s2">&quot;users&quot;</span>.<span class="s2">&quot;email&quot;</span> <span class="o">=</span> <span class="nv">$1</span> LIMIT <span class="m">1</span>  <span class="o">[[</span><span class="s2">&quot;email&quot;</span>, <span class="s2">&quot;hello@example.com&quot;</span><span class="o">]]</span>
+<span class="o">=</span>&gt; <span class="c">#&lt;User id: 2, name: nil, email: #&lt;EmailAddress:0x007fefa4ecc840 @raw_email_address=&quot;hello@example.com&quot;&gt;, preferences: {}, created_at: &quot;2015-08-21 19:40:37&quot;, updated_at: &quot;2015-08-21 19:40:37&quot;&gt;</span>
+irb<span class="o">(</span>main<span class="o">)</span>:009:0&gt; User.find_by<span class="o">(</span>email: EmailAddress.new<span class="o">(</span><span class="s2">&quot;hello@example.com&quot;</span><span class="o">))</span>
+  User Load <span class="o">(</span>0.5ms<span class="o">)</span>  SELECT  <span class="s2">&quot;users&quot;</span>.* FROM <span class="s2">&quot;users&quot;</span> WHERE <span class="s2">&quot;users&quot;</span>.<span class="s2">&quot;email&quot;</span> <span class="o">=</span> <span class="nv">$1</span> LIMIT <span class="m">1</span>  <span class="o">[[</span><span class="s2">&quot;email&quot;</span>, <span class="s2">&quot;hello@example.com&quot;</span><span class="o">]]</span>
+<span class="o">=</span>&gt; <span class="c">#&lt;User id: 2, name: nil, email: #&lt;EmailAddress:0x007fefa4ed6458 @raw_email_address=&quot;hello@example.com&quot;&gt;, preferences: {}, created_at: &quot;2015-08-21 19:40:37&quot;, updated_at: &quot;2015-08-21 19:40:37&quot;&gt;</span>
+irb<span class="o">(</span>main<span class="o">)</span>:010:0&gt; <span class="nb">exit</span>
+</code></pre></div>
+<p>As you can see from the above console session, we can use all the same
+<code>ActiveRecord</code> methods we&#39;re accustomed to using in everyday Rails: <code>attr=</code>,
+<code>find_by</code>, etc. We don&#39;t lose anything there. But there are real productivity
+gains such as never having to deal with <code>nil</code> when it comes to a user&#39;s email.</p>
+
+<h2>Conclusion</h2>
+
+<p>We&#39;ve come a long way. We can serialize and deserialize a User&#39;s email
+address with a custom class that can compare email addresses without <code>downcase</code>
+being littered all over the codebase. We know we&#39;ll always have a valid email
+address no matter where we are in the application.</p>
+
+<p>Where should we go from here? What else would you add to the <code>EmailAddress</code>
+class?</p>
+
+
+                </div>
+
+                
+
+                <hr />
+
+                
+                
+                <div class="author-profile">
+  <div class="about">
+    <em>ABOUT THE AUTHOR</em><br/>
+    <strong>Christopher Moeller</strong><br/>
+    <p>
+      Christopher is a self-taught developer and has been working with Ruby and
+      Ruby on Rails since 2010. He enjoys building the simple, elegant solution
+      to current problem he's solving and has recently picked up functional
+      programming, mostly with the
+      <a href="http://elixir-lang.org">Elixir programming language</a>.
+    </p>
+  </div>
+  <img src="/images/portrait-christopher-moeller.jpg" />
+</div>
+
+                
+
+                
+<h3>Comments</h3>
+<hr />
+<!-- https://developers.facebook.com/docs/reference/plugins/comments/ -->
+<div class='comments'>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+      /* * * CONFIGURATION VARIABLES * * */
+      var disqus_shortname = 'grokinteractive';
+
+      /* * * DON'T EDIT BELOW THIS LINE * * */
+      (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+</div>
+
+
+
+              </div>
+            </div>
+
+
+          </div>
+
+          <div class="col c30">
+
+            <div class="well">
+  <h4><i class="icon fa fa-folder" title="Categories"></i> Categories</h4>
+  <ul class="nav nav-list">
+    
+
+    <li><a href="/blog/category/general/">
+      General
+    </a></li>
+    
+
+    <li><a href="/blog/category/software_development/">
+      Software development
+    </a></li>
+    
+
+    <li><a href="/blog/category/training/">
+      Training
+    </a></li>
+    
+
+    <li><a href="/blog/category/testing/">
+      Testing
+    </a></li>
+    
+
+    <li><a href="/blog/category/environments/">
+      Environments
+    </a></li>
+    
+
+    <li><a href="/blog/category/business_development/">
+      Business development
+    </a></li>
+    
+  </ul>
+</div>
+
+
+            
+<div class="well">
+  <h4><i class="icon fa fa-users" title="Authors"></i> Authors</h4>
+  <ul class="nav nav-list">
+    
+    <li><a href="/blog/author/jason-straughan">Jason Straughan</a></li>
+    
+    <li><a href="/blog/author/jason-ellis">Jason Ellis</a></li>
+    
+    <li><a href="/blog/author/josh-freeman">Josh Freeman</a></li>
+    
+    <li><a href="/blog/author/chris-hardee">Chris Hardee</a></li>
+    
+    <li><a href="/blog/author/john-guest">John Guest</a></li>
+    
+    <li><a href="/blog/author/anton-domratchev">Anton Domratchev</a></li>
+    
+    <li><a href="/blog/author/joseph-villafranca">Joseph Villafranca</a></li>
+    
+    <li><a href="/blog/author/christopher-moeller">Christopher Moeller</a></li>
+    
+  </ul>
+</div>
+
+
+
+            <div class="well">
+  <h4><i class="icon fa fa-tags" title="Categories"></i> Tags</h4>
+
+  <ul class="nav nav-list">
+    
+    <li><a href="/blog/tag/grok">Grok</a></li>
+    
+    <li><a href="/blog/tag/industry">Industry</a></li>
+    
+    <li><a href="/blog/tag/codeup">Codeup</a></li>
+    
+    <li><a href="/blog/tag/security">Security</a></li>
+    
+    <li><a href="/blog/tag/php">Php</a></li>
+    
+    <li><a href="/blog/tag/phpunit">Phpunit</a></li>
+    
+    <li><a href="/blog/tag/emacs">Emacs</a></li>
+    
+    <li><a href="/blog/tag/expression_engine">Expression engine</a></li>
+    
+    <li><a href="/blog/tag/javascript">Javascript</a></li>
+    
+    <li><a href="/blog/tag/dom">Dom</a></li>
+    
+    <li><a href="/blog/tag/jquery">Jquery</a></li>
+    
+    <li><a href="/blog/tag/git">Git</a></li>
+    
+    <li><a href="/blog/tag/githooks">Githooks</a></li>
+    
+    <li><a href="/blog/tag/source_control">Source control</a></li>
+    
+    <li><a href="/blog/tag/css">Css</a></li>
+    
+    <li><a href="/blog/tag/rails">Rails</a></li>
+    
+    <li><a href="/blog/tag/ubuntu">Ubuntu</a></li>
+    
+    <li><a href="/blog/tag/linux">Linux</a></li>
+    
+    <li><a href="/blog/tag/developers">Developers</a></li>
+    
+    <li><a href="/blog/tag/node.js">Node.js</a></li>
+    
+    <li><a href="/blog/tag/mongodb">Mongodb</a></li>
+    
+    <li><a href="/blog/tag/javascript">Javascript</a></li>
+    
+    <li><a href="/blog/tag/socket.io">Socket.io</a></li>
+    
+    <li><a href="/blog/tag/express.js">Express.js</a></li>
+    
+    <li><a href="/blog/tag/email">Email</a></li>
+    
+    <li><a href="/blog/tag/outlook">Outlook</a></li>
+    
+    <li><a href="/blog/tag/cross_mail_client">Cross mail client</a></li>
+    
+    <li><a href="/blog/tag/compatibility">Compatibility</a></li>
+    
+    <li><a href="/blog/tag/mvc">Mvc</a></li>
+    
+    <li><a href="/blog/tag/object_oriented_programming">Object oriented programming</a></li>
+    
+    <li><a href="/blog/tag/domain_driven_design">Domain driven design</a></li>
+    
+    <li><a href="/blog/tag/value_objects">Value objects</a></li>
+    
+    <li><a href="/blog/tag/types">Types</a></li>
+    
+  </ul>
+</div>
+
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+    </div>
+  </div>
+
+  <footer>
+  <div class="container">
+    <div class="pull-left">
+      <p>&copy; 2013&ndash;2015 Grok Interactive, LLC</p>
+    </div>
+  </div>
+</footer>
+
+
+  <script type='text/javascript' src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js'></script>
+
+  <script src='/assets/global-5b2d0cc47ae047645ffc10228e2867fb.js' type='text/javascript'></script>
+
+  <script src="//static.getclicky.com/js" type="text/javascript"></script>
+  <script type="text/javascript">try{ clicky.init(100585693); }catch(e){}</script>
+  <noscript><p><img alt="Clicky" width="1" height="1" src="//in.getclicky.com/100585693ns.gif" /></p></noscript>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-43998305-2', 'grok-interactive.com');
+    ga('send', 'pageview');
+  </script>
+</body>
+</html>
