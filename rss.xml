@@ -6,8 +6,8 @@
     <atom:link href="http://www.grok-interactive.com/rss.xml" rel="self" type="application/rss+xml" />
     <description>Grok Interactive's web developers create outstanding applications</description>
     <language>en-us</language>
-    <pubDate>Thu, 03 Sep 2015 17:48:14 -0400</pubDate>
-    <lastBuildDate>Thu, 03 Sep 2015 17:48:14 -0400</lastBuildDate>
+    <pubDate>Thu, 03 Sep 2015 21:19:43 -0400</pubDate>
+    <lastBuildDate>Thu, 03 Sep 2015 21:19:43 -0400</lastBuildDate>
 
     
     <item>
@@ -272,7 +272,8 @@ Wikipedia page&lt;/a&gt; is a good place to
 start), we don&amp;#39;t need to validate against every single one. At the end of the
 day, the only way to verify an email address is to send it an email. That said,
 we do need to encode the email address rules that are important to our
-application somewhere.&lt;/p&gt;
+application somewhere. &lt;em&gt;(Update: See the update at the end of this post for the
+final &lt;code&gt;EmailAddress&lt;/code&gt; class.)&lt;/em&gt;&lt;/p&gt;
 
 &lt;p&gt;Let&amp;#39;s start with a basic &lt;code&gt;EmailAddress&lt;/code&gt; class:&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;EmailAddress&lt;/span&gt;
@@ -337,7 +338,44 @@ data, eliminating one source of bugs.&lt;/p&gt;
 &lt;p&gt;What do you think? Where have you been using a built-in type when you should be
 using a custom value object? Physical addresses pop out to me but what about a
 person&amp;#39;s name?&lt;/p&gt;
-</description>
+
+&lt;h3&gt;Update&lt;/h3&gt;
+
+&lt;p&gt;Reddit user materialdesigner brought up the point that we should not call &lt;code&gt;to_s&lt;/code&gt;
+on the comparing object in the &lt;code&gt;&amp;lt;=&amp;gt;&lt;/code&gt; method because it forces a type coercion
+and you get the issue (like in JavaScript) of &lt;code&gt;1 == &amp;quot;1&amp;quot;&lt;/code&gt;. Instead a user of this
+class would need to create a new &lt;code&gt;EmailAddress&lt;/code&gt; for the comparison. The final
+&lt;code&gt;EmailAddress&lt;/code&gt; class is this:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;EmailAddress&lt;/span&gt;
+  &lt;span class=&quot;kp&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Comparable&lt;/span&gt;
+
+  &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;initialize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=~&lt;/span&gt; &lt;span class=&quot;sr&quot;&gt;/@/&lt;/span&gt;
+      &lt;span class=&quot;vi&quot;&gt;@raw_email_address&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;downcase&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;strip&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;raise&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;ArgumentError&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;email address must have an &amp;#39;@&amp;#39;&amp;quot;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+
+  &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;&amp;lt;=&amp;gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;other&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;raw_email_address&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;other&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+
+  &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;to_s&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;raw_email_address&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+
+  &lt;span class=&quot;kp&quot;&gt;protected&lt;/span&gt;
+
+  &lt;span class=&quot;kp&quot;&gt;attr_reader&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:raw_email_address&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Now using the class:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;irb
+&amp;gt;&amp;gt; require &lt;span class=&quot;s2&quot;&gt;&amp;quot;./email_address&amp;quot;&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#=&amp;gt; true&lt;/span&gt;
+&amp;gt;&amp;gt; EmailAddress.new&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;user@example.com&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;user@example.com&amp;quot;&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#=&amp;gt; false (would have previously been true)&lt;/span&gt;
+&amp;gt;&amp;gt; EmailAddress.new&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;user@example.com&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; EmailAddress.new&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;user@example.com&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#=&amp;gt; true&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
     
     <item>

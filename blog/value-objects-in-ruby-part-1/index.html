@@ -219,7 +219,8 @@ Wikipedia page</a> is a good place to
 start), we don&#39;t need to validate against every single one. At the end of the
 day, the only way to verify an email address is to send it an email. That said,
 we do need to encode the email address rules that are important to our
-application somewhere.</p>
+application somewhere. <em>(Update: See the update at the end of this post for the
+final <code>EmailAddress</code> class.)</em></p>
 
 <p>Let&#39;s start with a basic <code>EmailAddress</code> class:</p>
 <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">EmailAddress</span>
@@ -285,6 +286,43 @@ data, eliminating one source of bugs.</p>
 using a custom value object? Physical addresses pop out to me but what about a
 person&#39;s name?</p>
 
+<h3>Update</h3>
+
+<p>Reddit user materialdesigner brought up the point that we should not call <code>to_s</code>
+on the comparing object in the <code>&lt;=&gt;</code> method because it forces a type coercion
+and you get the issue (like in JavaScript) of <code>1 == &quot;1&quot;</code>. Instead a user of this
+class would need to create a new <code>EmailAddress</code> for the comparison. The final
+<code>EmailAddress</code> class is this:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">EmailAddress</span>
+  <span class="kp">include</span> <span class="no">Comparable</span>
+
+  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">string</span> <span class="o">=~</span> <span class="sr">/@/</span>
+      <span class="vi">@raw_email_address</span> <span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="n">downcase</span><span class="o">.</span><span class="n">strip</span>
+    <span class="k">else</span>
+      <span class="k">raise</span> <span class="no">ArgumentError</span><span class="p">,</span> <span class="s2">&quot;email address must have an &#39;@&#39;&quot;</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">&lt;=&gt;</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+    <span class="n">raw_email_address</span> <span class="o">&lt;=&gt;</span> <span class="n">other</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">to_s</span>
+    <span class="n">raw_email_address</span>
+  <span class="k">end</span>
+
+  <span class="kp">protected</span>
+
+  <span class="kp">attr_reader</span> <span class="ss">:raw_email_address</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>Now using the class:</p>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nv">$ </span>irb
+&gt;&gt; require <span class="s2">&quot;./email_address&quot;</span> <span class="c">#=&gt; true</span>
+&gt;&gt; EmailAddress.new<span class="o">(</span><span class="s2">&quot;user@example.com&quot;</span><span class="o">)</span> <span class="o">==</span> <span class="s2">&quot;user@example.com&quot;</span> <span class="c">#=&gt; false (would have previously been true)</span>
+&gt;&gt; EmailAddress.new<span class="o">(</span><span class="s2">&quot;user@example.com&quot;</span><span class="o">)</span> <span class="o">==</span> EmailAddress.new<span class="o">(</span><span class="s2">&quot;user@example.com&quot;</span><span class="o">)</span> <span class="c">#=&gt; true</span>
+</code></pre></div>
 
                 </div>
 
