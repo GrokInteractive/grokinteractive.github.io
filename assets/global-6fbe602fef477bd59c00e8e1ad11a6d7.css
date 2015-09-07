@@ -891,9 +891,9 @@ body footer p {
     float: none;
   }
 }
-body section.form form fieldset textarea,
-body section.form form fieldset input,
-body section.form form fieldset button {
+section.form form fieldset textarea,
+section.form form fieldset input,
+section.form form fieldset button {
   width: 97%;
   margin: 1.5%;
   box-sizing: border-box;
@@ -901,11 +901,24 @@ body section.form form fieldset button {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
 }
-body section.form form fieldset input {
+section.form form fieldset input {
   height: 40px;
 }
-body section.form form fieldset textarea {
+section.form form fieldset textarea {
   height: 100%;
+}
+#podcast-cta {
+  text-align: center;
+  background-color: #faa61a;
+  color: #444;
+}
+#podcast-cta a {
+  color: #444;
+  text-decoration: underline;
+  font-weight: bold;
+}
+#podcast-cta a:hover {
+  color: #FFF;
 }
 @media (max-width: 480px) {
   body section.about h1 {
