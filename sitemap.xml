@@ -105,8 +105,18 @@
         <lastmod>2015-09-07T16:16:12-04:00</lastmod>
     </url>
     <url>
+        <loc>
+            http://www.grok-interactive.com/blog/effective-stakeholder-developer-communications-using-cucumber/
+        </loc>
+        <lastmod>2015-09-08T09:39:56-04:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.grok-interactive.com/blog/code-reviews/</loc>
+        <lastmod>2015-09-08T09:35:01-04:00</lastmod>
+    </url>
+    <url>
         <loc>http://www.grok-interactive.com/podcast/feed.xml</loc>
-        <lastmod>2015-09-01T18:47:04-04:00</lastmod>
+        <lastmod>2015-09-08T09:43:41-04:00</lastmod>
     </url>
     <url>
         <loc>http://www.grok-interactive.com/careers/</loc>
@@ -126,10 +136,10 @@
     </url>
     <url>
         <loc>http://www.grok-interactive.com/</loc>
-        <lastmod>2015-09-07T16:16:12-04:00</lastmod>
+        <lastmod>2015-09-08T09:39:56-04:00</lastmod>
     </url>
     <url>
         <loc>http://www.grok-interactive.com/rss.xml</loc>
-        <lastmod>2014-10-14T10:35:01-04:00</lastmod>
+        <lastmod>2015-09-08T09:43:41-04:00</lastmod>
     </url>
 </urlset>

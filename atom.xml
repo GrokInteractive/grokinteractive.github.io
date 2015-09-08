@@ -4,12 +4,93 @@
   <title>Grok Interactive</title>
   <link href="http://www.grok-interactive.com/"/>
   <link type="application/atom+xml" rel="self" href="http://www.grok-interactive.com/atom.xml"/>
-  <updated>2015-09-07T16:17:36-04:00</updated>
+  <updated>2015-09-08T09:44:07-04:00</updated>
   <id>http://www.grok-interactive.com/</id>
   <author>
     <name>Grok Interactive</name>
   </author>
 
+  
+  <entry>
+    <id>http://www.grok-interactive.com/blog/code-reviews</id>
+    <link type="text/html" rel="alternate" href="http://www.grok-interactive.com/blog/code-reviews/"/>
+    <title>01 - Code Reviews</title>
+    <published>2015-09-09T00:00:00-04:00</published>
+    <updated>2015-09-09T00:00:00-04:00</updated>
+    <author>
+      <name></name>
+      <email></email>
+    </author>
+    <content type="html"></content>
+  </entry>
+  
+  <entry>
+    <id>http://www.grok-interactive.com/blog/effective-stakeholder-developer-communications-using-cucumber</id>
+    <link type="text/html" rel="alternate" href="http://www.grok-interactive.com/blog/effective-stakeholder-developer-communications-using-cucumber/"/>
+    <title>Effective Stakeholder / Developer Communications using Cucumber</title>
+    <published>2015-09-08T00:00:00-04:00</published>
+    <updated>2015-09-08T00:00:00-04:00</updated>
+    <author>
+      <name>Jason Ellis</name>
+      <email>jasone@grok-interactive.com</email>
+    </author>
+    <content type="html">&lt;p&gt;There are not too many things more critical to a successful project than effective bi-directional stakeholder / developer communications. In fact, I can think of very few things that will sink a project faster.&lt;/p&gt;
+
+&lt;p&gt;I also can’t think of a single area during the life cycle of a given project that not only lasts the entire length of the project but that is also more rife with struggle, confusion, frustration and just generally fraught with issues.  &lt;/p&gt;
+
+&lt;p&gt;The focus of these communication gaps are often centered around feature requests, enhancements, expectations and functionality that can often get defined and redefined dozens of times over the course of a short period, usually resulting on no one being on the same page at the same time. Or worse, active development trying to hit a moving target.  Developers and stakeholders alike get frustrated to the point of breaking. &lt;/p&gt;
+
+&lt;p&gt;If this sounds like the voice of experience it’s because it is.  I’m sure we’ve all been there on one side or the other,  and it’s very easy to fall into the trap of asking yourselves, “Who’s right?”&lt;/p&gt;
+
+&lt;p&gt;What I have learned is that it honestly doesn’t matter!  We need to stop trying to figure out who is right and who is wrong and start working more towards shoring up the communication shortcomings or in the end no one will be happy.&lt;/p&gt;
+
+&lt;p&gt;Core to the issue however is that developers and stakeholders approach this communication process differently; be the individual a CEO/CTO, manager/PM, coder, technical writer or your grandmother, we all come at a problem from a different angle which likely is what led to the problem in the first place.&lt;/p&gt;
+
+&lt;p&gt;At Grok we recognized fairly early that we needed a communication method that would allow everyone to firmly define the needs and requirements of an application.  And do it in such a way as to unify the team as a whole instead of divide us.  &lt;/p&gt;
+
+&lt;p&gt;This new communication method had to not only be easily digestible by everyone involved, but it also had to be directly actionable by the developers. &lt;/p&gt;
+
+&lt;h3&gt;Enter Cucumber.&lt;/h3&gt;
+
+&lt;p&gt;The Cucumber project was started in April 2008 by Aslak Hellesøy. The core concept of which is to create small text files that describe features, scenarios and user stories in such a way as to be very simple and easily digestible by stakeholders. &lt;/p&gt;
+
+&lt;p&gt;As an example, an application that has a user login needs to be able to handle a user entering the wrong password.  This is something that we all take for granted and just assume it will give a standard flash message at top proclaiming the error, and move on.  &lt;/p&gt;
+
+&lt;p&gt;But unless you actually check with the client, you won’t know if that’s what they want.  They might have a completely different idea of how it should work. &lt;/p&gt;
+
+&lt;p&gt;So lets write a simple sentence of how we think it should work and convert that to the DSL;  &amp;quot;In order to get access to a protected section of the site a user should be able to sign in and if they exist as an approved user but they try to sign in with an invalid password, show an invalid login message.&amp;quot;&lt;/p&gt;
+
+&lt;p&gt;The feature of that should look something like this;&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;Feature: Sign in
+  In order to get access to protected sections of the site
+  As a user
+  I should be able to sign in
+
+  Scenario: User enters wrong password
+    Given I exist as an approved user
+    And I am not logged in
+    When I sign in with a wrong password
+    Then I see an invalid login message
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;I can pass that block of text (and dozens more like it) to a client for each feature and make sure that everyone is on board with the process and how this particular feature should work.&lt;/p&gt;
+
+&lt;p&gt;This simple act of putting plain English to a feature brings everyone on the same page by describing an application behavior in a very simple business-readable domain-specific plain text.  &lt;/p&gt;
+
+&lt;p&gt;This was obviously a very simple example but you can get as complex as any application you can dream up.  It gives each feature a plain text description of how a they should behave and affords the stakeholders the opportunity to modify and adjust the features descriptive language in the same (or similar) plain text until the feature works as they expect and now how we assumed.&lt;/p&gt;
+
+&lt;p&gt;The best part is that once both sides have gone back and forth on this particular feature and it is blessed by all the powers that be, the feature file is directly actionable by the developers!  A simple step definition file can be written in Ruby, Java, .NET, etc...  that interprets the feature plain text into a business driven development test that the developers can code to.&lt;/p&gt;
+
+&lt;h2&gt;Win!&lt;/h2&gt;
+
+&lt;p&gt;In one simple additional step to the software development process, you get a fully defined feature in written form that can serve not only as signed and blessed documentation of said feature, but as an active test that makes sure the feature works and gives the programmers something to write towards.&lt;/p&gt;
+
+&lt;p&gt;The end results of which are that everyone is now approaching the feature from the same angle, talking the same language, and on the same page.  Communication has never been more effective.&lt;/p&gt;
+
+&lt;h4&gt;TL;DR&lt;/h4&gt;
+
+&lt;p&gt;Effective stakeholder / developer communications is vital to a successful relationship.  Using a tool like Cucumber can actually help greatly by getting everyone on the same page.&lt;/p&gt;
+</content>
+  </entry>
   
   <entry>
     <id>http://www.grok-interactive.com/blog/value-objects-in-ruby-part-2</id>

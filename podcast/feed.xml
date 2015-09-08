@@ -19,14 +19,28 @@
         <itunes:explicit>no</itunes:explicit>
         <itunes:image href="http://grokfm-audio-files.s3.amazonaws.com/thegrokcast/images/show-image-v3-1400.jpg" />
         <atom:link href="http://www.grok-interactive.com/thegrokcast.xml" rel="self" type="application/rss+xml" />
-        <pubDate>Mon, 07 Sep 2015 16:17:36 -0400</pubDate>
+        <pubDate>Tue, 08 Sep 2015 09:44:07 -0400</pubDate>
         <title>The Grok Cast</title>
         <itunes:author>The Team at Grok Interactive, LLC</itunes:author>
         <description>Join the team of web developers from Grok Interactive as they discuss the topics, trends, and top stories that impact the world of web professionals. If you work in any capacity with web developers, designers, or marketers, you will be right at home with The Grok Cast.</description>
         <itunes:keywords>web, developer, internet, designer, ruby, rails, elixir, php, javascript, html, css, webdev, code, git</itunes:keywords>
         <itunes:summary>Join the team of web developers from Grok Interactive as they discuss the topics, trends, and top stories that impact the world of web professionals. If you work in any capacity with web developers, designers, or marketers, you will be right at home with The Grok Cast.</itunes:summary>
         <itunes:subtitle>Join the team of web developers from Grok Interactive as they discuss the topics, trends, and top stories that impact the world of web professionals. If you work in any capacity with web developers, designers, or marketers, you will be right at home.</itunes:subtitle>
-        <lastBuildDate>Mon, 07 Sep 2015 16:17:36 -0400</lastBuildDate>
+        <lastBuildDate>Tue, 08 Sep 2015 09:44:07 -0400</lastBuildDate>
+        
+        <item>
+            <title>01 - Code Reviews</title>
+            <itunes:image href="http://grokfm-audio-files.s3.amazonaws.com/thegrokcast/images/show-image-v3-1400.jpg" />
+            <description>Jason, Josh, Christopher and Jeffrey sit down to discuss code reviews and their importance in the software development world as well as things we have learned about how to not only make better reviews but accept others reviews in the way they were meant.</description>
+            <itunes:keywords>code, review, developer, webdev, ruby, php, qa</itunes:keywords>
+            <itunes:subtitle>Jason, Josh, Christopher and Jeffrey sit down to discuss code reviews and their importance in the software development world as well as things we have learned about how to not only make better reviews but accept others reviews in the way they were meant.</itunes:subtitle>
+            <itunes:summary>Jason, Josh, Christopher and Jeffrey sit down to discuss code reviews and their importance in the software development world as well as things we have learned about how to not only make better reviews but accept others reviews in the way they were meant.</itunes:summary>
+            <enclosure url="http://grokfm-audio-files.s3.amazonaws.com/thegrokcast/01-code-reviews.mp3" type="audio/mpeg" length="36575679" />
+            <guid isPermaLink="false">http://www.grok-interactive.com/blog/code-reviews/</guid>
+            <itunes:explicit>no</itunes:explicit>
+            <itunes:duration>38:02</itunes:duration>
+            <pubDate>Wed, 09 Sep 2015 00:00:00 -0400</pubDate>
+        </item>
         
         <item>
             <title>00 - Pilot - Impostor Syndrome</title>
