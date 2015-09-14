@@ -19,14 +19,14 @@
         <itunes:explicit>no</itunes:explicit>
         <itunes:image href="http://grokfm-audio-files.s3.amazonaws.com/thegrokcast/images/show-image-v3-1400.jpg" />
         <atom:link href="http://www.grok-interactive.com/thegrokcast.xml" rel="self" type="application/rss+xml" />
-        <pubDate>Fri, 11 Sep 2015 13:32:23 -0400</pubDate>
+        <pubDate>Mon, 14 Sep 2015 12:17:44 -0400</pubDate>
         <title>The Grok Cast</title>
         <itunes:author>The Team at Grok Interactive, LLC</itunes:author>
         <description>Join the team of web developers from Grok Interactive as they discuss the topics, trends, and top stories that impact the world of web professionals. If you work in any capacity with web developers, designers, or marketers, you will be right at home with The Grok Cast.</description>
         <itunes:keywords>web, developer, internet, designer, ruby, rails, elixir, php, javascript, html, css, webdev, code, git</itunes:keywords>
         <itunes:summary>Join the team of web developers from Grok Interactive as they discuss the topics, trends, and top stories that impact the world of web professionals. If you work in any capacity with web developers, designers, or marketers, you will be right at home with The Grok Cast.</itunes:summary>
         <itunes:subtitle>Join the team of web developers from Grok Interactive as they discuss the topics, trends, and top stories that impact the world of web professionals. If you work in any capacity with web developers, designers, or marketers, you will be right at home.</itunes:subtitle>
-        <lastBuildDate>Fri, 11 Sep 2015 13:32:23 -0400</lastBuildDate>
+        <lastBuildDate>Mon, 14 Sep 2015 12:17:44 -0400</lastBuildDate>
         
         <item>
             <title>01 - Code Reviews</title>
