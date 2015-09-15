@@ -4,12 +4,25 @@
   <title>Grok Interactive</title>
   <link href="http://www.grok-interactive.com/"/>
   <link type="application/atom+xml" rel="self" href="http://www.grok-interactive.com/atom.xml"/>
-  <updated>2015-09-14T12:17:44-04:00</updated>
+  <updated>2015-09-15T10:58:59-04:00</updated>
   <id>http://www.grok-interactive.com/</id>
   <author>
     <name>Grok Interactive</name>
   </author>
 
+  
+  <entry>
+    <id>http://www.grok-interactive.com/blog/apple-special-event-review</id>
+    <link type="text/html" rel="alternate" href="http://www.grok-interactive.com/blog/apple-special-event-review/"/>
+    <title>Apple Special Event Review</title>
+    <published>2015-09-15T00:00:00-04:00</published>
+    <updated>2015-09-15T00:00:00-04:00</updated>
+    <author>
+      <name></name>
+      <email></email>
+    </author>
+    <content type="html"></content>
+  </entry>
   
   <entry>
     <id>http://www.grok-interactive.com/blog/support-your-local-startup-taking-equity-in-projects</id>

@@ -19,14 +19,28 @@
         <itunes:explicit>no</itunes:explicit>
         <itunes:image href="http://grokfm-audio-files.s3.amazonaws.com/thegrokcast/images/show-image-v3-1400.jpg" />
         <atom:link href="http://www.grok-interactive.com/thegrokcast.xml" rel="self" type="application/rss+xml" />
-        <pubDate>Mon, 14 Sep 2015 12:17:44 -0400</pubDate>
+        <pubDate>Tue, 15 Sep 2015 10:58:59 -0400</pubDate>
         <title>The Grok Cast</title>
         <itunes:author>The Team at Grok Interactive, LLC</itunes:author>
         <description>Join the team of web developers from Grok Interactive as they discuss the topics, trends, and top stories that impact the world of web professionals. If you work in any capacity with web developers, designers, or marketers, you will be right at home with The Grok Cast.</description>
         <itunes:keywords>web, developer, internet, designer, ruby, rails, elixir, php, javascript, html, css, webdev, code, git</itunes:keywords>
         <itunes:summary>Join the team of web developers from Grok Interactive as they discuss the topics, trends, and top stories that impact the world of web professionals. If you work in any capacity with web developers, designers, or marketers, you will be right at home with The Grok Cast.</itunes:summary>
         <itunes:subtitle>Join the team of web developers from Grok Interactive as they discuss the topics, trends, and top stories that impact the world of web professionals. If you work in any capacity with web developers, designers, or marketers, you will be right at home.</itunes:subtitle>
-        <lastBuildDate>Mon, 14 Sep 2015 12:17:44 -0400</lastBuildDate>
+        <lastBuildDate>Tue, 15 Sep 2015 10:58:59 -0400</lastBuildDate>
+        
+        <item>
+            <title>Apple Special Event Review</title>
+            <itunes:image href="http://grokfm-audio-files.s3.amazonaws.com/thegrokcast/images/show-image-v3-1400.jpg" />
+            <description>The crew from Grok Interactive discuss the Apple Special Event releases of the new iPad Pro, Apple Pencil, iOS 9, watchOS 2, tvOS, and other announcements.</description>
+            <itunes:keywords>apple, tvos, ios, apple watch, ipad, ipad pro, iphone, swift</itunes:keywords>
+            <itunes:subtitle>The crew from Grok Interactive discuss the Apple Special Event releases of the new iPad Pro, Apple Pencil, iOS 9, watchOS 2, tvOS, and other announcements.</itunes:subtitle>
+            <itunes:summary>The crew from Grok Interactive discuss the Apple Special Event releases of the new iPad Pro, Apple Pencil, iOS 9, watchOS 2, tvOS, and other announcements.</itunes:summary>
+            <enclosure url="http://grokfm-audio-files.s3.amazonaws.com/thegrokcast/02-apple-event.mp3" type="audio/mpeg" length="39232335" />
+            <guid isPermaLink="false">http://www.grok-interactive.com/blog/apple-special-event-review/</guid>
+            <itunes:explicit>no</itunes:explicit>
+            <itunes:duration>40:44</itunes:duration>
+            <pubDate>Tue, 15 Sep 2015 00:00:00 -0400</pubDate>
+        </item>
         
         <item>
             <title>01 - Code Reviews</title>
