@@ -625,6 +625,9 @@ body div.post p a span {
   font-size: 14px;
   display: block;
 }
+body div.post p sub.up {
+  bottom: 0;
+}
 body div.post ul {
   margin-left: 20px;
   margin-bottom: 20px;
@@ -678,7 +681,15 @@ body div div.podcast-sidebar p {
 }
 body div div.podcast-sidebar #itunes-badge {
   padding-left: 10px;
-  width: 140px;
+  width: 120px;
+}
+body div div.podcast-sidebar #stitcher-badge {
+  padding-right: 10px;
+  width: 120px;
+}
+body div div.podcast-sidebar #rss-badge {
+  height: 45px;
+  margin: 0 20px;
 }
 body div.well {
   -webkit-border-radius: 8px;

@@ -17,25 +17,25 @@
             <itunes:category text="Software How-To" />
         </itunes:category>
         <itunes:explicit>no</itunes:explicit>
-        <itunes:image href="http://grokfm-audio-files.s3.amazonaws.com/thegrokcast/images/show-image-v3-1400.jpg" />
+        <itunes:image href="http://dicf1uf588bsp.cloudfront.net/images/show-image-v3-1400.jpg" />
         <atom:link href="http://www.grok-interactive.com/thegrokcast.xml" rel="self" type="application/rss+xml" />
-        <pubDate>Tue, 15 Sep 2015 11:06:11 -0400</pubDate>
+        <pubDate>Sun, 20 Sep 2015 11:56:02 -0400</pubDate>
         <title>The Grok Cast</title>
         <itunes:author>The Team at Grok Interactive, LLC</itunes:author>
         <description>Join the team of web developers from Grok Interactive as they discuss the topics, trends, and top stories that impact the world of web professionals. If you work in any capacity with web developers, designers, or marketers, you will be right at home with The Grok Cast.</description>
         <itunes:keywords>web, developer, internet, designer, ruby, rails, elixir, php, javascript, html, css, webdev, code, git</itunes:keywords>
         <itunes:summary>Join the team of web developers from Grok Interactive as they discuss the topics, trends, and top stories that impact the world of web professionals. If you work in any capacity with web developers, designers, or marketers, you will be right at home with The Grok Cast.</itunes:summary>
         <itunes:subtitle>Join the team of web developers from Grok Interactive as they discuss the topics, trends, and top stories that impact the world of web professionals. If you work in any capacity with web developers, designers, or marketers, you will be right at home.</itunes:subtitle>
-        <lastBuildDate>Tue, 15 Sep 2015 11:06:11 -0400</lastBuildDate>
+        <lastBuildDate>Sun, 20 Sep 2015 11:56:02 -0400</lastBuildDate>
         
         <item>
             <title>02 - Apple Special Event Review</title>
-            <itunes:image href="http://grokfm-audio-files.s3.amazonaws.com/thegrokcast/images/show-image-v3-1400.jpg" />
+            <itunes:image href="http://dicf1uf588bsp.cloudfront.net/images/show-image-v3-1400.jpg" />
             <description>The crew from Grok Interactive discuss the Apple Special Event releases of the new iPad Pro, Apple Pencil, iOS 9, watchOS 2, tvOS, and other announcements.</description>
             <itunes:keywords>apple, tvos, ios, apple watch, ipad, ipad pro, iphone, swift</itunes:keywords>
             <itunes:subtitle>The crew from Grok Interactive discuss the Apple Special Event releases of the new iPad Pro, Apple Pencil, iOS 9, watchOS 2, tvOS, and other announcements.</itunes:subtitle>
             <itunes:summary>The crew from Grok Interactive discuss the Apple Special Event releases of the new iPad Pro, Apple Pencil, iOS 9, watchOS 2, tvOS, and other announcements.</itunes:summary>
-            <enclosure url="http://grokfm-audio-files.s3.amazonaws.com/thegrokcast/02-apple-event.mp3" type="audio/mpeg" length="39232335" />
+            <enclosure url="http://dicf1uf588bsp.cloudfront.net/02-apple-event.mp3" type="audio/mpeg" length="39232335" />
             <guid isPermaLink="false">http://www.grok-interactive.com/blog/apple-special-event-review/</guid>
             <itunes:explicit>no</itunes:explicit>
             <itunes:duration>40:44</itunes:duration>
@@ -44,12 +44,12 @@
         
         <item>
             <title>01 - Code Reviews</title>
-            <itunes:image href="http://grokfm-audio-files.s3.amazonaws.com/thegrokcast/images/show-image-v3-1400.jpg" />
+            <itunes:image href="http://dicf1uf588bsp.cloudfront.net/images/show-image-v3-1400.jpg" />
             <description>Jason, Josh, Christopher and Jeffrey sit down to discuss code reviews and their importance in the software development world as well as things we have learned about how to not only make better reviews but accept others reviews in the way they were meant.</description>
             <itunes:keywords>code, review, developer, webdev, ruby, php, qa</itunes:keywords>
             <itunes:subtitle>Jason, Josh, Christopher and Jeffrey sit down to discuss code reviews and their importance in the software development world as well as things we have learned about how to not only make better reviews but accept others reviews in the way they were meant.</itunes:subtitle>
             <itunes:summary>Jason, Josh, Christopher and Jeffrey sit down to discuss code reviews and their importance in the software development world as well as things we have learned about how to not only make better reviews but accept others reviews in the way they were meant.</itunes:summary>
-            <enclosure url="http://grokfm-audio-files.s3.amazonaws.com/thegrokcast/01-code-reviews.mp3" type="audio/mpeg" length="36575679" />
+            <enclosure url="http://dicf1uf588bsp.cloudfront.net/01-code-reviews.mp3" type="audio/mpeg" length="36575679" />
             <guid isPermaLink="false">http://www.grok-interactive.com/blog/code-reviews/</guid>
             <itunes:explicit>no</itunes:explicit>
             <itunes:duration>38:02</itunes:duration>
@@ -58,12 +58,12 @@
         
         <item>
             <title>00 - Pilot - Impostor Syndrome</title>
-            <itunes:image href="http://grokfm-audio-files.s3.amazonaws.com/thegrokcast/images/show-image-v3-1400.jpg" />
+            <itunes:image href="http://dicf1uf588bsp.cloudfront.net/images/show-image-v3-1400.jpg" />
             <description>The Jasons, Josh, and Joseph all sit down to discuss impostor syndrome and how it has impacted each of them during their careers as web developers.</description>
             <itunes:keywords>impostor, syndrome, developer, webdev, ruby, php, code</itunes:keywords>
             <itunes:subtitle>The Jasons, Josh, and Joseph all sit down to discuss impostor syndrome and how it has impacted each of them during their careers as web developers.</itunes:subtitle>
             <itunes:summary>The Jasons, Josh, and Joseph all sit down to discuss impostor syndrome and how it has impacted each of them during their careers as web developers.</itunes:summary>
-            <enclosure url="http://grokfm-audio-files.s3.amazonaws.com/thegrokcast/00-pilot-impostor-syndrome.mp3" type="audio/mpeg" length="31461304" />
+            <enclosure url="http://dicf1uf588bsp.cloudfront.net/00-pilot-impostor-syndrome.mp3" type="audio/mpeg" length="31461304" />
             <guid isPermaLink="false">http://www.grok-interactive.com/blog/pilot-impostor-syndrome/</guid>
             <itunes:explicit>no</itunes:explicit>
             <itunes:duration>32:46</itunes:duration>
