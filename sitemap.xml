@@ -93,8 +93,8 @@
         <lastmod>2015-09-07T16:16:12-04:00</lastmod>
     </url>
     <url>
-        <loc>http://www.grok-interactive.com/blog/pilot-impostor-syndrome/</loc>
-        <lastmod>2015-09-01T19:13:21-04:00</lastmod>
+        <loc>http://www.grok-interactive.com/podcast/pilot-impostor-syndrome</loc>
+        <lastmod>2015-09-22T11:50:28-04:00</lastmod>
     </url>
     <url>
         <loc>http://www.grok-interactive.com/blog/value-objects-in-ruby-part-1/</loc>
@@ -111,8 +111,8 @@
         <lastmod>2015-09-08T09:39:56-04:00</lastmod>
     </url>
     <url>
-        <loc>http://www.grok-interactive.com/blog/code-reviews/</loc>
-        <lastmod>2015-09-08T09:35:01-04:00</lastmod>
+        <loc>http://www.grok-interactive.com/podcast/code-reviews</loc>
+        <lastmod>2015-09-22T11:50:28-04:00</lastmod>
     </url>
     <url>
         <loc>
@@ -121,8 +121,20 @@
         <lastmod>2015-09-14T12:17:39-04:00</lastmod>
     </url>
     <url>
-        <loc>http://www.grok-interactive.com/blog/apple-special-event-review/</loc>
-        <lastmod>2015-09-15T11:05:59-04:00</lastmod>
+        <loc>http://www.grok-interactive.com/podcast/apple-special-event-review</loc>
+        <lastmod>2015-09-22T11:50:28-04:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.grok-interactive.com/blog/adios-oliver/</loc>
+        <lastmod>2015-09-22T11:30:20-04:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.grok-interactive.com/podcast/cqrs</loc>
+        <lastmod>2015-09-22T12:06:10-04:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.grok-interactive.com/blog/import-large-csv-into-mysql-part-1/</loc>
+        <lastmod>2015-09-22T11:36:51-04:00</lastmod>
     </url>
     <url>
         <loc>http://www.grok-interactive.com/podcast/feed.xml</loc>
@@ -138,7 +150,7 @@
     </url>
     <url>
         <loc>http://www.grok-interactive.com/podcast/</loc>
-        <lastmod>2015-09-20T11:37:22-04:00</lastmod>
+        <lastmod>2015-09-22T11:45:14-04:00</lastmod>
     </url>
     <url>
         <loc>http://www.grok-interactive.com/thankyou/</loc>
@@ -146,7 +158,7 @@
     </url>
     <url>
         <loc>http://www.grok-interactive.com/</loc>
-        <lastmod>2015-09-15T11:05:59-04:00</lastmod>
+        <lastmod>2015-09-22T12:06:10-04:00</lastmod>
     </url>
     <url>
         <loc>http://www.grok-interactive.com/rss.xml</loc>

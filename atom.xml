@@ -4,7 +4,7 @@
   <title>Grok Interactive</title>
   <link href="http://www.grok-interactive.com/"/>
   <link type="application/atom+xml" rel="self" href="http://www.grok-interactive.com/atom.xml"/>
-  <updated>2015-09-20T11:56:02-04:00</updated>
+  <updated>2015-09-22T12:20:47-04:00</updated>
   <id>http://www.grok-interactive.com/</id>
   <author>
     <name>Grok Interactive</name>
@@ -12,8 +12,315 @@
 
   
   <entry>
-    <id>http://www.grok-interactive.com/blog/apple-special-event-review</id>
-    <link type="text/html" rel="alternate" href="http://www.grok-interactive.com/blog/apple-special-event-review/"/>
+    <id>http://www.grok-interactive.com/blog/import-large-csv-into-mysql-part-1</id>
+    <link type="text/html" rel="alternate" href="http://www.grok-interactive.com/blog/import-large-csv-into-mysql-part-1/"/>
+    <title>Importing Large CSV files Part 1: Import using one query</title>
+    <published>2015-09-22T00:00:00-04:00</published>
+    <updated>2015-09-22T00:00:00-04:00</updated>
+    <author>
+      <name>Anton Domratchev</name>
+      <email>anton.domratchev@grok-interactive.com</email>
+    </author>
+    <content type="html">&lt;p&gt;Importing CSV files into your application can become a problem when the file is really big, &amp;gt; 65,000 rows big. Each row of the file needs to be parsed, converted into an object, and then saved to a database. All of this needs to happen within a 30 second timeout window. It may sound like an impossible task, but there are actually a couple of solutions that can solve this problem. While working on a project at Grok, I was tasked with doing exactly that. &lt;/p&gt;
+
+&lt;p&gt;Initially I hoped to save the CSV file to a directory and iterate through it in a single request. I was only able to get through about 1/3 of the file before the request timed out. The second attempt was to upload the file and process it at a later time. I saved the CSV file to a temp directory, used a support class to split the original file, and saved 10,000 row chunks in processing directory. I decided to split the file in order to reduce the margin of error for large files in this case that the import did fail at some point, it would only be a part of the file instead of the entire file. &lt;/p&gt;
+
+&lt;p&gt;I also set up an artisan command which will look for files in processing directory and process the 10,000 row chunk without worrying about HTTP request timeout. I hooked the artisan command into a cronjob and ran it every minute on the server. (Stay tuned for my guide on how to process csv files using a command) This solved the problem but it was not very well tested since it relied primarily on file system. If the import of chunk would fail we didn&amp;#39;t have any information to debug why it failed. After about 6 months it came time to add more features to the CSV importer and was a perfect time to refactor this feature.&lt;/p&gt;
+
+&lt;p&gt;After hours of research I came up on this MySQL function&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-mysql&quot; data-lang=&quot;mysql&quot;&gt;&lt;span class=&quot;k&quot;&gt;LOAD&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DATA&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;LOCAL&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;INFILE&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;path/to/file.csv&amp;#39;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;INTO&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;TABLE&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;table_name&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;You can read more on the &lt;code&gt;LOAD DATA&lt;/code&gt; function &lt;a href=&quot;https://dev.mysql.com/doc/refman/5.1/en/load-data.html&quot;&gt;here&lt;/a&gt;. This was exciting discovery because the performance of importing a CSV file directly into mySQL database was unparalleled. Using this SQL query I was able to import a 65,000 row file in under 10 seconds, it is BLAZING fast. Below I will explain how to use this query in order to quickly import a CSV file into your Laravel app.&lt;/p&gt;
+
+&lt;h2&gt;Controller&lt;/h2&gt;
+
+&lt;p&gt;First lets set up our &lt;code&gt;CsvImportController.php&lt;/code&gt; in  &lt;code&gt;app/Acme/Controllers/&lt;/code&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Note: I am using PSR-4 namespacing check out &lt;a href=&quot;http://www.php-fig.org/psr/psr-4/&quot;&gt;PSR-4 documentation&lt;/a&gt; for details&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;namespace&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Acme\Controllers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;use&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Input&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;use&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Acme\Importing\CsvImporter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;CsvImportController&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;BaseController&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;sd&quot;&gt;/**&lt;/span&gt;
+&lt;span class=&quot;sd&quot;&gt;     * [POST] Form which will submit the file&lt;/span&gt;
+&lt;span class=&quot;sd&quot;&gt;     */&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;store&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// Check if form submitted a file&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Input&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;hasFile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$csv_import&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+
+
+            &lt;span class=&quot;nv&quot;&gt;$csv_import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Input&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;csv_import&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+            &lt;span class=&quot;c1&quot;&gt;// You wish to do file validation at this point&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$csv_import&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;isValid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+
+                &lt;span class=&quot;c1&quot;&gt;// We can also create a CsvStructureValidator class&lt;/span&gt;
+                &lt;span class=&quot;c1&quot;&gt;// So that we can validate the structure of our CSV file&lt;/span&gt;
+
+                &lt;span class=&quot;c1&quot;&gt;// Lets construct our importer&lt;/span&gt;
+                &lt;span class=&quot;nv&quot;&gt;$csv_importer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;CsvFileImporter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+
+                &lt;span class=&quot;c1&quot;&gt;// Import our csv file&lt;/span&gt;
+                &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$csv_importer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;import&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$csv_import&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+                    &lt;span class=&quot;c1&quot;&gt;// Provide success message to the user&lt;/span&gt;
+                    &lt;span class=&quot;nv&quot;&gt;$message&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;Your file has been successfully imported!&amp;#39;&lt;/span&gt;
+                &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+                    &lt;span class=&quot;nv&quot;&gt;$message&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;Your file did not import&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+                &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+            &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+                &lt;span class=&quot;c1&quot;&gt;// Provide a meaningful error message to the user&lt;/span&gt;
+                &lt;span class=&quot;c1&quot;&gt;// Perform any logging if necessary&lt;/span&gt;
+                &lt;span class=&quot;nv&quot;&gt;$message&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;You must provide a CSV file for import.&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+            &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Redirect&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;back&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;with&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;message&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$message&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;?&amp;gt;&lt;/span&gt;&lt;span class=&quot;x&quot;&gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;blockquote&gt;
+&lt;p&gt;WARNING: We are making an assumption that the user is providing us with the correctly formatted file. THIS IS NOT A SAFE ASSUMPTION! You should never trust the user to provide correct content! You must ALWAYS validate users input including files. I will be adding another blog post with CSV validation in the near future, stay tuned!&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;code&gt;store()&lt;/code&gt; - will be used for the POST route that the form will submit. We will perform some basic input validation to make sure that the file is present. We are constructing a CsvFileImporter and using the import method with our file.&lt;/p&gt;
+
+&lt;h2&gt;Importer Class&lt;/h2&gt;
+
+&lt;p&gt;Lets make &lt;code&gt;CsvFileImporter.php&lt;/code&gt; inside &lt;code&gt;app/Acme/Importing&lt;/code&gt;. This class is responsible for saving the file to a file system and importing it using the MySQL query I mentioned above.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;namespace&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Acme\Importing&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;use&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;DB&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;CsvFileImporter&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;sd&quot;&gt;/**&lt;/span&gt;
+&lt;span class=&quot;sd&quot;&gt;     * Import method used for saving file and importing it using a database query&lt;/span&gt;
+&lt;span class=&quot;sd&quot;&gt;     * &lt;/span&gt;
+&lt;span class=&quot;sd&quot;&gt;     * @param Symfony\Component\HttpFoundation\File\UploadedFile $csv_import&lt;/span&gt;
+&lt;span class=&quot;sd&quot;&gt;     * @return int number of lines imported&lt;/span&gt;
+&lt;span class=&quot;sd&quot;&gt;     */&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;fuction&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;import&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$csv_import&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// Save file to temp directory&lt;/span&gt;
+        &lt;span class=&quot;nv&quot;&gt;$moved_file&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;moveFile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$csv_import&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+        &lt;span class=&quot;c1&quot;&gt;// Normalize line endings&lt;/span&gt;
+        &lt;span class=&quot;nv&quot;&gt;$normalized_file&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;normalize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$moved_file&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+        &lt;span class=&quot;c1&quot;&gt;// Import contents of the file into database&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;importFileContents&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$normalized_file&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;sd&quot;&gt;/**&lt;/span&gt;
+&lt;span class=&quot;sd&quot;&gt;     * Move File to a temporary storage directory for processing&lt;/span&gt;
+&lt;span class=&quot;sd&quot;&gt;     * temporary directory must have 0755 permissions in order to be processed&lt;/span&gt;
+&lt;span class=&quot;sd&quot;&gt;     *&lt;/span&gt;
+&lt;span class=&quot;sd&quot;&gt;     * @param Symfony\Component\HttpFoundation\File\UploadedFile $csv_import&lt;/span&gt;
+&lt;span class=&quot;sd&quot;&gt;     * @return Symfony\Component\HttpFoundation\File $moved_file&lt;/span&gt;
+&lt;span class=&quot;sd&quot;&gt;     */&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;moveFile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$csv_import&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// Check if directory exists make sure it has correct permissions, if not make it&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;is_dir&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$destination_directory&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;storage_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;imports/tmp&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;nb&quot;&gt;chmod&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$destination_directory&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mo&quot;&gt;0755&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;nb&quot;&gt;mkdir&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$destination_directory&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mo&quot;&gt;0755&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+        &lt;span class=&quot;c1&quot;&gt;// Get file&amp;#39;s original name&lt;/span&gt;
+        &lt;span class=&quot;nv&quot;&gt;$original_file_name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$csv_import&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getClientOriginalName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+
+        &lt;span class=&quot;c1&quot;&gt;// Return moved file as File object&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$csv_import&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;move&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$destination_directory&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$original_file_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;sd&quot;&gt;/**&lt;/span&gt;
+&lt;span class=&quot;sd&quot;&gt;     * Convert file line endings to uniform &amp;quot;\r\n&amp;quot; to solve for EOL issues&lt;/span&gt;
+&lt;span class=&quot;sd&quot;&gt;     * Files that are created on different platforms use different EOL characters&lt;/span&gt;
+&lt;span class=&quot;sd&quot;&gt;     * This method will convert all line endings to Unix uniform&lt;/span&gt;
+&lt;span class=&quot;sd&quot;&gt;     *&lt;/span&gt;
+&lt;span class=&quot;sd&quot;&gt;     * @param string $file_path&lt;/span&gt;
+&lt;span class=&quot;sd&quot;&gt;     * @return string $file_path&lt;/span&gt;
+&lt;span class=&quot;sd&quot;&gt;     */&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;protected&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;normalize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$file_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;//Load the file into a string&lt;/span&gt;
+        &lt;span class=&quot;nv&quot;&gt;$string&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;file_get_contents&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$file_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$file_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+        &lt;span class=&quot;c1&quot;&gt;//Convert all line-endings using regular expression&lt;/span&gt;
+        &lt;span class=&quot;nv&quot;&gt;$string&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;preg_replace&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;~\r\n?~&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+        &lt;span class=&quot;nb&quot;&gt;file_put_contents&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$file_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$file_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;sd&quot;&gt;/**&lt;/span&gt;
+&lt;span class=&quot;sd&quot;&gt;     * Import CSV file into Database using LOAD DATA LOCAL INFILE function&lt;/span&gt;
+&lt;span class=&quot;sd&quot;&gt;     *&lt;/span&gt;
+&lt;span class=&quot;sd&quot;&gt;     * NOTE: PDO settings must have attribute PDO::MYSQL_ATTR_LOCAL_INFILE =&amp;gt; true&lt;/span&gt;
+&lt;span class=&quot;sd&quot;&gt;     *&lt;/span&gt;
+&lt;span class=&quot;sd&quot;&gt;     * @param $file_path&lt;/span&gt;
+&lt;span class=&quot;sd&quot;&gt;     * @return mixed Will return number of lines imported by the query&lt;/span&gt;
+&lt;span class=&quot;sd&quot;&gt;     */&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;importFileContents&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$file_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nv&quot;&gt;$query&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;sprintf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;LOAD DATA LOCAL INFILE &amp;#39;%s&amp;#39; INTO TABLE file_import_contents &lt;/span&gt;
+&lt;span class=&quot;s2&quot;&gt;            LINES TERMINATED BY &amp;#39;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\\&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;n&amp;#39;&lt;/span&gt;
+&lt;span class=&quot;s2&quot;&gt;            FIELDS TERMINATED BY &amp;#39;,&amp;#39; &lt;/span&gt;
+&lt;span class=&quot;s2&quot;&gt;            IGNORE 1 LINES (`content`)&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;addslashes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$file_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
+
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;DB&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;connection&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getpdo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;exec&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$query&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;?&amp;gt;&lt;/span&gt;&lt;span class=&quot;x&quot;&gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Now lets walk through each method and look at what each of them does.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;import($csv_import)&lt;/code&gt; method is the only public method of this class thats because we only want to worry about using the import method when importing. This method accepts 1 parameter. The parameter should be an instance of the &lt;code&gt;UploadedFile&lt;/code&gt; class from the Laravel support library. This way we have conveniet access to methods like &lt;code&gt;getClientOriginalName()&lt;/code&gt; and &lt;code&gt;move()&lt;/code&gt;. This method will use the &lt;code&gt;moveFile()&lt;/code&gt; &lt;code&gt;normalize()&lt;/code&gt; and &lt;code&gt;importFileContents()&lt;/code&gt; methods. It returns the result of &lt;code&gt;importFileContents()&lt;/code&gt; method which will return the number of line imported by the SQL query.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;moveFile($csv_import)&lt;/code&gt; method is used to move our uploaded file to a temp directory and also verifies that we have appropriate file permissions. The directory and file permissions must be &lt;code&gt;0755&lt;/code&gt; this is important because MySQL needs to be able to read from the directory and file when we execute the query. This method returns a new File object from the Laravel&amp;#39;s support library&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;normalize($file_path)&lt;/code&gt; method is a very useful workaround for file that are created on different platforms. This method will normalize all line endings to be &lt;code&gt;\n&lt;/code&gt; format which is standard for Unix system. Learn more about line endings &lt;a href=&quot;https://en.wikipedia.org/wiki/Newline&quot;&gt;here&lt;/a&gt;. This is also important for our query because we need to tell MySQL where the row of file stops. This method returns a newly written file object.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;NOTE: We are specifying the parameter to be a &lt;code&gt;$file_path&lt;/code&gt;. This is because we only need a file path to use it inside of &lt;code&gt;file_get_contents()&lt;/code&gt; method. Here is where some nice magic happens. &lt;code&gt;File&lt;/code&gt; class extneds &lt;code&gt;SplFileInfo&lt;/code&gt; class provided by PHP. This class has a &lt;code&gt;__toString()&lt;/code&gt; method which will return a full path to the file. Neat!&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;code&gt;importFileContents()&lt;/code&gt;method is where all of the import actually happens. This method builds up a SQL query and executes it using the DB class. The method returns the number of records processed by the query, if nothing was imported this method will return 0. &lt;/p&gt;
+
+&lt;h2&gt;Query breakdown&lt;/h2&gt;
+
+&lt;p&gt;Lets look closely at the query we are executing:
+&lt;code&gt;LOAD DATA LOCAL INFILE&lt;/code&gt; tells mySQL that it needs to stream the contents of the file into a specified table. The &lt;code&gt;LOCAL&lt;/code&gt; flag tells MySQL server that the file resides on the same machine as the Database, this is usually the case unless you have a remote database server in whic case you can not use the &lt;code&gt;LOCAL&lt;/code&gt; flag. Since we are using &lt;code&gt;sprintf()&lt;/code&gt; function we are specifying the file path as a &lt;code&gt;%s&lt;/code&gt; string format.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;INTO TABLE&lt;/code&gt; is fairly straight forward this is the table where you want the data to go to.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;LINES TERMINATED BY &amp;#39;\\n&amp;#39;&lt;/code&gt; will accept any character including &lt;code&gt;\n&lt;/code&gt;,&lt;code&gt;\r&lt;/code&gt;,&lt;code&gt;\r\n&lt;/code&gt; line endings, or even &lt;code&gt;\t&lt;/code&gt; tabs. This tell the query where the row will end and thus will being creating a new record.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;FIELDS TERMINATED BY &amp;#39;,&amp;#39;&lt;/code&gt; this parameter tells MySQL where each field should end. You may also specify the following optional parameter &lt;code&gt;ENCLOSED BY &amp;#39;&amp;#39;&lt;/code&gt; which tell MySQL to only look for values which are enclosed in the specified character. This is helpful if you know that your data will be enclosed in &amp;quot; or &amp;#39; characters.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;IGNORE 1 LINES&lt;/code&gt; will tell MySQL to ignore the number of lines specified in the beginning of the file. This is helpful when your CSV file contains a header.&lt;/p&gt;
+
+&lt;p&gt;Additionally you can specify the column names which you would like to set by including    &lt;code&gt;SET (column_name, column_name2, etc)&lt;/code&gt; &lt;/p&gt;
+
+&lt;h2&gt;Configuration notes:&lt;/h2&gt;
+
+&lt;p&gt;In order to use &lt;code&gt;LOAD DATA LOCAL INFILE&lt;/code&gt; your PDO connection must have the
+&lt;code&gt;PDO::MYSQL_ATTR_LOCAL_INFILE =&amp;gt; true&lt;/code&gt; parameter. It is set to false by default but its fairly simple to enable. &lt;/p&gt;
+
+&lt;p&gt;Open your &lt;code&gt;app/config/database.php&lt;/code&gt; file. It should look something like this:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&amp;lt;?php
+
+return array(
+
+    /* other settings removed for brevity */
+    &amp;#39;connections&amp;#39; =&amp;gt; array(
+
+
+        &amp;#39;mysql&amp;#39; =&amp;gt; array(
+            &amp;#39;driver&amp;#39;    =&amp;gt; &amp;#39;mysql&amp;#39;,
+            &amp;#39;host&amp;#39;      =&amp;gt; &amp;#39;localhost&amp;#39;,
+            &amp;#39;database&amp;#39;  =&amp;gt; &amp;#39;database&amp;#39;,
+            &amp;#39;username&amp;#39;  =&amp;gt; &amp;#39;root&amp;#39;,
+            &amp;#39;password&amp;#39;  =&amp;gt; &amp;#39;&amp;#39;,
+            &amp;#39;charset&amp;#39;   =&amp;gt; &amp;#39;utf8&amp;#39;,
+            &amp;#39;collation&amp;#39; =&amp;gt; &amp;#39;utf8_unicode_ci&amp;#39;,
+            &amp;#39;prefix&amp;#39;    =&amp;gt; &amp;#39;&amp;#39;
+        ),
+        /* other connections removed for brevity */
+    )
+)
+?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Now we need to add our connection options to the end of the &lt;code&gt;mysql&lt;/code&gt; connection array. So your &lt;code&gt;database.php&lt;/code&gt; file should end up looking like this.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+
+    &lt;span class=&quot;cm&quot;&gt;/* other settings removed for brevity */&lt;/span&gt;
+    &lt;span class=&quot;s1&quot;&gt;&amp;#39;connections&amp;#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+
+
+        &lt;span class=&quot;s1&quot;&gt;&amp;#39;mysql&amp;#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+            &lt;span class=&quot;s1&quot;&gt;&amp;#39;driver&amp;#39;&lt;/span&gt;    &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;mysql&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+            &lt;span class=&quot;s1&quot;&gt;&amp;#39;host&amp;#39;&lt;/span&gt;      &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;localhost&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+            &lt;span class=&quot;s1&quot;&gt;&amp;#39;database&amp;#39;&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;database&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+            &lt;span class=&quot;s1&quot;&gt;&amp;#39;username&amp;#39;&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;root&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+            &lt;span class=&quot;s1&quot;&gt;&amp;#39;password&amp;#39;&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+            &lt;span class=&quot;s1&quot;&gt;&amp;#39;charset&amp;#39;&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;utf8&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+            &lt;span class=&quot;s1&quot;&gt;&amp;#39;collation&amp;#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;utf8_unicode_ci&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+            &lt;span class=&quot;s1&quot;&gt;&amp;#39;prefix&amp;#39;&lt;/span&gt;    &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+            &lt;span class=&quot;s1&quot;&gt;&amp;#39;options&amp;#39;&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+                &lt;span class=&quot;nx&quot;&gt;PDO&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;MYSQL_ATTR_LOCAL_INFILE&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+        &lt;span class=&quot;cm&quot;&gt;/* other connections removed for brevity */&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;?&amp;gt;&lt;/span&gt;&lt;span class=&quot;x&quot;&gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Thanks to &lt;a href=&quot;http://fideloper.com/laravel-pdo-connection-options&quot;&gt;fideloper.com&lt;/a&gt; for discovering this nice trick.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;NOTE: From my experience this works best if your MySQL server version is ~ 5.6 earlier version of MySQL seem to experience problems when using the &lt;code&gt;LOCAL&lt;/code&gt; parameter.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Using this method large CSV files can be imported into MySQL really fast and thus are not required to be processed later. In a later post I will describe how we can validate the contents of the file before attempt to import it. I will also make a post about storing the CSV file and processing it at a later time using &lt;code&gt;php artisan&lt;/code&gt; command and &lt;code&gt;crontab&lt;/code&gt; job. If you enjoyed this post, share it, if you have questions, comments or concearns feel free to leave a comment below.&lt;/p&gt;
+</content>
+  </entry>
+  
+  <entry>
+    <id>http://www.grok-interactive.com/podcast/cqrs</id>
+    <link type="text/html" rel="alternate" href="http://www.grok-interactive.com/podcast/cqrs"/>
+    <title>03 - Command Query Responsibility Segregation design pattern</title>
+    <published>2015-09-22T00:00:00-04:00</published>
+    <updated>2015-09-22T00:00:00-04:00</updated>
+    <author>
+      <name></name>
+      <email></email>
+    </author>
+    <content type="html">&lt;p&gt;All developers are familiar with most frameworks Create/Read/Update/Delete (CRUD) methodology, but we have found that sometimes it begins to break down at a certain scale.  &lt;/p&gt;
+
+&lt;p&gt;Listen to a few of the members of Grok team discus how the command query responsibility segregation design pattern (CQRS) is a good thing and how we use it to make software better.&lt;/p&gt;
+</content>
+  </entry>
+  
+  <entry>
+    <id>http://www.grok-interactive.com/blog/adios-oliver</id>
+    <link type="text/html" rel="alternate" href="http://www.grok-interactive.com/blog/adios-oliver/"/>
+    <title>Adios Oliver!</title>
+    <published>2015-09-18T00:00:00-04:00</published>
+    <updated>2015-09-18T00:00:00-04:00</updated>
+    <author>
+      <name>Josh Freeman</name>
+      <email>joshf@grok-interactive.com</email>
+    </author>
+    <content type="html">&lt;p&gt;On September 18, 2015, Oliver Garcia will be leaving us to work with the &lt;a href=&quot;https://pressable.com/&quot;&gt;Pressable&lt;/a&gt; team. Oliver is an outstanding developer and his skills and knowledge will be sorely missed.  While we are saddened to see him go, we are proud for his new assignment and wish him the best.&lt;/p&gt;
+
+&lt;p&gt;Grok On Oliver!&lt;/p&gt;
+</content>
+  </entry>
+  
+  <entry>
+    <id>http://www.grok-interactive.com/podcast/apple-special-event-review</id>
+    <link type="text/html" rel="alternate" href="http://www.grok-interactive.com/podcast/apple-special-event-review"/>
     <title>02 - Apple Special Event Review</title>
     <published>2015-09-15T00:00:00-04:00</published>
     <updated>2015-09-15T00:00:00-04:00</updated>
@@ -21,7 +328,10 @@
       <name></name>
       <email></email>
     </author>
-    <content type="html"></content>
+    <content type="html">&lt;p&gt;Listen to a few members of the Grok team discuss what Apple revealed on
+September 9, 2015. Hear how the announcements might affect both consumers as
+well as web and mobile developers.&lt;/p&gt;
+</content>
   </entry>
   
   <entry>
@@ -51,8 +361,8 @@
   </entry>
   
   <entry>
-    <id>http://www.grok-interactive.com/blog/code-reviews</id>
-    <link type="text/html" rel="alternate" href="http://www.grok-interactive.com/blog/code-reviews/"/>
+    <id>http://www.grok-interactive.com/podcast/code-reviews</id>
+    <link type="text/html" rel="alternate" href="http://www.grok-interactive.com/podcast/code-reviews"/>
     <title>01 - Code Reviews</title>
     <published>2015-09-09T00:00:00-04:00</published>
     <updated>2015-09-09T00:00:00-04:00</updated>
@@ -60,7 +370,23 @@
       <name></name>
       <email></email>
     </author>
-    <content type="html"></content>
+    <content type="html">&lt;p&gt;Why do code reviews? What is the value of having other developers assess the
+quality of changes to software? Settling for shipping &amp;quot;code that works&amp;quot; might
+work sometimes but eventually developers find themselves fighting against the
+prior decisions they (or another developer) made. Code review is one of the
+tools we have to fight against that.&lt;/p&gt;
+
+&lt;p&gt;But code review isn&amp;#39;t just for making sure you have a great product. Though
+unsettling, it makes you a better a developer when your code is reviewed and
+when you have the opportunity to review the code of others. We not only ensure
+the best possible, easiest to modify code, we also get to level up our skills,
+raising the level of everyone on the team.&lt;/p&gt;
+
+&lt;p&gt;Listen to some of the Grok developers talk about how we write applications that
+not only meet client requirements, but are also easy to update if and when the
+requirements change. We talk about our personal experiences and the different
+ways we review each other&amp;#39;s code.&lt;/p&gt;
+</content>
   </entry>
   
   <entry>
@@ -508,8 +834,8 @@ class would need to create a new &lt;code&gt;EmailAddress&lt;/code&gt; for the c
   </entry>
   
   <entry>
-    <id>http://www.grok-interactive.com/blog/pilot-impostor-syndrome</id>
-    <link type="text/html" rel="alternate" href="http://www.grok-interactive.com/blog/pilot-impostor-syndrome/"/>
+    <id>http://www.grok-interactive.com/podcast/pilot-impostor-syndrome</id>
+    <link type="text/html" rel="alternate" href="http://www.grok-interactive.com/podcast/pilot-impostor-syndrome"/>
     <title>00 - Pilot - Impostor Syndrome</title>
     <published>2015-09-01T00:00:00-04:00</published>
     <updated>2015-09-01T00:00:00-04:00</updated>
@@ -517,7 +843,28 @@ class would need to create a new &lt;code&gt;EmailAddress&lt;/code&gt; for the c
       <name></name>
       <email></email>
     </author>
-    <content type="html"></content>
+    <content type="html">&lt;p&gt;Software development is a fast-paced, continually changing field. Whether you&amp;#39;ve
+just starting learning how to program or you&amp;#39;ve been doing it for 30 years, at
+some point in your career you&amp;#39;ll feel like you don&amp;#39;t belong. This is inevitable
+in any field where the job requires you to always be learning and keeping up
+with the latest trends.&lt;/p&gt;
+
+&lt;p&gt;As times passes and your career progresses, impostor syndrome may manifest
+itself differently. What are the benefits and downsides to impostor syndrome?
+How can you use it to drive your career forward instead of holding you back?&lt;/p&gt;
+
+&lt;p&gt;Writing software isn&amp;#39;t just a difficult technical task, at some point it will be
+difficult emotionally as well. At Grok we&amp;#39;ve all experienced this. Listen to how
+some of us handle impostor syndrome, including our most experienced team
+members.&lt;/p&gt;
+
+&lt;p&gt;Related links:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Impostor_syndrome&quot;&gt;https://en.wikipedia.org/wiki/Impostor_syndrome&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Illusory_superiority&quot;&gt;https://en.wikipedia.org/wiki/Illusory_superiority&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</content>
   </entry>
   
   <entry>
