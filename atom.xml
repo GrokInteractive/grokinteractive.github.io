@@ -4,7 +4,7 @@
   <title>Grok Interactive</title>
   <link href="http://www.grok-interactive.com/"/>
   <link type="application/atom+xml" rel="self" href="http://www.grok-interactive.com/atom.xml"/>
-  <updated>2015-09-22T12:20:47-04:00</updated>
+  <updated>2015-09-22T12:25:31-04:00</updated>
   <id>http://www.grok-interactive.com/</id>
   <author>
     <name>Grok Interactive</name>
@@ -289,7 +289,7 @@ return array(
   <entry>
     <id>http://www.grok-interactive.com/podcast/cqrs</id>
     <link type="text/html" rel="alternate" href="http://www.grok-interactive.com/podcast/cqrs"/>
-    <title>03 - Command Query Responsibility Segregation design pattern</title>
+    <title>03 - Command Query Responsibility Segregation Design Pattern</title>
     <published>2015-09-22T00:00:00-04:00</published>
     <updated>2015-09-22T00:00:00-04:00</updated>
     <author>

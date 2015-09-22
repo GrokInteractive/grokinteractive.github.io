@@ -56,6 +56,9 @@ footer {
 body {
   font-family: 'Open Sans', sans-serif, Arial;
 }
+body hr {
+  clear: both;
+}
 body div.columns {
   clear: both;
   overflow: auto;

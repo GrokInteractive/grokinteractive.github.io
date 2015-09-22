@@ -19,17 +19,17 @@
         <itunes:explicit>no</itunes:explicit>
         <itunes:image href="http://dicf1uf588bsp.cloudfront.net/images/show-image-v3-1400.jpg" />
         <atom:link href="http://www.grok-interactive.com/thegrokcast.xml" rel="self" type="application/rss+xml" />
-        <pubDate>Tue, 22 Sep 2015 12:20:47 -0400</pubDate>
+        <pubDate>Tue, 22 Sep 2015 12:25:31 -0400</pubDate>
         <title>The Grok Cast</title>
         <itunes:author>The Team at Grok Interactive, LLC</itunes:author>
         <description>Join the team of web developers from Grok Interactive as they discuss the topics, trends, and top stories that impact the world of web professionals. If you work in any capacity with web developers, designers, or marketers, you will be right at home with The Grok Cast.</description>
         <itunes:keywords>web, developer, internet, designer, ruby, rails, elixir, php, javascript, html, css, webdev, code, git</itunes:keywords>
         <itunes:summary>Join the team of web developers from Grok Interactive as they discuss the topics, trends, and top stories that impact the world of web professionals. If you work in any capacity with web developers, designers, or marketers, you will be right at home with The Grok Cast.</itunes:summary>
         <itunes:subtitle>Join the team of web developers from Grok Interactive as they discuss the topics, trends, and top stories that impact the world of web professionals. If you work in any capacity with web developers, designers, or marketers, you will be right at home.</itunes:subtitle>
-        <lastBuildDate>Tue, 22 Sep 2015 12:20:47 -0400</lastBuildDate>
+        <lastBuildDate>Tue, 22 Sep 2015 12:25:31 -0400</lastBuildDate>
         
         <item>
-            <title>03 - Command Query Responsibility Segregation design pattern</title>
+            <title>03 - Command Query Responsibility Segregation Design Pattern</title>
             <itunes:image href="http://dicf1uf588bsp.cloudfront.net/images/show-image-v3-1400.jpg" />
             <description>The crew from Grok Interactive discuss command query responsibility segregation (CQRS).</description>
             <itunes:keywords>CQRS, Rapid Application Development </itunes:keywords>
