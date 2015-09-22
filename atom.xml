@@ -4,7 +4,7 @@
   <title>Grok Interactive</title>
   <link href="http://www.grok-interactive.com/"/>
   <link type="application/atom+xml" rel="self" href="http://www.grok-interactive.com/atom.xml"/>
-  <updated>2015-09-22T12:25:31-04:00</updated>
+  <updated>2015-09-22T12:27:21-04:00</updated>
   <id>http://www.grok-interactive.com/</id>
   <author>
     <name>Grok Interactive</name>
@@ -12,9 +12,9 @@
 
   
   <entry>
-    <id>http://www.grok-interactive.com/blog/import-large-csv-into-mysql-part-1</id>
-    <link type="text/html" rel="alternate" href="http://www.grok-interactive.com/blog/import-large-csv-into-mysql-part-1/"/>
-    <title>Importing Large CSV files Part 1: Import using one query</title>
+    <id>http://www.grok-interactive.com/blog/import-large-csv-into-mysql-with-php-part-1</id>
+    <link type="text/html" rel="alternate" href="http://www.grok-interactive.com/blog/import-large-csv-into-mysql-with-php-part-1/"/>
+    <title>Importing Large CSV files with PHP Part 1: Import using one query</title>
     <published>2015-09-22T00:00:00-04:00</published>
     <updated>2015-09-22T00:00:00-04:00</updated>
     <author>

@@ -6,16 +6,16 @@
     <atom:link href="http://www.grok-interactive.com/rss.xml" rel="self" type="application/rss+xml" />
     <description>Grok Interactive's web developers create outstanding applications</description>
     <language>en-us</language>
-    <pubDate>Tue, 22 Sep 2015 12:25:31 -0400</pubDate>
-    <lastBuildDate>Tue, 22 Sep 2015 12:25:31 -0400</lastBuildDate>
+    <pubDate>Tue, 22 Sep 2015 12:27:21 -0400</pubDate>
+    <lastBuildDate>Tue, 22 Sep 2015 12:27:21 -0400</lastBuildDate>
 
     
     <item>
-      <title>Importing Large CSV files Part 1: Import using one query</title>
-      <link>http://www.grok-interactive.com/blog/import-large-csv-into-mysql-part-1/</link>
+      <title>Importing Large CSV files with PHP Part 1: Import using one query</title>
+      <link>http://www.grok-interactive.com/blog/import-large-csv-into-mysql-with-php-part-1/</link>
       <pubDate>Tue, 22 Sep 2015 00:00:00 -0400</pubDate>
       <author>anton.domratchev@grok-interactive.com (Anton Domratchev)</author>
-      <guid>http://www.grok-interactive.com/blog/import-large-csv-into-mysql-part-1</guid>
+      <guid>http://www.grok-interactive.com/blog/import-large-csv-into-mysql-with-php-part-1</guid>
       <description>&lt;p&gt;Importing CSV files into your application can become a problem when the file is really big, &amp;gt; 65,000 rows big. Each row of the file needs to be parsed, converted into an object, and then saved to a database. All of this needs to happen within a 30 second timeout window. It may sound like an impossible task, but there are actually a couple of solutions that can solve this problem. While working on a project at Grok, I was tasked with doing exactly that. &lt;/p&gt;
 
 &lt;p&gt;Initially I hoped to save the CSV file to a directory and iterate through it in a single request. I was only able to get through about 1/3 of the file before the request timed out. The second attempt was to upload the file and process it at a later time. I saved the CSV file to a temp directory, used a support class to split the original file, and saved 10,000 row chunks in processing directory. I decided to split the file in order to reduce the margin of error for large files in this case that the import did fail at some point, it would only be a part of the file instead of the entire file. &lt;/p&gt;
