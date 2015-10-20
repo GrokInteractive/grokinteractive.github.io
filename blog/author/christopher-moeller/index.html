@@ -50,7 +50,7 @@
 <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800,300|Open+Sans+Condensed:300' type='text/css' />
 <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.min.css' type='text/css' media='all' />
 
-<link href='/assets/global-001aa5df720ff14bc6f88bfc6c0dcbff.css' rel='stylesheet' type='text/css' />
+<link href='/assets/global-6b2036851216c08cdb9f2f1abbb4e9ac.css' rel='stylesheet' type='text/css' />
 
 <link rel="apple-touch-icon-precomposed" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png" />
 <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png" />
@@ -158,10 +158,10 @@
 
 <div class="post">
   <div class="text">
-    <h1><a href="/blog/value-objects-in-ruby-part-1/">Value objects in Ruby: Creating custom data types</a></h1>
+    <h2><a href="/blog/value-objects-in-ruby-part-1/">Value objects in Ruby: Creating custom data types</a></h2>
     <h5>
       
-      <a href="/blog/author/christopher-moeller"><img class="gravatar" src="http://www.gravatar.com/avatar/eec2d1d58972494b4dd68e7f988bee49?s=60"></img></a>
+      <a href="/blog/author/christopher-moeller"><img class="gravatar" src="http://www.gravatar.com/avatar/eec2d1d58972494b4dd68e7f988bee49"></img></a>
       
       &nbsp; <a href="/blog/author/christopher-moeller" class="author">Christopher Moeller</a>
       &nbsp;&nbsp;&nbsp; <strong>Sep 01, 2015</strong>&nbsp;&nbsp;&nbsp;
@@ -188,11 +188,11 @@
 
     
     <div class="image">
-      <img src="/images/2015/08/value_objects.jpg" />
+      <a href="/blog/value-objects-in-ruby-part-1/"><img src="/images/2015/08/value_objects.jpg" /></a>
     </div>
     
 
-    <p>
+    <p class="excerpt">
       Ruby provides a rich set of value objects for things like IP addresses, Dates, Strings, Hashes, Arrays, etc. When working with data in our applications we can usually start with one of the types that Ruby gives us. This helps us get started very quickly but it can get out of hand as requirements change. Just about every application needs data in a particular format, like an email address or a list of investments.
       <br />
       <a href="/blog/value-objects-in-ruby-part-1/" class="more">CONTINUE READING <i class="icon fa fa-angle-double-right"></i></a>
@@ -211,10 +211,10 @@
 
 <div class="post">
   <div class="text">
-    <h1><a href="/blog/value-objects-in-ruby-part-2/">Value objects in Ruby: Serializing your custom objects with ActiveRecord</a></h1>
+    <h2><a href="/blog/value-objects-in-ruby-part-2/">Value objects in Ruby: Serializing your custom objects with ActiveRecord</a></h2>
     <h5>
       
-      <a href="/blog/author/christopher-moeller"><img class="gravatar" src="http://www.gravatar.com/avatar/eec2d1d58972494b4dd68e7f988bee49?s=60"></img></a>
+      <a href="/blog/author/christopher-moeller"><img class="gravatar" src="http://www.gravatar.com/avatar/eec2d1d58972494b4dd68e7f988bee49"></img></a>
       
       &nbsp; <a href="/blog/author/christopher-moeller" class="author">Christopher Moeller</a>
       &nbsp;&nbsp;&nbsp; <strong>Sep 03, 2015</strong>&nbsp;&nbsp;&nbsp;
@@ -241,14 +241,65 @@
 
     
     <div class="image">
-      <img src="/images/2015/08/activerecord_serialize.jpg" />
+      <a href="/blog/value-objects-in-ruby-part-2/"><img src="/images/2015/08/activerecord_serialize.jpg" /></a>
     </div>
     
 
-    <p>
+    <p class="excerpt">
       Most web applications we work on require storing data in a database. Like many Rails shops our default database of choice at Grok is Postgres. We can store the vast majority of data using its text types, numeric types, dates and times, and booleans. Postgres also provides support for collections with arrays and hstore as well as more specific types like UUIDs and IP addresses, allowing us to store that data in a more structured way instead of as text.
       <br />
       <a href="/blog/value-objects-in-ruby-part-2/" class="more">CONTINUE READING <i class="icon fa fa-angle-double-right"></i></a>
+    </p>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+<div class="post">
+  <div class="text">
+    <h2><a href="/blog/functional-enumerators-in-ruby/">Functional enumerators in Ruby</a></h2>
+    <h5>
+      
+      <a href="/blog/author/christopher-moeller"><img class="gravatar" src="http://www.gravatar.com/avatar/eec2d1d58972494b4dd68e7f988bee49"></img></a>
+      
+      &nbsp; <a href="/blog/author/christopher-moeller" class="author">Christopher Moeller</a>
+      &nbsp;&nbsp;&nbsp; <strong>Oct 12, 2015</strong>&nbsp;&nbsp;&nbsp;
+      
+      <i class="icon fa fa-folder" title="Categories"></i>
+      
+      <a href="/blog/category/software_development/" class="category">Software development</a>
+      
+      
+
+      
+      <i class="icon fa fa-tags" title="Tags"></i>
+      
+      <a href="/blog/tag/ruby/" class="tag">Ruby</a>,
+      
+      <a href="/blog/tag/functional_programming/" class="tag">Functional programming</a>
+      
+      
+
+      
+    </h5>
+
+    
+    <div class="image">
+      <a href="/blog/functional-enumerators-in-ruby/"><img src="/images/2015/09/clock.jpg" /></a>
+    </div>
+    
+
+    <p class="excerpt">
+      Ruby lets developers program using multiple paradigms. We'll explore how Ruby uses functional programming for some of the iterators in Enumerable.
+      <br />
+      <a href="/blog/functional-enumerators-in-ruby/" class="more">CONTINUE READING <i class="icon fa fa-angle-double-right"></i></a>
     </p>
   </div>
 </div>
@@ -317,19 +368,27 @@
   <h4><i class="icon fa fa-users" title="Authors"></i> Authors</h4>
   <ul class="nav nav-list">
     
+    
     <li><a href="/blog/author/jason-straughan">Jason Straughan</a></li>
+    
     
     <li><a href="/blog/author/jason-ellis">Jason Ellis</a></li>
     
+    
     <li><a href="/blog/author/josh-freeman">Josh Freeman</a></li>
+    
     
     <li><a href="/blog/author/chris-hardee">Chris Hardee</a></li>
     
+    
     <li><a href="/blog/author/john-guest">John Guest</a></li>
+    
     
     <li><a href="/blog/author/anton-domratchev">Anton Domratchev</a></li>
     
+    
     <li><a href="/blog/author/joseph-villafranca">Joseph Villafranca</a></li>
+    
     
     <li><a href="/blog/author/christopher-moeller">Christopher Moeller</a></li>
     
@@ -414,6 +473,10 @@
     <li><a href="/blog/tag/mysql">Mysql</a></li>
     
     <li><a href="/blog/tag/laravel">Laravel</a></li>
+    
+    <li><a href="/blog/tag/ruby">Ruby</a></li>
+    
+    <li><a href="/blog/tag/functional_programming">Functional programming</a></li>
     
   </ul>
 </div>

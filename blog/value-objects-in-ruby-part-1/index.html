@@ -58,7 +58,7 @@
 <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800,300|Open+Sans+Condensed:300' type='text/css' />
 <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.min.css' type='text/css' media='all' />
 
-<link href='/assets/global-001aa5df720ff14bc6f88bfc6c0dcbff.css' rel='stylesheet' type='text/css' />
+<link href='/assets/global-6b2036851216c08cdb9f2f1abbb4e9ac.css' rel='stylesheet' type='text/css' />
 
 <link rel="apple-touch-icon-precomposed" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png" />
 <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png" />
@@ -138,10 +138,12 @@
 
             <div class="canvas">
 
-              <div class="post">
+              <div class="post" itemscope itemprop="blogPost" itemtype="http://schema.org/BlogPosting">
 
-                <h1><a href="/blog/value-objects-in-ruby-part-1/" rel="bookmark" title="Link to Value objects in Ruby: Creating custom data types">Value objects in Ruby: Creating custom data types</a></h1>
-                <h5>by <a href="/blog/author/christopher-moeller" class="author">Christopher Moeller</a>
+                <h1><a href="/blog/value-objects-in-ruby-part-1/" rel="bookmark" title="Link to Value objects in Ruby: Creating custom data types" >Value objects in Ruby: Creating custom data types</a></h1>
+                <meta itemprop="name" content="Value objects in Ruby: Creating custom data types">
+                <meta itemprop="author" content="Christopher Moeller">
+                <h5>by <a href="/blog/author/christopher-moeller" class="author" itemprop="author">Christopher Moeller</a>
                   &nbsp;&nbsp;&nbsp;<strong>Sep 01, 2015</strong>&nbsp;&nbsp;&nbsp;
                   
                   <i class="icon fa fa-folder" title="Categories"></i>
@@ -175,7 +177,7 @@ with a database. In the first part, we&#39;ll explore the benefits of using valu
 objects in Ruby. The second part will be a tutorial on how to use a custom data
 type with ActiveRecord in a Ruby on Rails application.</p>
 
-<h2>Introduction</h2>
+<h3>Introduction</h3>
 
 <p>Ruby provides a rich set of value objects for things like IP addresses, Dates,
 Strings, Hashes, Arrays, etc. When working with data in our applications we can
@@ -187,7 +189,7 @@ or a list of investments.</p>
 <p>Let&#39;s take a look at something we all do: using Ruby Strings to store email
 addresses and work with them.</p>
 
-<h2>Using a Ruby String to store an email address</h2>
+<h3>Using a Ruby String to store an email address</h3>
 
 <p>We&#39;ll leave out data persistence for this post and focus on our application
 code. For now, we&#39;ll use <code>irb</code> as a playground. Let&#39;s fire it up and take a poke
@@ -224,7 +226,7 @@ specific format</em>. There are some specific rules that every email address fol
   are required, some are optional, and some are not permitted (like brackets and
   semicolons)</p>
 
-<h2>Using a value object</h2>
+<h3>Using a value object</h3>
 
 <p>While all of the rules for email address formatting are very complex (<a href="https://en.wikipedia.org/wiki/Email_address">the
 Wikipedia page</a> is a good place to
@@ -286,7 +288,7 @@ application:</p>
 <span class="o">&gt;&gt;</span> <span class="no">EmailAddress</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;yo!&quot;</span><span class="p">)</span>
 <span class="ss">ArgumentError</span><span class="p">:</span> <span class="n">email</span> <span class="n">address</span> <span class="n">must</span> <span class="n">have</span> <span class="n">an</span> <span class="s1">&#39;@&#39;</span>
 </code></pre></div>
-<h2>Conclusion</h2>
+<h3>Conclusion</h3>
 
 <p>Nearly every production application I&#39;ve seen passes around built-in data types
 for almost everything that isn&#39;t considered a composite type (like a user).
@@ -298,7 +300,7 @@ data, eliminating one source of bugs.</p>
 using a custom value object? Physical addresses pop out to me but what about a
 person&#39;s name?</p>
 
-<h3>Update</h3>
+<h4>Update</h4>
 
 <p>Reddit user materialdesigner brought up the point that we should not call <code>to_s</code>
 on the comparing object in the <code>&lt;=&gt;</code> method because it forces a type coercion
@@ -365,6 +367,14 @@ class would need to create a new <code>EmailAddress</code> for the comparison. T
 <p>
   Grok Interactive specializes in web and mobile development using Ruby, Swift, Elixir, Javascript, and various other technologies to solve problems for our clients. If we can assist you, please do not hesitate to <a href="/#contact">contact us</a> today.
 </p>
+
+
+                <div class="share-page">
+  Share this on &rarr;
+  <a href="https://twitter.com/intent/tweet?text=Value objects in Ruby: Creating custom data types&url=http://www.grok-interactive.com/blog/value-objects-in-ruby-part-1/&via=&related=" rel="nofollow" target="_blank" title="Share on Twitter">Twitter</a>
+  <a href="https://facebook.com/sharer.php?u=http://www.grok-interactive.com/blog/value-objects-in-ruby-part-1/" rel="nofollow" target="_blank" title="Share on Facebook">Facebook</a>
+  <a href="https://plus.google.com/share?url=http://www.grok-interactive.com/blog/value-objects-in-ruby-part-1/" rel="nofollow" target="_blank" title="Share on Google+">Google+</a>
+</div>
 
 
                 
@@ -440,19 +450,27 @@ class would need to create a new <code>EmailAddress</code> for the comparison. T
   <h4><i class="icon fa fa-users" title="Authors"></i> Authors</h4>
   <ul class="nav nav-list">
     
+    
     <li><a href="/blog/author/jason-straughan">Jason Straughan</a></li>
+    
     
     <li><a href="/blog/author/jason-ellis">Jason Ellis</a></li>
     
+    
     <li><a href="/blog/author/josh-freeman">Josh Freeman</a></li>
+    
     
     <li><a href="/blog/author/chris-hardee">Chris Hardee</a></li>
     
+    
     <li><a href="/blog/author/john-guest">John Guest</a></li>
+    
     
     <li><a href="/blog/author/anton-domratchev">Anton Domratchev</a></li>
     
+    
     <li><a href="/blog/author/joseph-villafranca">Joseph Villafranca</a></li>
+    
     
     <li><a href="/blog/author/christopher-moeller">Christopher Moeller</a></li>
     
@@ -537,6 +555,10 @@ class would need to create a new <code>EmailAddress</code> for the comparison. T
     <li><a href="/blog/tag/mysql">Mysql</a></li>
     
     <li><a href="/blog/tag/laravel">Laravel</a></li>
+    
+    <li><a href="/blog/tag/ruby">Ruby</a></li>
+    
+    <li><a href="/blog/tag/functional_programming">Functional programming</a></li>
     
   </ul>
 </div>

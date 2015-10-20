@@ -19,14 +19,70 @@
         <itunes:explicit>no</itunes:explicit>
         <itunes:image href="http://dicf1uf588bsp.cloudfront.net/images/show-image-v3-1400.jpg" />
         <atom:link href="http://www.grok-interactive.com/thegrokcast.xml" rel="self" type="application/rss+xml" />
-        <pubDate>Tue, 22 Sep 2015 14:49:37 -0400</pubDate>
+        <pubDate>Tue, 20 Oct 2015 18:55:18 -0400</pubDate>
         <title>The Grok Cast</title>
         <itunes:author>The Team at Grok Interactive, LLC</itunes:author>
         <description>Join the team of web developers from Grok Interactive as they discuss the topics, trends, and top stories that impact the world of web professionals. If you work in any capacity with web developers, designers, or marketers, you will be right at home with The Grok Cast.</description>
         <itunes:keywords>web, developer, internet, designer, ruby, rails, elixir, php, javascript, html, css, webdev, code, git</itunes:keywords>
         <itunes:summary>Join the team of web developers from Grok Interactive as they discuss the topics, trends, and top stories that impact the world of web professionals. If you work in any capacity with web developers, designers, or marketers, you will be right at home with The Grok Cast.</itunes:summary>
         <itunes:subtitle>Join the team of web developers from Grok Interactive as they discuss the topics, trends, and top stories that impact the world of web professionals. If you work in any capacity with web developers, designers, or marketers, you will be right at home.</itunes:subtitle>
-        <lastBuildDate>Tue, 22 Sep 2015 14:49:37 -0400</lastBuildDate>
+        <lastBuildDate>Tue, 20 Oct 2015 18:55:18 -0400</lastBuildDate>
+        
+        <item>
+            <title>07 - Ryan Orsinger Interview</title>
+            <itunes:image href="http://dicf1uf588bsp.cloudfront.net/images/show-image-v3-1400.jpg" />
+            <description>Listen along as we interview a long time friend, former employee and CodeUp instructor; Ryan Orsinger</description>
+            <itunes:keywords>development, professional, learning, Codeup, Interview</itunes:keywords>
+            <itunes:subtitle>Listen along as we interview a long time friend, former employee and CodeUp instructor; Ryan Orsinger</itunes:subtitle>
+            <itunes:summary>Listen along as we interview a long time friend, former employee and CodeUp instructor; Ryan Orsinger</itunes:summary>
+            <enclosure url="http://dicf1uf588bsp.cloudfront.net/07-ryan-orsinger-interview.mp3" type="audio/mpeg" length="40215962" />
+            <guid isPermaLink="false">http://www.grok-interactive.com/podcast/ryan-orsinger-interview</guid>
+            <itunes:explicit>no</itunes:explicit>
+            <itunes:duration>00:41:52</itunes:duration>
+            <pubDate>Tue, 20 Oct 2015 00:00:00 -0400</pubDate>
+        </item>
+        
+        <item>
+            <title>06 - Professional Development</title>
+            <itunes:image href="http://dicf1uf588bsp.cloudfront.net/images/show-image-v3-1400.jpg" />
+            <description>Continuing education is especially important in this industry.  Listen to some developers discuss their methods and thoughts on professional development</description>
+            <itunes:keywords>development, professional, learning</itunes:keywords>
+            <itunes:subtitle>Continuing education is especially important in this industry.  Listen to some developers discuss their methods and thoughts on professional development</itunes:subtitle>
+            <itunes:summary>Continuing education is especially important in this industry.  Listen to some developers discuss their methods and thoughts on professional development</itunes:summary>
+            <enclosure url="http://dicf1uf588bsp.cloudfront.net/06-professional-development.mp3" type="audio/mpeg" length="54340714" />
+            <guid isPermaLink="false">http://www.grok-interactive.com/podcast/professional-development</guid>
+            <itunes:explicit>no</itunes:explicit>
+            <itunes:duration>00:37:43</itunes:duration>
+            <pubDate>Tue, 13 Oct 2015 00:00:00 -0400</pubDate>
+        </item>
+        
+        <item>
+            <title>05 - Pleasure Reading for Geeks</title>
+            <itunes:image href="http://dicf1uf588bsp.cloudfront.net/images/show-image-v3-1400.jpg" />
+            <description>The crew from Grok Interactive discuss their favorite pleasure reading material.</description>
+            <itunes:keywords>book, entertainment, fiction, science fiction, fantasy</itunes:keywords>
+            <itunes:subtitle>The crew from Grok Interactive discuss their favorite pleasure reading material.</itunes:subtitle>
+            <itunes:summary>The crew from Grok Interactive discuss their favorite pleasure reading material.</itunes:summary>
+            <enclosure url="http://dicf1uf588bsp.cloudfront.net/05-pleasure-reading.mp3" type="audio/mpeg" length="38729860" />
+            <guid isPermaLink="false">http://www.grok-interactive.com/podcast/pleasure-reading-for-geeks</guid>
+            <itunes:explicit>no</itunes:explicit>
+            <itunes:duration>40:21</itunes:duration>
+            <pubDate>Tue, 06 Oct 2015 00:00:00 -0400</pubDate>
+        </item>
+        
+        <item>
+            <title>04 - Tooling</title>
+            <itunes:image href="http://dicf1uf588bsp.cloudfront.net/images/show-image-v3-1400.jpg" />
+            <description>The crew from Grok Interactive discuss common tools of the trade; IDEs, Editors, Terminals and Tooling.</description>
+            <itunes:keywords>tools, tooling, terminal, ide, editor</itunes:keywords>
+            <itunes:subtitle>The crew from Grok Interactive discuss common tools of the trade; IDEs, Editors, Terminals and Tooling.</itunes:subtitle>
+            <itunes:summary>The crew from Grok Interactive discuss common tools of the trade; IDEs, Editors, Terminals and Tooling.</itunes:summary>
+            <enclosure url="http://dicf1uf588bsp.cloudfront.net/04-tooling.mp3" type="audio/mpeg" length="36004961" />
+            <guid isPermaLink="false">http://www.grok-interactive.com/podcast/tooling</guid>
+            <itunes:explicit>no</itunes:explicit>
+            <itunes:duration>37:23</itunes:duration>
+            <pubDate>Tue, 29 Sep 2015 00:00:00 -0400</pubDate>
+        </item>
         
         <item>
             <title>03 - Command Query Responsibility Segregation Design Pattern</title>

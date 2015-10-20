@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Importing Large CSV files with PHP Part 2: Validating CSV file structure</title>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Language" content="en" />
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+<meta name="author" content="Grok Interactive, LLC">
+<meta name="description" content="Validating large CSV files could be problematic due to a number of constraints. In this post we will look at a technique I used to perform some checks on the user supplied file before attempting to process it.">
+<meta name="MS.LOCALE" content="EN-US" />
+<meta name="revisit-after" content="10 days" />
+<meta name="robots" content="index,follow" />
+<meta name="URL" content="http://www.grok-interactive.com" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="fb:admins" content="440639386014676"/>
+<meta property="fb:admins" content="621293620"/>
+<meta property="fb:admins" content="710704899"/>
+
+<meta property="og:title" content="Importing Large CSV files with PHP Part 2: Validating CSV file structure">
+
+<meta property="og:type" content="article">
+
+<meta property="og:url" content="http://www.grok-interactive.com/blog/import-large-csv-into-mysql-with-php-part-2-csv-file-validation/">
+
+
+<meta property="og:image" content="http://www.grok-interactive.com/images/2015/08/CSV_into_MySQL.png">
+
+
+
+<meta property="og:description" content="Validating large CSV files could be problematic due to a number of constraints. In this post we will look at a technique I used to perform some checks on the...">
+
+
+<meta property="og:site_name" content="Grok Interactive">
+
+<meta property="og:locale" content="en_US">
+
+
+<meta property="article:published_time" content="2015-09-29T00:00:00-04:00">
+
+
+<meta property="fb:admins" content="">
+<meta property="fb:app_id" content="">
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@GrokInteractive" />
+<meta name="twitter:title" content="Importing Large CSV files with PHP Part 2: Validating CSV file structure" />
+<meta name="twitter:description" content="Validating large CSV files could be problematic due to a number of constraints. In this post we will look at a technique I used to perform some checks on the user supplied file before attempting to process it." />
+<meta name="twitter:url" content="http://www.grok-interactive.com/blog/import-large-csv-into-mysql-with-php-part-2-csv-file-validation/" />
+
+
+<meta name="twitter:image" content="http://www.grok-interactive.com/images/2015/08/CSV_into_MySQL.png" />
+
+
+
+
+<link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800,300|Open+Sans+Condensed:300' type='text/css' />
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.min.css' type='text/css' media='all' />
+
+<link href='/assets/global-6b2036851216c08cdb9f2f1abbb4e9ac.css' rel='stylesheet' type='text/css' />
+
+<link rel="apple-touch-icon-precomposed" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png" />
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png" />
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png" />
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png" />
+<link rel="apple-touch-icon-precomposed" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png" />
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon-precomposed" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png" />
+<link rel="icon" type="image/png" href="/images/favicons/favicon-196x196.png" sizes="196x196" />
+<link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32" />
+<link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16" />
+<link rel="icon" type="image/png" href="/images/favicons/favicon-128.png" sizes="128x128" />
+<meta name="application-name" content="Grok Interactive, LLC"/>
+<meta name="msapplication-TileColor" content="#000000" />
+<meta name="msapplication-TileImage" content="/assets/img/favicons/mstile-144x144.png" />
+<meta name="msapplication-square70x70logo" content="/assets/img/favicons/mstile-70x70.png" />
+<meta name="msapplication-square150x150logo" content="/assets/img/favicons/mstile-150x150.png" />
+<meta name="msapplication-wide310x150logo" content="/assets/img/favicons/mstile-310x150.png" />
+<meta name="msapplication-square310x310logo" content="/assets/img/favicons/mstile-310x310.png" />
+
+
+</head>
+
+<body style="display: none;">
+
+  <div id="wrap">
+    <div id="main">
+      <header>
+        <div class="navbar navbar-inverse navbar-static-top">
+          <div class="navbar-inner">
+            <div class="container">
+              <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="brand grok-logo" href="/">Grok Interactive, LLC Home Page</a>
+              <div class="nav-collapse collapse pull-right">
+                <ul class="nav">
+                  <li class='blog active'><a href="/blog/">Blog</a></li>
+                  <li class='podcast'><a href="/podcast/">Podcast</a></li>
+                  <li class='about'><a href="/#about" class='slide'>About</a></li>
+                  <li class='service'><a href="/#service" class='slide'>Service</a></li>
+                  <li class='work'><a href="/#work" class='slide'>Work</a></li>
+                  <li class='contact'><a href="/#contact" class='slide'>Contact</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+      <section class="podcast-cta" id="podcast-cta" >
+
+        <div class="container">
+          <div class="row">
+            <div class="span12">
+
+              <h4>Check out our new <a href="/podcast/">podcast</a> "The Grok Cast" now <a href="https://itunes.apple.com/us/podcast/the-grok-cast/id1036008796">available on iTunes!</a></h4>
+
+            </div>
+          </div>
+        </div>
+
+      </section>
+      <div class="content">
+  <div class="container">
+    <div class="inner">
+      <div class="canvas">
+
+        <div class="columns">
+          <div class="col c70">
+
+            
+            
+
+            <div class="canvas">
+
+              <div class="post" itemscope itemprop="blogPost" itemtype="http://schema.org/BlogPosting">
+
+                <h1><a href="/blog/import-large-csv-into-mysql-with-php-part-2-csv-file-validation/" rel="bookmark" title="Link to Importing Large CSV files with PHP Part 2: Validating CSV file structure" >Importing Large CSV files with PHP Part 2: Validating CSV file structure</a></h1>
+                <meta itemprop="name" content="Importing Large CSV files with PHP Part 2: Validating CSV file structure">
+                <meta itemprop="author" content="Anton Domratchev">
+                <h5>by <a href="/blog/author/anton-domratchev" class="author" itemprop="author">Anton Domratchev</a>
+                  &nbsp;&nbsp;&nbsp;<strong>Sep 29, 2015</strong>&nbsp;&nbsp;&nbsp;
+                  
+                  <i class="icon fa fa-folder" title="Categories"></i>
+                  
+                  <a href="/blog/category/software_development/" class="category">Software development</a>
+                  
+                  
+
+                  
+                  <i class="icon fa fa-tags" title="Tags"></i>
+                  
+                  <a href="/blog/tag/csv/" class="tag">Csv</a>,
+                  
+                  <a href="/blog/tag/mysql/" class="tag">Mysql</a>,
+                  
+                  <a href="/blog/tag/php/" class="tag">Php</a>,
+                  
+                  <a href="/blog/tag/laravel/" class="tag">Laravel</a>
+                  
+                  
+
+                  
+                </h5>
+
+                <div class=''>
+
+                  
+                  <img src="/images/2015/08/CSV_into_MySQL.png" width="150" height="150" class="pull-right" />
+                  
+
+                  <p>In the first part of this series we learned how to quickly we can <a href="/blog/import-large-csv-into-mysql-with-php-part-1/">Importing Large CSV files with PHP Part 1: Import using one query</a>. Using that query means that we will need to perform user input validation before we can safely use it in a production application.</p>
+
+<p>Validating large CSV files could be problematic due to a number of constraints. In this post we will look at a technique I used to perform some checks on the user supplied file before attempting to process it.</p>
+
+<p>First, lets look at what sort of validation we can perform on a user supplied CSV file. We can:</p>
+
+<ol>
+<li>Check to make sure that the file is in fact a CSV file</li>
+<li>Check that the file is properly formatted such as columns are in the correct order, and that required data columns are present</li>
+<li>Check that required data is present</li>
+<li>Check that the data is formatted to the specified column format, such as email is in fact an email and etc.</li>
+</ol>
+
+<p>There may be more specific validation that can be performed such as in multi file uploads when CSV files need to be ordered in a specific way, but for the purposes of this post we are focusing on the above mentioned validations.</p>
+
+<p>Now that we established what we want to validate we need to look at what validation we can perform when the user first uploads the file. </p>
+
+<p>We can easily verify that the file has an extension of CSV which I will explain later. I would avoid attempting to validate file&#39;s mime types. From my personal experience I&#39;ve had trouble validating mime types using Laravel&#39;s <code>mimes:</code> rule when file has been saved on multiple platforms and various file processors. We can also verify that the file contains the required columns, as well as verify that the columns which are required by our application are present, we will look at that validation shortly. </p>
+
+<p>So far the validation we are doing will work without a problem, however the other two rules will be a problem. Remember we are working with very large CSV files exceeding 15MB in size. Attempting to validate the entire file one line at the time will not work as we learned in the previous post. We can approach this with a bit of assumptions. We can sample a few lines of the file and make an assumption that the rest of the file is in the similar format. This isn&#39;t a perfect solution but it will ween about 90% of the files which don&#39;t have the proper formatting or required fields. A better solution would be to import the file and its contents in its original state into a temporary table and process it line by line at a later time. Stay tuned for my upcoming post in this series which will describe how to do that.</p>
+
+<h2>Validator class</h2>
+
+<p>Most of the validation we will be doing can be done using Laravel&#39;s built in rules. You can however define your own custom validation rules if you find that you may need to use these rules in several places in your application. In the projects I&#39;ve been working on, I tend to extract validation rules out of the model and apply them to the specific domain or a command I am executing. This way my validation rules are more flexible and apply to the action that is being performed rather than the domain as a whole. For this example our CSV importer is going to be used to import new users in the the system. We need to validate that the file&#39;s extension is in fact CSV all of our required columns are present. We will also validate that each record has an email address, first and last name.</p>
+<div class="highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span> 
+
+<span class="k">namespace</span> <span class="nx">Acme\Importing</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">Illuminate\Validation\Factory</span> <span class="k">as</span> <span class="nx">ValidationFactory</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Exception</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">CsvImportValidator</span> 
+<span class="p">{</span>
+
+    <span class="sd">/**</span>
+<span class="sd">     * Validator object</span>
+<span class="sd">     * @var \Illuminate\Validation\Factory</span>
+<span class="sd">     */</span>
+    <span class="k">private</span> <span class="nv">$validator</span><span class="p">;</span>
+
+    <span class="sd">/**</span>
+<span class="sd">     * Validation rules for CsvImport</span>
+<span class="sd">     *</span>
+<span class="sd">     */</span>
+    <span class="k">private</span> <span class="nv">$rules</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s1">&#39;csv_extension&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;in:csv&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;email_column&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;required&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;first_name_column&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;last_name_column&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;required&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;fist_name&#39;</span>         <span class="o">=&gt;</span> <span class="s1">&#39;required&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;last_name&#39;</span>         <span class="o">=&gt;</span> <span class="s1">&#39;required&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;email&#39;</span>             <span class="o">=&gt;</span> <span class="s1">&#39;email|required&#39;</span>
+    <span class="p">];</span>
+
+    <span class="sd">/**</span>
+<span class="sd">     * Constructor for CsvImportValidator</span>
+<span class="sd">     * @param \Illuminate\Validation\Factory $validator</span>
+<span class="sd">     */</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">__construct</span><span class="p">(</span><span class="nx">ValidationFactory</span> <span class="nv">$validator</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">validator</span> <span class="o">=</span> <span class="nv">$validator</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="sd">/**</span>
+<span class="sd">     * Validation method</span>
+<span class="sd">     * @param \Symfony\Component\HttpFoundation\File\UploadedFile</span>
+<span class="sd">     * @return \Illuminate\Validation\Validator $validator</span>
+<span class="sd">     */</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">validate</span><span class="p">(</span><span class="nv">$csv_file_path</span><span class="p">)</span> 
+    <span class="p">{</span>
+        <span class="c1">// Line endings fix</span>
+        <span class="nb">ini_set</span><span class="p">(</span><span class="s1">&#39;auto_detect_line_endings&#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+
+        <span class="nv">$csv_extendion</span> <span class="o">=</span> <span class="nv">$csv_file_path</span><span class="o">-&gt;</span><span class="na">getClientOriginalExtension</span><span class="p">();</span>
+
+        <span class="c1">// Open file into memory</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nv">$opened_file</span> <span class="o">=</span> <span class="nb">fopen</span><span class="p">(</span><span class="nv">$csv_file_path</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="o">===</span> <span class="k">false</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nx">Exception</span><span class="p">(</span><span class="s1">&#39;File cannot be opened for reading&#39;</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="c1">// Get first row of the file as the header</span>
+        <span class="nv">$header</span> <span class="o">=</span> <span class="nb">fgetcsv</span><span class="p">(</span><span class="nv">$opened_file</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;,&#39;</span><span class="p">);</span>
+
+        <span class="c1">// Find email column </span>
+        <span class="nv">$email_column</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getColumnNameByValue</span><span class="p">(</span><span class="nv">$header</span><span class="p">,</span> <span class="s1">&#39;email&#39;</span><span class="p">);</span>
+
+        <span class="c1">// Find first_name column</span>
+        <span class="nv">$first_name_column</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getColumnNameByValue</span><span class="p">(</span><span class="nv">$header</span><span class="p">,</span> <span class="s1">&#39;first_name&#39;</span><span class="p">);</span>
+
+        <span class="c1">// Find last_name column</span>
+        <span class="nv">$last_name_column</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getColumnNameByValue</span><span class="p">(</span><span class="nv">$header</span><span class="p">,</span> <span class="s1">&#39;last_name&#39;</span><span class="p">);</span>
+
+        <span class="c1">// Get second row of the file as the first data row</span>
+        <span class="nv">$data_row</span> <span class="o">=</span> <span class="nb">fgetcsv</span><span class="p">(</span><span class="nv">$opened_file</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;,&#39;</span><span class="p">);</span>
+
+        <span class="c1">// Combine header and first row data</span>
+        <span class="nv">$first_row</span> <span class="o">=</span> <span class="nb">array_combine</span><span class="p">(</span><span class="nv">$header</span><span class="p">,</span> <span class="nv">$data_row</span><span class="p">);</span>
+
+        <span class="c1">// Find email in the email column</span>
+        <span class="nv">$first_row_email</span> <span class="o">=</span> <span class="nb">array_key_exists</span><span class="p">(</span><span class="s1">&#39;email&#39;</span><span class="p">,</span> <span class="nv">$first_row</span><span class="p">)</span><span class="o">?</span> <span class="nv">$first_row</span><span class="p">[</span><span class="s1">&#39;email&#39;</span><span class="p">]</span> <span class="o">:</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+
+        <span class="c1">// Find first name in first_name column</span>
+        <span class="nv">$first_row_first_name</span> <span class="o">=</span> <span class="nb">array_key_exists</span><span class="p">(</span><span class="s1">&#39;first_name&#39;</span><span class="p">,</span> <span class="nv">$first_row</span><span class="p">)</span><span class="o">?</span> <span class="nv">$first_row</span><span class="p">[</span><span class="s1">&#39;first_name&#39;</span><span class="p">]</span> <span class="o">:</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+
+        <span class="c1">// Find last name in last_name column</span>
+        <span class="nv">$first_row_last_name</span> <span class="o">=</span> <span class="nb">array_key_exists</span><span class="p">(</span><span class="s1">&#39;last_name&#39;</span><span class="p">,</span> <span class="nv">$first_row</span><span class="p">)</span><span class="o">?</span> <span class="nv">$first_row</span><span class="p">[</span><span class="s1">&#39;last_name&#39;</span><span class="p">]</span> <span class="o">:</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+
+        <span class="c1">// Close file and free up memory</span>
+        <span class="nb">fclose</span><span class="p">(</span><span class="nv">$opened_file</span><span class="p">);</span>
+
+        <span class="c1">// Build our validation array</span>
+        <span class="nv">$validation_array</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s1">&#39;csv_extension&#39;</span> <span class="o">=&gt;</span> <span class="nv">$csv_extendion</span><span class="p">,</span>
+            <span class="s1">&#39;email_column&#39;</span> <span class="o">=&gt;</span> <span class="nv">$email_column</span><span class="p">,</span>
+            <span class="s1">&#39;first_name_column&#39;</span> <span class="o">=&gt;</span> <span class="nv">$first_name_column</span><span class="p">,</span>
+            <span class="s1">&#39;last_name_column&#39;</span> <span class="o">=&gt;</span> <span class="nv">$last_name_column</span><span class="p">,</span>
+            <span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="nv">$fist_row_email</span><span class="p">,</span>
+            <span class="s1">&#39;first_name&#39;</span> <span class="o">=&gt;</span> <span class="nv">$first_row_first_name</span><span class="p">,</span>
+            <span class="s1">&#39;last_name&#39;</span> <span class="o">=&gt;</span> <span class="nv">$first_row_last_name</span>
+        <span class="p">];</span>
+
+        <span class="c1">// Return validator object</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">validator</span><span class="o">-&gt;</span><span class="na">make</span><span class="p">(</span><span class="nv">$validation_array</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">rules</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="sd">/**</span>
+<span class="sd">     * Attempts to find a value in array or returns empty string</span>
+<span class="sd">     * @param array  $array hay stack we are searching</span>
+<span class="sd">     * @param string $key   </span>
+<span class="sd">     *</span>
+<span class="sd">     */</span>
+    <span class="k">private</span> <span class="k">function</span> <span class="nf">getColumnNameByValue</span><span class="p">(</span><span class="nv">$array</span><span class="p">,</span> <span class="nv">$value</span><span class="p">)</span> 
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nb">in_array</span><span class="p">(</span><span class="nv">$value</span><span class="p">,</span> <span class="nv">$array</span><span class="p">)</span><span class="o">?</span> <span class="nv">$value</span> <span class="o">:</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+    <span class="p">}</span>
+
+<span class="p">}</span>
+
+<span class="cp">?&gt;</span><span class="x"></span>
+</code></pre></div>
+<p>Our validator constructs with validation factory so we can quickly make validation of our data. We will be able to resolve this dependency through the IOC container in Laravel. This class only has one public method <code>validate()</code> it accepts a UploadedFile object which we get from using <code>Input::file()</code>, this lets us easily get the extension of the uploaded file to validate it. Within our validate method we use the <code>ini_set()</code> method to adjust <code>PHP</code> settings to auto detect line endings. This solves issues with files saved on multiple platforms. As you can see I am grabbing the first line of the file to verify that it is the header. Next I am grabbing the second line of the file and combine the header with first line of data. This way I can assert that each value is in the appropriate column. Next I build my validation array and run make with my validator factory. In this scenario I am only using the first line, however, this can be modified to use a larger sample of data. At this point I am only concerned with making the sure that the format of the CSV is correct.</p>
+
+<p>Now we just need a small modification to our controller:</p>
+<div class="highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+
+<span class="k">namespace</span> <span class="nx">Acme\Controllers</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">Input</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Acme\Importing\CsvImporter</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">App</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">CsvImportController</span> <span class="k">extends</span> <span class="nx">BaseController</span>
+<span class="p">{</span>
+    <span class="sd">/**</span>
+<span class="sd">     * [POST] Form which will submit the file</span>
+<span class="sd">     */</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">store</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="c1">// Check if form submitted a file</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">Input</span><span class="o">::</span><span class="na">hasFile</span><span class="p">(</span><span class="nv">$csv_import</span><span class="p">))</span> <span class="p">{</span>
+
+
+            <span class="nv">$csv_import</span> <span class="o">=</span> <span class="nx">Input</span><span class="o">::</span><span class="na">file</span><span class="p">(</span><span class="s1">&#39;csv_import&#39;</span><span class="p">);</span>
+
+            <span class="c1">// Validate that the file is present</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nv">$csv_import</span><span class="o">-&gt;</span><span class="na">isValid</span><span class="p">())</span> <span class="p">{</span>
+
+                <span class="c1">// Create validator object</span>
+                <span class="nv">$validator</span> <span class="o">=</span> <span class="nx">App</span><span class="o">::</span><span class="na">make</span><span class="p">(</span><span class="s1">&#39;Acme\Importing\CsvImportValidator&#39;</span><span class="p">);</span>
+
+                <span class="c1">// Run validation with input file</span>
+                <span class="nv">$validator</span> <span class="o">=</span> <span class="nv">$validator</span><span class="o">-&gt;</span><span class="na">validate</span><span class="p">(</span><span class="nv">$csv_import</span><span class="p">);</span>
+
+                <span class="k">if</span> <span class="p">(</span><span class="nv">$validator</span><span class="o">-&gt;</span><span class="na">fails</span><span class="p">())</span> <span class="p">{</span>
+
+                    <span class="k">return</span> <span class="nx">Redirect</span><span class="o">::</span><span class="na">back</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">withErrors</span><span class="p">(</span><span class="nv">$validator</span><span class="p">);</span>
+                <span class="p">}</span>
+
+                <span class="c1">// Lets construct our importer</span>
+                <span class="nv">$csv_importer</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">CsvFileImporter</span><span class="p">();</span>
+
+                <span class="c1">// Import our csv file</span>
+                <span class="k">if</span> <span class="p">(</span><span class="nv">$csv_importer</span><span class="o">-&gt;</span><span class="na">import</span><span class="p">(</span><span class="nv">$csv_import</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="c1">// Provide success message to the user</span>
+                    <span class="nv">$message</span> <span class="o">=</span> <span class="s1">&#39;Your file has been successfully imported!&#39;</span>
+                <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                    <span class="nv">$message</span> <span class="o">=</span> <span class="s1">&#39;Your file did not import&#39;</span><span class="p">;</span>
+                <span class="p">}</span>
+
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="c1">// Provide a meaningful error message to the user</span>
+                <span class="c1">// Perform any logging if necessary</span>
+                <span class="nv">$message</span> <span class="o">=</span> <span class="s1">&#39;You must provide a CSV file for import.&#39;</span><span class="p">;</span>
+            <span class="p">}</span>
+
+            <span class="k">return</span> <span class="nx">Redirect</span><span class="o">::</span><span class="na">back</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">with</span><span class="p">(</span><span class="s1">&#39;message&#39;</span><span class="p">,</span> <span class="nv">$message</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="cp">?&gt;</span><span class="x"></span>
+</code></pre></div>
+<p>Now that we have validation for our file importer we feel much safer about using our single query import. However, this isn&#39;t going to solve problems of bad data in CSV. For that we can do a much granular validation with background imports, see <a href="%7B%20%20%%20post_url%20blog/2015-10-06-import-large-csv-into-mysql-with-php-part-3-background-import%20%20%%20%20%7D">Importing Large CSV files Part 3: Processing and Validating data in background</a>.</p>
+
+
+                </div>
+
+                
+
+                <hr />
+
+                
+                
+                <div class="author-profile">
+  <div class="about">
+    <em>ABOUT THE AUTHOR</em><br/>
+    <strong>Anton Domratchev</strong><br/>
+    <p>Anton graduated from the University of Texas at San Antonio with a degree in Cyber Security. Anton started front end development with HTML, CSS and JavaScript in 2008, and has been developing in PHP since 2013. He is currently honing his Ruby on Rails skills while discovering the wonderful world of Software Architecture.</p>
+  </div>
+  <img src="/images/portrait-anton-domratchev.jpg" />
+</div>
+
+                
+
+                <hr>
+<p>
+  Grok Interactive specializes in web and mobile development using Ruby, Swift, Elixir, Javascript, and various other technologies to solve problems for our clients. If we can assist you, please do not hesitate to <a href="/#contact">contact us</a> today.
+</p>
+
+
+                <div class="share-page">
+  Share this on &rarr;
+  <a href="https://twitter.com/intent/tweet?text=Importing Large CSV files with PHP Part 2: Validating CSV file structure&url=http://www.grok-interactive.com/blog/import-large-csv-into-mysql-with-php-part-2-csv-file-validation/&via=&related=" rel="nofollow" target="_blank" title="Share on Twitter">Twitter</a>
+  <a href="https://facebook.com/sharer.php?u=http://www.grok-interactive.com/blog/import-large-csv-into-mysql-with-php-part-2-csv-file-validation/" rel="nofollow" target="_blank" title="Share on Facebook">Facebook</a>
+  <a href="https://plus.google.com/share?url=http://www.grok-interactive.com/blog/import-large-csv-into-mysql-with-php-part-2-csv-file-validation/" rel="nofollow" target="_blank" title="Share on Google+">Google+</a>
+</div>
+
+
+                
+<h3>Comments</h3>
+<hr />
+<!-- https://developers.facebook.com/docs/reference/plugins/comments/ -->
+<div class='comments'>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+      /* * * CONFIGURATION VARIABLES * * */
+      var disqus_shortname = 'grokinteractive';
+
+      /* * * DON'T EDIT BELOW THIS LINE * * */
+      (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+</div>
+
+
+
+              </div>
+            </div>
+
+
+          </div>
+
+          <div class="col c30">
+
+            <div class="well">
+  <h4><i class="icon fa fa-folder" title="Categories"></i> Categories</h4>
+  <ul class="nav nav-list">
+    
+
+    <li><a href="/blog/category/general/">
+      General
+    </a></li>
+    
+
+    <li><a href="/blog/category/software_development/">
+      Software development
+    </a></li>
+    
+
+    <li><a href="/blog/category/training/">
+      Training
+    </a></li>
+    
+
+    <li><a href="/blog/category/testing/">
+      Testing
+    </a></li>
+    
+
+    <li><a href="/blog/category/environments/">
+      Environments
+    </a></li>
+    
+
+    <li><a href="/blog/category/business_development/">
+      Business development
+    </a></li>
+    
+  </ul>
+</div>
+
+
+            
+<div class="well">
+  <h4><i class="icon fa fa-users" title="Authors"></i> Authors</h4>
+  <ul class="nav nav-list">
+    
+    
+    <li><a href="/blog/author/jason-straughan">Jason Straughan</a></li>
+    
+    
+    <li><a href="/blog/author/jason-ellis">Jason Ellis</a></li>
+    
+    
+    <li><a href="/blog/author/josh-freeman">Josh Freeman</a></li>
+    
+    
+    <li><a href="/blog/author/chris-hardee">Chris Hardee</a></li>
+    
+    
+    <li><a href="/blog/author/john-guest">John Guest</a></li>
+    
+    
+    <li><a href="/blog/author/anton-domratchev">Anton Domratchev</a></li>
+    
+    
+    <li><a href="/blog/author/joseph-villafranca">Joseph Villafranca</a></li>
+    
+    
+    <li><a href="/blog/author/christopher-moeller">Christopher Moeller</a></li>
+    
+  </ul>
+</div>
+
+
+
+            <div class="well">
+  <h4><i class="icon fa fa-tags" title="Categories"></i> Tags</h4>
+
+  <ul class="nav nav-list">
+    
+    <li><a href="/blog/tag/grok">Grok</a></li>
+    
+    <li><a href="/blog/tag/industry">Industry</a></li>
+    
+    <li><a href="/blog/tag/codeup">Codeup</a></li>
+    
+    <li><a href="/blog/tag/security">Security</a></li>
+    
+    <li><a href="/blog/tag/php">Php</a></li>
+    
+    <li><a href="/blog/tag/phpunit">Phpunit</a></li>
+    
+    <li><a href="/blog/tag/emacs">Emacs</a></li>
+    
+    <li><a href="/blog/tag/expression_engine">Expression engine</a></li>
+    
+    <li><a href="/blog/tag/javascript">Javascript</a></li>
+    
+    <li><a href="/blog/tag/dom">Dom</a></li>
+    
+    <li><a href="/blog/tag/jquery">Jquery</a></li>
+    
+    <li><a href="/blog/tag/git">Git</a></li>
+    
+    <li><a href="/blog/tag/githooks">Githooks</a></li>
+    
+    <li><a href="/blog/tag/source_control">Source control</a></li>
+    
+    <li><a href="/blog/tag/css">Css</a></li>
+    
+    <li><a href="/blog/tag/rails">Rails</a></li>
+    
+    <li><a href="/blog/tag/ubuntu">Ubuntu</a></li>
+    
+    <li><a href="/blog/tag/linux">Linux</a></li>
+    
+    <li><a href="/blog/tag/developers">Developers</a></li>
+    
+    <li><a href="/blog/tag/node.js">Node.js</a></li>
+    
+    <li><a href="/blog/tag/mongodb">Mongodb</a></li>
+    
+    <li><a href="/blog/tag/javascript">Javascript</a></li>
+    
+    <li><a href="/blog/tag/socket.io">Socket.io</a></li>
+    
+    <li><a href="/blog/tag/express.js">Express.js</a></li>
+    
+    <li><a href="/blog/tag/email">Email</a></li>
+    
+    <li><a href="/blog/tag/outlook">Outlook</a></li>
+    
+    <li><a href="/blog/tag/cross_mail_client">Cross mail client</a></li>
+    
+    <li><a href="/blog/tag/compatibility">Compatibility</a></li>
+    
+    <li><a href="/blog/tag/mvc">Mvc</a></li>
+    
+    <li><a href="/blog/tag/object_oriented_programming">Object oriented programming</a></li>
+    
+    <li><a href="/blog/tag/domain_driven_design">Domain driven design</a></li>
+    
+    <li><a href="/blog/tag/value_objects">Value objects</a></li>
+    
+    <li><a href="/blog/tag/types">Types</a></li>
+    
+    <li><a href="/blog/tag/csv">Csv</a></li>
+    
+    <li><a href="/blog/tag/mysql">Mysql</a></li>
+    
+    <li><a href="/blog/tag/laravel">Laravel</a></li>
+    
+    <li><a href="/blog/tag/ruby">Ruby</a></li>
+    
+    <li><a href="/blog/tag/functional_programming">Functional programming</a></li>
+    
+  </ul>
+</div>
+
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+    </div>
+  </div>
+
+  <footer>
+  <div class="container">
+    <div class="pull-left">
+      <p>&copy; 2013&ndash;2015 Grok Interactive, LLC</p>
+    </div>
+  </div>
+</footer>
+
+
+  <script type='text/javascript' src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js'></script>
+
+  <script src='/assets/global-5b2d0cc47ae047645ffc10228e2867fb.js' type='text/javascript'></script>
+
+  <script src="//static.getclicky.com/js" type="text/javascript"></script>
+  <script type="text/javascript">try{ clicky.init(100585693); }catch(e){}</script>
+  <noscript><p><img alt="Clicky" width="1" height="1" src="//in.getclicky.com/100585693ns.gif" /></p></noscript>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-43998305-2', 'grok-interactive.com');
+    ga('send', 'pageview');
+  </script>
+</body>
+</html>

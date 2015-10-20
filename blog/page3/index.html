@@ -52,7 +52,7 @@
 <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800,300|Open+Sans+Condensed:300' type='text/css' />
 <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.min.css' type='text/css' media='all' />
 
-<link href='/assets/global-001aa5df720ff14bc6f88bfc6c0dcbff.css' rel='stylesheet' type='text/css' />
+<link href='/assets/global-6b2036851216c08cdb9f2f1abbb4e9ac.css' rel='stylesheet' type='text/css' />
 
 <link rel="apple-touch-icon-precomposed" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png" />
 <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png" />
@@ -137,10 +137,122 @@
 <!-- Begin: post -->
 <div class="post">
   <div class="text">
-    <h1><a href="/blog/command-query-responsibility-segregation/">Moving on from MVC&#58; CQRS</a></h1>
+    <h2><a href="/blog/value-objects-in-ruby-part-2/">Value objects in Ruby: Serializing your custom objects with ActiveRecord</a></h2>
     <h5>
       
-      <a href="/blog/author/joseph-villafranca"><img class="gravatar" src="http://www.gravatar.com/avatar/1f7bcfb3e97d09889a9e19707d723543?s=60"></img></a>
+      <a href="/blog/author/christopher-moeller"><img class="gravatar" src="http://www.gravatar.com/avatar/eec2d1d58972494b4dd68e7f988bee49"></img></a>
+      
+      &nbsp; <a href="/blog/author/christopher-moeller" class="author">Christopher Moeller</a>
+      &nbsp;&nbsp;&nbsp; <strong>Sep 03, 2015</strong>&nbsp;&nbsp;&nbsp;
+      
+      <i class="icon fa fa-folder" title="Categories"></i>
+      
+      <a href="/blog/category/software_development/" class="category">Software development</a>
+      
+      
+
+      
+      <i class="icon fa fa-tags" title="Tags"></i>
+      
+      <a href="/blog/tag/object_oriented_programming/" class="tag">Object oriented programming</a>,
+      
+      <a href="/blog/tag/value_objects/" class="tag">Value objects</a>,
+      
+      <a href="/blog/tag/types/" class="tag">Types</a>
+      
+      
+
+      
+    </h5>
+
+    
+    <div class="image">
+      <a href="/blog/value-objects-in-ruby-part-2/"><img src="/images/2015/08/activerecord_serialize.jpg" /></a>
+    </div>
+    
+
+    <p class="excerpt">
+      Most web applications we work on require storing data in a database. Like many Rails shops our default database of choice at Grok is Postgres. We can store the vast majority of data using its text types, numeric types, dates and times, and booleans. Postgres also provides support for collections with arrays and hstore as well as more specific types like UUIDs and IP addresses, allowing us to store that data in a more structured way instead of as text.
+      <br />
+      <a href="/blog/value-objects-in-ruby-part-2/" class="more">CONTINUE READING <i class="icon fa fa-angle-double-right"></i></a>
+    </p>
+  </div>
+</div>
+
+<!-- End -->
+
+
+
+
+
+
+
+
+
+<!-- Begin: post -->
+<div class="post">
+  <div class="text">
+    <h2><a href="/blog/value-objects-in-ruby-part-1/">Value objects in Ruby: Creating custom data types</a></h2>
+    <h5>
+      
+      <a href="/blog/author/christopher-moeller"><img class="gravatar" src="http://www.gravatar.com/avatar/eec2d1d58972494b4dd68e7f988bee49"></img></a>
+      
+      &nbsp; <a href="/blog/author/christopher-moeller" class="author">Christopher Moeller</a>
+      &nbsp;&nbsp;&nbsp; <strong>Sep 01, 2015</strong>&nbsp;&nbsp;&nbsp;
+      
+      <i class="icon fa fa-folder" title="Categories"></i>
+      
+      <a href="/blog/category/software_development/" class="category">Software development</a>
+      
+      
+
+      
+      <i class="icon fa fa-tags" title="Tags"></i>
+      
+      <a href="/blog/tag/object_oriented_programming/" class="tag">Object oriented programming</a>,
+      
+      <a href="/blog/tag/value_objects/" class="tag">Value objects</a>,
+      
+      <a href="/blog/tag/types/" class="tag">Types</a>
+      
+      
+
+      
+    </h5>
+
+    
+    <div class="image">
+      <a href="/blog/value-objects-in-ruby-part-1/"><img src="/images/2015/08/value_objects.jpg" /></a>
+    </div>
+    
+
+    <p class="excerpt">
+      Ruby provides a rich set of value objects for things like IP addresses, Dates, Strings, Hashes, Arrays, etc. When working with data in our applications we can usually start with one of the types that Ruby gives us. This helps us get started very quickly but it can get out of hand as requirements change. Just about every application needs data in a particular format, like an email address or a list of investments.
+      <br />
+      <a href="/blog/value-objects-in-ruby-part-1/" class="more">CONTINUE READING <i class="icon fa fa-angle-double-right"></i></a>
+    </p>
+  </div>
+</div>
+
+<!-- End -->
+
+
+
+
+
+
+
+
+
+
+
+<!-- Begin: post -->
+<div class="post">
+  <div class="text">
+    <h2><a href="/blog/command-query-responsibility-segregation/">Moving on from MVC&#58; CQRS</a></h2>
+    <h5>
+      
+      <a href="/blog/author/joseph-villafranca"><img class="gravatar" src="http://www.gravatar.com/avatar/1f7bcfb3e97d09889a9e19707d723543"></img></a>
       
       &nbsp; <a href="/blog/author/joseph-villafranca" class="author">Joseph Villafranca</a>
       &nbsp;&nbsp;&nbsp; <strong>Aug 19, 2015</strong>&nbsp;&nbsp;&nbsp;
@@ -167,11 +279,11 @@
 
     
     <div class="image">
-      <img src="/images/2015/08/bad_design_kills.png" />
+      <a href="/blog/command-query-responsibility-segregation/"><img src="/images/2015/08/bad_design_kills.png" /></a>
     </div>
     
 
-    <p>
+    <p class="excerpt">
       CQRS is a simple, yet powerful design pattern you can use to keep your models and controllers (and views, if you like to abuse every part of the MVC acronym) dry.
       <br />
       <a href="/blog/command-query-responsibility-segregation/" class="more">CONTINUE READING <i class="icon fa fa-angle-double-right"></i></a>
@@ -192,10 +304,10 @@
 <!-- Begin: post -->
 <div class="post">
   <div class="text">
-    <h1><a href="/blog/professional-development-activities-for-professional-developers/">Professional Development Activities for Professional Developers</a></h1>
+    <h2><a href="/blog/professional-development-activities-for-professional-developers/">Professional Development Activities for Professional Developers</a></h2>
     <h5>
       
-      <a href="/blog/author/jason-straughan"><img class="gravatar" src="http://www.gravatar.com/avatar/b317d77ee165de850911ef2191d89cae?s=60"></img></a>
+      <a href="/blog/author/jason-straughan"><img class="gravatar" src="http://www.gravatar.com/avatar/b317d77ee165de850911ef2191d89cae"></img></a>
       
       &nbsp; <a href="/blog/author/jason-straughan" class="author">Jason Straughan</a>
       &nbsp;&nbsp;&nbsp; <strong>Jun 10, 2015</strong>&nbsp;&nbsp;&nbsp;
@@ -222,11 +334,11 @@
 
     
     <div class="image">
-      <img src="/images/2015/06/800px-Louvre_Pyramid.jpg" />
+      <a href="/blog/professional-development-activities-for-professional-developers/"><img src="/images/2015/06/800px-Louvre_Pyramid.jpg" /></a>
     </div>
     
 
-    <p>
+    <p class="excerpt">
       A career in software development involves constant professional development in a wide variety of activities to inspire, educate, and help us grow.
       <br />
       <a href="/blog/professional-development-activities-for-professional-developers/" class="more">CONTINUE READING <i class="icon fa fa-angle-double-right"></i></a>
@@ -247,10 +359,10 @@
 <!-- Begin: post -->
 <div class="post">
   <div class="text">
-    <h1><a href="/blog/great-apis-start-with-great-design/">Great APIs Start with a Great Design</a></h1>
+    <h2><a href="/blog/great-apis-start-with-great-design/">Great APIs Start with a Great Design</a></h2>
     <h5>
       
-      <a href="/blog/author/jason-straughan"><img class="gravatar" src="http://www.gravatar.com/avatar/b317d77ee165de850911ef2191d89cae?s=60"></img></a>
+      <a href="/blog/author/jason-straughan"><img class="gravatar" src="http://www.gravatar.com/avatar/b317d77ee165de850911ef2191d89cae"></img></a>
       
       &nbsp; <a href="/blog/author/jason-straughan" class="author">Jason Straughan</a>
       &nbsp;&nbsp;&nbsp; <strong>Jun 02, 2015</strong>&nbsp;&nbsp;&nbsp;
@@ -273,11 +385,11 @@
 
     
     <div class="image">
-      <img src="/images/2015/06/Professor_Lucifer_Butts.gif" />
+      <a href="/blog/great-apis-start-with-great-design/"><img src="/images/2015/06/Professor_Lucifer_Butts.gif" /></a>
     </div>
     
 
-    <p>
+    <p class="excerpt">
       Very few APIs are easy to work with, it is like Rube Goldberg invented the School of API Architecture. Behind every mobile, web, or desktop application is code, and that code was written by a human.
       <br />
       <a href="/blog/great-apis-start-with-great-design/" class="more">CONTINUE READING <i class="icon fa fa-angle-double-right"></i></a>
@@ -298,10 +410,10 @@
 <!-- Begin: post -->
 <div class="post">
   <div class="text">
-    <h1><a href="/blog/emails-in-outlook/">Make your emails look right everywhere</a></h1>
+    <h2><a href="/blog/emails-in-outlook/">Make your emails look right everywhere</a></h2>
     <h5>
       
-      <a href="/blog/author/anton-domratchev"><img class="gravatar" src="http://www.gravatar.com/avatar/eb10ead9c3830fc4715e90242674234f?s=60"></img></a>
+      <a href="/blog/author/anton-domratchev"><img class="gravatar" src="http://www.gravatar.com/avatar/eb10ead9c3830fc4715e90242674234f"></img></a>
       
       &nbsp; <a href="/blog/author/anton-domratchev" class="author">Anton Domratchev</a>
       &nbsp;&nbsp;&nbsp; <strong>Oct 12, 2014</strong>&nbsp;&nbsp;&nbsp;
@@ -330,73 +442,14 @@
 
     
     <div class="image">
-      <img src="/images/2014/10/responsive-email.jpg" />
+      <a href="/blog/emails-in-outlook/"><img src="/images/2014/10/responsive-email.jpg" /></a>
     </div>
     
 
-    <p>
+    <p class="excerpt">
       When it comes to cross mail client compatibility, there is a way to make your emails look right in all email clients.
       <br />
       <a href="/blog/emails-in-outlook/" class="more">CONTINUE READING <i class="icon fa fa-angle-double-right"></i></a>
-    </p>
-  </div>
-</div>
-
-<!-- End -->
-
-
-
-
-
-
-
-
-
-<!-- Begin: post -->
-<div class="post">
-  <div class="text">
-    <h1><a href="/blog/node-express-mongo-socketio-introduction/">A not so small introduction to 3 parts of the MEAN stack</a></h1>
-    <h5>
-      
-      <a href="/blog/author/john-guest"><img class="gravatar" src="http://www.gravatar.com/avatar/bb642891e79b15b73e5b781b3f8276f7?s=60"></img></a>
-      
-      &nbsp; <a href="/blog/author/john-guest" class="author">John Guest</a>
-      &nbsp;&nbsp;&nbsp; <strong>Oct 02, 2014</strong>&nbsp;&nbsp;&nbsp;
-      
-      <i class="icon fa fa-folder" title="Categories"></i>
-      
-      <a href="/blog/category/training/" class="category">Training</a>
-      
-      
-
-      
-      <i class="icon fa fa-tags" title="Tags"></i>
-      
-      <a href="/blog/tag/node.js/" class="tag">Node.js</a>,
-      
-      <a href="/blog/tag/mongodb/" class="tag">Mongodb</a>,
-      
-      <a href="/blog/tag/javascript/" class="tag">Javascript</a>,
-      
-      <a href="/blog/tag/socket.io/" class="tag">Socket.io</a>,
-      
-      <a href="/blog/tag/express.js/" class="tag">Express.js</a>
-      
-      
-
-      
-    </h5>
-
-    
-    <div class="image">
-      <img src="/images/2014/10/node-comment-feature.png" />
-    </div>
-    
-
-    <p>
-      Node.js is becoming increasingly more popular in modern web development. Here is a small tutorial intended to walk someone with little to no experience in full stack javascript development through three parts of the MEAN stack -- MongoDB/Mongoose, Express.js and Node.js -- plus a short Socket.io introduction. The tutorial uses a small comment feature to show a reader how parts of the stack come together.
-      <br />
-      <a href="/blog/node-express-mongo-socketio-introduction/" class="more">CONTINUE READING <i class="icon fa fa-angle-double-right"></i></a>
     </p>
   </div>
 </div>
@@ -443,11 +496,6 @@
 
   
   <a href="/blog/page6" class="page" data-page="6">6</a>
-  
-  
-
-  
-  <a href="/blog/page7" class="page" data-page="7">7</a>
   
   
 
@@ -514,19 +562,27 @@
   <h4><i class="icon fa fa-users" title="Authors"></i> Authors</h4>
   <ul class="nav nav-list">
     
+    
     <li><a href="/blog/author/jason-straughan">Jason Straughan</a></li>
+    
     
     <li><a href="/blog/author/jason-ellis">Jason Ellis</a></li>
     
+    
     <li><a href="/blog/author/josh-freeman">Josh Freeman</a></li>
+    
     
     <li><a href="/blog/author/chris-hardee">Chris Hardee</a></li>
     
+    
     <li><a href="/blog/author/john-guest">John Guest</a></li>
+    
     
     <li><a href="/blog/author/anton-domratchev">Anton Domratchev</a></li>
     
+    
     <li><a href="/blog/author/joseph-villafranca">Joseph Villafranca</a></li>
+    
     
     <li><a href="/blog/author/christopher-moeller">Christopher Moeller</a></li>
     
@@ -611,6 +667,10 @@
     <li><a href="/blog/tag/mysql">Mysql</a></li>
     
     <li><a href="/blog/tag/laravel">Laravel</a></li>
+    
+    <li><a href="/blog/tag/ruby">Ruby</a></li>
+    
+    <li><a href="/blog/tag/functional_programming">Functional programming</a></li>
     
   </ul>
 </div>

@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Functional enumerators in Ruby</title>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Language" content="en" />
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+<meta name="author" content="Grok Interactive, LLC">
+<meta name="description" content="Ruby lets developers program using multiple paradigms. We'll explore how Ruby uses functional programming for some of the iterators in Enumerable.">
+<meta name="MS.LOCALE" content="EN-US" />
+<meta name="revisit-after" content="10 days" />
+<meta name="robots" content="index,follow" />
+<meta name="URL" content="http://www.grok-interactive.com" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="fb:admins" content="440639386014676"/>
+<meta property="fb:admins" content="621293620"/>
+<meta property="fb:admins" content="710704899"/>
+
+<meta property="og:title" content="Functional enumerators in Ruby">
+
+<meta property="og:type" content="article">
+
+<meta property="og:url" content="http://www.grok-interactive.com/blog/functional-enumerators-in-ruby/">
+
+
+<meta property="og:image" content="http://www.grok-interactive.com/images/2015/09/clock.jpg">
+
+
+
+<meta property="og:description" content="Ruby lets developers program using multiple paradigms. We'll explore how Ruby uses functional programming for some of the iterators in Enumerable.">
+
+
+<meta property="og:site_name" content="Grok Interactive">
+
+<meta property="og:locale" content="en_US">
+
+
+<meta property="article:published_time" content="2015-10-12T00:00:00-04:00">
+
+
+<meta property="fb:admins" content="">
+<meta property="fb:app_id" content="">
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@GrokInteractive" />
+<meta name="twitter:title" content="Functional enumerators in Ruby" />
+<meta name="twitter:description" content="Ruby lets developers program using multiple paradigms. We'll explore how Ruby uses functional programming for some of the iterators in Enumerable." />
+<meta name="twitter:url" content="http://www.grok-interactive.com/blog/functional-enumerators-in-ruby/" />
+
+
+<meta name="twitter:image" content="http://www.grok-interactive.com/images/2015/09/clock.jpg" />
+
+
+
+
+<link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800,300|Open+Sans+Condensed:300' type='text/css' />
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.min.css' type='text/css' media='all' />
+
+<link href='/assets/global-6b2036851216c08cdb9f2f1abbb4e9ac.css' rel='stylesheet' type='text/css' />
+
+<link rel="apple-touch-icon-precomposed" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png" />
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png" />
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png" />
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png" />
+<link rel="apple-touch-icon-precomposed" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png" />
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon-precomposed" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png" />
+<link rel="icon" type="image/png" href="/images/favicons/favicon-196x196.png" sizes="196x196" />
+<link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32" />
+<link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16" />
+<link rel="icon" type="image/png" href="/images/favicons/favicon-128.png" sizes="128x128" />
+<meta name="application-name" content="Grok Interactive, LLC"/>
+<meta name="msapplication-TileColor" content="#000000" />
+<meta name="msapplication-TileImage" content="/assets/img/favicons/mstile-144x144.png" />
+<meta name="msapplication-square70x70logo" content="/assets/img/favicons/mstile-70x70.png" />
+<meta name="msapplication-square150x150logo" content="/assets/img/favicons/mstile-150x150.png" />
+<meta name="msapplication-wide310x150logo" content="/assets/img/favicons/mstile-310x150.png" />
+<meta name="msapplication-square310x310logo" content="/assets/img/favicons/mstile-310x310.png" />
+
+
+</head>
+
+<body style="display: none;">
+
+  <div id="wrap">
+    <div id="main">
+      <header>
+        <div class="navbar navbar-inverse navbar-static-top">
+          <div class="navbar-inner">
+            <div class="container">
+              <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="brand grok-logo" href="/">Grok Interactive, LLC Home Page</a>
+              <div class="nav-collapse collapse pull-right">
+                <ul class="nav">
+                  <li class='blog active'><a href="/blog/">Blog</a></li>
+                  <li class='podcast'><a href="/podcast/">Podcast</a></li>
+                  <li class='about'><a href="/#about" class='slide'>About</a></li>
+                  <li class='service'><a href="/#service" class='slide'>Service</a></li>
+                  <li class='work'><a href="/#work" class='slide'>Work</a></li>
+                  <li class='contact'><a href="/#contact" class='slide'>Contact</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+      <section class="podcast-cta" id="podcast-cta" >
+
+        <div class="container">
+          <div class="row">
+            <div class="span12">
+
+              <h4>Check out our new <a href="/podcast/">podcast</a> "The Grok Cast" now <a href="https://itunes.apple.com/us/podcast/the-grok-cast/id1036008796">available on iTunes!</a></h4>
+
+            </div>
+          </div>
+        </div>
+
+      </section>
+      <div class="content">
+  <div class="container">
+    <div class="inner">
+      <div class="canvas">
+
+        <div class="columns">
+          <div class="col c70">
+
+            
+            
+
+            <div class="canvas">
+
+              <div class="post" itemscope itemprop="blogPost" itemtype="http://schema.org/BlogPosting">
+
+                <h1><a href="/blog/functional-enumerators-in-ruby/" rel="bookmark" title="Link to Functional enumerators in Ruby" >Functional enumerators in Ruby</a></h1>
+                <meta itemprop="name" content="Functional enumerators in Ruby">
+                <meta itemprop="author" content="Christopher Moeller">
+                <h5>by <a href="/blog/author/christopher-moeller" class="author" itemprop="author">Christopher Moeller</a>
+                  &nbsp;&nbsp;&nbsp;<strong>Oct 12, 2015</strong>&nbsp;&nbsp;&nbsp;
+                  
+                  <i class="icon fa fa-folder" title="Categories"></i>
+                  
+                  <a href="/blog/category/software_development/" class="category">Software development</a>
+                  
+                  
+
+                  
+                  <i class="icon fa fa-tags" title="Tags"></i>
+                  
+                  <a href="/blog/tag/ruby/" class="tag">Ruby</a>,
+                  
+                  <a href="/blog/tag/functional_programming/" class="tag">Functional programming</a>
+                  
+                  
+
+                  
+                </h5>
+
+                <div class=''>
+
+                  
+                  <img src="/images/2015/09/clock.jpg" width="150" height="150" class="pull-right" />
+                  
+
+                  <h3>Functional enumerators in Ruby</h3>
+
+<p>Ruby is a beautifully designed object-oriented programming language with
+heritage in Smalltalk, Perl, and Lisp among others. People are attracted to many
+different features in Ruby: almost everything in Ruby is an object, we have
+terse constructs for iterating through collections, and it&#39;s friendly to
+beginners and experts alike. One of the reasons people love programming in Ruby
+is the <code>Enumerable</code> module. While developers can loop though collections using
+more traditional constructs like <code>for</code> and <code>while</code> loops, idiomatic Ruby
+typically uses the methods found in <code>Enumerable</code>.</p>
+
+<p><code>Enumerable</code> adds a lot of methods to the class where it&#39;s included, and all of
+these methods are based on the <code>each</code> method. I&#39;ve read (and also written) a lot
+of iterative code using <code>each</code> when there&#39;s a more elegant, explicit, and
+performant method that I could have used. Using the <code>Array</code> and <code>Range</code> classes
+as examples, I&#39;ll start with a brief overview of <code>each</code> and <code>map</code> and conclude
+with an overview of <code>reduce</code>.</p>
+
+<h4>What makes some of the iterators functional?</h4>
+
+<p>One of the many principles of functional programming is higher order functions.
+For a function to be a &quot;higher order&quot; function, it needs to either receive a
+function as an argument or return a function as the return value. The main idea
+is using functions as values.</p>
+
+<p>In JavaScript we call these &quot;anonymous functions&quot; while in Ruby we call them
+lambdas and procs. In most functional languages I&#39;ve surveyed and explored,
+they&#39;re just called lambdas. It&#39;s outside the scope of this post to go into
+detail on lambdas and procs in Ruby but there are a <em>ton</em> of great resources
+online that explain what they are and how to use them.</p>
+
+<p>Now that we understand why some of Enumerable&#39;s iterators are functional, let&#39;s
+look at how to use them in our code.</p>
+
+<h4>Iterating with each</h4>
+
+<p>As I mentioned, Ruby allows developers to iterate through collections with
+traditional, imperative-style constructs like <code>while</code> and <code>for</code>. For example,
+using a <code>Range</code> with <code>for</code>:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">$</span> <span class="n">irb</span>
+<span class="n">irb</span><span class="p">(</span><span class="n">main</span><span class="p">):</span><span class="mo">001</span><span class="p">:</span><span class="mi">0</span><span class="o">&gt;</span> <span class="k">for</span> <span class="n">n</span> <span class="k">in</span> <span class="mi">0</span><span class="o">.</span><span class="n">.</span><span class="mi">5</span>
+<span class="n">irb</span><span class="p">(</span><span class="n">main</span><span class="p">):</span><span class="mo">002</span><span class="p">:</span><span class="mi">1</span><span class="o">&gt;</span>   <span class="nb">puts</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="n">irb</span><span class="p">(</span><span class="n">main</span><span class="p">):</span><span class="mo">003</span><span class="p">:</span><span class="mi">1</span><span class="o">&gt;</span> <span class="k">end</span>
+<span class="mi">1</span>
+<span class="mi">2</span>
+<span class="mi">3</span>
+<span class="mi">4</span>
+<span class="mi">5</span>
+<span class="mi">6</span>
+<span class="o">=&gt;</span> <span class="mi">0</span><span class="o">.</span><span class="n">.</span><span class="mi">5</span>
+</code></pre></div>
+<p>We have a range of integers from 0 to 5 and we print each number plus 1 to the
+console. This works just fine. This is how we would get the same result using
+<code>each</code>:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">$</span> <span class="n">irb</span>
+<span class="n">irb</span><span class="p">(</span><span class="n">main</span><span class="p">):</span><span class="mo">001</span><span class="p">:</span><span class="mi">0</span><span class="o">&gt;</span> <span class="p">(</span><span class="mi">0</span><span class="o">.</span><span class="n">.</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">n</span><span class="o">|</span>
+<span class="n">irb</span><span class="p">(</span><span class="n">main</span><span class="p">):</span><span class="mo">002</span><span class="p">:</span><span class="mi">1</span><span class="o">*</span>   <span class="nb">puts</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="n">irb</span><span class="p">(</span><span class="n">main</span><span class="p">):</span><span class="mo">003</span><span class="p">:</span><span class="mi">1</span><span class="o">&gt;</span> <span class="k">end</span>
+<span class="mi">1</span>
+<span class="mi">2</span>
+<span class="mi">3</span>
+<span class="mi">4</span>
+<span class="mi">5</span>
+<span class="mi">6</span>
+<span class="o">=&gt;</span> <span class="mi">0</span><span class="o">.</span><span class="n">.</span><span class="mi">5</span>
+</code></pre></div>
+<p>This does the exact same thing as the code with <code>for</code>: we print the values of
+every element in the collection incremented by 1. So why do many Rubyists say
+using <code>each</code> is better than <code>for</code>? Personally, I think it has to do with the
+<em>mindset</em> of the developer. Using <code>each</code> makes me think more about <em>what</em> I want
+the computer to do and less about <em>how</em> I want it to perform the operation.
+Thinking about the result I want creates a layer of abstraction so I can focus
+on the bigger picture of my current task.</p>
+
+<p>This additional layer of abstraction can be shown by using another one of
+Enumerable&#39;s methods: <code>map</code>.</p>
+
+<h4>Using Enumerable&#39;s map</h4>
+
+<p>We can print each value of an array with <code>each</code>, but what if we wanted to save
+these incremented values into a new array? We know we should use <code>each</code> to
+iterate of the collection instead of <code>for</code>, so let&#39;s take a look at one approach
+to saving the incremented values using <code>each</code>:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">$</span> <span class="n">irb</span>
+<span class="n">irb</span><span class="p">(</span><span class="n">main</span><span class="p">):</span><span class="mo">001</span><span class="p">:</span><span class="mi">0</span><span class="o">&gt;</span> <span class="n">incremented</span> <span class="o">=</span> <span class="o">[]</span>
+<span class="o">=&gt;</span> <span class="o">[]</span>
+<span class="n">irb</span><span class="p">(</span><span class="n">main</span><span class="p">):</span><span class="mo">002</span><span class="p">:</span><span class="mi">0</span><span class="o">&gt;</span> <span class="p">(</span><span class="mi">0</span><span class="o">.</span><span class="n">.</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">n</span><span class="o">|</span>
+<span class="n">irb</span><span class="p">(</span><span class="n">main</span><span class="p">):</span><span class="mo">003</span><span class="p">:</span><span class="mi">1</span><span class="o">*</span>   <span class="n">incremented</span> <span class="o">&lt;&lt;</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="n">irb</span><span class="p">(</span><span class="n">main</span><span class="p">):</span><span class="mo">004</span><span class="p">:</span><span class="mi">1</span><span class="o">&gt;</span> <span class="k">end</span>
+<span class="o">=&gt;</span> <span class="mi">0</span><span class="o">.</span><span class="n">.</span><span class="mi">5</span>
+<span class="n">irb</span><span class="p">(</span><span class="n">main</span><span class="p">):</span><span class="mo">005</span><span class="p">:</span><span class="mi">0</span><span class="o">&gt;</span> <span class="n">incremented</span>
+<span class="o">=&gt;</span> <span class="o">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="o">]</span>
+</code></pre></div>
+<p>This works. We start with a variable to hold our new collection (<code>incremented</code>),
+iterate through each number in the range, and append each incremented number to
+the new array. However, in writing this example I found myself caught in the
+details of performing each step of the task instead of simply requesting the
+result I wanted: an array of incremented integers. From the world of functional
+programming, <code>Enumerable</code> provides <code>map</code> (also aliased as <code>collect</code>) to better
+manage this:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">$</span> <span class="n">irb</span>
+<span class="n">irb</span><span class="p">(</span><span class="n">main</span><span class="p">):</span><span class="mo">001</span><span class="p">:</span><span class="mi">0</span><span class="o">&gt;</span> <span class="n">incremented</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="o">.</span><span class="n">.</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">map</span> <span class="k">do</span> <span class="o">|</span><span class="n">n</span><span class="o">|</span>
+<span class="n">irb</span><span class="p">(</span><span class="n">main</span><span class="p">):</span><span class="mo">002</span><span class="p">:</span><span class="mi">1</span><span class="o">*</span>   <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="n">irb</span><span class="p">(</span><span class="n">main</span><span class="p">):</span><span class="mo">003</span><span class="p">:</span><span class="mi">1</span><span class="o">&gt;</span> <span class="k">end</span>
+<span class="o">=&gt;</span> <span class="o">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="o">]</span>
+</code></pre></div>
+<p>The result of calling <code>map</code> on the collection is exactly what we&#39;re looking for.
+In this case we save it to the <code>incremented</code> variable. Also, as Enumerable is
+tuned for better performance, we get those benefits for free. I don&#39;t care <em>how</em>
+the computer creates this new <code>Array</code>, I just care that each value is
+incremented by <code>1</code>.</p>
+
+<p>Using <code>map</code> also has a more succinct way of expressing this operation using
+<code>Symbol#to_proc</code> and Fixnum&#39;s <code>succ</code> method (you can also use <code>next</code> if you
+prefer):</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">$</span> <span class="n">irb</span>
+<span class="n">irb</span><span class="p">(</span><span class="n">main</span><span class="p">):</span><span class="mo">001</span><span class="p">:</span><span class="mi">0</span><span class="o">&gt;</span> <span class="n">incremented</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="o">.</span><span class="n">.</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:succ</span><span class="p">)</span>
+<span class="o">=&gt;</span> <span class="o">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="o">]</span>
+<span class="n">irb</span><span class="p">(</span><span class="n">main</span><span class="p">):</span><span class="mo">002</span><span class="p">:</span><span class="mi">0</span><span class="o">&gt;</span> <span class="sx">%w(foo bar baz)</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:capitalize</span><span class="p">)</span>
+<span class="o">=&gt;</span> <span class="o">[</span><span class="s2">&quot;Foo&quot;</span><span class="p">,</span> <span class="s2">&quot;Bar&quot;</span><span class="p">,</span> <span class="s2">&quot;Baz&quot;</span><span class="o">]</span>
+</code></pre></div>
+<p>In case you haven&#39;t seen it yet, you can use the unary <code>&amp;</code> operator with a
+symbol as the method name to call on each member of the collection. I won&#39;t go
+into the details here but you can
+<a href="http://ruby-doc.org/core-2.2.3/Symbol.html#method-i-to_proc">check out the <code>Symbol#to_proc</code> documentation</a>.
+(Keep in mind this only works if every element in the collection responds to the
+method. Otherwise you&#39;ll get a <code>NoMethodError</code>.)</p>
+
+<p>This is pretty great! We can take a collection and easily create another
+collection with some modified values. In the same vein of <code>map</code>, Enumerable
+provides <code>find</code>, <code>select</code>, <code>reject</code>, etc. All are ways of building new
+collections from an existing collection and applying the same method to each of
+the collection&#39;s elements.</p>
+
+<p>Sometimes we don&#39;t want a new collection, though. Instead, we want a singular
+value back. Ruby again borrows from the functional programming world again to
+provide <code>reduce</code> (aliased as <code>inject</code>): we take a collection and <em>reduce</em> all of
+it&#39;s values into a single value. Let&#39;s take a look at it.</p>
+
+<h4>Using reduce</h4>
+
+<p>I&#39;ll start with an example:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">$</span> <span class="n">irb</span>
+<span class="n">irb</span><span class="p">(</span><span class="n">main</span><span class="p">):</span><span class="mo">001</span><span class="p">:</span><span class="mi">0</span><span class="o">&gt;</span> <span class="p">(</span><span class="mi">0</span><span class="o">.</span><span class="n">.</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">reduce</span> <span class="p">{</span> <span class="o">|</span><span class="n">accumulator</span><span class="p">,</span> <span class="n">n</span><span class="o">|</span> <span class="n">accumulator</span> <span class="o">+</span> <span class="n">n</span> <span class="p">}</span>
+<span class="o">=&gt;</span> <span class="mi">15</span>
+<span class="n">irb</span><span class="p">(</span><span class="n">main</span><span class="p">):</span><span class="mo">002</span><span class="p">:</span><span class="mi">0</span><span class="o">&gt;</span> <span class="p">(</span><span class="mi">0</span><span class="o">.</span><span class="n">.</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="p">{</span> <span class="o">|</span><span class="n">accumulator</span><span class="p">,</span> <span class="n">n</span><span class="o">|</span> <span class="n">accumulator</span> <span class="o">+</span> <span class="n">n</span> <span class="p">}</span>
+<span class="o">=&gt;</span> <span class="mi">15</span>
+<span class="n">irb</span><span class="p">(</span><span class="n">main</span><span class="p">):</span><span class="mo">003</span><span class="p">:</span><span class="mi">0</span><span class="o">&gt;</span> <span class="p">(</span><span class="mi">0</span><span class="o">.</span><span class="n">.</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:+</span><span class="p">)</span>
+<span class="o">=&gt;</span> <span class="mi">15</span>
+<span class="n">irb</span><span class="p">(</span><span class="n">main</span><span class="p">):</span><span class="mo">004</span><span class="p">:</span><span class="mi">0</span><span class="o">&gt;</span> <span class="p">(</span><span class="mi">0</span><span class="o">.</span><span class="n">.</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="o">&amp;</span><span class="ss">:+</span><span class="p">)</span>
+<span class="o">=&gt;</span> <span class="mi">20</span>
+</code></pre></div>
+<p>Here we take the same range we&#39;ve been using <code>0..5</code> and add all of its numbers
+together to produce a single integer: <code>15</code>. Let&#39;s look into the first example
+with the block a bit more: <code>(0..5).reduce { |accumulator, n| accumulator + n }</code>.</p>
+
+<p>In this form, <code>reduce</code> doesn&#39;t take any arguments except the block. The block
+must declare an accumulator variable (I usually call it <code>acc</code> but opted for the
+more descriptive <code>accumulator</code> name in this case) and a variable for the member
+of the collection for each iteration, <code>n</code> in this case. <code>reduce</code> then sets the
+value of <code>accumulator</code> to the result of the block, in this case adding the
+current value of <code>accumulator</code> to <code>n</code>. This happens until all the values in the
+collection have been reached.</p>
+
+<p>In the second form of the method (when <code>0</code> is passed to <code>reduce</code>), <code>0</code> is the
+initial value for <code>accumulator</code>, which is why the result is the same as the
+example above it.</p>
+
+<p>The last two forms use the more terse (and I&#39;d argue more readable)
+<code>Symbol#to_proc</code> syntax, one without explicitly setting the accumulators initial
+value and one with setting the initial value to <code>5</code>.</p>
+
+<p>Here&#39;s another way to get the same result using <code>each</code>:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">$</span> <span class="n">irb</span>
+<span class="n">irb</span><span class="p">(</span><span class="n">main</span><span class="p">):</span><span class="mo">001</span><span class="p">:</span><span class="mi">0</span><span class="o">&gt;</span> <span class="n">accumulator</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="o">=&gt;</span> <span class="mi">0</span>
+<span class="n">irb</span><span class="p">(</span><span class="n">main</span><span class="p">):</span><span class="mo">002</span><span class="p">:</span><span class="mi">0</span><span class="o">&gt;</span> <span class="n">result</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="o">.</span><span class="n">.</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">n</span><span class="o">|</span>
+<span class="n">irb</span><span class="p">(</span><span class="n">main</span><span class="p">):</span><span class="mo">003</span><span class="p">:</span><span class="mi">1</span><span class="o">*</span>   <span class="n">accumulator</span> <span class="o">=</span> <span class="n">accumulator</span> <span class="o">+</span> <span class="n">n</span>
+<span class="n">irb</span><span class="p">(</span><span class="n">main</span><span class="p">):</span><span class="mo">004</span><span class="p">:</span><span class="mi">1</span><span class="o">&gt;</span> <span class="k">end</span>
+<span class="o">=&gt;</span> <span class="mi">0</span><span class="o">.</span><span class="n">.</span><span class="mi">5</span>
+<span class="n">irb</span><span class="p">(</span><span class="n">main</span><span class="p">):</span><span class="mo">005</span><span class="p">:</span><span class="mi">0</span><span class="o">&gt;</span> <span class="n">accumulator</span>
+<span class="o">=&gt;</span> <span class="mi">15</span>
+</code></pre></div>
+<p>As with our example for using <code>map</code> instead of <code>each</code> (when appropriate), using
+<code>reduce</code> frees us from telling the computer how to do the calculation. We tell
+it what we want in the end: the sum of every integer in the collection.</p>
+
+<h4>One more thing: Lazy Enumeration</h4>
+
+<p>Using a dynamically typed language like Ruby, we can create arrays with values
+of mixed types. We also encourage
+<a href="https://en.wikipedia.org/wiki/Duck_typing">duck typing</a> over checking an
+object&#39;s type. However, this language feature and programming best practice can
+create some unexpected consequences. For example, the <code>+</code> method is defined for
+both Strings and Integers but they can&#39;t be mixed. If we have an array of both
+Integers and Strings and call <code>reduce</code> on the array with <code>+</code>, we get a
+<code>TypeError</code>:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">$</span> <span class="n">irb</span>
+<span class="n">irb</span><span class="p">(</span><span class="n">main</span><span class="p">):</span><span class="mo">001</span><span class="p">:</span><span class="mi">0</span><span class="o">&gt;</span> <span class="n">mixed</span> <span class="o">=</span> <span class="o">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;bar&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="o">]</span>
+<span class="o">=&gt;</span> <span class="o">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;bar&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="o">]</span>
+<span class="ss">TypeError</span><span class="p">:</span> <span class="nb">String</span> <span class="n">can</span><span class="s1">&#39;t be coerced into Fixnum</span>
+<span class="s1">        from (irb):6:in `+&#39;</span>
+        <span class="n">from</span> <span class="p">(</span><span class="n">irb</span><span class="p">):</span><span class="mi">6</span><span class="ss">:in</span> <span class="sb">`each&#39;</span>
+<span class="sb">        from (irb):6:in `</span><span class="n">reduce</span><span class="s1">&#39;</span>
+<span class="s1">        from (irb):6</span>
+<span class="s1">        from /Users/cmoel/.rubies/ruby-2.2.3/bin/irb:11:in `&lt;main&gt;&#39;</span>
+</code></pre></div>
+<p>This happens because <code>+</code> is defined for both Integers and Strings but it has a
+different (and incompatible) meaning for each class: addition for <code>Integer</code> and
+concatenation for <code>String</code>. While the solution to this problem is completely
+dependent on the needs of the application, we&#39;ll say we do not need the <code>String</code>
+values and will only keep the <code>Integer</code> values. We can do this with <code>select</code>:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">$</span> <span class="n">irb</span>
+<span class="n">irb</span><span class="p">(</span><span class="n">main</span><span class="p">):</span><span class="mo">001</span><span class="p">:</span><span class="mi">0</span><span class="o">&gt;</span> <span class="n">mixed</span> <span class="o">=</span> <span class="o">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;bar&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="o">]</span>
+<span class="o">=&gt;</span> <span class="o">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;bar&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="o">]</span>
+<span class="n">irb</span><span class="p">(</span><span class="n">main</span><span class="p">):</span><span class="mo">002</span><span class="p">:</span><span class="mi">0</span><span class="o">&gt;</span> <span class="n">mixed</span><span class="o">.</span><span class="n">select</span><span class="p">{</span> <span class="o">|</span><span class="n">n</span><span class="o">|</span> <span class="n">n</span><span class="o">.</span><span class="n">is_a?</span><span class="p">(</span><span class="nb">Integer</span><span class="p">)</span> <span class="p">}</span>
+<span class="o">=&gt;</span> <span class="o">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="o">]</span>
+</code></pre></div>
+<p>Now we can do the same <code>reduce</code> we did previously:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">$</span> <span class="n">irb</span>
+<span class="n">irb</span><span class="p">(</span><span class="n">main</span><span class="p">):</span><span class="mo">001</span><span class="p">:</span><span class="mi">0</span><span class="o">&gt;</span> <span class="n">mixed</span> <span class="o">=</span> <span class="o">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;bar&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="o">]</span>
+<span class="o">=&gt;</span> <span class="o">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;bar&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="o">]</span>
+<span class="n">irb</span><span class="p">(</span><span class="n">main</span><span class="p">):</span><span class="mo">002</span><span class="p">:</span><span class="mi">0</span><span class="o">&gt;</span> <span class="n">mixed</span><span class="o">.</span><span class="n">select</span><span class="p">{</span> <span class="o">|</span><span class="n">n</span><span class="o">|</span> <span class="n">n</span><span class="o">.</span><span class="n">is_a?</span><span class="p">(</span><span class="nb">Integer</span><span class="p">)</span> <span class="p">}</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:+</span><span class="p">)</span>
+<span class="o">=&gt;</span> <span class="mi">15</span>
+</code></pre></div>
+<p>There&#39;s a problem here, though. Each time we use one of the Enumerable
+functions, we fully traverse the collection. In the last example, we run through
+the collection twice, once for <code>select</code> and once for <code>reduce</code>. If <code>mixed</code> was a
+very large collection, we would eventually run out of memory and the program
+would crash. To solve this, in Ruby 2.0, <code>Enumerator::Lazy</code> was introduced. I
+won&#39;t give a full explanation in this post, but the gist is to call <code>lazy</code> on
+the collection before using any <code>Enumerable</code> methods:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">$</span> <span class="n">irb</span>
+<span class="n">irb</span><span class="p">(</span><span class="n">main</span><span class="p">):</span><span class="mo">001</span><span class="p">:</span><span class="mi">0</span><span class="o">&gt;</span> <span class="n">mixed</span> <span class="o">=</span> <span class="o">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;bar&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="o">]</span>
+<span class="o">=&gt;</span> <span class="o">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;bar&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="o">]</span>
+<span class="n">irb</span><span class="p">(</span><span class="n">main</span><span class="p">):</span><span class="mo">002</span><span class="p">:</span><span class="mi">0</span><span class="o">&gt;</span> <span class="n">mixed</span><span class="o">.</span><span class="n">lazy</span><span class="o">.</span><span class="n">select</span><span class="p">{</span> <span class="o">|</span><span class="n">n</span><span class="o">|</span> <span class="n">n</span><span class="o">.</span><span class="n">is_a?</span><span class="p">(</span><span class="nb">Integer</span><span class="p">)</span> <span class="p">}</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:+</span><span class="p">)</span>
+<span class="o">=&gt;</span> <span class="mi">120</span>
+</code></pre></div>
+<p>Removing the call to <code>reduce</code>, we can see what we&#39;re actually building:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">$</span> <span class="n">irb</span>
+<span class="n">irb</span><span class="p">(</span><span class="n">main</span><span class="p">):</span><span class="mo">001</span><span class="p">:</span><span class="mi">0</span><span class="o">&gt;</span> <span class="n">mixed</span> <span class="o">=</span> <span class="o">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;bar&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="o">]</span>
+<span class="o">=&gt;</span> <span class="o">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;bar&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="o">]</span>
+<span class="n">irb</span><span class="p">(</span><span class="n">main</span><span class="p">):</span><span class="mo">002</span><span class="p">:</span><span class="mi">0</span><span class="o">&gt;</span> <span class="n">mixed</span><span class="o">.</span><span class="n">lazy</span><span class="o">.</span><span class="n">select</span><span class="p">{</span> <span class="o">|</span><span class="n">n</span><span class="o">|</span> <span class="n">n</span><span class="o">.</span><span class="n">is_a?</span><span class="p">(</span><span class="nb">Integer</span><span class="p">)</span> <span class="p">}</span>
+<span class="o">=&gt;</span> <span class="c1">#&lt;Enumerator::Lazy: #&lt;Enumerator::Lazy: [1, 2, &quot;foo&quot;, 3, 4, &quot;bar&quot;, 5]&gt;:select&gt;</span>
+</code></pre></div>
+<p>Calling <code>reduce</code> forces our <code>Enumerator::Lazy</code> to evaluate and perform the
+reduction. If we simply wanted a new array, we could call <code>to_a</code> on the
+<code>Enumerator::Lazy</code> to force evaluation.
+<a href="http://ruby-doc.org/core-2.2.3/Enumerator/Lazy.html">Check out the docs</a> for
+more details. Pat Shaughnessy has also written a very
+<a href="http://patshaughnessy.net/2013/4/3/ruby-2-0-works-hard-so-you-can-be-lazy">detailed blog post on <code>Enumerator::Lazy</code></a>
+that I wholeheartedly recommend.</p>
+
+<h4>Conclusion</h4>
+
+<p>Ruby allows developers to write clear concise code following object-oriented
+principles and using procedural or functional principles as well. To me, using
+the more functionally-inspired methods from <code>Enumerable</code> makes the developer&#39;s
+intent more clear without getting stuck in the details. It also allows
+developers to think at a higher level about <em>what</em> they want instead of telling
+the computer <em>how</em> to create what they want, making for more declarative code.</p>
+
+<p>What do you think? Are there any <code>Enumerable</code> methods you tend to reach for over
+others? Which ones are your favorites?</p>
+
+
+                </div>
+
+                
+
+                <hr />
+
+                
+                
+                <div class="author-profile">
+  <div class="about">
+    <em>ABOUT THE AUTHOR</em><br/>
+    <strong>Christopher Moeller</strong><br/>
+    <p>
+      Christopher is a self-taught developer and has been working with Ruby and
+      Ruby on Rails since 2010. He enjoys building the simple, elegant solution
+      to current problem he's solving and has recently picked up functional
+      programming, mostly with the
+      <a href="http://elixir-lang.org">Elixir programming language</a>.
+    </p>
+  </div>
+  <img src="/images/portrait-christopher-moeller.jpg" />
+</div>
+
+                
+
+                <hr>
+<p>
+  Grok Interactive specializes in web and mobile development using Ruby, Swift, Elixir, Javascript, and various other technologies to solve problems for our clients. If we can assist you, please do not hesitate to <a href="/#contact">contact us</a> today.
+</p>
+
+
+                <div class="share-page">
+  Share this on &rarr;
+  <a href="https://twitter.com/intent/tweet?text=Functional enumerators in Ruby&url=http://www.grok-interactive.com/blog/functional-enumerators-in-ruby/&via=&related=" rel="nofollow" target="_blank" title="Share on Twitter">Twitter</a>
+  <a href="https://facebook.com/sharer.php?u=http://www.grok-interactive.com/blog/functional-enumerators-in-ruby/" rel="nofollow" target="_blank" title="Share on Facebook">Facebook</a>
+  <a href="https://plus.google.com/share?url=http://www.grok-interactive.com/blog/functional-enumerators-in-ruby/" rel="nofollow" target="_blank" title="Share on Google+">Google+</a>
+</div>
+
+
+                
+<h3>Comments</h3>
+<hr />
+<!-- https://developers.facebook.com/docs/reference/plugins/comments/ -->
+<div class='comments'>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+      /* * * CONFIGURATION VARIABLES * * */
+      var disqus_shortname = 'grokinteractive';
+
+      /* * * DON'T EDIT BELOW THIS LINE * * */
+      (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+</div>
+
+
+
+              </div>
+            </div>
+
+
+          </div>
+
+          <div class="col c30">
+
+            <div class="well">
+  <h4><i class="icon fa fa-folder" title="Categories"></i> Categories</h4>
+  <ul class="nav nav-list">
+    
+
+    <li><a href="/blog/category/general/">
+      General
+    </a></li>
+    
+
+    <li><a href="/blog/category/software_development/">
+      Software development
+    </a></li>
+    
+
+    <li><a href="/blog/category/training/">
+      Training
+    </a></li>
+    
+
+    <li><a href="/blog/category/testing/">
+      Testing
+    </a></li>
+    
+
+    <li><a href="/blog/category/environments/">
+      Environments
+    </a></li>
+    
+
+    <li><a href="/blog/category/business_development/">
+      Business development
+    </a></li>
+    
+  </ul>
+</div>
+
+
+            
+<div class="well">
+  <h4><i class="icon fa fa-users" title="Authors"></i> Authors</h4>
+  <ul class="nav nav-list">
+    
+    
+    <li><a href="/blog/author/jason-straughan">Jason Straughan</a></li>
+    
+    
+    <li><a href="/blog/author/jason-ellis">Jason Ellis</a></li>
+    
+    
+    <li><a href="/blog/author/josh-freeman">Josh Freeman</a></li>
+    
+    
+    <li><a href="/blog/author/chris-hardee">Chris Hardee</a></li>
+    
+    
+    <li><a href="/blog/author/john-guest">John Guest</a></li>
+    
+    
+    <li><a href="/blog/author/anton-domratchev">Anton Domratchev</a></li>
+    
+    
+    <li><a href="/blog/author/joseph-villafranca">Joseph Villafranca</a></li>
+    
+    
+    <li><a href="/blog/author/christopher-moeller">Christopher Moeller</a></li>
+    
+  </ul>
+</div>
+
+
+
+            <div class="well">
+  <h4><i class="icon fa fa-tags" title="Categories"></i> Tags</h4>
+
+  <ul class="nav nav-list">
+    
+    <li><a href="/blog/tag/grok">Grok</a></li>
+    
+    <li><a href="/blog/tag/industry">Industry</a></li>
+    
+    <li><a href="/blog/tag/codeup">Codeup</a></li>
+    
+    <li><a href="/blog/tag/security">Security</a></li>
+    
+    <li><a href="/blog/tag/php">Php</a></li>
+    
+    <li><a href="/blog/tag/phpunit">Phpunit</a></li>
+    
+    <li><a href="/blog/tag/emacs">Emacs</a></li>
+    
+    <li><a href="/blog/tag/expression_engine">Expression engine</a></li>
+    
+    <li><a href="/blog/tag/javascript">Javascript</a></li>
+    
+    <li><a href="/blog/tag/dom">Dom</a></li>
+    
+    <li><a href="/blog/tag/jquery">Jquery</a></li>
+    
+    <li><a href="/blog/tag/git">Git</a></li>
+    
+    <li><a href="/blog/tag/githooks">Githooks</a></li>
+    
+    <li><a href="/blog/tag/source_control">Source control</a></li>
+    
+    <li><a href="/blog/tag/css">Css</a></li>
+    
+    <li><a href="/blog/tag/rails">Rails</a></li>
+    
+    <li><a href="/blog/tag/ubuntu">Ubuntu</a></li>
+    
+    <li><a href="/blog/tag/linux">Linux</a></li>
+    
+    <li><a href="/blog/tag/developers">Developers</a></li>
+    
+    <li><a href="/blog/tag/node.js">Node.js</a></li>
+    
+    <li><a href="/blog/tag/mongodb">Mongodb</a></li>
+    
+    <li><a href="/blog/tag/javascript">Javascript</a></li>
+    
+    <li><a href="/blog/tag/socket.io">Socket.io</a></li>
+    
+    <li><a href="/blog/tag/express.js">Express.js</a></li>
+    
+    <li><a href="/blog/tag/email">Email</a></li>
+    
+    <li><a href="/blog/tag/outlook">Outlook</a></li>
+    
+    <li><a href="/blog/tag/cross_mail_client">Cross mail client</a></li>
+    
+    <li><a href="/blog/tag/compatibility">Compatibility</a></li>
+    
+    <li><a href="/blog/tag/mvc">Mvc</a></li>
+    
+    <li><a href="/blog/tag/object_oriented_programming">Object oriented programming</a></li>
+    
+    <li><a href="/blog/tag/domain_driven_design">Domain driven design</a></li>
+    
+    <li><a href="/blog/tag/value_objects">Value objects</a></li>
+    
+    <li><a href="/blog/tag/types">Types</a></li>
+    
+    <li><a href="/blog/tag/csv">Csv</a></li>
+    
+    <li><a href="/blog/tag/mysql">Mysql</a></li>
+    
+    <li><a href="/blog/tag/laravel">Laravel</a></li>
+    
+    <li><a href="/blog/tag/ruby">Ruby</a></li>
+    
+    <li><a href="/blog/tag/functional_programming">Functional programming</a></li>
+    
+  </ul>
+</div>
+
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+    </div>
+  </div>
+
+  <footer>
+  <div class="container">
+    <div class="pull-left">
+      <p>&copy; 2013&ndash;2015 Grok Interactive, LLC</p>
+    </div>
+  </div>
+</footer>
+
+
+  <script type='text/javascript' src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js'></script>
+
+  <script src='/assets/global-5b2d0cc47ae047645ffc10228e2867fb.js' type='text/javascript'></script>
+
+  <script src="//static.getclicky.com/js" type="text/javascript"></script>
+  <script type="text/javascript">try{ clicky.init(100585693); }catch(e){}</script>
+  <noscript><p><img alt="Clicky" width="1" height="1" src="//in.getclicky.com/100585693ns.gif" /></p></noscript>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-43998305-2', 'grok-interactive.com');
+    ga('send', 'pageview');
+  </script>
+</body>
+</html>

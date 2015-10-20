@@ -2,141 +2,173 @@
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
         <loc>http://www.grok-interactive.com/blog/groking-the-web/</loc>
-        <lastmod>2015-09-07T16:16:12-04:00</lastmod>
+        <lastmod>2015-10-20T09:02:32-04:00</lastmod>
     </url>
     <url>
         <loc>http://www.grok-interactive.com/blog/introducting-chris-hardee/</loc>
-        <lastmod>2015-09-07T16:16:12-04:00</lastmod>
+        <lastmod>2015-10-20T09:02:32-04:00</lastmod>
     </url>
     <url>
         <loc>http://www.grok-interactive.com/blog/state-of-the-industry/</loc>
-        <lastmod>2015-09-07T16:16:12-04:00</lastmod>
+        <lastmod>2015-10-20T09:02:32-04:00</lastmod>
     </url>
     <url>
         <loc>http://www.grok-interactive.com/blog/codeup-for-a-brighter-future/</loc>
-        <lastmod>2015-09-07T16:16:12-04:00</lastmod>
+        <lastmod>2015-10-20T09:02:32-04:00</lastmod>
     </url>
     <url>
         <loc>http://www.grok-interactive.com/blog/introducing-josh-freeman/</loc>
-        <lastmod>2015-09-07T16:16:12-04:00</lastmod>
+        <lastmod>2015-10-20T09:02:32-04:00</lastmod>
     </url>
     <url>
         <loc>http://www.grok-interactive.com/blog/avoid-avenues-of-attack/</loc>
-        <lastmod>2015-09-07T16:16:12-04:00</lastmod>
+        <lastmod>2015-10-20T09:02:32-04:00</lastmod>
     </url>
     <url>
         <loc>http://www.grok-interactive.com/blog/setting-up-a-phpunit-testing-environment/</loc>
-        <lastmod>2015-09-07T16:16:12-04:00</lastmod>
+        <lastmod>2015-10-20T09:02:32-04:00</lastmod>
     </url>
     <url>
         <loc>http://www.grok-interactive.com/blog/laravel-emacs-part1/</loc>
-        <lastmod>2015-09-07T16:16:12-04:00</lastmod>
+        <lastmod>2015-10-20T09:02:32-04:00</lastmod>
     </url>
     <url>
         <loc>http://www.grok-interactive.com/blog/stash-ee-templates/</loc>
-        <lastmod>2015-09-07T16:16:12-04:00</lastmod>
+        <lastmod>2015-10-20T09:02:32-04:00</lastmod>
     </url>
     <url>
         <loc>
             http://www.grok-interactive.com/blog/javascript-dot-notation-vs-bracket-notation/
         </loc>
-        <lastmod>2015-09-07T16:16:12-04:00</lastmod>
+        <lastmod>2015-10-20T09:02:32-04:00</lastmod>
     </url>
     <url>
         <loc>http://www.grok-interactive.com/blog/javascript-everything-is-an-object-wrong/</loc>
-        <lastmod>2015-09-07T16:16:12-04:00</lastmod>
+        <lastmod>2015-10-20T09:02:32-04:00</lastmod>
     </url>
     <url>
         <loc>http://www.grok-interactive.com/blog/save-me-not/</loc>
-        <lastmod>2015-09-07T16:16:12-04:00</lastmod>
+        <lastmod>2015-10-20T09:02:32-04:00</lastmod>
     </url>
     <url>
         <loc>http://www.grok-interactive.com/blog/githooks/</loc>
-        <lastmod>2015-09-07T16:16:12-04:00</lastmod>
+        <lastmod>2015-10-20T09:02:32-04:00</lastmod>
     </url>
     <url>
         <loc>http://www.grok-interactive.com/blog/css-specificity/</loc>
-        <lastmod>2015-09-07T16:16:12-04:00</lastmod>
+        <lastmod>2015-10-20T09:02:32-04:00</lastmod>
     </url>
     <url>
         <loc>http://www.grok-interactive.com/blog/setting-up-rails-in-ubuntu/</loc>
-        <lastmod>2015-09-07T16:16:12-04:00</lastmod>
+        <lastmod>2015-10-20T09:02:32-04:00</lastmod>
     </url>
     <url>
         <loc>http://www.grok-interactive.com/blog/object-inheritance/</loc>
-        <lastmod>2015-09-07T16:16:12-04:00</lastmod>
+        <lastmod>2015-10-20T09:02:32-04:00</lastmod>
     </url>
     <url>
         <loc>http://www.grok-interactive.com/blog/happy-developers-are-good-developers/</loc>
-        <lastmod>2015-09-07T16:16:12-04:00</lastmod>
+        <lastmod>2015-10-20T09:02:32-04:00</lastmod>
     </url>
     <url>
         <loc>http://www.grok-interactive.com/blog/node-express-mongo-socketio-introduction/</loc>
-        <lastmod>2015-09-11T13:28:50-04:00</lastmod>
+        <lastmod>2015-10-20T09:02:32-04:00</lastmod>
     </url>
     <url>
         <loc>http://www.grok-interactive.com/blog/emails-in-outlook/</loc>
-        <lastmod>2015-09-07T16:16:12-04:00</lastmod>
+        <lastmod>2015-10-20T09:02:32-04:00</lastmod>
     </url>
     <url>
         <loc>http://www.grok-interactive.com/blog/great-apis-start-with-great-design/</loc>
-        <lastmod>2015-09-07T16:16:12-04:00</lastmod>
+        <lastmod>2015-10-20T09:02:32-04:00</lastmod>
     </url>
     <url>
         <loc>
             http://www.grok-interactive.com/blog/professional-development-activities-for-professional-developers/
         </loc>
-        <lastmod>2015-09-07T16:16:12-04:00</lastmod>
+        <lastmod>2015-10-20T09:02:32-04:00</lastmod>
     </url>
     <url>
         <loc>http://www.grok-interactive.com/blog/command-query-responsibility-segregation/</loc>
-        <lastmod>2015-09-07T16:16:12-04:00</lastmod>
+        <lastmod>2015-10-20T09:02:32-04:00</lastmod>
     </url>
     <url>
         <loc>http://www.grok-interactive.com/podcast/pilot-impostor-syndrome</loc>
-        <lastmod>2015-09-22T14:49:22-04:00</lastmod>
+        <lastmod>2015-10-20T09:02:32-04:00</lastmod>
     </url>
     <url>
         <loc>http://www.grok-interactive.com/blog/value-objects-in-ruby-part-1/</loc>
-        <lastmod>2015-09-07T16:16:12-04:00</lastmod>
+        <lastmod>2015-10-20T09:02:32-04:00</lastmod>
     </url>
     <url>
         <loc>http://www.grok-interactive.com/blog/value-objects-in-ruby-part-2/</loc>
-        <lastmod>2015-09-07T16:16:12-04:00</lastmod>
+        <lastmod>2015-10-20T09:02:32-04:00</lastmod>
     </url>
     <url>
         <loc>
             http://www.grok-interactive.com/blog/effective-stakeholder-developer-communications-using-cucumber/
         </loc>
-        <lastmod>2015-09-08T09:39:56-04:00</lastmod>
+        <lastmod>2015-10-20T09:02:32-04:00</lastmod>
     </url>
     <url>
         <loc>http://www.grok-interactive.com/podcast/code-reviews</loc>
-        <lastmod>2015-09-22T14:49:22-04:00</lastmod>
+        <lastmod>2015-10-20T09:02:32-04:00</lastmod>
     </url>
     <url>
         <loc>
             http://www.grok-interactive.com/blog/support-your-local-startup-taking-equity-in-projects/
         </loc>
-        <lastmod>2015-09-14T12:17:39-04:00</lastmod>
+        <lastmod>2015-10-20T09:02:32-04:00</lastmod>
     </url>
     <url>
         <loc>http://www.grok-interactive.com/podcast/apple-special-event-review</loc>
-        <lastmod>2015-09-22T11:50:28-04:00</lastmod>
+        <lastmod>2015-10-20T09:02:32-04:00</lastmod>
     </url>
     <url>
         <loc>http://www.grok-interactive.com/blog/adios-oliver/</loc>
-        <lastmod>2015-09-22T11:30:20-04:00</lastmod>
+        <lastmod>2015-10-20T09:02:32-04:00</lastmod>
     </url>
     <url>
         <loc>http://www.grok-interactive.com/podcast/cqrs</loc>
-        <lastmod>2015-09-22T12:25:17-04:00</lastmod>
+        <lastmod>2015-10-20T09:02:32-04:00</lastmod>
     </url>
     <url>
         <loc>
             http://www.grok-interactive.com/blog/import-large-csv-into-mysql-with-php-part-1/
         </loc>
-        <lastmod>2015-09-22T12:27:08-04:00</lastmod>
+        <lastmod>2015-10-20T09:02:32-04:00</lastmod>
+    </url>
+    <url>
+        <loc>
+            http://www.grok-interactive.com/blog/import-large-csv-into-mysql-with-php-part-2-csv-file-validation/
+        </loc>
+        <lastmod>2015-10-20T09:02:32-04:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.grok-interactive.com/podcast/tooling</loc>
+        <lastmod>2015-10-20T09:02:32-04:00</lastmod>
+    </url>
+    <url>
+        <loc>
+            http://www.grok-interactive.com/blog/import-large-csv-into-mysql-with-php-part-3-background-import/
+        </loc>
+        <lastmod>2015-10-20T09:02:32-04:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.grok-interactive.com/podcast/pleasure-reading-for-geeks</loc>
+        <lastmod>2015-10-20T09:02:32-04:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.grok-interactive.com/blog/functional-enumerators-in-ruby/</loc>
+        <lastmod>2015-10-20T09:02:32-04:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.grok-interactive.com/podcast/professional-development</loc>
+        <lastmod>2015-10-20T09:02:32-04:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.grok-interactive.com/podcast/ryan-orsinger-interview</loc>
+        <lastmod>2015-10-20T17:51:46-04:00</lastmod>
     </url>
     <url>
         <loc>http://www.grok-interactive.com/podcast/feed.xml</loc>
@@ -160,7 +192,7 @@
     </url>
     <url>
         <loc>http://www.grok-interactive.com/</loc>
-        <lastmod>2015-09-22T14:49:22-04:00</lastmod>
+        <lastmod>2015-10-20T17:51:46-04:00</lastmod>
     </url>
     <url>
         <loc>http://www.grok-interactive.com/rss.xml</loc>

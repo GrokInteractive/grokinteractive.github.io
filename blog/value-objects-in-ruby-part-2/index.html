@@ -58,7 +58,7 @@
 <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800,300|Open+Sans+Condensed:300' type='text/css' />
 <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.min.css' type='text/css' media='all' />
 
-<link href='/assets/global-001aa5df720ff14bc6f88bfc6c0dcbff.css' rel='stylesheet' type='text/css' />
+<link href='/assets/global-6b2036851216c08cdb9f2f1abbb4e9ac.css' rel='stylesheet' type='text/css' />
 
 <link rel="apple-touch-icon-precomposed" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png" />
 <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png" />
@@ -138,10 +138,12 @@
 
             <div class="canvas">
 
-              <div class="post">
+              <div class="post" itemscope itemprop="blogPost" itemtype="http://schema.org/BlogPosting">
 
-                <h1><a href="/blog/value-objects-in-ruby-part-2/" rel="bookmark" title="Link to Value objects in Ruby: Serializing your custom objects with ActiveRecord">Value objects in Ruby: Serializing your custom objects with ActiveRecord</a></h1>
-                <h5>by <a href="/blog/author/christopher-moeller" class="author">Christopher Moeller</a>
+                <h1><a href="/blog/value-objects-in-ruby-part-2/" rel="bookmark" title="Link to Value objects in Ruby: Serializing your custom objects with ActiveRecord" >Value objects in Ruby: Serializing your custom objects with ActiveRecord</a></h1>
+                <meta itemprop="name" content="Value objects in Ruby: Serializing your custom objects with ActiveRecord">
+                <meta itemprop="author" content="Christopher Moeller">
+                <h5>by <a href="/blog/author/christopher-moeller" class="author" itemprop="author">Christopher Moeller</a>
                   &nbsp;&nbsp;&nbsp;<strong>Sep 03, 2015</strong>&nbsp;&nbsp;&nbsp;
                   
                   <i class="icon fa fa-folder" title="Categories"></i>
@@ -172,7 +174,7 @@
 
                   <p>In the last post I discussed the value in moving beyond Ruby&#39;s built-in data types like Strings, Arrays, and Hashes in favor of using custom data types (or value objects). There are many benefits in designing a system with custom types, one of the greatest being that your intent is the code itself instead of in documentation or a wiki. <a href="/blog/value-objects-in-ruby-part-1/">Check out part 1 if you haven&#39;t had a chance yet</a>. This post will show you how you can use your custom data types with ActiveRecord.</p>
 
-<h2>Introduction</h2>
+<h3>Introduction</h3>
 
 <p>Most web applications we work on require storing data in a database. Like many Rails shops our default database of choice at Grok is <a href="http://www.postgresql.org">Postgres</a>. We can store the vast majority of data using its text types, numeric types, dates and times, and booleans. Postgres also provides support for collections with arrays and hstore as well as more specific types like UUIDs and IP addresses, allowing us to store that data in a more structured way instead of as text. This is <a href="http://www.postgresql.org/docs/9%204/static/datatype-net-types.html">how Postgres describes using the Network Address Types</a>:</p>
 
@@ -241,7 +243,7 @@ of the database.</p>
 with it. The biggest wins come, though, when we write our own serializers using
 value objects.</p>
 
-<h2>Using a custom EmailAddress class with ActiveRecord#serialize</h2>
+<h3>Using a custom EmailAddress class with ActiveRecord#serialize</h3>
 
 <p>In the last post we created a basic <code>EmailAddress</code> class that included some
 basic validation and comparison. Here&#39;s the same class again after some
@@ -347,7 +349,7 @@ irb<span class="o">(</span>main<span class="o">)</span>:010:0&gt; <span class="n
 <code>find_by</code>, etc. We don&#39;t lose anything there. But there are real productivity
 gains such as never having to deal with <code>nil</code> when it comes to a user&#39;s email.</p>
 
-<h2>Conclusion</h2>
+<h3>Conclusion</h3>
 
 <p>We&#39;ve come a long way. We can serialize and deserialize a User&#39;s email
 address with a custom class that can compare email addresses without <code>downcase</code>
@@ -387,6 +389,14 @@ class?</p>
 <p>
   Grok Interactive specializes in web and mobile development using Ruby, Swift, Elixir, Javascript, and various other technologies to solve problems for our clients. If we can assist you, please do not hesitate to <a href="/#contact">contact us</a> today.
 </p>
+
+
+                <div class="share-page">
+  Share this on &rarr;
+  <a href="https://twitter.com/intent/tweet?text=Value objects in Ruby: Serializing your custom objects with ActiveRecord&url=http://www.grok-interactive.com/blog/value-objects-in-ruby-part-2/&via=&related=" rel="nofollow" target="_blank" title="Share on Twitter">Twitter</a>
+  <a href="https://facebook.com/sharer.php?u=http://www.grok-interactive.com/blog/value-objects-in-ruby-part-2/" rel="nofollow" target="_blank" title="Share on Facebook">Facebook</a>
+  <a href="https://plus.google.com/share?url=http://www.grok-interactive.com/blog/value-objects-in-ruby-part-2/" rel="nofollow" target="_blank" title="Share on Google+">Google+</a>
+</div>
 
 
                 
@@ -462,19 +472,27 @@ class?</p>
   <h4><i class="icon fa fa-users" title="Authors"></i> Authors</h4>
   <ul class="nav nav-list">
     
+    
     <li><a href="/blog/author/jason-straughan">Jason Straughan</a></li>
+    
     
     <li><a href="/blog/author/jason-ellis">Jason Ellis</a></li>
     
+    
     <li><a href="/blog/author/josh-freeman">Josh Freeman</a></li>
+    
     
     <li><a href="/blog/author/chris-hardee">Chris Hardee</a></li>
     
+    
     <li><a href="/blog/author/john-guest">John Guest</a></li>
+    
     
     <li><a href="/blog/author/anton-domratchev">Anton Domratchev</a></li>
     
+    
     <li><a href="/blog/author/joseph-villafranca">Joseph Villafranca</a></li>
+    
     
     <li><a href="/blog/author/christopher-moeller">Christopher Moeller</a></li>
     
@@ -559,6 +577,10 @@ class?</p>
     <li><a href="/blog/tag/mysql">Mysql</a></li>
     
     <li><a href="/blog/tag/laravel">Laravel</a></li>
+    
+    <li><a href="/blog/tag/ruby">Ruby</a></li>
+    
+    <li><a href="/blog/tag/functional_programming">Functional programming</a></li>
     
   </ul>
 </div>

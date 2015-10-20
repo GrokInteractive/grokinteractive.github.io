@@ -560,18 +560,21 @@ body div.post {
   padding: 10px;
   margin-bottom: 10px;
   border-bottom: 2px solid #f0f0f0;
+  clear: both;
+  overflow: auto;
 }
-body div.post h1 {
-  margin: 36px 0;
-  font-size: 42px;
+body div.post h1,
+body div.post h2 {
+  margin: 30px 0 15px 0;
+  font-size: 36px;
   font-weight: 800;
   line-height: 45px;
   text-transform: uppercase;
 }
-body div.post h1 a {
+body div.post h1 a,
+body div.post h2 a {
   color: #4b4d4a;
 }
-body div.post h2,
 body div.post h3,
 body div.post h4 {
   margin: 18px 0;
@@ -604,6 +607,9 @@ body div.post a.more {
 body div.post div.image {
   text-align: center;
   margin-bottom: 10px;
+  width: 300px;
+  margin-right: 20px;
+  float: left;
 }
 body div.post img.gravatar {
   float: left;
@@ -982,4 +988,19 @@ section.form form fieldset textarea {
   outline: none;
   padding: 0 !important;
   margin-left: 0 !important;
+}
+.share-page {
+  text-align: center;
+  background: #faa61a;
+  color: #444444;
+  padding: 8px 15px;
+  border-radius: 5px;
+  margin: 1.5 em 0;
+}
+.share-page a {
+  color: #444444;
+  margin-left: 10px;
+}
+.share-page a:hover {
+  font-weight: 700;
 }

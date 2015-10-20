@@ -58,7 +58,7 @@
 <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800,300|Open+Sans+Condensed:300' type='text/css' />
 <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.min.css' type='text/css' media='all' />
 
-<link href='/assets/global-001aa5df720ff14bc6f88bfc6c0dcbff.css' rel='stylesheet' type='text/css' />
+<link href='/assets/global-6b2036851216c08cdb9f2f1abbb4e9ac.css' rel='stylesheet' type='text/css' />
 
 <link rel="apple-touch-icon-precomposed" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png" />
 <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png" />
@@ -138,10 +138,12 @@
 
             <div class="canvas">
 
-              <div class="post">
+              <div class="post" itemscope itemprop="blogPost" itemtype="http://schema.org/BlogPosting">
 
-                <h1><a href="/blog/import-large-csv-into-mysql-with-php-part-1/" rel="bookmark" title="Link to Importing Large CSV files with PHP Part 1: Import using one query">Importing Large CSV files with PHP Part 1: Import using one query</a></h1>
-                <h5>by <a href="/blog/author/anton-domratchev" class="author">Anton Domratchev</a>
+                <h1><a href="/blog/import-large-csv-into-mysql-with-php-part-1/" rel="bookmark" title="Link to Importing Large CSV files with PHP Part 1: Import using one query" >Importing Large CSV files with PHP Part 1: Import using one query</a></h1>
+                <meta itemprop="name" content="Importing Large CSV files with PHP Part 1: Import using one query">
+                <meta itemprop="author" content="Anton Domratchev">
+                <h5>by <a href="/blog/author/anton-domratchev" class="author" itemprop="author">Anton Domratchev</a>
                   &nbsp;&nbsp;&nbsp;<strong>Sep 22, 2015</strong>&nbsp;&nbsp;&nbsp;
                   
                   <i class="icon fa fa-folder" title="Categories"></i>
@@ -183,7 +185,7 @@
 </code></pre></div>
 <p>You can read more on the <code>LOAD DATA</code> function <a href="https://dev.mysql.com/doc/refman/5.1/en/load-data.html">here</a>. This was exciting discovery because the performance of importing a CSV file directly into mySQL database was unparalleled. Using this SQL query I was able to import a 65,000 row file in under 10 seconds, it is BLAZING fast. Below I will explain how to use this query in order to quickly import a CSV file into your Laravel app.</p>
 
-<h2>Controller</h2>
+<h3>Controller</h3>
 
 <p>First lets set up our <code>CsvImportController.php</code> in  <code>app/Acme/Controllers/</code></p>
 
@@ -194,8 +196,9 @@
 
 <span class="k">namespace</span> <span class="nx">Acme\Controllers</span><span class="p">;</span>
 
-<span class="k">use</span> <span class="nx">Input</span><span class="p">;</span>
 <span class="k">use</span> <span class="nx">Acme\Importing\CsvImporter</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Input</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Redirect</span><span class="p">;</span>
 
 <span class="k">class</span> <span class="nc">CsvImportController</span> <span class="k">extends</span> <span class="nx">BaseController</span>
 <span class="p">{</span>
@@ -205,13 +208,11 @@
     <span class="k">public</span> <span class="k">function</span> <span class="nf">store</span><span class="p">()</span>
     <span class="p">{</span>
         <span class="c1">// Check if form submitted a file</span>
-        <span class="k">if</span> <span class="p">(</span><span class="nx">Input</span><span class="o">::</span><span class="na">hasFile</span><span class="p">(</span><span class="nv">$csv_import</span><span class="p">))</span> <span class="p">{</span>
-
-
-            <span class="nv">$csv_import</span> <span class="o">=</span> <span class="nx">Input</span><span class="o">::</span><span class="na">file</span><span class="p">(</span><span class="s1">&#39;csv_import&#39;</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">Input</span><span class="o">::</span><span class="na">hasFile</span><span class="p">(</span><span class="s1">&#39;csv_import&#39;</span><span class="p">))</span> <span class="p">{</span>
+            <span class="nv">$csv_file</span> <span class="o">=</span> <span class="nx">Input</span><span class="o">::</span><span class="na">file</span><span class="p">(</span><span class="s1">&#39;csv_import&#39;</span><span class="p">);</span>
 
             <span class="c1">// You wish to do file validation at this point</span>
-            <span class="k">if</span> <span class="p">(</span><span class="nv">$csv_import</span><span class="o">-&gt;</span><span class="na">isValid</span><span class="p">())</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nv">$csv_file</span><span class="o">-&gt;</span><span class="na">isValid</span><span class="p">())</span> <span class="p">{</span>
 
                 <span class="c1">// We can also create a CsvStructureValidator class</span>
                 <span class="c1">// So that we can validate the structure of our CSV file</span>
@@ -220,7 +221,7 @@
                 <span class="nv">$csv_importer</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">CsvFileImporter</span><span class="p">();</span>
 
                 <span class="c1">// Import our csv file</span>
-                <span class="k">if</span> <span class="p">(</span><span class="nv">$csv_importer</span><span class="o">-&gt;</span><span class="na">import</span><span class="p">(</span><span class="nv">$csv_import</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span><span class="nv">$csv_importer</span><span class="o">-&gt;</span><span class="na">import</span><span class="p">(</span><span class="nv">$csv_file</span><span class="p">)</span> <span class="p">{</span>
                     <span class="c1">// Provide success message to the user</span>
                     <span class="nv">$message</span> <span class="o">=</span> <span class="s1">&#39;Your file has been successfully imported!&#39;</span>
                 <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
@@ -262,7 +263,7 @@
 <span class="sd">     * @param Symfony\Component\HttpFoundation\File\UploadedFile $csv_import</span>
 <span class="sd">     * @return int number of lines imported</span>
 <span class="sd">     */</span>
-    <span class="k">public</span> <span class="nx">fuction</span> <span class="nx">import</span><span class="p">(</span><span class="nv">$csv_import</span><span class="p">)</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">import</span><span class="p">(</span><span class="nv">$csv_import</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="c1">// Save file to temp directory</span>
         <span class="nv">$moved_file</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">moveFile</span><span class="p">(</span><span class="nv">$csv_import</span><span class="p">);</span>
@@ -435,6 +436,8 @@ return array(
 
 <p>Using this method large CSV files can be imported into MySQL really fast and thus are not required to be processed later. In a later post I will describe how we can validate the contents of the file before attempt to import it. I will also make a post about storing the CSV file and processing it at a later time using <code>php artisan</code> command and <code>crontab</code> job. If you enjoyed this post, share it, if you have questions, comments or concearns feel free to leave a comment below.</p>
 
+<p>Next we will look at validating the CSV file structure before we run this import, head on over to <a href="/blog/import-large-csv-into-mysql-with-php-part-2-csv-file-validation/">Importing Large CSV files with PHP Part 2: Validating CSV file structure</a></p>
+
 
                 </div>
 
@@ -459,6 +462,14 @@ return array(
 <p>
   Grok Interactive specializes in web and mobile development using Ruby, Swift, Elixir, Javascript, and various other technologies to solve problems for our clients. If we can assist you, please do not hesitate to <a href="/#contact">contact us</a> today.
 </p>
+
+
+                <div class="share-page">
+  Share this on &rarr;
+  <a href="https://twitter.com/intent/tweet?text=Importing Large CSV files with PHP Part 1: Import using one query&url=http://www.grok-interactive.com/blog/import-large-csv-into-mysql-with-php-part-1/&via=&related=" rel="nofollow" target="_blank" title="Share on Twitter">Twitter</a>
+  <a href="https://facebook.com/sharer.php?u=http://www.grok-interactive.com/blog/import-large-csv-into-mysql-with-php-part-1/" rel="nofollow" target="_blank" title="Share on Facebook">Facebook</a>
+  <a href="https://plus.google.com/share?url=http://www.grok-interactive.com/blog/import-large-csv-into-mysql-with-php-part-1/" rel="nofollow" target="_blank" title="Share on Google+">Google+</a>
+</div>
 
 
                 
@@ -534,19 +545,27 @@ return array(
   <h4><i class="icon fa fa-users" title="Authors"></i> Authors</h4>
   <ul class="nav nav-list">
     
+    
     <li><a href="/blog/author/jason-straughan">Jason Straughan</a></li>
+    
     
     <li><a href="/blog/author/jason-ellis">Jason Ellis</a></li>
     
+    
     <li><a href="/blog/author/josh-freeman">Josh Freeman</a></li>
+    
     
     <li><a href="/blog/author/chris-hardee">Chris Hardee</a></li>
     
+    
     <li><a href="/blog/author/john-guest">John Guest</a></li>
+    
     
     <li><a href="/blog/author/anton-domratchev">Anton Domratchev</a></li>
     
+    
     <li><a href="/blog/author/joseph-villafranca">Joseph Villafranca</a></li>
+    
     
     <li><a href="/blog/author/christopher-moeller">Christopher Moeller</a></li>
     
@@ -631,6 +650,10 @@ return array(
     <li><a href="/blog/tag/mysql">Mysql</a></li>
     
     <li><a href="/blog/tag/laravel">Laravel</a></li>
+    
+    <li><a href="/blog/tag/ruby">Ruby</a></li>
+    
+    <li><a href="/blog/tag/functional_programming">Functional programming</a></li>
     
   </ul>
 </div>
