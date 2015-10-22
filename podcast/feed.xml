@@ -19,22 +19,22 @@
         <itunes:explicit>no</itunes:explicit>
         <itunes:image href="http://dicf1uf588bsp.cloudfront.net/images/show-image-v3-1400.jpg" />
         <atom:link href="http://www.grok-interactive.com/thegrokcast.xml" rel="self" type="application/rss+xml" />
-        <pubDate>Tue, 20 Oct 2015 18:55:18 -0400</pubDate>
+        <pubDate>Thu, 22 Oct 2015 13:03:34 -0400</pubDate>
         <title>The Grok Cast</title>
         <itunes:author>The Team at Grok Interactive, LLC</itunes:author>
         <description>Join the team of web developers from Grok Interactive as they discuss the topics, trends, and top stories that impact the world of web professionals. If you work in any capacity with web developers, designers, or marketers, you will be right at home with The Grok Cast.</description>
         <itunes:keywords>web, developer, internet, designer, ruby, rails, elixir, php, javascript, html, css, webdev, code, git</itunes:keywords>
         <itunes:summary>Join the team of web developers from Grok Interactive as they discuss the topics, trends, and top stories that impact the world of web professionals. If you work in any capacity with web developers, designers, or marketers, you will be right at home with The Grok Cast.</itunes:summary>
         <itunes:subtitle>Join the team of web developers from Grok Interactive as they discuss the topics, trends, and top stories that impact the world of web professionals. If you work in any capacity with web developers, designers, or marketers, you will be right at home.</itunes:subtitle>
-        <lastBuildDate>Tue, 20 Oct 2015 18:55:18 -0400</lastBuildDate>
+        <lastBuildDate>Thu, 22 Oct 2015 13:03:34 -0400</lastBuildDate>
         
         <item>
             <title>07 - Ryan Orsinger Interview</title>
             <itunes:image href="http://dicf1uf588bsp.cloudfront.net/images/show-image-v3-1400.jpg" />
-            <description>Listen along as we interview a long time friend, former employee and CodeUp instructor; Ryan Orsinger</description>
+            <description></description>
             <itunes:keywords>development, professional, learning, Codeup, Interview</itunes:keywords>
-            <itunes:subtitle>Listen along as we interview a long time friend, former employee and CodeUp instructor; Ryan Orsinger</itunes:subtitle>
-            <itunes:summary>Listen along as we interview a long time friend, former employee and CodeUp instructor; Ryan Orsinger</itunes:summary>
+            <itunes:subtitle></itunes:subtitle>
+            <itunes:summary></itunes:summary>
             <enclosure url="http://dicf1uf588bsp.cloudfront.net/07-ryan-orsinger-interview.mp3" type="audio/mpeg" length="40215962" />
             <guid isPermaLink="false">http://www.grok-interactive.com/podcast/ryan-orsinger-interview</guid>
             <itunes:explicit>no</itunes:explicit>
@@ -45,10 +45,10 @@
         <item>
             <title>06 - Professional Development</title>
             <itunes:image href="http://dicf1uf588bsp.cloudfront.net/images/show-image-v3-1400.jpg" />
-            <description>Continuing education is especially important in this industry.  Listen to some developers discuss their methods and thoughts on professional development</description>
+            <description></description>
             <itunes:keywords>development, professional, learning</itunes:keywords>
-            <itunes:subtitle>Continuing education is especially important in this industry.  Listen to some developers discuss their methods and thoughts on professional development</itunes:subtitle>
-            <itunes:summary>Continuing education is especially important in this industry.  Listen to some developers discuss their methods and thoughts on professional development</itunes:summary>
+            <itunes:subtitle></itunes:subtitle>
+            <itunes:summary></itunes:summary>
             <enclosure url="http://dicf1uf588bsp.cloudfront.net/06-professional-development.mp3" type="audio/mpeg" length="54340714" />
             <guid isPermaLink="false">http://www.grok-interactive.com/podcast/professional-development</guid>
             <itunes:explicit>no</itunes:explicit>
@@ -59,10 +59,10 @@
         <item>
             <title>05 - Pleasure Reading for Geeks</title>
             <itunes:image href="http://dicf1uf588bsp.cloudfront.net/images/show-image-v3-1400.jpg" />
-            <description>The crew from Grok Interactive discuss their favorite pleasure reading material.</description>
+            <description></description>
             <itunes:keywords>book, entertainment, fiction, science fiction, fantasy</itunes:keywords>
-            <itunes:subtitle>The crew from Grok Interactive discuss their favorite pleasure reading material.</itunes:subtitle>
-            <itunes:summary>The crew from Grok Interactive discuss their favorite pleasure reading material.</itunes:summary>
+            <itunes:subtitle></itunes:subtitle>
+            <itunes:summary></itunes:summary>
             <enclosure url="http://dicf1uf588bsp.cloudfront.net/05-pleasure-reading.mp3" type="audio/mpeg" length="38729860" />
             <guid isPermaLink="false">http://www.grok-interactive.com/podcast/pleasure-reading-for-geeks</guid>
             <itunes:explicit>no</itunes:explicit>
@@ -73,10 +73,10 @@
         <item>
             <title>04 - Tooling</title>
             <itunes:image href="http://dicf1uf588bsp.cloudfront.net/images/show-image-v3-1400.jpg" />
-            <description>The crew from Grok Interactive discuss common tools of the trade; IDEs, Editors, Terminals and Tooling.</description>
+            <description></description>
             <itunes:keywords>tools, tooling, terminal, ide, editor</itunes:keywords>
-            <itunes:subtitle>The crew from Grok Interactive discuss common tools of the trade; IDEs, Editors, Terminals and Tooling.</itunes:subtitle>
-            <itunes:summary>The crew from Grok Interactive discuss common tools of the trade; IDEs, Editors, Terminals and Tooling.</itunes:summary>
+            <itunes:subtitle></itunes:subtitle>
+            <itunes:summary></itunes:summary>
             <enclosure url="http://dicf1uf588bsp.cloudfront.net/04-tooling.mp3" type="audio/mpeg" length="36004961" />
             <guid isPermaLink="false">http://www.grok-interactive.com/podcast/tooling</guid>
             <itunes:explicit>no</itunes:explicit>
@@ -87,10 +87,10 @@
         <item>
             <title>03 - Command Query Responsibility Segregation Design Pattern</title>
             <itunes:image href="http://dicf1uf588bsp.cloudfront.net/images/show-image-v3-1400.jpg" />
-            <description>The crew from Grok Interactive discuss command query responsibility segregation (CQRS).</description>
+            <description></description>
             <itunes:keywords>CQRS, Rapid Application Development </itunes:keywords>
-            <itunes:subtitle>The crew from Grok Interactive discuss command query responsibility segregation (CQRS).</itunes:subtitle>
-            <itunes:summary>The crew from Grok Interactive discuss command query responsibility segregation (CQRS).</itunes:summary>
+            <itunes:subtitle></itunes:subtitle>
+            <itunes:summary></itunes:summary>
             <enclosure url="http://dicf1uf588bsp.cloudfront.net/03-cqrs.mp3" type="audio/mpeg" length="31157238" />
             <guid isPermaLink="false">http://www.grok-interactive.com/podcast/cqrs</guid>
             <itunes:explicit>no</itunes:explicit>
@@ -101,10 +101,10 @@
         <item>
             <title>02 - Apple Special Event Review</title>
             <itunes:image href="http://dicf1uf588bsp.cloudfront.net/images/show-image-v3-1400.jpg" />
-            <description>The crew from Grok Interactive discuss the Apple Special Event releases of the new iPad Pro, Apple Pencil, iOS 9, watchOS 2, tvOS, and other announcements.</description>
+            <description></description>
             <itunes:keywords>apple, tvos, ios, apple watch, ipad, ipad pro, iphone, swift</itunes:keywords>
-            <itunes:subtitle>The crew from Grok Interactive discuss the Apple Special Event releases of the new iPad Pro, Apple Pencil, iOS 9, watchOS 2, tvOS, and other announcements.</itunes:subtitle>
-            <itunes:summary>The crew from Grok Interactive discuss the Apple Special Event releases of the new iPad Pro, Apple Pencil, iOS 9, watchOS 2, tvOS, and other announcements.</itunes:summary>
+            <itunes:subtitle></itunes:subtitle>
+            <itunes:summary></itunes:summary>
             <enclosure url="http://dicf1uf588bsp.cloudfront.net/02-apple-event.mp3" type="audio/mpeg" length="39232335" />
             <guid isPermaLink="false">http://www.grok-interactive.com/podcast/apple-special-event-review</guid>
             <itunes:explicit>no</itunes:explicit>
@@ -115,10 +115,10 @@
         <item>
             <title>01 - Code Reviews</title>
             <itunes:image href="http://dicf1uf588bsp.cloudfront.net/images/show-image-v3-1400.jpg" />
-            <description>Jason, Josh, Christopher and Jeffrey sit down to discuss code reviews and their importance in the software development world as well as things we have learned about how to not only make better reviews but accept others reviews in the way they were meant.</description>
+            <description></description>
             <itunes:keywords>code, review, developer, webdev, ruby, php, qa</itunes:keywords>
-            <itunes:subtitle>Jason, Josh, Christopher and Jeffrey sit down to discuss code reviews and their importance in the software development world as well as things we have learned about how to not only make better reviews but accept others reviews in the way they were meant.</itunes:subtitle>
-            <itunes:summary>Jason, Josh, Christopher and Jeffrey sit down to discuss code reviews and their importance in the software development world as well as things we have learned about how to not only make better reviews but accept others reviews in the way they were meant.</itunes:summary>
+            <itunes:subtitle></itunes:subtitle>
+            <itunes:summary></itunes:summary>
             <enclosure url="http://dicf1uf588bsp.cloudfront.net/01-code-reviews.mp3" type="audio/mpeg" length="36575679" />
             <guid isPermaLink="false">http://www.grok-interactive.com/podcast/code-reviews</guid>
             <itunes:explicit>no</itunes:explicit>
@@ -129,10 +129,10 @@
         <item>
             <title>00 - Pilot - Impostor Syndrome</title>
             <itunes:image href="http://dicf1uf588bsp.cloudfront.net/images/show-image-v3-1400.jpg" />
-            <description>The Jasons, Josh, and Joseph all sit down to discuss impostor syndrome and how it has impacted each of them during their careers as web developers.</description>
+            <description></description>
             <itunes:keywords>impostor, syndrome, developer, webdev, ruby, php, code</itunes:keywords>
-            <itunes:subtitle>The Jasons, Josh, and Joseph all sit down to discuss impostor syndrome and how it has impacted each of them during their careers as web developers.</itunes:subtitle>
-            <itunes:summary>The Jasons, Josh, and Joseph all sit down to discuss impostor syndrome and how it has impacted each of them during their careers as web developers.</itunes:summary>
+            <itunes:subtitle></itunes:subtitle>
+            <itunes:summary></itunes:summary>
             <enclosure url="http://dicf1uf588bsp.cloudfront.net/00-pilot-impostor-syndrome.mp3" type="audio/mpeg" length="31461304" />
             <guid isPermaLink="false">http://www.grok-interactive.com/podcast/pilot-impostor-syndrome</guid>
             <itunes:explicit>no</itunes:explicit>

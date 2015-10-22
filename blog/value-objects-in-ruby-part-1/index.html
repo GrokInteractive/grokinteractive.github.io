@@ -138,12 +138,15 @@
 
             <div class="canvas">
 
-              <div class="post" itemscope itemprop="blogPost" itemtype="http://schema.org/BlogPosting">
+              <div class="post" itemscope itemtype="http://schema.org/BlogPosting" itemid="http://www.grok-interactive.com/blog/value-objects-in-ruby-part-1/">
 
-                <h1><a href="/blog/value-objects-in-ruby-part-1/" rel="bookmark" title="Link to Value objects in Ruby: Creating custom data types" >Value objects in Ruby: Creating custom data types</a></h1>
+                <h1 itemprop="headline"><a href="/blog/value-objects-in-ruby-part-1/" rel="bookmark" title="Link to Value objects in Ruby: Creating custom data types">Value objects in Ruby: Creating custom data types</a></h1>
                 <meta itemprop="name" content="Value objects in Ruby: Creating custom data types">
-                <meta itemprop="author" content="Christopher Moeller">
-                <h5>by <a href="/blog/author/christopher-moeller" class="author" itemprop="author">Christopher Moeller</a>
+                <meta itemprop="description" content="Ruby provides a rich set of value objects for things like IP addresses, Dates, Strings, Hashes, Arrays, etc. When working with data in our applications we can usually start with one of the types that Ruby gives us. This helps us get started very quickly but it can get out of hand as requirements change. Just about every application needs data in a particular format, like an email address or a list of investments.">
+                <meta itemprop="datePublished" content="2015-09-01 00:00:00 -0400">
+                <meta itemprop="image" content="http://www.grok-interactive.com/images/2015/08/value_objects.jpg">
+                <meta itemprop="discussionUrl" content="http://www.grok-interactive.com/blog/value-objects-in-ruby-part-1/">
+                <h5 itemprop="author" itemscope itemtype="http://schema.org/Person">by <a href="http://www.grok-interactive.com/blog/author/christopher-moeller" class="author" itemprop="url"><span itemprop="name">Christopher Moeller</span></a>
                   &nbsp;&nbsp;&nbsp;<strong>Sep 01, 2015</strong>&nbsp;&nbsp;&nbsp;
                   
                   <i class="icon fa fa-folder" title="Categories"></i>
@@ -399,6 +402,19 @@ class would need to create a new <code>EmailAddress</code> for the comparison. T
 
 
 
+                <div itemprop="provider" itemscope itemtype="http://schema.org/Organization">
+  <meta itemprop="name" content="Grok Interactive, LLC">
+  <meta itemprop="logo" content="http://www.grok-interactive.com/images/grok-logo.svg">
+  <div itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+    <meta itemprop="streetAddress" content="3517 Columbia Dr">
+    <meta itemprop="postalCode" content="78108">
+    <meta itemprop="addressLocality" content="San Antonio, Texas">
+    <meta itemprop="email" content="jason@grok-interactive.com">
+    <meta itemprop="telephone" content="1-210-702-3915">
+  </div>
+</div>
+
+
               </div>
             </div>
 
@@ -559,6 +575,8 @@ class would need to create a new <code>EmailAddress</code> for the comparison. T
     <li><a href="/blog/tag/ruby">Ruby</a></li>
     
     <li><a href="/blog/tag/functional_programming">Functional programming</a></li>
+    
+    <li><a href="/blog/tag/schema.org">Schema.org</a></li>
     
   </ul>
 </div>

@@ -138,12 +138,15 @@
 
             <div class="canvas">
 
-              <div class="post" itemscope itemprop="blogPost" itemtype="http://schema.org/BlogPosting">
+              <div class="post" itemscope itemtype="http://schema.org/BlogPosting" itemid="http://www.grok-interactive.com/blog/import-large-csv-into-mysql-with-php-part-3-background-import/">
 
-                <h1><a href="/blog/import-large-csv-into-mysql-with-php-part-3-background-import/" rel="bookmark" title="Link to Importing Large CSV files with PHP Part 3: Processing and Validating data in background" >Importing Large CSV files with PHP Part 3: Processing and Validating data in background</a></h1>
+                <h1 itemprop="headline"><a href="/blog/import-large-csv-into-mysql-with-php-part-3-background-import/" rel="bookmark" title="Link to Importing Large CSV files with PHP Part 3: Processing and Validating data in background">Importing Large CSV files with PHP Part 3: Processing and Validating data in background</a></h1>
                 <meta itemprop="name" content="Importing Large CSV files with PHP Part 3: Processing and Validating data in background">
-                <meta itemprop="author" content="Anton Domratchev">
-                <h5>by <a href="/blog/author/anton-domratchev" class="author" itemprop="author">Anton Domratchev</a>
+                <meta itemprop="description" content="In a case where the structure of the CSV data requires some processing at the time of import you may want to consider processing it in the background. In this tutorial I will walk you through setting up an artisan command to process your import, and setting up a cron job to run the command in the background on your server.">
+                <meta itemprop="datePublished" content="2015-10-06 00:00:00 -0400">
+                <meta itemprop="image" content="http://www.grok-interactive.com/images/2015/08/CSV_into_MySQL.png">
+                <meta itemprop="discussionUrl" content="http://www.grok-interactive.com/blog/import-large-csv-into-mysql-with-php-part-3-background-import/">
+                <h5 itemprop="author" itemscope itemtype="http://schema.org/Person">by <a href="http://www.grok-interactive.com/blog/author/anton-domratchev" class="author" itemprop="url"><span itemprop="name">Anton Domratchev</span></a>
                   &nbsp;&nbsp;&nbsp;<strong>Oct 06, 2015</strong>&nbsp;&nbsp;&nbsp;
                   
                   <i class="icon fa fa-folder" title="Categories"></i>
@@ -608,6 +611,19 @@ The processFileImport method will fetch all of the CSV imports with the CSV rows
 
 
 
+                <div itemprop="provider" itemscope itemtype="http://schema.org/Organization">
+  <meta itemprop="name" content="Grok Interactive, LLC">
+  <meta itemprop="logo" content="http://www.grok-interactive.com/images/grok-logo.svg">
+  <div itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+    <meta itemprop="streetAddress" content="3517 Columbia Dr">
+    <meta itemprop="postalCode" content="78108">
+    <meta itemprop="addressLocality" content="San Antonio, Texas">
+    <meta itemprop="email" content="jason@grok-interactive.com">
+    <meta itemprop="telephone" content="1-210-702-3915">
+  </div>
+</div>
+
+
               </div>
             </div>
 
@@ -768,6 +784,8 @@ The processFileImport method will fetch all of the CSV imports with the CSV rows
     <li><a href="/blog/tag/ruby">Ruby</a></li>
     
     <li><a href="/blog/tag/functional_programming">Functional programming</a></li>
+    
+    <li><a href="/blog/tag/schema.org">Schema.org</a></li>
     
   </ul>
 </div>

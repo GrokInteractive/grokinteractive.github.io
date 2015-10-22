@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Better search engine results with Schema.org</title>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Language" content="en" />
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+<meta name="author" content="Grok Interactive, LLC">
+<meta name="description" content="Learn how to get better search engine results and better click through rates by using Schema.org and HTML5 to make your sites content more machine readable.">
+<meta name="MS.LOCALE" content="EN-US" />
+<meta name="revisit-after" content="10 days" />
+<meta name="robots" content="index,follow" />
+<meta name="URL" content="http://www.grok-interactive.com" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="fb:admins" content="440639386014676"/>
+<meta property="fb:admins" content="621293620"/>
+<meta property="fb:admins" content="710704899"/>
+
+<meta property="og:title" content="Better search engine results with Schema.org">
+
+<meta property="og:type" content="article">
+
+<meta property="og:url" content="http://www.grok-interactive.com/blog/better-search-engine-results-with-schema-org/">
+
+
+<meta property="og:image" content="http://www.grok-interactive.com/images/2015/10/html5_schema_markup.jpg">
+
+
+
+<meta property="og:description" content="Learn how to get better search engine results and better click through rates by using Schema.org and HTML5 to make your sites content more machine readable.">
+
+
+<meta property="og:site_name" content="Grok Interactive">
+
+<meta property="og:locale" content="en_US">
+
+
+<meta property="article:published_time" content="2015-10-22T00:00:00-04:00">
+
+
+<meta property="fb:admins" content="">
+<meta property="fb:app_id" content="">
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@GrokInteractive" />
+<meta name="twitter:title" content="Better search engine results with Schema.org" />
+<meta name="twitter:description" content="Learn how to get better search engine results and better click through rates by using Schema.org and HTML5 to make your sites content more machine readable." />
+<meta name="twitter:url" content="http://www.grok-interactive.com/blog/better-search-engine-results-with-schema-org/" />
+
+
+<meta name="twitter:image" content="http://www.grok-interactive.com/images/2015/10/html5_schema_markup.jpg" />
+
+
+
+
+<link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800,300|Open+Sans+Condensed:300' type='text/css' />
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.min.css' type='text/css' media='all' />
+
+<link href='/assets/global-6b2036851216c08cdb9f2f1abbb4e9ac.css' rel='stylesheet' type='text/css' />
+
+<link rel="apple-touch-icon-precomposed" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png" />
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png" />
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png" />
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png" />
+<link rel="apple-touch-icon-precomposed" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png" />
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon-precomposed" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png" />
+<link rel="icon" type="image/png" href="/images/favicons/favicon-196x196.png" sizes="196x196" />
+<link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32" />
+<link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16" />
+<link rel="icon" type="image/png" href="/images/favicons/favicon-128.png" sizes="128x128" />
+<meta name="application-name" content="Grok Interactive, LLC"/>
+<meta name="msapplication-TileColor" content="#000000" />
+<meta name="msapplication-TileImage" content="/assets/img/favicons/mstile-144x144.png" />
+<meta name="msapplication-square70x70logo" content="/assets/img/favicons/mstile-70x70.png" />
+<meta name="msapplication-square150x150logo" content="/assets/img/favicons/mstile-150x150.png" />
+<meta name="msapplication-wide310x150logo" content="/assets/img/favicons/mstile-310x150.png" />
+<meta name="msapplication-square310x310logo" content="/assets/img/favicons/mstile-310x310.png" />
+
+
+</head>
+
+<body style="display: none;">
+
+  <div id="wrap">
+    <div id="main">
+      <header>
+        <div class="navbar navbar-inverse navbar-static-top">
+          <div class="navbar-inner">
+            <div class="container">
+              <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="brand grok-logo" href="/">Grok Interactive, LLC Home Page</a>
+              <div class="nav-collapse collapse pull-right">
+                <ul class="nav">
+                  <li class='blog active'><a href="/blog/">Blog</a></li>
+                  <li class='podcast'><a href="/podcast/">Podcast</a></li>
+                  <li class='about'><a href="/#about" class='slide'>About</a></li>
+                  <li class='service'><a href="/#service" class='slide'>Service</a></li>
+                  <li class='work'><a href="/#work" class='slide'>Work</a></li>
+                  <li class='contact'><a href="/#contact" class='slide'>Contact</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+      <section class="podcast-cta" id="podcast-cta" >
+
+        <div class="container">
+          <div class="row">
+            <div class="span12">
+
+              <h4>Check out our new <a href="/podcast/">podcast</a> "The Grok Cast" now <a href="https://itunes.apple.com/us/podcast/the-grok-cast/id1036008796">available on iTunes!</a></h4>
+
+            </div>
+          </div>
+        </div>
+
+      </section>
+      <div class="content">
+  <div class="container">
+    <div class="inner">
+      <div class="canvas">
+
+        <div class="columns">
+          <div class="col c70">
+
+            
+            
+
+            <div class="canvas">
+
+              <div class="post" itemscope itemtype="http://schema.org/BlogPosting" itemid="http://www.grok-interactive.com/blog/better-search-engine-results-with-schema-org/">
+
+                <h1 itemprop="headline"><a href="/blog/better-search-engine-results-with-schema-org/" rel="bookmark" title="Link to Better search engine results with Schema.org">Better search engine results with Schema.org</a></h1>
+                <meta itemprop="name" content="Better search engine results with Schema.org">
+                <meta itemprop="description" content="Learn how to get better search engine results and better click through rates by using Schema.org and HTML5 to make your sites content more machine readable.">
+                <meta itemprop="datePublished" content="2015-10-22 00:00:00 -0400">
+                <meta itemprop="image" content="http://www.grok-interactive.com/images/2015/10/html5_schema_markup.jpg">
+                <meta itemprop="discussionUrl" content="http://www.grok-interactive.com/blog/better-search-engine-results-with-schema-org/">
+                <h5 itemprop="author" itemscope itemtype="http://schema.org/Person">by <a href="http://www.grok-interactive.com/blog/author/jason-ellis" class="author" itemprop="url"><span itemprop="name">Jason Ellis</span></a>
+                  &nbsp;&nbsp;&nbsp;<strong>Oct 22, 2015</strong>&nbsp;&nbsp;&nbsp;
+                  
+                  <i class="icon fa fa-folder" title="Categories"></i>
+                  
+                  <a href="/blog/category/software_development/" class="category">Software development</a>
+                  
+                  
+
+                  
+                  <i class="icon fa fa-tags" title="Tags"></i>
+                  
+                  <a href="/blog/tag/schema.org/" class="tag">Schema.org</a>
+                  
+                  
+
+                  
+                </h5>
+
+                <div class=''>
+
+                  
+                  <img src="/images/2015/10/html5_schema_markup.jpg" width="150" height="150" class="pull-right" />
+                  
+
+                  <p>Grok Interactive in and of itself is an ever evolving going concern.  We are always iterating on new ideas and trying new things.  We have the luxury of being agile in a nimble sort of way which allows us to try new things or pivot on an idea in short order.  </p>
+
+<p>So when we started working on a <a href="http://www.grok-interactive.com/podcast/">podcast</a> we wanted to get the word out quickly via our blog what it was we were doing and that we thought everyone should give it a <a href="http://www.grok-interactive.com/podcast/">listen</a>!</p>
+
+<p>The issue is we noticed our search engine results page click through rate (SERP/CTR) was kinda poor. Our SERP presence was poor to say the least so our CTR suffered.</p>
+
+<p>We needed to fix this and started to explore ways of doing so;  Enter <a href="http://schema.org">Schema.org</a>.</p>
+
+<h4>Schema.org</h4>
+
+<p>Back in June of 2011 Schema.org was launched and pretty much immediately both Google and Bing! implemented rich snippets on their SERP using the metadata that could be gleaned from the Schema.org data added to the searched pages.</p>
+
+<p>Schema.org gives you the developer a handy ability to convey a very large amount of information to search engines about what exactly an element represents and is implementable with very little effort.   </p>
+
+<p>There are a lot of different tags for various content types which in turn become “rich snippets&quot; on your favorite search engine results; music, events, blog posts, products, recipes..etc.   Anything you can think of can likely be expressed and better defined by Schema.org microdata and microformats.   And doing so will only help your rankings.</p>
+
+<h4>Microdata</h4>
+
+<p>Schema.org provides you with a “microdata language&quot; and a “schema vocabulary&quot; that while not a true language in and of itself, is a way to make your HTML tags more machine readable which the major search engines then use to better optimize and sort your data for display purposes.</p>
+
+<p>Your various webpages are easy for people to understand when they read them but search engines aren’t people and as such have a very limited and often broken understanding of what is actually being discussed on those pages.   We need to help the machine by adding some additional information to the tags on the page in order to help the search engines better understand what the content you’re trying to display actually is in a relevant and useful way.</p>
+
+<p>For example - Let’s say you’re creating a blog post.  The HTML might look something like this:</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;article&gt;</span>
+  <span class="nt">&lt;header&gt;</span>
+    <span class="nt">&lt;h1&gt;</span>Schema.org is pretty cool<span class="nt">&lt;/h1&gt;</span>
+    <span class="nt">&lt;address&gt;</span>
+      by <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;mailto:jason.ellis@grok.rocks&quot;</span><span class="nt">&gt;</span>Jason Ellis<span class="nt">&lt;/a&gt;</span>
+    <span class="nt">&lt;/address&gt;</span>
+  <span class="nt">&lt;/header&gt;</span>
+  <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;content&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;p&gt;</span>.... article content ....<span class="nt">&lt;/p&gt;</span>
+    <span class="nt">&lt;p&gt;</span>.... article content ....<span class="nt">&lt;/p&gt;</span>
+  <span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/article&gt;</span>
+</code></pre></div>
+<p>This is dated and while modern search engines would read it and you would show up in the search results, your position in those results would be directly affected by the lack of Schema.org microdata.  The simple fact of the matter is, the search engine back end logic can only do so much to intuit what this type of data is and how it should be displayed.  </p>
+
+<p>We need to give it some more information in order to convey exactly what it is we are trying to accomplish ~ lets help the search engine a bit:</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;article</span> <span class="na">itemscope</span> <span class="na">itemtype=</span><span class="s">&quot;http://schema.org/BlogPosting&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;header&gt;</span>
+    <span class="nt">&lt;h1</span> <span class="na">itemprop=</span><span class="s">&quot;headline&quot;</span><span class="nt">&gt;</span>Schema.org is pretty cool<span class="nt">&lt;/h1&gt;</span>
+    <span class="nt">&lt;address&gt;</span>
+      by <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;mailto:jason.ellis@grok.rocks&quot;</span><span class="nt">&gt;</span>Jason Ellis<span class="nt">&lt;/a&gt;</span>
+    <span class="nt">&lt;/address&gt;</span>
+  <span class="nt">&lt;/header&gt;</span>
+  <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;content&quot;</span> <span class="na">itemprop=</span><span class="s">&quot;articleBody&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;p&gt;</span>.... article content ....<span class="nt">&lt;/p&gt;</span>
+    <span class="nt">&lt;p&gt;</span>.... article content ....<span class="nt">&lt;/p&gt;</span>
+  <span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/article&gt;</span>
+</code></pre></div>
+<p>As you can see the tags themselves haven’t changed.  We are still using the standard HTML5 elements and haven’t moved them around or anything.  But we have added some Schema.org Microdata and schema vocabulary.</p>
+
+<p>Let’s look at each one individually:</p>
+
+<h4>itemscope</h4>
+<div class="highlight"><pre><code class="language-html" data-lang="html">  <span class="nt">&lt;article</span> <span class="na">_itemscope_</span> <span class="na">itemtype=</span><span class="s">&quot;http://schema.org/BlogPosting&quot;</span><span class="nt">&gt;</span>
+</code></pre></div>
+<p>The “itemscope&quot; microdata keyword added to a specific element tells the reader that we are going to be discussing a block of data contained within this specific tag.  It’s your “Begin here&quot; attribute which gives the system a starting point.   There can be many on a page.</p>
+
+<h4>itemtype</h4>
+<div class="highlight"><pre><code class="language-html" data-lang="html">  <span class="nt">&lt;article</span> <span class="na">itemscope</span> <span class="na">_itemtype=</span><span class="s">&quot;http://schema.org/BlogPosting&quot;</span><span class="na">_</span><span class="nt">&gt;</span>
+</code></pre></div>
+<p>The “itemtype&quot; keyword tell us is specifically which schema vocabulary we are talking about by linking to a schema vocabulary on Schema.org.  You can (and it’s a good idea to) open that page up in your browser and read exactly what key/value pairs it can accept.  More over there is generally a good example at the bottom of the page how your content should look once you have all the microdata in place.</p>
+
+<p>In this case we are saying everything inside this itemscope is the itemtype “BlogPosting&quot;. </p>
+
+<h4>itemprop</h4>
+<div class="highlight"><pre><code class="language-html" data-lang="html">  <span class="nt">&lt;h1</span> <span class="na">_itemprop=</span><span class="s">&quot;headline&quot;</span><span class="na">_</span><span class="nt">&gt;</span>Schema.org is pretty cool<span class="nt">&lt;/h1&gt;</span>
+</code></pre></div>
+<p>Once you have opened up the schema.org page on the itemtype you’re trying to better define you’ll see that there are a lot of different item properites that can be defined. </p>
+
+<p>Each itemprop key/value pair directly defines what this given tag and it’s content is and how it relates to the information contained within.</p>
+
+<p>Item props have an expected value type as defined by the Schema.org schema vocabulary page.  Some can be text, some have to be specific types of other Schema.org data.  </p>
+
+<p>There is actually quite a lot of data that you can add to your pages which will get extremely specific about defining all the things according to Schema.org.   How far you go down that particular rabbit hole is up to you but the more defined you get, the better it helps the various engines with SERP/CTR and SEO.  So it’s a pretty good idea to make it happen.</p>
+
+<p>Taking it a bit deeper, lets define the author;</p>
+
+<h4>Author</h4>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;article</span> <span class="na">itemscope</span> <span class="na">itemtype=</span><span class="s">&quot;http://schema.org/BlogPosting&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;header&gt;</span>
+    <span class="nt">&lt;h1</span> <span class="na">itemprop=</span><span class="s">&quot;headline&quot;</span><span class="nt">&gt;</span>Schema.org is pretty cool<span class="nt">&lt;/h1&gt;</span>
+    <span class="nt">&lt;address</span> <span class="na">itemprop=</span><span class="s">&quot;author&quot;</span> <span class="na">itemscope</span> <span class="na">itemtype=</span><span class="s">&quot;http://schema.org/Person&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;meta</span> <span class="na">itemprop=</span><span class="s">&quot;email&quot;</span> <span class="na">content=</span><span class="s">&quot;jason.ellis@grok.rocks&quot;</span><span class="nt">&gt;</span>
+      by <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;mailto:jason.ellis@grok.rocks&quot;</span> <span class="na">itemprop=</span><span class="s">&quot;name&quot;</span><span class="nt">&gt;</span>Jason Ellis<span class="nt">&lt;/a&gt;</span>
+    <span class="nt">&lt;/address&gt;</span>
+  <span class="nt">&lt;/header&gt;</span>
+  <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;content&quot;</span> <span class="na">itemprop=</span><span class="s">&quot;articleBody&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;p&gt;</span>.... article content ....<span class="nt">&lt;/p&gt;</span>
+    <span class="nt">&lt;p&gt;</span>.... article content ....<span class="nt">&lt;/p&gt;</span>
+  <span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/article&gt;</span>
+</code></pre></div>
+<p>Here you can see I have told the system that the <code>address</code> tag is a new item scope and everything inside of it relates to the schema.org item type of Person.  </p>
+
+<p>I then added a meta tag with the itemprop of email to define the email of the author since the anchor tag which is a mailto actually defines the users name.  There really is no limit to how deep you can go.  Give it a try and see if your search results don&#39;t improve. </p>
+
+<h4>Testing</h4>
+
+<p>As with all things you need a way to test.  I highly recommend using Google&#39;s testing tool, <a href="https://developers.google.com/structured-data/testing-tool/">https://developers.google.com/structured-data/testing-tool/</a></p>
+
+
+                </div>
+
+                
+
+                <hr />
+
+                
+                
+                <div class="author-profile">
+  <div class="about">
+    <em>ABOUT THE AUTHOR</em><br/>
+    <strong>Jason Ellis</strong><br/>
+    <p>The CTO of Grok Interactive and is a calm, considerate problem solver that has been working as a software engineer in the industry for over 15 years.</p>
+    <p>He enjoys rapid application and web development and has created all manner of rich web applications using RoR, PHP, JS, Java, JSON, XML, AJAX, XHTML, CSS and every other trendy acronym you care to mention.</p>
+  </div>
+  <img src="/images/portrait-jason-ellis.jpg" />
+</div>
+
+                
+
+                <hr>
+<p>
+  Grok Interactive specializes in web and mobile development using Ruby, Swift, Elixir, Javascript, and various other technologies to solve problems for our clients. If we can assist you, please do not hesitate to <a href="/#contact">contact us</a> today.
+</p>
+
+
+                <div class="share-page">
+  Share this on &rarr;
+  <a href="https://twitter.com/intent/tweet?text=Better search engine results with Schema.org&url=http://www.grok-interactive.com/blog/better-search-engine-results-with-schema-org/&via=&related=" rel="nofollow" target="_blank" title="Share on Twitter">Twitter</a>
+  <a href="https://facebook.com/sharer.php?u=http://www.grok-interactive.com/blog/better-search-engine-results-with-schema-org/" rel="nofollow" target="_blank" title="Share on Facebook">Facebook</a>
+  <a href="https://plus.google.com/share?url=http://www.grok-interactive.com/blog/better-search-engine-results-with-schema-org/" rel="nofollow" target="_blank" title="Share on Google+">Google+</a>
+</div>
+
+
+                
+<h3>Comments</h3>
+<hr />
+<!-- https://developers.facebook.com/docs/reference/plugins/comments/ -->
+<div class='comments'>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+      /* * * CONFIGURATION VARIABLES * * */
+      var disqus_shortname = 'grokinteractive';
+
+      /* * * DON'T EDIT BELOW THIS LINE * * */
+      (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+</div>
+
+
+
+                <div itemprop="provider" itemscope itemtype="http://schema.org/Organization">
+  <meta itemprop="name" content="Grok Interactive, LLC">
+  <meta itemprop="logo" content="http://www.grok-interactive.com/images/grok-logo.svg">
+  <div itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+    <meta itemprop="streetAddress" content="3517 Columbia Dr">
+    <meta itemprop="postalCode" content="78108">
+    <meta itemprop="addressLocality" content="San Antonio, Texas">
+    <meta itemprop="email" content="jason@grok-interactive.com">
+    <meta itemprop="telephone" content="1-210-702-3915">
+  </div>
+</div>
+
+
+              </div>
+            </div>
+
+
+          </div>
+
+          <div class="col c30">
+
+            <div class="well">
+  <h4><i class="icon fa fa-folder" title="Categories"></i> Categories</h4>
+  <ul class="nav nav-list">
+    
+
+    <li><a href="/blog/category/general/">
+      General
+    </a></li>
+    
+
+    <li><a href="/blog/category/software_development/">
+      Software development
+    </a></li>
+    
+
+    <li><a href="/blog/category/training/">
+      Training
+    </a></li>
+    
+
+    <li><a href="/blog/category/testing/">
+      Testing
+    </a></li>
+    
+
+    <li><a href="/blog/category/environments/">
+      Environments
+    </a></li>
+    
+
+    <li><a href="/blog/category/business_development/">
+      Business development
+    </a></li>
+    
+  </ul>
+</div>
+
+
+            
+<div class="well">
+  <h4><i class="icon fa fa-users" title="Authors"></i> Authors</h4>
+  <ul class="nav nav-list">
+    
+    
+    <li><a href="/blog/author/jason-straughan">Jason Straughan</a></li>
+    
+    
+    <li><a href="/blog/author/jason-ellis">Jason Ellis</a></li>
+    
+    
+    <li><a href="/blog/author/josh-freeman">Josh Freeman</a></li>
+    
+    
+    <li><a href="/blog/author/chris-hardee">Chris Hardee</a></li>
+    
+    
+    <li><a href="/blog/author/john-guest">John Guest</a></li>
+    
+    
+    <li><a href="/blog/author/anton-domratchev">Anton Domratchev</a></li>
+    
+    
+    <li><a href="/blog/author/joseph-villafranca">Joseph Villafranca</a></li>
+    
+    
+    <li><a href="/blog/author/christopher-moeller">Christopher Moeller</a></li>
+    
+  </ul>
+</div>
+
+
+
+            <div class="well">
+  <h4><i class="icon fa fa-tags" title="Categories"></i> Tags</h4>
+
+  <ul class="nav nav-list">
+    
+    <li><a href="/blog/tag/grok">Grok</a></li>
+    
+    <li><a href="/blog/tag/industry">Industry</a></li>
+    
+    <li><a href="/blog/tag/codeup">Codeup</a></li>
+    
+    <li><a href="/blog/tag/security">Security</a></li>
+    
+    <li><a href="/blog/tag/php">Php</a></li>
+    
+    <li><a href="/blog/tag/phpunit">Phpunit</a></li>
+    
+    <li><a href="/blog/tag/emacs">Emacs</a></li>
+    
+    <li><a href="/blog/tag/expression_engine">Expression engine</a></li>
+    
+    <li><a href="/blog/tag/javascript">Javascript</a></li>
+    
+    <li><a href="/blog/tag/dom">Dom</a></li>
+    
+    <li><a href="/blog/tag/jquery">Jquery</a></li>
+    
+    <li><a href="/blog/tag/git">Git</a></li>
+    
+    <li><a href="/blog/tag/githooks">Githooks</a></li>
+    
+    <li><a href="/blog/tag/source_control">Source control</a></li>
+    
+    <li><a href="/blog/tag/css">Css</a></li>
+    
+    <li><a href="/blog/tag/rails">Rails</a></li>
+    
+    <li><a href="/blog/tag/ubuntu">Ubuntu</a></li>
+    
+    <li><a href="/blog/tag/linux">Linux</a></li>
+    
+    <li><a href="/blog/tag/developers">Developers</a></li>
+    
+    <li><a href="/blog/tag/node.js">Node.js</a></li>
+    
+    <li><a href="/blog/tag/mongodb">Mongodb</a></li>
+    
+    <li><a href="/blog/tag/javascript">Javascript</a></li>
+    
+    <li><a href="/blog/tag/socket.io">Socket.io</a></li>
+    
+    <li><a href="/blog/tag/express.js">Express.js</a></li>
+    
+    <li><a href="/blog/tag/email">Email</a></li>
+    
+    <li><a href="/blog/tag/outlook">Outlook</a></li>
+    
+    <li><a href="/blog/tag/cross_mail_client">Cross mail client</a></li>
+    
+    <li><a href="/blog/tag/compatibility">Compatibility</a></li>
+    
+    <li><a href="/blog/tag/mvc">Mvc</a></li>
+    
+    <li><a href="/blog/tag/object_oriented_programming">Object oriented programming</a></li>
+    
+    <li><a href="/blog/tag/domain_driven_design">Domain driven design</a></li>
+    
+    <li><a href="/blog/tag/value_objects">Value objects</a></li>
+    
+    <li><a href="/blog/tag/types">Types</a></li>
+    
+    <li><a href="/blog/tag/csv">Csv</a></li>
+    
+    <li><a href="/blog/tag/mysql">Mysql</a></li>
+    
+    <li><a href="/blog/tag/laravel">Laravel</a></li>
+    
+    <li><a href="/blog/tag/ruby">Ruby</a></li>
+    
+    <li><a href="/blog/tag/functional_programming">Functional programming</a></li>
+    
+    <li><a href="/blog/tag/schema.org">Schema.org</a></li>
+    
+  </ul>
+</div>
+
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+    </div>
+  </div>
+
+  <footer>
+  <div class="container">
+    <div class="pull-left">
+      <p>&copy; 2013&ndash;2015 Grok Interactive, LLC</p>
+    </div>
+  </div>
+</footer>
+
+
+  <script type='text/javascript' src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js'></script>
+
+  <script src='/assets/global-5b2d0cc47ae047645ffc10228e2867fb.js' type='text/javascript'></script>
+
+  <script src="//static.getclicky.com/js" type="text/javascript"></script>
+  <script type="text/javascript">try{ clicky.init(100585693); }catch(e){}</script>
+  <noscript><p><img alt="Clicky" width="1" height="1" src="//in.getclicky.com/100585693ns.gif" /></p></noscript>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-43998305-2', 'grok-interactive.com');
+    ga('send', 'pageview');
+  </script>
+</body>
+</html>

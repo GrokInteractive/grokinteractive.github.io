@@ -138,12 +138,15 @@
 
             <div class="canvas">
 
-              <div class="post" itemscope itemprop="blogPost" itemtype="http://schema.org/BlogPosting">
+              <div class="post" itemscope itemtype="http://schema.org/BlogPosting" itemid="http://www.grok-interactive.com/blog/value-objects-in-ruby-part-2/">
 
-                <h1><a href="/blog/value-objects-in-ruby-part-2/" rel="bookmark" title="Link to Value objects in Ruby: Serializing your custom objects with ActiveRecord" >Value objects in Ruby: Serializing your custom objects with ActiveRecord</a></h1>
+                <h1 itemprop="headline"><a href="/blog/value-objects-in-ruby-part-2/" rel="bookmark" title="Link to Value objects in Ruby: Serializing your custom objects with ActiveRecord">Value objects in Ruby: Serializing your custom objects with ActiveRecord</a></h1>
                 <meta itemprop="name" content="Value objects in Ruby: Serializing your custom objects with ActiveRecord">
-                <meta itemprop="author" content="Christopher Moeller">
-                <h5>by <a href="/blog/author/christopher-moeller" class="author" itemprop="author">Christopher Moeller</a>
+                <meta itemprop="description" content="Most web applications we work on require storing data in a database. Like many Rails shops our default database of choice at Grok is Postgres. We can store the vast majority of data using its text types, numeric types, dates and times, and booleans. Postgres also provides support for collections with arrays and hstore as well as more specific types like UUIDs and IP addresses, allowing us to store that data in a more structured way instead of as text.">
+                <meta itemprop="datePublished" content="2015-09-03 00:00:00 -0400">
+                <meta itemprop="image" content="http://www.grok-interactive.com/images/2015/08/activerecord_serialize.jpg">
+                <meta itemprop="discussionUrl" content="http://www.grok-interactive.com/blog/value-objects-in-ruby-part-2/">
+                <h5 itemprop="author" itemscope itemtype="http://schema.org/Person">by <a href="http://www.grok-interactive.com/blog/author/christopher-moeller" class="author" itemprop="url"><span itemprop="name">Christopher Moeller</span></a>
                   &nbsp;&nbsp;&nbsp;<strong>Sep 03, 2015</strong>&nbsp;&nbsp;&nbsp;
                   
                   <i class="icon fa fa-folder" title="Categories"></i>
@@ -421,6 +424,19 @@ class?</p>
 
 
 
+                <div itemprop="provider" itemscope itemtype="http://schema.org/Organization">
+  <meta itemprop="name" content="Grok Interactive, LLC">
+  <meta itemprop="logo" content="http://www.grok-interactive.com/images/grok-logo.svg">
+  <div itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+    <meta itemprop="streetAddress" content="3517 Columbia Dr">
+    <meta itemprop="postalCode" content="78108">
+    <meta itemprop="addressLocality" content="San Antonio, Texas">
+    <meta itemprop="email" content="jason@grok-interactive.com">
+    <meta itemprop="telephone" content="1-210-702-3915">
+  </div>
+</div>
+
+
               </div>
             </div>
 
@@ -581,6 +597,8 @@ class?</p>
     <li><a href="/blog/tag/ruby">Ruby</a></li>
     
     <li><a href="/blog/tag/functional_programming">Functional programming</a></li>
+    
+    <li><a href="/blog/tag/schema.org">Schema.org</a></li>
     
   </ul>
 </div>

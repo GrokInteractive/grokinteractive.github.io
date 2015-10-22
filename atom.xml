@@ -4,12 +4,128 @@
   <title>Grok Interactive</title>
   <link href="http://www.grok-interactive.com/"/>
   <link type="application/atom+xml" rel="self" href="http://www.grok-interactive.com/atom.xml"/>
-  <updated>2015-10-20T18:55:18-04:00</updated>
+  <updated>2015-10-22T13:03:34-04:00</updated>
   <id>http://www.grok-interactive.com/</id>
   <author>
     <name>Grok Interactive</name>
   </author>
 
+  
+  <entry>
+    <id>http://www.grok-interactive.com/blog/better-search-engine-results-with-schema-org</id>
+    <link type="text/html" rel="alternate" href="http://www.grok-interactive.com/blog/better-search-engine-results-with-schema-org/"/>
+    <title>Better search engine results with Schema.org</title>
+    <published>2015-10-22T00:00:00-04:00</published>
+    <updated>2015-10-22T00:00:00-04:00</updated>
+    <author>
+      <name>Jason Ellis</name>
+      <email>jasone@grok-interactive.com</email>
+    </author>
+    <content type="html">&lt;p&gt;Grok Interactive in and of itself is an ever evolving going concern.  We are always iterating on new ideas and trying new things.  We have the luxury of being agile in a nimble sort of way which allows us to try new things or pivot on an idea in short order.  &lt;/p&gt;
+
+&lt;p&gt;So when we started working on a &lt;a href=&quot;http://www.grok-interactive.com/podcast/&quot;&gt;podcast&lt;/a&gt; we wanted to get the word out quickly via our blog what it was we were doing and that we thought everyone should give it a &lt;a href=&quot;http://www.grok-interactive.com/podcast/&quot;&gt;listen&lt;/a&gt;!&lt;/p&gt;
+
+&lt;p&gt;The issue is we noticed our search engine results page click through rate (SERP/CTR) was kinda poor. Our SERP presence was poor to say the least so our CTR suffered.&lt;/p&gt;
+
+&lt;p&gt;We needed to fix this and started to explore ways of doing so;  Enter &lt;a href=&quot;http://schema.org&quot;&gt;Schema.org&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h4&gt;Schema.org&lt;/h4&gt;
+
+&lt;p&gt;Back in June of 2011 Schema.org was launched and pretty much immediately both Google and Bing! implemented rich snippets on their SERP using the metadata that could be gleaned from the Schema.org data added to the searched pages.&lt;/p&gt;
+
+&lt;p&gt;Schema.org gives you the developer a handy ability to convey a very large amount of information to search engines about what exactly an element represents and is implementable with very little effort.   &lt;/p&gt;
+
+&lt;p&gt;There are a lot of different tags for various content types which in turn become “rich snippets&amp;quot; on your favorite search engine results; music, events, blog posts, products, recipes..etc.   Anything you can think of can likely be expressed and better defined by Schema.org microdata and microformats.   And doing so will only help your rankings.&lt;/p&gt;
+
+&lt;h4&gt;Microdata&lt;/h4&gt;
+
+&lt;p&gt;Schema.org provides you with a “microdata language&amp;quot; and a “schema vocabulary&amp;quot; that while not a true language in and of itself, is a way to make your HTML tags more machine readable which the major search engines then use to better optimize and sort your data for display purposes.&lt;/p&gt;
+
+&lt;p&gt;Your various webpages are easy for people to understand when they read them but search engines aren’t people and as such have a very limited and often broken understanding of what is actually being discussed on those pages.   We need to help the machine by adding some additional information to the tags on the page in order to help the search engines better understand what the content you’re trying to display actually is in a relevant and useful way.&lt;/p&gt;
+
+&lt;p&gt;For example - Let’s say you’re creating a blog post.  The HTML might look something like this:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;article&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;header&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;h1&amp;gt;&lt;/span&gt;Schema.org is pretty cool&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h1&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;address&amp;gt;&lt;/span&gt;
+      by &lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;mailto:jason.ellis@grok.rocks&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Jason Ellis&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/address&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/header&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;content&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;.... article content ....&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;.... article content ....&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/article&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This is dated and while modern search engines would read it and you would show up in the search results, your position in those results would be directly affected by the lack of Schema.org microdata.  The simple fact of the matter is, the search engine back end logic can only do so much to intuit what this type of data is and how it should be displayed.  &lt;/p&gt;
+
+&lt;p&gt;We need to give it some more information in order to convey exactly what it is we are trying to accomplish ~ lets help the search engine a bit:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;article&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;itemscope&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;itemtype=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;http://schema.org/BlogPosting&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;header&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;h1&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;itemprop=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;headline&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Schema.org is pretty cool&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h1&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;address&amp;gt;&lt;/span&gt;
+      by &lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;mailto:jason.ellis@grok.rocks&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Jason Ellis&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/address&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/header&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;content&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;itemprop=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;articleBody&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;.... article content ....&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;.... article content ....&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/article&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;As you can see the tags themselves haven’t changed.  We are still using the standard HTML5 elements and haven’t moved them around or anything.  But we have added some Schema.org Microdata and schema vocabulary.&lt;/p&gt;
+
+&lt;p&gt;Let’s look at each one individually:&lt;/p&gt;
+
+&lt;h4&gt;itemscope&lt;/h4&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;  &lt;span class=&quot;nt&quot;&gt;&amp;lt;article&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;_itemscope_&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;itemtype=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;http://schema.org/BlogPosting&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The “itemscope&amp;quot; microdata keyword added to a specific element tells the reader that we are going to be discussing a block of data contained within this specific tag.  It’s your “Begin here&amp;quot; attribute which gives the system a starting point.   There can be many on a page.&lt;/p&gt;
+
+&lt;h4&gt;itemtype&lt;/h4&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;  &lt;span class=&quot;nt&quot;&gt;&amp;lt;article&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;itemscope&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;_itemtype=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;http://schema.org/BlogPosting&amp;quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;_&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The “itemtype&amp;quot; keyword tell us is specifically which schema vocabulary we are talking about by linking to a schema vocabulary on Schema.org.  You can (and it’s a good idea to) open that page up in your browser and read exactly what key/value pairs it can accept.  More over there is generally a good example at the bottom of the page how your content should look once you have all the microdata in place.&lt;/p&gt;
+
+&lt;p&gt;In this case we are saying everything inside this itemscope is the itemtype “BlogPosting&amp;quot;. &lt;/p&gt;
+
+&lt;h4&gt;itemprop&lt;/h4&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;  &lt;span class=&quot;nt&quot;&gt;&amp;lt;h1&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;_itemprop=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;headline&amp;quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;_&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Schema.org is pretty cool&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h1&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Once you have opened up the schema.org page on the itemtype you’re trying to better define you’ll see that there are a lot of different item properites that can be defined. &lt;/p&gt;
+
+&lt;p&gt;Each itemprop key/value pair directly defines what this given tag and it’s content is and how it relates to the information contained within.&lt;/p&gt;
+
+&lt;p&gt;Item props have an expected value type as defined by the Schema.org schema vocabulary page.  Some can be text, some have to be specific types of other Schema.org data.  &lt;/p&gt;
+
+&lt;p&gt;There is actually quite a lot of data that you can add to your pages which will get extremely specific about defining all the things according to Schema.org.   How far you go down that particular rabbit hole is up to you but the more defined you get, the better it helps the various engines with SERP/CTR and SEO.  So it’s a pretty good idea to make it happen.&lt;/p&gt;
+
+&lt;p&gt;Taking it a bit deeper, lets define the author;&lt;/p&gt;
+
+&lt;h4&gt;Author&lt;/h4&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;article&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;itemscope&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;itemtype=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;http://schema.org/BlogPosting&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;header&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;h1&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;itemprop=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;headline&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Schema.org is pretty cool&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h1&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;address&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;itemprop=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;author&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;itemscope&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;itemtype=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;http://schema.org/Person&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;itemprop=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;email&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;content=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;jason.ellis@grok.rocks&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+      by &lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;mailto:jason.ellis@grok.rocks&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;itemprop=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Jason Ellis&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/address&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/header&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;content&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;itemprop=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;articleBody&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;.... article content ....&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;.... article content ....&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/article&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Here you can see I have told the system that the &lt;code&gt;address&lt;/code&gt; tag is a new item scope and everything inside of it relates to the schema.org item type of Person.  &lt;/p&gt;
+
+&lt;p&gt;I then added a meta tag with the itemprop of email to define the email of the author since the anchor tag which is a mailto actually defines the users name.  There really is no limit to how deep you can go.  Give it a try and see if your search results don&amp;#39;t improve. &lt;/p&gt;
+
+&lt;h4&gt;Testing&lt;/h4&gt;
+
+&lt;p&gt;As with all things you need a way to test.  I highly recommend using Google&amp;#39;s testing tool, &lt;a href=&quot;https://developers.google.com/structured-data/testing-tool/&quot;&gt;https://developers.google.com/structured-data/testing-tool/&lt;/a&gt;&lt;/p&gt;
+</content>
+  </entry>
   
   <entry>
     <id>http://www.grok-interactive.com/podcast/ryan-orsinger-interview</id>

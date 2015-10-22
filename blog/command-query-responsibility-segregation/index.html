@@ -138,12 +138,15 @@
 
             <div class="canvas">
 
-              <div class="post" itemscope itemprop="blogPost" itemtype="http://schema.org/BlogPosting">
+              <div class="post" itemscope itemtype="http://schema.org/BlogPosting" itemid="http://www.grok-interactive.com/blog/command-query-responsibility-segregation/">
 
-                <h1><a href="/blog/command-query-responsibility-segregation/" rel="bookmark" title="Link to Moving on from MVC&#58; CQRS" >Moving on from MVC&#58; CQRS</a></h1>
+                <h1 itemprop="headline"><a href="/blog/command-query-responsibility-segregation/" rel="bookmark" title="Link to Moving on from MVC&#58; CQRS">Moving on from MVC&#58; CQRS</a></h1>
                 <meta itemprop="name" content="Moving on from MVC&#58; CQRS">
-                <meta itemprop="author" content="Joseph Villafranca">
-                <h5>by <a href="/blog/author/joseph-villafranca" class="author" itemprop="author">Joseph Villafranca</a>
+                <meta itemprop="description" content="CQRS is a simple, yet powerful design pattern you can use to keep your models and controllers (and views, if you like to abuse every part of the MVC acronym) dry.">
+                <meta itemprop="datePublished" content="2015-08-19 00:00:00 -0400">
+                <meta itemprop="image" content="http://www.grok-interactive.com/images/2015/08/bad_design_kills.png">
+                <meta itemprop="discussionUrl" content="http://www.grok-interactive.com/blog/command-query-responsibility-segregation/">
+                <h5 itemprop="author" itemscope itemtype="http://schema.org/Person">by <a href="http://www.grok-interactive.com/blog/author/joseph-villafranca" class="author" itemprop="url"><span itemprop="name">Joseph Villafranca</span></a>
                   &nbsp;&nbsp;&nbsp;<strong>Aug 19, 2015</strong>&nbsp;&nbsp;&nbsp;
                   
                   <i class="icon fa fa-folder" title="Categories"></i>
@@ -338,6 +341,19 @@ class UserController {
 
 
 
+                <div itemprop="provider" itemscope itemtype="http://schema.org/Organization">
+  <meta itemprop="name" content="Grok Interactive, LLC">
+  <meta itemprop="logo" content="http://www.grok-interactive.com/images/grok-logo.svg">
+  <div itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+    <meta itemprop="streetAddress" content="3517 Columbia Dr">
+    <meta itemprop="postalCode" content="78108">
+    <meta itemprop="addressLocality" content="San Antonio, Texas">
+    <meta itemprop="email" content="jason@grok-interactive.com">
+    <meta itemprop="telephone" content="1-210-702-3915">
+  </div>
+</div>
+
+
               </div>
             </div>
 
@@ -498,6 +514,8 @@ class UserController {
     <li><a href="/blog/tag/ruby">Ruby</a></li>
     
     <li><a href="/blog/tag/functional_programming">Functional programming</a></li>
+    
+    <li><a href="/blog/tag/schema.org">Schema.org</a></li>
     
   </ul>
 </div>

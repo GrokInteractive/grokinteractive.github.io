@@ -138,12 +138,15 @@
 
             <div class="canvas">
 
-              <div class="post" itemscope itemprop="blogPost" itemtype="http://schema.org/BlogPosting">
+              <div class="post" itemscope itemtype="http://schema.org/BlogPosting" itemid="http://www.grok-interactive.com/blog/save-me-not/">
 
-                <h1><a href="/blog/save-me-not/" rel="bookmark" title="Link to Save Me Not" >Save Me Not</a></h1>
+                <h1 itemprop="headline"><a href="/blog/save-me-not/" rel="bookmark" title="Link to Save Me Not">Save Me Not</a></h1>
                 <meta itemprop="name" content="Save Me Not">
-                <meta itemprop="author" content="Josh Freeman">
-                <h5>by <a href="/blog/author/josh-freeman" class="author" itemprop="author">Josh Freeman</a>
+                <meta itemprop="description" content="Buttons just begged to be pushed. We design them that way. But what if they do not need to be pushed? A while back I hit a project requirement that a form for user data could not be submitted back to the server unless there had been a change. I did *way* more work (and made the browser do way more work) than necessary.">
+                <meta itemprop="datePublished" content="2014-03-30 00:00:00 -0400">
+                <meta itemprop="image" content="http://www.grok-interactive.com/images/2014/03/javascript.jpg">
+                <meta itemprop="discussionUrl" content="http://www.grok-interactive.com/blog/save-me-not/">
+                <h5 itemprop="author" itemscope itemtype="http://schema.org/Person">by <a href="http://www.grok-interactive.com/blog/author/josh-freeman" class="author" itemprop="url"><span itemprop="name">Josh Freeman</span></a>
                   &nbsp;&nbsp;&nbsp;<strong>Mar 30, 2014</strong>&nbsp;&nbsp;&nbsp;
                   
                   <i class="icon fa fa-folder" title="Categories"></i>
@@ -533,6 +536,19 @@ function autoResize(id){
 
 
 
+                <div itemprop="provider" itemscope itemtype="http://schema.org/Organization">
+  <meta itemprop="name" content="Grok Interactive, LLC">
+  <meta itemprop="logo" content="http://www.grok-interactive.com/images/grok-logo.svg">
+  <div itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+    <meta itemprop="streetAddress" content="3517 Columbia Dr">
+    <meta itemprop="postalCode" content="78108">
+    <meta itemprop="addressLocality" content="San Antonio, Texas">
+    <meta itemprop="email" content="jason@grok-interactive.com">
+    <meta itemprop="telephone" content="1-210-702-3915">
+  </div>
+</div>
+
+
               </div>
             </div>
 
@@ -693,6 +709,8 @@ function autoResize(id){
     <li><a href="/blog/tag/ruby">Ruby</a></li>
     
     <li><a href="/blog/tag/functional_programming">Functional programming</a></li>
+    
+    <li><a href="/blog/tag/schema.org">Schema.org</a></li>
     
   </ul>
 </div>
