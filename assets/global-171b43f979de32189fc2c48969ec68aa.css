@@ -484,6 +484,15 @@ body section.form form fieldset button {
   border: 1px solid #d35400;
   text-transform: uppercase;
 }
+body section.form form#contactUs button#submit {
+  width: 97%;
+  background-color: #00AA00;
+  color: #FFF;
+  border: 1px solid #333333;
+}
+body section.form form#contactUs button#submit:hover {
+  background-color: #008800;
+}
 body div > div.hero {
   background: #d35400;
   box-shadow: inset 0px 5px 6px rgba(0, 0, 0, 0.3);
