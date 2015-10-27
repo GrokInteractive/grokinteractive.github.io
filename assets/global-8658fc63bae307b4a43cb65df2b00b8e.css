@@ -571,27 +571,42 @@ body div.post {
   border-bottom: 2px solid #f0f0f0;
   clear: both;
   overflow: auto;
+  font-size: 16px;
+  line-height: 1.25;
+}
+body div.post h1 {
+  font-size: 41px !important;
+}
+body div.post h2 {
+  font-size: 34px !important;
+}
+body div.post h3 {
+  font-size: 27px !important;
+}
+body div.post h4 {
+  font-size: 20px !important;
+}
+body div.post h5 {
+  font-size: 16px !important;
+}
+body div.post h6 {
+  font-size: 13px !important;
+}
+body div.post p {
+  font-size: 16px !important;
 }
 body div.post h1,
 body div.post h2 {
   margin: 30px 0 15px 0;
-  font-size: 36px;
   font-weight: 800;
-  line-height: 45px;
   text-transform: uppercase;
 }
 body div.post h1 a,
 body div.post h2 a {
   color: #4b4d4a;
 }
-body div.post h3,
-body div.post h4 {
-  margin: 18px 0;
-}
 body div.post h5 {
   font-weight: 500;
-  font-size: 14px;
-  margin: 3px 0 24px 0;
 }
 body div.post h5 i.icon {
   margin-left: 10px;
@@ -611,7 +626,6 @@ body div.post a.more {
 body div.post a.more {
   display: inline-block;
   margin: 20px 0;
-  font-size: 18px;
 }
 body div.post div.image {
   text-align: center;
@@ -629,8 +643,6 @@ body div.post img.gravatar {
   border: 1px solid #eee;
 }
 body div.post p {
-  font-size: 18px;
-  line-height: 26px;
   color: #616161;
   margin-bottom: 10px;
 }
