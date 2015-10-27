@@ -6,9 +6,21 @@
     <atom:link href="http://www.grok-interactive.com/rss.xml" rel="self" type="application/rss+xml" />
     <description>Grok Interactive's web developers create outstanding applications</description>
     <language>en-us</language>
-    <pubDate>Tue, 27 Oct 2015 09:00:20 -0400</pubDate>
-    <lastBuildDate>Tue, 27 Oct 2015 09:00:20 -0400</lastBuildDate>
+    <pubDate>Tue, 27 Oct 2015 14:48:09 -0400</pubDate>
+    <lastBuildDate>Tue, 27 Oct 2015 14:48:09 -0400</lastBuildDate>
 
+    
+    <item>
+      <title>08 - Test Driven Development</title>
+      <link>http://www.grok-interactive.com/podcast/test-driven-development</link>
+      <pubDate>Tue, 27 Oct 2015 00:00:00 -0400</pubDate>
+      <author> ()</author>
+      <guid>http://www.grok-interactive.com/podcast/test-driven-development</guid>
+      <description>&lt;p&gt;Listen along as Josh, Anton and Christopher discuss one of our favorite topics; Test driven development. &lt;/p&gt;
+
+&lt;p&gt;Test-driven development (TDD) is a software development process that relies on the repetition of a very short development cycle: first the developer writes an (initially failing) automated test case that defines a desired improvement or new function, then produces the minimum amount of code to pass that test, and finally refactors the new code to acceptable standards. Kent Beck, who is credited with having developed or &amp;#39;rediscovered&amp;#39; the technique, stated in 2003 that TDD encourages simple designs and inspires confidence.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Better search engine results with Schema.org</title>
