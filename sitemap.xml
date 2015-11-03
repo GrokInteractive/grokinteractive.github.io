@@ -177,32 +177,46 @@
         <lastmod>2015-10-27T08:46:55-04:00</lastmod>
     </url>
     <url>
+        <loc>http://www.grok-interactive.com/blog/deploying-jekyll-site-to-aws/</loc>
+        <lastmod>2015-11-03T15:22:01-05:00</lastmod>
+    </url>
+    <url>
         <loc>http://www.grok-interactive.com/podcast/test-driven-development</loc>
         <lastmod>2015-10-27T14:48:07-04:00</lastmod>
+    </url>
+    <url>
+        <loc>
+            http://www.grok-interactive.com/podcast/security-basics-for-the-consumer-and-developer
+        </loc>
+        <lastmod>2015-11-03T15:21:30-05:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.grok-interactive.com/error.html</loc>
+        <lastmod>2015-11-03T15:22:01-05:00</lastmod>
     </url>
     <url>
         <loc>http://www.grok-interactive.com/podcast/feed.xml</loc>
         <lastmod>2015-09-08T09:43:41-04:00</lastmod>
     </url>
     <url>
-        <loc>http://www.grok-interactive.com/careers/</loc>
-        <lastmod>2015-09-03T11:06:12-04:00</lastmod>
-    </url>
-    <url>
-        <loc>http://www.grok-interactive.com/blog/</loc>
-        <lastmod>2015-10-27T08:46:55-04:00</lastmod>
+        <loc>http://www.grok-interactive.com/</loc>
+        <lastmod>2015-11-03T15:22:01-05:00</lastmod>
     </url>
     <url>
         <loc>http://www.grok-interactive.com/podcast/</loc>
         <lastmod>2015-09-22T11:45:14-04:00</lastmod>
     </url>
     <url>
-        <loc>http://www.grok-interactive.com/thankyou/</loc>
-        <lastmod>2015-09-07T16:16:12-04:00</lastmod>
+        <loc>http://www.grok-interactive.com/blog/</loc>
+        <lastmod>2015-10-27T08:46:55-04:00</lastmod>
     </url>
     <url>
-        <loc>http://www.grok-interactive.com/</loc>
-        <lastmod>2015-10-27T14:48:07-04:00</lastmod>
+        <loc>http://www.grok-interactive.com/thankyou/</loc>
+        <lastmod>2015-11-03T15:22:01-05:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.grok-interactive.com/careers/</loc>
+        <lastmod>2015-09-03T11:06:12-04:00</lastmod>
     </url>
     <url>
         <loc>http://www.grok-interactive.com/rss.xml</loc>

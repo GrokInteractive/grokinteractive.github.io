@@ -6,9 +6,21 @@
     <atom:link href="http://www.grok-interactive.com/rss.xml" rel="self" type="application/rss+xml" />
     <description>Grok Interactive's web developers create outstanding applications</description>
     <language>en-us</language>
-    <pubDate>Tue, 27 Oct 2015 14:48:09 -0400</pubDate>
-    <lastBuildDate>Tue, 27 Oct 2015 14:48:09 -0400</lastBuildDate>
+    <pubDate>Tue, 03 Nov 2015 15:22:20 -0500</pubDate>
+    <lastBuildDate>Tue, 03 Nov 2015 15:22:20 -0500</lastBuildDate>
 
+    
+    <item>
+      <title>09 - Security Basics for the Consumer and Developer</title>
+      <link>http://www.grok-interactive.com/podcast/security-basics-for-the-consumer-and-developer</link>
+      <pubDate>Tue, 03 Nov 2015 00:00:00 -0500</pubDate>
+      <author> ()</author>
+      <guid>http://www.grok-interactive.com/podcast/security-basics-for-the-consumer-and-developer</guid>
+      <description>&lt;p&gt;Listen along as Josh, Paul and Omar of def-Logix.com discuss cyber security and research development.&lt;/p&gt;
+
+&lt;p&gt;Paul and Omar tap their experience to give a short talk about what to do, what not to do as well as some common mistakes and misconceptions in the web space regarding security.  &lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>08 - Test Driven Development</title>
@@ -19,6 +31,214 @@
       <description>&lt;p&gt;Listen along as Josh, Anton and Christopher discuss one of our favorite topics; Test driven development. &lt;/p&gt;
 
 &lt;p&gt;Test-driven development (TDD) is a software development process that relies on the repetition of a very short development cycle: first the developer writes an (initially failing) automated test case that defines a desired improvement or new function, then produces the minimum amount of code to pass that test, and finally refactors the new code to acceptable standards. Kent Beck, who is credited with having developed or &amp;#39;rediscovered&amp;#39; the technique, stated in 2003 that TDD encourages simple designs and inspires confidence.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Upload a Jekyll Site to AWS with Continuous Deployment</title>
+      <link>http://www.grok-interactive.com/blog/deploying-jekyll-site-to-aws/</link>
+      <pubDate>Thu, 22 Oct 2015 00:00:00 -0400</pubDate>
+      <author>joshf@grok-interactive.com (Josh Freeman)</author>
+      <guid>http://www.grok-interactive.com/blog/deploying-jekyll-site-to-aws</guid>
+      <description>&lt;p&gt;When Grok builds applications, we strive to follow the Agile approach to software development. Continuous Integration and Continous Delivery is paramount to our business. We&amp;#39;re able to deploy changes to our clients&amp;#39; websites dozens of times per day (if we choose). However, one place we haven&amp;#39;t used CI/CD is this blog!&lt;/p&gt;
+
+&lt;h2&gt;Why Not?&lt;/h2&gt;
+
+&lt;p&gt;When this site was first built, we used Github Pages to host our website.  It&amp;#39;s certainly not the best approach, but deployment was fast and management was simple  If you have a Jekyll site (like this one), pushing a branch to &lt;strong&gt;gh-page&lt;/strong&gt; will build and serve the static site.&lt;/p&gt;
+
+&lt;p&gt;Jekyll blog authors always tend to need more flexibility, so naturally we install plugins! Only there&amp;#39;s a problem–Github disables Jekyll builds that use plugins.  If we want to continue using Github to host our site, we now require &lt;em&gt;another&lt;/em&gt; repository to host the site.  We build our Jekyll site locally, copy the files to the new static repository, commit, and push to Github.&lt;/p&gt;
+
+&lt;p&gt;We have traded the convenience of continuous deployment for the flexibility of Jekyll plugins.  We deploy changes several times per week--sometimes several times per day.  It works, but it&amp;#39;s cumbersome, and error prone. &lt;/p&gt;
+
+&lt;h2&gt;The Setup: Amazon Web Services (AWS) &amp;amp; Codeship&lt;/h2&gt;
+
+&lt;p&gt;Hosting a static website is about the simplest thing you can do on the internet–web servers were literally designed for this single purpose. But we can avoid having to manage a server all together. Enter Amazon Web Services and Codeship.&lt;/p&gt;
+
+&lt;p&gt;With AWS, we get extraordinarily cheap website delivery and resilience.  With Codeship, we&amp;#39;re given a listener that will deploy changes on Github to AWS.&lt;/p&gt;
+
+&lt;p&gt;Let&amp;#39;s put it all together. &lt;/p&gt;
+
+&lt;h3&gt;File Storage: Amazon Simple Storage Service (S3)&lt;/h3&gt;
+
+&lt;p&gt;S3 is the file storage service we&amp;#39;ll use to host our website.  It&amp;#39;s simple enough to think of it as a filesystem that we&amp;#39;ll expose to a URL.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Create a bucket. Ours is named &lt;code&gt;www.grok-interactive.com&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Under &lt;strong&gt;Static Website Hosting&lt;/strong&gt;, choose &lt;em&gt;Enable website hosting&lt;/em&gt; and provide the index document (probably &lt;code&gt;index.html&lt;/code&gt;) and the error document (probably &lt;code&gt;404.html&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;Under Permissions, edit the bucket policy:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-json&quot; data-lang=&quot;json&quot;&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;quot;Version&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;2012-10-17&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;quot;Statement&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;quot;Sid&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;AddPerm&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;quot;Effect&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Allow&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;quot;Principal&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;*&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;quot;Action&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;s3:GetObject&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;quot;Resource&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;arn:aws:s3:::www.grok-interactive.com/*&amp;quot;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;We now have a place to store our website. Next we need to setup the permissions to automate its management.&lt;/p&gt;
+
+&lt;h3&gt;Account Management: Amazon Identity and Access Management (IAM)&lt;/h3&gt;
+
+&lt;p&gt;IAM is the user management service we&amp;#39;ll use to permit the command-line deployment of our files to S3.  We will create a user and provide policies to enable access to our S3 bucket. &lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Create a user and copy the &lt;em&gt;Access Key ID&lt;/em&gt; and &lt;em&gt;Secret Access Key&lt;/em&gt;.&lt;/li&gt;
+&lt;li&gt;Create an In-Line User Policy to enable full access to the S3 bucket with the following:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-json&quot; data-lang=&quot;json&quot;&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;quot;Statement&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;nt&quot;&gt;&amp;quot;Action&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;s3:*&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+            &lt;span class=&quot;nt&quot;&gt;&amp;quot;Effect&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Allow&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+            &lt;span class=&quot;nt&quot;&gt;&amp;quot;Resource&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
+                &lt;span class=&quot;s2&quot;&gt;&amp;quot;arn:aws:s3:::www.grok-interactive.com&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                &lt;span class=&quot;s2&quot;&gt;&amp;quot;arn:aws:s3:::www.grok-interactive.com/*&amp;quot;&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;Create another In-Line User Policy to remove S3 bucket creation/deletion with the following: &lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-json&quot; data-lang=&quot;json&quot;&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;quot;Version&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;2012-10-17&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;quot;Statement&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;nt&quot;&gt;&amp;quot;Effect&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Deny&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+            &lt;span class=&quot;nt&quot;&gt;&amp;quot;Action&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
+                &lt;span class=&quot;s2&quot;&gt;&amp;quot;s3:CreateBucket&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                &lt;span class=&quot;s2&quot;&gt;&amp;quot;s3:DeleteBucket&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                &lt;span class=&quot;s2&quot;&gt;&amp;quot;s3:DeleteBucketPolicy&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                &lt;span class=&quot;s2&quot;&gt;&amp;quot;s3:DeleteBucketWebsite&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                &lt;span class=&quot;s2&quot;&gt;&amp;quot;s3:DeleteObjectVersion&amp;quot;&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+            &lt;span class=&quot;nt&quot;&gt;&amp;quot;Resource&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
+                &lt;span class=&quot;s2&quot;&gt;&amp;quot;arn:aws:s3:::www.grok-interactive.com&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                &lt;span class=&quot;s2&quot;&gt;&amp;quot;arn:aws:s3:::www.grok-interactive.com/*&amp;quot;&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Validate the policies and simulate to ensure it works like we expect. &lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2015/10/policy-simulator.gif&quot; alt=&quot;Amazon IAM Policy Simulation&quot;&gt;&lt;/p&gt;
+
+&lt;h3&gt;Continuous Integration &amp;amp; Deployment: Codeship&lt;/h3&gt;
+
+&lt;p&gt;Codeship is the CI/CD service we&amp;#39;ll use to automatically deploy changes to the website.  Without tests, we get continuous integration effectively free–our only failure would be if Jekyll fails to build.  However, with Codeship, we can build our site within their virtual machine and then push the built site to S3.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Create a project and add connect your Github repository&lt;/li&gt;
+&lt;li&gt;Under &lt;strong&gt;Project Settings: Test&lt;/strong&gt;, provide the following setup commands:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;rvm use 2.2.3 --install
+pip install awscli
+bundle install
+jekyll build
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;Under &lt;strong&gt;Project Settings: Deployment&lt;/strong&gt;, add a new pipeline that only runs on your &lt;strong&gt;master&lt;/strong&gt; branch that will execute the following:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;aws s3 sync _site s3://www.grok-interactive.com --delete
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;Under &lt;strong&gt;Project Settings: Environment&lt;/strong&gt;, provide the following from your IAM account: 
+
+&lt;ul&gt;
+&lt;li&gt;AWS_ACCESS_KEY_ID&lt;/li&gt;
+&lt;li&gt;AWS_SECRET_ACCESS_KEY&lt;/li&gt;
+&lt;li&gt;AWS_DEFAULT_REGION&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;At this point, it&amp;#39;s a good idea to check that commits to your &lt;strong&gt;master&lt;/strong&gt; branch on Github will trigger a build on &lt;strong&gt;Codeship&lt;/strong&gt; and deploy the static files to S3.&lt;/p&gt;
+
+&lt;p&gt;Our S3 endpoint is &lt;code&gt;www.grok-interactive.com.s3-website-us-west-2.amazonaws.com&lt;/code&gt;, and you can find yours under the &lt;strong&gt;Static Website Hosting&lt;/strong&gt; panel in your S3 console. &lt;/p&gt;
+
+&lt;p&gt;Because our site has a few plugins, the exact commands are slightly different, but the intent is the same.  If you ever want to redeploy, or test you configuration, you can re-run a build.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2015/10/codeship.gif&quot; alt=&quot;Codeship Integration Build&quot;&gt;&lt;/p&gt;
+
+&lt;h3&gt;Content Deliver Network: Amazon CloudFront&lt;/h3&gt;
+
+&lt;p&gt;CloudFront is our CDN.  When Github has problems (like suffering DDOS attacks from China, for instance), we tend to suffer downtime as well.  By using CloudFront, we greatly reduce the latency for file downloads and improve our website&amp;#39;s resilience.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Create a &lt;strong&gt;&lt;em&gt;web&lt;/em&gt; distribution&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Set the origin domain name to your S3 Static Website URL. &lt;strong&gt;Do NOT use the auto-dropdown, paste the URL&lt;/strong&gt;. The origin path should autopopulate with &lt;code&gt;Custom-&lt;/code&gt; prepended to your URL.&lt;br&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2015/10/cloudfront-origin-settings.png&quot; alt=&quot;CloudFront Origin Settings&quot;&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Set your &lt;strong&gt;Default Cache Behavior Settings&lt;/strong&gt;. Here&amp;#39;s ours:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2015/10/cloudfront-cache-settings.png&quot; alt=&quot;CloudFront Origin Settings&quot;&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Set your &lt;strong&gt;Distribution Settings&lt;/strong&gt;. Here&amp;#39;s ours: &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2015/10/cloudfront-distribution-settings.png&quot; alt=&quot;CloudFront Origin Settings&quot;&gt;&lt;/p&gt;
+
+&lt;h3&gt;DNS: Amazon Route 53&lt;/h3&gt;
+
+&lt;p&gt;Route 53 is the service we&amp;#39;ll use to enable Amazon to internally route requests to our website to the correct services.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Create a hosted zone&lt;/li&gt;
+&lt;li&gt;Add an Alias record for &lt;code&gt;www.grok-interactive.com&lt;/code&gt; to point to the S3 Website Endpoint&lt;/li&gt;
+&lt;li&gt;Add an Alias record for &lt;code&gt;grok-interactive.com&lt;/code&gt; to point to the S3 Website Endpoint&lt;/li&gt;
+&lt;li&gt;Migrate any remaining records from your other registrar/DNS provider to Route 53. Execututing &lt;code&gt;host -a grok-interactive.com&lt;/code&gt; is &lt;em&gt;really&lt;/em&gt; useful for this. &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3&gt;Update Your Nameservers&lt;/h3&gt;
+
+&lt;p&gt;Go to your Domain registrar (Domain.com, GoDaddy, Namecheap, etc.) and update your nameservers to the nameservers provided in Route 53.  Now that your domain points to Route 53, AWS will know where to send each request. Each registrar has a different control panel to do this, so I&amp;#39;ll refer you to their documentation.&lt;/p&gt;
+
+&lt;p&gt;Remember, that updating DNS records can take up to several hours to propagate through the internet.&lt;/p&gt;
+
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;We have taken our static website from a manual deployment on a single node and converted into a continuously deliverable website powered with a CDN that provides low latency and high resiliency, for less than a dollar per month. Great return for a few hours time and a few bucks a year.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;ol class=&quot;abcd&quot;&gt;
+    &lt;li&gt;&lt;strong&gt;A.&lt;/strong&gt; Always&lt;/li&gt;
+    &lt;li&gt;&lt;strong&gt;B.&lt;/strong&gt; Be&lt;/li&gt;
+    &lt;li&gt;&lt;strong&gt;C.&lt;/strong&gt; Continuously&lt;/li&gt;
+    &lt;li&gt;&lt;strong&gt;D.&lt;/strong&gt; Deploying&lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/blockquote&gt;
+
+&lt;h2&gt;Thanks and Resources&lt;/h2&gt;
+
+&lt;p&gt;There are few original thoughts.  Thanks for all the help!&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://danielwhyte.com/app/design/2014/10/05/creating-a-jekyll-s3-server.html&quot;&gt;Create a jekyll blog &amp;amp; host it on amazon s3 by Daniel Whyte&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.michaelgallego.fr/blog/2013/08/27/static-website-on-s3-cloudfront-and-route-53-the-right-way/&quot;&gt;Static website on S3, CloudFront and Route 53, the right way! by Michaël Gallego&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.leveluplunch.com/blog/2014/09/29/amazon-cloudfront-s3-subfolders-default-index/&quot;&gt;Setting up cloudfront with S3&lt;/a&gt;
+&lt;style&gt;
+.abcd {
+list-style-type: none;
+margin: 16px 0;
+font-size: 20px;
+}&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;.abcd strong {
+  color: #f68423;
+}
+&lt;/style&gt;&lt;/p&gt;
 </description>
     </item>
     

@@ -19,14 +19,28 @@
         <itunes:explicit>no</itunes:explicit>
         <itunes:image href="http://dicf1uf588bsp.cloudfront.net/images/show-image-v3-1400.jpg" />
         <atom:link href="http://www.grok-interactive.com/thegrokcast.xml" rel="self" type="application/rss+xml" />
-        <pubDate>Tue, 27 Oct 2015 14:48:09 -0400</pubDate>
+        <pubDate>Tue, 03 Nov 2015 15:22:20 -0500</pubDate>
         <title>The Grok Cast</title>
         <itunes:author>The Team at Grok Interactive, LLC</itunes:author>
         <description>Join the team of web developers from Grok Interactive as they discuss the topics, trends, and top stories that impact the world of web professionals. If you work in any capacity with web developers, designers, or marketers, you will be right at home with The Grok Cast.</description>
         <itunes:keywords>web, developer, internet, designer, ruby, rails, elixir, php, javascript, html, css, webdev, code, git</itunes:keywords>
         <itunes:summary>Join the team of web developers from Grok Interactive as they discuss the topics, trends, and top stories that impact the world of web professionals. If you work in any capacity with web developers, designers, or marketers, you will be right at home with The Grok Cast.</itunes:summary>
         <itunes:subtitle>Join the team of web developers from Grok Interactive as they discuss the topics, trends, and top stories that impact the world of web professionals. If you work in any capacity with web developers, designers, or marketers, you will be right at home.</itunes:subtitle>
-        <lastBuildDate>Tue, 27 Oct 2015 14:48:09 -0400</lastBuildDate>
+        <lastBuildDate>Tue, 03 Nov 2015 15:22:20 -0500</lastBuildDate>
+        
+        <item>
+            <title>09 - Security Basics for the Consumer and Developer</title>
+            <itunes:image href="http://dicf1uf588bsp.cloudfront.net/images/show-image-v3-1400.jpg" />
+            <description></description>
+            <itunes:keywords>development, security, cyber security, threat detection</itunes:keywords>
+            <itunes:subtitle></itunes:subtitle>
+            <itunes:summary></itunes:summary>
+            <enclosure url="http://dicf1uf588bsp.cloudfront.net/09-security-basics-for-the-consumer-and-developer.mp3" type="audio/mpeg" length="40904313" />
+            <guid isPermaLink="false">http://www.grok-interactive.com/podcast/security-basics-for-the-consumer-and-developer</guid>
+            <itunes:explicit>no</itunes:explicit>
+            <itunes:duration>00:42:36</itunes:duration>
+            <pubDate>Tue, 03 Nov 2015 00:00:00 -0500</pubDate>
+        </item>
         
         <item>
             <title>08 - Test Driven Development</title>
